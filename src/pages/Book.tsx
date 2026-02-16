@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { CTFFundingBanner } from "@/components/CTFFundingBanner";
 import { BookeoWidget } from "@/components/BookeoWidget";
@@ -7,10 +8,26 @@ import { HeroImage } from "@/components/ui/hero-image";
 import heroImage from "@/assets/photos/loader-dumptruck-wide.jpg";
 
 
-
 const Book = () => {
   const [searchParams] = useSearchParams();
   const courseParam = searchParams.get("course") || undefined;
+
+  useEffect(() => {
+    // Set cache-control meta tags to prevent caching
+    const metas = [
+      { httpEquiv: "Cache-Control", content: "no-cache, no-store, must-revalidate" },
+      { httpEquiv: "Pragma", content: "no-cache" },
+      { httpEquiv: "Expires", content: "0" },
+    ];
+    const elements = metas.map(({ httpEquiv, content }) => {
+      const meta = document.createElement("meta");
+      meta.httpEquiv = httpEquiv;
+      meta.content = content;
+      document.head.appendChild(meta);
+      return meta;
+    });
+    return () => elements.forEach((el) => el.remove());
+  }, []);
 
   return (
     <Layout>
