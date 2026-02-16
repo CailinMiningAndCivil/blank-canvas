@@ -169,7 +169,7 @@ const RPL = () => {
       </section>
 
       {/* RPL Application Form */}
-      <section className="py-20">
+      <section className="py-20 bg-card">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <iframe
