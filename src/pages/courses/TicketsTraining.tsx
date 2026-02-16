@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, ArrowRight, Banknote, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
+import { BookLink } from "@/components/BookLink";
 
 // Real Cailin photos
 import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
@@ -180,9 +181,9 @@ const TicketsTraining = () => {
                     <span className="font-display text-2xl text-primary">{bundle.price}</span>
                   </div>
                   <Button asChild variant="hero" className="w-full">
-                    <Link to={bundle.id === "starter-bundle" ? "/book?course=3351KU6F7618EA12C49A3" : "/book"}>
+                    <BookLink course={bundle.id === "starter-bundle" ? "3351KU6F7618EA12C49A3" : undefined}>
                       Book Now <ArrowRight className="w-4 h-4 ml-2" />
-                    </Link>
+                    </BookLink>
                   </Button>
                 </div>
               </div>
