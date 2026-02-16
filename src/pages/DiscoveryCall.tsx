@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
-import { CheckCircle, Phone } from "lucide-react";
+import { CheckCircle, Phone, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import cailinLogo from "@/assets/cailin-logo.svg";
 
@@ -51,9 +51,9 @@ const DiscoveryCall = () => {
               style={{ animationDelay: "0.4s" }}
               asChild
             >
-              <a href="tel:0483951501">
-                <Phone className="w-5 h-5 mr-2" />
-                Call 0483 951 501
+              <a href="https://live.cailintraining.com.au/discovery_call_qualification_page" target="_blank" rel="noopener noreferrer">
+                <ArrowRight className="w-5 h-5 mr-2" />
+                Book a Call Now
               </a>
             </Button>
           </div>
@@ -103,9 +103,9 @@ const DiscoveryCall = () => {
                   className="w-full text-lg py-6 shadow-glow"
                   asChild
                 >
-                  <a href="tel:0483951501">
-                    <Phone className="w-5 h-5 mr-2" />
-                    Call 0483 951 501
+                  <a href="https://live.cailintraining.com.au/discovery_call_qualification_page" target="_blank" rel="noopener noreferrer">
+                    <ArrowRight className="w-5 h-5 mr-2" />
+                    Book a Call Now
                   </a>
                 </Button>
                 
@@ -131,9 +131,9 @@ const DiscoveryCall = () => {
             Our team is ready to guide you through every step of your training journey.
           </p>
           <Button size="lg" variant="hero" className="shadow-glow" asChild>
-            <a href="tel:0483951501">
-              <Phone className="w-5 h-5 mr-2" />
-              Call 0483 951 501
+            <a href="https://live.cailintraining.com.au/discovery_call_qualification_page" target="_blank" rel="noopener noreferrer">
+              <ArrowRight className="w-5 h-5 mr-2" />
+              Book a Call Now
             </a>
           </Button>
         </div>
