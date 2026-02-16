@@ -20,7 +20,7 @@ const courseOptions = [
     duration: "1-4 hours",
     price: "$600",
     description: "Quick certification with national qualification and work referral",
-    bookingUrl: "https://live.cailintraining.com.au/rpl_voc-for-moxy-book",
+    bookingUrl: "https://live.cailintraining.com.au/short_course_moxy-book",
     highlight: false,
   },
   {
@@ -28,7 +28,7 @@ const courseOptions = [
     duration: "Unlimited hours",
     price: "$2,500",
     description: "1:1 training on a live mine site until you're confident",
-    bookingUrl: "https://live.cailintraining.com.au/moxy-courses",
+    bookingUrl: "https://live.cailintraining.com.au/moxy_day_course",
     highlight: true,
     badge: "RECOMMENDED",
   },
@@ -136,12 +136,14 @@ const Moxy = () => {
                 </div>
                 <p className="font-display text-3xl text-primary text-center mb-4">{option.price}</p>
                 <p className="text-foreground text-sm text-center mb-6">{option.description}</p>
-                <Button asChild variant={option.highlight ? "hero" : "outline"} className="w-full">
-                  {option.title === "RPL Assessment" ? (
-                    <Link to="/courses/rpl#rpl-form">Book Now</Link>
-                  ) : (
-                    <BookLink>Book Now</BookLink>
-                  )}
+                <Button variant={option.highlight ? "hero" : "outline"} className="w-full" onClick={() => {
+                  if (option.title === "RPL Assessment") {
+                    window.location.href = "/courses/rpl#rpl-form";
+                  } else {
+                    window.open(option.bookingUrl, '_blank');
+                  }
+                }}>
+                  Book Now
                 </Button>
               </div>
             ))}
