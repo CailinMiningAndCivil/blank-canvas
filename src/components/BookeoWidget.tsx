@@ -23,7 +23,7 @@ export const BookeoWidget = ({ course }: { course?: string }) => {
 
   return (
     <div ref={containerRef} className="w-full min-h-[600px]">
-      <div id="bookeo_widget" style={{ position: 'relative', zIndex: 9999 }} />
+      <div id="bookeo_widget" style={{ position: 'relative', zIndex: 9999, backgroundColor: 'transparent' }} />
     </div>
   );
 };
