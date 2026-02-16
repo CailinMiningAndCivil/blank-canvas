@@ -44,7 +44,7 @@ const bundles = [
     description: "A powerful combination for material handling roles. Load and haul with confidence on any mining or civil construction site.",
     price: "$2,500",
     image: wheelloaderFullBucket,
-    bookingUrl: "https://live.cailintraining.com.au/loader-moxy-bundle",
+    bookingUrl: "https://live.cailintraining.com.au/loader_moxy_bundle",
     highlight: false,
   },
   {
@@ -180,17 +180,9 @@ const TicketsTraining = () => {
                   <div className="flex items-center justify-between mb-6">
                     <span className="font-display text-2xl text-primary">{bundle.price}</span>
                   </div>
-                  {bundle.id === "starter-bundle" ? (
-                    <Button variant="hero" className="w-full" onClick={() => { window.location.href = '/book?course=3351KU6F7618EA12C49A3'; }}>
-                      Book Now <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
-                  ) : (
-                    <Button asChild variant="hero" className="w-full">
-                      <BookLink>
-                        Book Now <ArrowRight className="w-4 h-4 ml-2" />
-                      </BookLink>
-                    </Button>
-                  )}
+                  <Button variant="hero" className="w-full" onClick={() => { window.open(bundle.bookingUrl, '_blank'); }}>
+                    Book Now <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
                 </div>
               </div>
             ))}
