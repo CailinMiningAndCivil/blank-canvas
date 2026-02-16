@@ -180,11 +180,17 @@ const TicketsTraining = () => {
                   <div className="flex items-center justify-between mb-6">
                     <span className="font-display text-2xl text-primary">{bundle.price}</span>
                   </div>
-                  <Button asChild variant="hero" className="w-full">
-                    <BookLink course={bundle.id === "starter-bundle" ? "3351KU6F7618EA12C49A3" : undefined}>
+                  {bundle.id === "starter-bundle" ? (
+                    <Button variant="hero" className="w-full" onClick={() => { window.location.href = '/book?course=3351KU6F7618EA12C49A3'; }}>
                       Book Now <ArrowRight className="w-4 h-4 ml-2" />
-                    </BookLink>
-                  </Button>
+                    </Button>
+                  ) : (
+                    <Button asChild variant="hero" className="w-full">
+                      <BookLink>
+                        Book Now <ArrowRight className="w-4 h-4 ml-2" />
+                      </BookLink>
+                    </Button>
+                  )}
                 </div>
               </div>
             ))}
