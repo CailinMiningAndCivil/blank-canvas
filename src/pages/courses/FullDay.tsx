@@ -54,21 +54,18 @@ const FullDay = () => {
         <HeroImage src={loaderDumptruckAction} alt="Loader and dump truck training on site" />
         
         <div className="relative z-10 container mx-auto px-4">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-2 mb-6">
-              <RefreshCw className="w-4 h-4 text-primary" />
-              <span className="text-primary font-medium text-sm">Unlimited Return Training</span>
-            </div>
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-primary font-medium tracking-widest uppercase mb-4">Unlimited Return Training</p>
             <h1 className="font-display text-5xl md:text-6xl text-foreground mb-6">
               Full Day Course
             </h1>
-            <p className="text-muted-foreground text-lg mb-4">
+            <p className="text-muted-foreground text-lg mb-8">
               Master any single machine with unlimited return training. Train until you're fully confident 
               and job-ready — no rushing, no time limits.
             </p>
-            <div className="flex items-baseline gap-3">
-              <span className="font-display text-4xl text-primary">$2,500</span>
-              <span className="text-muted-foreground">per machine</span>
+            <div className="inline-block bg-primary/10 px-8 py-4 rounded-xl">
+              <span className="text-primary font-display text-4xl">$2,500</span>
+              <span className="text-foreground ml-2">per machine</span>
             </div>
           </div>
         </div>
