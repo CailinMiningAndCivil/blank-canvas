@@ -24,6 +24,11 @@ export const BookeoWidget = ({ accountId, course }: BookeoWidgetProps) => {
     containerRef.current.appendChild(widgetDiv);
 
     // Create and inject the script
+    // Clean up any previous Bookeo global state
+    if ((window as any).bookeo_widgets) {
+      delete (window as any).bookeo_widgets;
+    }
+
     const script = document.createElement("script");
     script.type = "text/javascript";
     
@@ -31,11 +36,12 @@ export const BookeoWidget = ({ accountId, course }: BookeoWidgetProps) => {
     if (course) {
       scriptUrl += `&type=${course}`;
     }
+    // Cache-bust to ensure script re-executes on param changes
+    scriptUrl += `&_=${Date.now()}`;
     
     script.src = scriptUrl;
     script.async = true;
     script.onload = () => {
-      // Give the widget a moment to render after script loads
       setTimeout(() => setIsLoading(false), 2000);
     };
     script.onerror = () => setIsLoading(false);
