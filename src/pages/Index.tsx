@@ -8,7 +8,7 @@ import { MachineCard } from "@/components/MachineCard";
 // Real Cailin photos
 import fleetLineupWide from "@/assets/photos/fleet-lineup-wide.jpg";
 import excavatorTraining1on1 from "@/assets/photos/excavator-training-1on1.jpg";
-import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
+import excavatorNew from "@/assets/photos/excavator-new.jpg";
 import wheelloaderHero from "@/assets/photos/wheelloader-hero.jpg";
 import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
@@ -52,7 +52,7 @@ const individualMachines = [
     title: "Excavator Ticket",
     code: "RIIMPO320F & RIIMPO301E",
     description: "Comprehensive excavator training for civil construction. Learn safe operation, loading, trenching, and more.",
-    image: excavatorOperation,
+    image: excavatorNew,
     link: "/courses/excavator",
   },
   {
