@@ -14,30 +14,65 @@ import {
 // Real Cailin photos
 import safetyEquipmentCheck from "@/assets/photos/safety-equipment-check.jpg";
 import graderCabinAccess from "@/assets/photos/grader-cabin-access.jpg";
+import excavatorNew from "@/assets/photos/excavator-new.jpg";
+import wheelloaderProfile from "@/assets/photos/wheelloader-profile.jpg";
+import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
+import rollerNew from "@/assets/photos/roller-new.jpg";
+import watercartNew from "@/assets/photos/watercart-new.jpg";
+import skidSteerLoader from "@/assets/photos/skid-steer-loader.jpg";
+import dozer from "@/assets/photos/dozer.jpg";
+import rigidHaulTruck from "@/assets/photos/rigid-haul-truck.jpg";
+import integratedToolCarrier from "@/assets/photos/integrated-tool-carrier.jpg";
 
 const machines = [
   {
     name: "Excavator",
-    bookingUrl: "https://live.cailintraining.com.au/voc-excavator-book",
+    image: excavatorNew,
+    bookingUrl: "https://live.cailintraining.com.au/VOC-excavator-book",
   },
   {
     name: "Wheel Loader",
+    image: wheelloaderProfile,
     bookingUrl: "https://live.cailintraining.com.au/voc-wheel_loader-book",
   },
   {
-    name: "Watercart",
-    bookingUrl: "https://live.cailintraining.com.au/voc-watercart-book",
-  },
-  {
-    name: "ADT Moxy Truck",
+    name: "Moxy",
+    image: articulatedDumptruck,
     bookingUrl: "https://live.cailintraining.com.au/voc-moxy-book",
   },
   {
     name: "Roller",
+    image: rollerNew,
     bookingUrl: "https://live.cailintraining.com.au/voc-roller-book",
   },
   {
-    name: "Integrated Tool Carrier (IT)",
+    name: "Watercart",
+    image: watercartNew,
+    bookingUrl: "https://live.cailintraining.com.au/voc-watercart-book",
+  },
+  {
+    name: "Skid Steer Loader",
+    image: skidSteerLoader,
+    bookingUrl: "https://live.cailintraining.com.au/voc-skid_loader-book",
+  },
+  {
+    name: "Grader",
+    image: graderCabinAccess,
+    bookingUrl: "https://live.cailintraining.com.au/voc-grader-book",
+  },
+  {
+    name: "Dozer",
+    image: dozer,
+    bookingUrl: "https://live.cailintraining.com.au/voc-dozer-book",
+  },
+  {
+    name: "Rigid Haul Truck",
+    image: rigidHaulTruck,
+    bookingUrl: "https://live.cailintraining.com.au/voc-rigid_haul_truck-book",
+  },
+  {
+    name: "Integrated Tool Carrier",
+    image: integratedToolCarrier,
     bookingUrl: "https://live.cailintraining.com.au/voc-integratedtoolcarrier-book",
   },
 ];
@@ -195,22 +230,23 @@ const VOC = () => {
               qualification for the machine you wish to be assessed on.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
             {machines.map((machine) => (
               <div
                 key={machine.name}
-                className="bg-card border border-border rounded-2xl p-6 hover:border-primary transition-colors text-center"
+                className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary transition-colors"
               >
-                <h3 className="font-display text-xl text-foreground mb-4">{machine.name}</h3>
-                <div className="flex items-center justify-center gap-2 text-muted-foreground mb-6">
-                  <Clock className="w-4 h-4" />
-                  <span>~30 minutes</span>
-                </div>
-                <Button asChild variant="hero" className="w-full">
-                  <BookLink>
+                <img src={machine.image} alt={machine.name} className="w-full h-32 object-cover" />
+                <div className="p-4 text-center">
+                  <h3 className="font-display text-base text-foreground mb-2">{machine.name}</h3>
+                  <div className="flex items-center justify-center gap-2 text-muted-foreground mb-4">
+                    <Clock className="w-3 h-3" />
+                    <span className="text-xs">~30 mins</span>
+                  </div>
+                  <Button variant="hero" size="sm" className="w-full" onClick={() => window.open(machine.bookingUrl, '_blank')}>
                     Book VOC
-                  </BookLink>
-                </Button>
+                  </Button>
+                </div>
               </div>
             ))}
           </div>
