@@ -12,6 +12,7 @@ import loaderMoxyBundle from "@/assets/photos/loader-moxy-bundle.png";
 import trainerWatchingLoader from "@/assets/photos/trainer-watching-loader.jpg";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import loaderDumptruckPair from "@/assets/photos/loader-dumptruck-pair.jpg";
+import topconGpsExcavator from "@/assets/photos/topcon-gps-excavator.jpg";
 
 const bundles = [
   {
@@ -217,12 +218,8 @@ const TicketsTraining = () => {
                     Book Now <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </div>
-              <div className="bg-card border border-border rounded-xl p-6 text-center">
-                <Award className="w-12 h-12 text-primary mx-auto mb-4" />
-                <h3 className="font-display text-xl text-foreground mb-2">Essential for Modern Sites</h3>
-                <p className="text-muted-foreground text-sm">
-                  GPS-guided earthmoving is now standard on major projects. Get ahead with specialist certification.
-                </p>
+              <div className="rounded-xl overflow-hidden">
+                <img src={topconGpsExcavator} alt="Topcon GPS Excavator on site" className="w-full h-full object-cover rounded-xl" />
               </div>
             </div>
           </div>
