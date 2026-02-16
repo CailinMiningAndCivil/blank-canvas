@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const BookeoWidgetInner = ({ course }: { course?: string }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -29,7 +29,7 @@ const BookeoWidgetInner = ({ course }: { course?: string }) => {
       const w = document.getElementById('bookeo_widget');
       if (w) w.innerHTML = '';
     };
-  }, []);
+  }, [course]);
 
   return (
     <div ref={containerRef} className="w-full min-h-[600px]">
@@ -40,6 +40,5 @@ const BookeoWidgetInner = ({ course }: { course?: string }) => {
 
 // Wrapper that forces full remount when course changes via key
 export const BookeoWidget = ({ course }: { course?: string }) => {
-  const [mountKey] = useState(() => Date.now());
-  return <BookeoWidgetInner key={`${course}-${mountKey}`} course={course} />;
+  return <BookeoWidgetInner key={course} course={course} />;
 };
