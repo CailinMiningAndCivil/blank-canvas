@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { BookLink } from "@/components/BookLink";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -131,7 +132,7 @@ export const Navbar = () => {
               <span className="text-sm font-medium">0483 951 501</span>
             </a>
             <Button asChild variant="hero" size="lg">
-              <Link to="/book">Book Now</Link>
+              <BookLink>Book Now</BookLink>
             </Button>
           </div>
 
@@ -222,7 +223,7 @@ export const Navbar = () => {
               </Link>
             ))}
             <Button asChild variant="hero" size="lg" className="mt-4">
-              <Link to="/book">Book Now</Link>
+              <BookLink>Book Now</BookLink>
             </Button>
           </div>
         </div>

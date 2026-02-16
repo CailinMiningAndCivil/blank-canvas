@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, Banknote, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import { BookLink } from "@/components/BookLink";
 import {
   Accordion,
   AccordionContent,
@@ -136,9 +137,9 @@ const Moxy = () => {
                 <p className="font-display text-3xl text-primary text-center mb-4">{option.price}</p>
                 <p className="text-foreground text-sm text-center mb-6">{option.description}</p>
                 <Button asChild variant={option.highlight ? "hero" : "outline"} className="w-full">
-                  <Link to="/book">
+                  <BookLink>
                     Book Now
-                  </Link>
+                  </BookLink>
                 </Button>
               </div>
             ))}
@@ -235,9 +236,9 @@ const Moxy = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button asChild variant="hero" size="xl">
-              <Link to="/book">
+              <BookLink>
                 Book Now
-              </Link>
+              </BookLink>
             </Button>
             <Button asChild variant="outline" size="xl">
               <Link to="/discovery-call">Free Consultation</Link>

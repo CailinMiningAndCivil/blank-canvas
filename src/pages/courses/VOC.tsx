@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, FileCheck, Award, ArrowRight, HelpCircle, Users, Banknote } from "lucide-react";
 import { Link } from "react-router-dom";
+import { BookLink } from "@/components/BookLink";
 import {
   Accordion,
   AccordionContent,
@@ -206,9 +207,9 @@ const VOC = () => {
                   <span>~30 minutes</span>
                 </div>
                 <Button asChild variant="hero" className="w-full">
-                  <Link to="/book">
+                  <BookLink>
                     Book VOC
-                  </Link>
+                  </BookLink>
                 </Button>
               </div>
             ))}
