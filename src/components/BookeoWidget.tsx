@@ -5,11 +5,10 @@ export const BookeoWidget = ({ course }: { course?: string }) => {
 
   useEffect(() => {
     if (!containerRef.current) return;
-    containerRef.current.innerHTML = '';
 
-    const widgetDiv = document.createElement('div');
-    widgetDiv.id = 'bookeo_widget';
-    containerRef.current.appendChild(widgetDiv);
+    // Remove any previously injected script
+    const oldScript = containerRef.current.querySelector('script');
+    if (oldScript) oldScript.remove();
 
     const script = document.createElement('script');
     script.type = 'text/javascript';
@@ -17,11 +16,14 @@ export const BookeoWidget = ({ course }: { course?: string }) => {
     containerRef.current.appendChild(script);
 
     return () => {
-      if (containerRef.current) {
-        containerRef.current.innerHTML = '';
-      }
+      const s = containerRef.current?.querySelector('script');
+      if (s) s.remove();
     };
   }, [course]);
 
-  return <div ref={containerRef} className="w-full min-h-[600px]" />;
+  return (
+    <div ref={containerRef} className="w-full min-h-[600px]">
+      <div id="bookeo_widget" />
+    </div>
+  );
 };
