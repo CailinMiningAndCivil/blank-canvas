@@ -1,14 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export const BookeoWidget = ({ course }: { course?: string }) => {
+const BookeoWidgetInner = ({ course }: { course?: string }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Remove any previously injected script
-    const oldScript = containerRef.current.querySelector('script');
-    if (oldScript) oldScript.remove();
+    // Clear any previous widget content
+    const widgetDiv = document.getElementById('bookeo_widget');
+    if (widgetDiv) widgetDiv.innerHTML = '';
+
+    // Remove any old Bookeo scripts from head and body
+    document.querySelectorAll('script[src*="bookeo.com"]').forEach(s => s.remove());
 
     const script = document.createElement('script');
     script.type = 'text/javascript';
@@ -16,14 +19,21 @@ export const BookeoWidget = ({ course }: { course?: string }) => {
     containerRef.current.appendChild(script);
 
     return () => {
-      const s = containerRef.current?.querySelector('script');
-      if (s) s.remove();
+      document.querySelectorAll('script[src*="bookeo.com"]').forEach(s => s.remove());
+      const w = document.getElementById('bookeo_widget');
+      if (w) w.innerHTML = '';
     };
-  }, [course]);
+  }, []);
 
   return (
     <div ref={containerRef} className="w-full min-h-[600px]">
       <div id="bookeo_widget" style={{ position: 'relative', zIndex: 9999, backgroundColor: 'transparent' }} />
     </div>
   );
+};
+
+// Wrapper that forces full remount when course changes via key
+export const BookeoWidget = ({ course }: { course?: string }) => {
+  const [mountKey] = useState(() => Date.now());
+  return <BookeoWidgetInner key={`${course}-${mountKey}`} course={course} />;
 };
