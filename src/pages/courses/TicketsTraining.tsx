@@ -133,7 +133,7 @@ const TicketsTraining = () => {
       {/* Benefits Section */}
       <section className="py-16 bg-secondary">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
             {benefits.map((benefit) => (
               <div key={benefit.title} className="bg-card p-6 rounded-xl border border-border text-center">
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4 mx-auto">
