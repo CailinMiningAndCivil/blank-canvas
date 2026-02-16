@@ -109,6 +109,15 @@ export const Navbar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
+            <a
+              href="https://live.cailintraining.com.au/affiliate-program"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-sm uppercase tracking-wider transition-colors duration-300 text-muted-foreground hover:text-foreground"
+            >
+              Affiliates
+            </a>
+
             {navLinks.slice(1).map((link) => (
               <Link
                 key={link.path}
@@ -206,6 +215,16 @@ export const Navbar = () => {
                 ))}
               </div>
             </div>
+
+            <a
+              href="https://live.cailintraining.com.au/affiliate-program"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsOpen(false)}
+              className="font-medium text-lg uppercase tracking-wider transition-colors duration-300 text-muted-foreground hover:text-foreground"
+            >
+              Affiliates
+            </a>
 
             {navLinks.slice(1).map((link) => (
               <Link
