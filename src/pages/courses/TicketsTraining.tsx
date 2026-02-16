@@ -8,6 +8,7 @@ import { BookLink } from "@/components/BookLink";
 // Real Cailin photos
 import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
+import loaderMoxyBundle from "@/assets/photos/loader-moxy-bundle.png";
 import trainerWatchingLoader from "@/assets/photos/trainer-watching-loader.jpg";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import loaderDumptruckPair from "@/assets/photos/loader-dumptruck-pair.jpg";
@@ -43,7 +44,7 @@ const bundles = [
     codes: ["RIIMPO304E", "RIIMPO337E"],
     description: "A powerful combination for material handling roles. Load and haul with confidence on any mining or civil construction site.",
     price: "$2,500",
-    image: wheelloaderFullBucket,
+    image: loaderMoxyBundle,
     bookingUrl: "https://live.cailintraining.com.au/loader_moxy_bundle",
     highlight: false,
   },
