@@ -12,7 +12,7 @@ import excavatorNew from "@/assets/photos/excavator-new.jpg";
 import wheelloaderHero from "@/assets/photos/wheelloader-hero.jpg";
 import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
-import rollerArtistic from "@/assets/photos/roller-artistic.jpg";
+import rollerNew from "@/assets/photos/roller-new.jpg";
 import loaderDumptruckWide from "@/assets/photos/loader-dumptruck-wide.jpg";
 
 
@@ -76,7 +76,7 @@ const individualMachines = [
     title: "Roller Ticket",
     code: "RIIMPO317F",
     description: "Roller operator certification for compaction work in construction and road building.",
-    image: rollerArtistic,
+    image: rollerNew,
     link: "/courses/roller",
   },
   {
