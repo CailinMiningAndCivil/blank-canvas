@@ -137,9 +137,11 @@ const Roller = () => {
                 <p className="font-display text-3xl text-primary text-center mb-4">{option.price}</p>
                 <p className="text-foreground text-sm text-center mb-6">{option.description}</p>
                 <Button asChild variant={option.highlight ? "hero" : "outline"} className="w-full">
-                  <BookLink>
-                    Book Now
-                  </BookLink>
+                  {option.title === "RPL Assessment" ? (
+                    <Link to="/courses/rpl#rpl-form">Book Now</Link>
+                  ) : (
+                    <BookLink>Book Now</BookLink>
+                  )}
                 </Button>
               </div>
             ))}
