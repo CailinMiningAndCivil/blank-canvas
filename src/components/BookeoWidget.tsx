@@ -12,7 +12,7 @@ export const BookeoWidget = ({ course }: { course?: string }) => {
 
     const script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = `https://bookeo.com/widget.js?a=3351CC6YAJ18E89A53D33&type=${course}`;
+    script.src = `https://bookeo.com/widget.js?a=3351CC6YAJ18E89A53D33&type=${course}&_=${Date.now()}`;
     containerRef.current.appendChild(script);
 
     return () => {
