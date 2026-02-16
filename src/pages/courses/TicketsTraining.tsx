@@ -212,10 +212,8 @@ const TicketsTraining = () => {
                     </li>
                   ))}
                 </ul>
-                <Button asChild variant="hero" size="lg">
-                  <Link to="/courses/excavator">
-                    Learn More
-                  </Link>
+                <Button variant="hero" size="lg" onClick={() => { window.open('https://live.cailintraining.com.au/topcon_excavator_1_day_course', '_blank'); }}>
+                    Book Now <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </div>
               <div className="bg-card border border-border rounded-xl p-6 text-center">
