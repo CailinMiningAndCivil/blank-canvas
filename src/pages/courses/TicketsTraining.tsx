@@ -11,6 +11,7 @@ import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import loaderMoxyBundle from "@/assets/photos/loader-moxy-bundle.png";
 import trainerWatchingLoader from "@/assets/photos/trainer-watching-loader.jpg";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
+import starterBundleImg from "@/assets/photos/starter-bundle.jpg";
 import loaderDumptruckPair from "@/assets/photos/loader-dumptruck-pair.jpg";
 import topconGpsExcavator from "@/assets/photos/topcon-gps-excavator.jpg";
 import interstateBundleImg from "@/assets/photos/interstate-bundle.jpg";
@@ -23,7 +24,7 @@ const bundles = [
     codes: ["RIIMPO337E", "RIIMPO206D", "RIIMPO317F"],
     description: "Perfect for beginners wanting versatility. Get certified in Articulated Haul Truck (Moxy), Watercart, and Roller operations — the most in-demand entry-level combination.",
     price: "$2,500",
-    image: articulatedDumptruck,
+    image: starterBundleImg,
     bookingUrl: "https://live.cailintraining.com.au/starter_bundle_moxy_roller_watercart",
     highlight: true,
     badge: "MOST POPULAR",
