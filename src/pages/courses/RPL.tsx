@@ -169,16 +169,15 @@ const RPL = () => {
       </section>
 
       {/* RPL Application Form */}
-      <section className="py-20 bg-secondary">
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <iframe
               src="https://link.cailinminingcivil.com/widget/form/nsriBVOc4K3Y6O26x8zw"
-              style={{ width: '100%', border: 'none', overflow: 'hidden' }}
-              scrolling="no"
+              style={{ width: '100%', height: '1200px', border: 'none' }}
               id="nsriBVOc4K3Y6O26x8zw"
               title="RPL Application Form"
-              className="rounded-2xl bg-card min-h-[600px]"
+              className="rounded-2xl"
             />
           </div>
         </div>
