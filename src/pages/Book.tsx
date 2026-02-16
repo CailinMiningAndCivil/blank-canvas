@@ -6,7 +6,7 @@ import { useSearchParams } from "react-router-dom";
 import { HeroImage } from "@/components/ui/hero-image";
 import heroImage from "@/assets/photos/loader-dumptruck-wide.jpg";
 
-const BOOKEO_ACCOUNT_ID = "3351CC6YAJ18E89A53D33";
+
 
 const Book = () => {
   const [searchParams] = useSearchParams();
@@ -40,7 +40,7 @@ const Book = () => {
       <section className="py-16 bg-secondary/30">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
-            <BookeoWidget accountId={BOOKEO_ACCOUNT_ID} course={courseParam} />
+            <BookeoWidget course={courseParam} />
           </div>
         </div>
       </section>
