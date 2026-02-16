@@ -13,7 +13,7 @@ import wheelloaderHero from "@/assets/photos/wheelloader-hero.jpg";
 import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import rollerNew from "@/assets/photos/roller-new.jpg";
-import loaderDumptruckWide from "@/assets/photos/loader-dumptruck-wide.jpg";
+import watercartNew from "@/assets/photos/watercart-new.jpg";
 
 
 const features = [
@@ -84,7 +84,7 @@ const individualMachines = [
     title: "Watercart Ticket",
     code: "RIIMPO206D",
     description: "Bulk water truck operations training for dust suppression and site maintenance.",
-    image: loaderDumptruckWide,
+    image: watercartNew,
     link: "/courses/watercart",
   },
 ];
