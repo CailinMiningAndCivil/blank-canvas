@@ -22,7 +22,8 @@ const bundles = [
     title: "Starter Bundle",
     subtitle: "Moxy + Watercart + Roller",
     codes: ["RIIMPO337E", "RIIMPO206D", "RIIMPO317F"],
-    description: "Perfect for beginners wanting versatility. Get certified in Articulated Haul Truck (Moxy), Watercart, and Roller operations — the most in-demand entry-level combination.",
+    description:
+      "Perfect for beginners wanting versatility. Get certified in Articulated Haul Truck (Moxy), Watercart, and Roller operations — the most in-demand entry-level combination.",
     price: "$2,500",
     image: starterBundleImg,
     bookingUrl: "https://live.cailintraining.com.au/starter_bundle_moxy_roller_watercart",
@@ -34,7 +35,8 @@ const bundles = [
     title: "Excavator + Loader Bundle",
     subtitle: "Excavator + Wheel Loader",
     codes: ["RIIMPO320F", "RIIMPO304E"],
-    description: "Master two of the most versatile machines on any site. Perfect for operators wanting maximum job opportunities across mining and civil.",
+    description:
+      "Master two of the most versatile machines on any site. Perfect for operators wanting maximum job opportunities across mining and civil.",
     price: "$2,500",
     image: excavatorOperation,
     bookingUrl: "https://live.cailintraining.com.au/excavator-loader-bundle",
@@ -45,7 +47,8 @@ const bundles = [
     title: "Loader + Moxy Bundle",
     subtitle: "Wheel Loader + Articulated Truck",
     codes: ["RIIMPO304E", "RIIMPO337E"],
-    description: "A powerful combination for material handling roles. Load and haul with confidence on any mining or civil construction site.",
+    description:
+      "A powerful combination for material handling roles. Load and haul with confidence on any mining or civil construction site.",
     price: "$2,500",
     image: loaderMoxyBundle,
     bookingUrl: "https://live.cailintraining.com.au/loader_moxy_bundle",
@@ -56,7 +59,8 @@ const bundles = [
     title: "Interstate Bundle",
     subtitle: "Moxy + Watercart + Roller",
     codes: ["RIIMPO337E", "RIIMPO206D", "RIIMPO317F"],
-    description: "Designed for interstate visitors with accommodation-friendly scheduling. Same great training, flexible timing.",
+    description:
+      "Designed for interstate visitors with accommodation-friendly scheduling. Same great training, flexible timing.",
     price: "$2,500",
     image: interstateBundleImg,
     bookingUrl: "https://live.cailintraining.com.au/interstate_bundle_moxy_roller_watercart",
@@ -80,11 +84,11 @@ const benefits = [
     title: "Live Mine Site",
     description: "Real training on a real site — not a concrete yard",
   },
-  {
+  /*{
     icon: Clock,
     title: "Unlimited Hours",
     description: "Train until you're confident — no rushed timeframes",
-  },
+  }, */
 ];
 
 const TicketsTraining = () => {
@@ -93,16 +97,14 @@ const TicketsTraining = () => {
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={trainerWatchingLoader} alt="Trainer watching loader operation" />
-        
+
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-primary font-medium tracking-widest uppercase mb-4">Full Training Programs</p>
-            <h1 className="font-display text-5xl md:text-6xl text-foreground mb-6">
-              Training Bundles
-            </h1>
+            <h1 className="font-display text-5xl md:text-6xl text-foreground mb-6">Training Bundles</h1>
             <p className="text-muted-foreground text-lg mb-8">
-              Double or triple your employment opportunities by bundling your courses. 
-              Become 2-3x more employable with multiple machine certifications.
+              Double or triple your employment opportunities by bundling your courses. Become 2-3x more employable with
+              multiple machine certifications.
             </p>
             <div className="inline-block bg-primary/10 px-8 py-4 rounded-xl">
               <span className="text-primary font-display text-4xl">$2,500</span>
@@ -133,10 +135,7 @@ const TicketsTraining = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {benefits.map((benefit) => (
-              <div
-                key={benefit.title}
-                className="bg-card p-6 rounded-xl border border-border text-center"
-              >
+              <div key={benefit.title} className="bg-card p-6 rounded-xl border border-border text-center">
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4 mx-auto">
                   <benefit.icon className="w-6 h-6 text-primary" />
                 </div>
@@ -154,28 +153,22 @@ const TicketsTraining = () => {
           <div className="text-center mb-12">
             <h2 className="font-display text-4xl text-foreground mb-4">Choose Your Bundle</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Each bundle includes multiple machine certifications, 1:1 training on a live mine site, 
-              and professional work referrals to help you secure employment.
+              Each bundle includes multiple machine certifications, 1:1 training on a live mine site, and professional
+              work referrals to help you secure employment.
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {bundles.map((bundle) => (
               <div
                 key={bundle.id}
-                className={`bg-card border rounded-2xl overflow-hidden hover:border-primary transition-colors ${bundle.highlight ? 'border-primary ring-2 ring-primary/20' : 'border-border'} relative`}
+                className={`bg-card border rounded-2xl overflow-hidden hover:border-primary transition-colors ${bundle.highlight ? "border-primary ring-2 ring-primary/20" : "border-border"} relative`}
               >
                 {bundle.badge && (
                   <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-bold z-10">
                     {bundle.badge}
                   </div>
                 )}
-                {bundle.image && (
-                  <img
-                    src={bundle.image}
-                    alt={bundle.title}
-                    className="w-full h-48 object-cover"
-                  />
-                )}
+                {bundle.image && <img src={bundle.image} alt={bundle.title} className="w-full h-48 object-cover" />}
                 <div className="p-6">
                   <p className="text-primary text-sm font-medium mb-2">{bundle.codes.join(" + ")}</p>
                   <h3 className="font-display text-2xl text-foreground mb-2">{bundle.title}</h3>
@@ -184,7 +177,13 @@ const TicketsTraining = () => {
                   <div className="flex items-center justify-between mb-6">
                     <span className="font-display text-2xl text-primary">{bundle.price}</span>
                   </div>
-                  <Button variant="hero" className="w-full" onClick={() => { window.open(bundle.bookingUrl, '_blank'); }}>
+                  <Button
+                    variant="hero"
+                    className="w-full"
+                    onClick={() => {
+                      window.open(bundle.bookingUrl, "_blank");
+                    }}
+                  >
                     Book Now <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
@@ -201,27 +200,37 @@ const TicketsTraining = () => {
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
                 <p className="text-primary font-medium tracking-widest uppercase mb-2">Specialist Training</p>
-                <h2 className="font-display text-3xl text-foreground mb-4">
-                  Topcon GPS Excavator Training
-                </h2>
+                <h2 className="font-display text-3xl text-foreground mb-4">Topcon GPS Excavator Training</h2>
                 <p className="text-muted-foreground mb-6">
-                  Western Australia's only private Topcon GPS excavator training program. 
-                  Master the most widely used GPS system in civil construction for career advancement.
+                  Western Australia's only private Topcon GPS excavator training program. Master the most widely used
+                  GPS system in civil construction for career advancement.
                 </p>
                 <ul className="space-y-3 mb-6">
-                  {["1 Day intensive training", "1:1 GPS technology experience", "Industry-standard equipment"].map((item) => (
-                    <li key={item} className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-primary shrink-0" />
-                      <span className="text-foreground">{item}</span>
-                    </li>
-                  ))}
+                  {["1 Day intensive training", "1:1 GPS technology experience", "Industry-standard equipment"].map(
+                    (item) => (
+                      <li key={item} className="flex items-center gap-3">
+                        <CheckCircle className="w-5 h-5 text-primary shrink-0" />
+                        <span className="text-foreground">{item}</span>
+                      </li>
+                    ),
+                  )}
                 </ul>
-                <Button variant="hero" size="lg" onClick={() => { window.open('https://live.cailintraining.com.au/topcon_excavator_1_day_course', '_blank'); }}>
-                    Book Now <ArrowRight className="w-4 h-4 ml-2" />
+                <Button
+                  variant="hero"
+                  size="lg"
+                  onClick={() => {
+                    window.open("https://live.cailintraining.com.au/topcon_excavator_1_day_course", "_blank");
+                  }}
+                >
+                  Book Now <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </div>
               <div className="rounded-xl overflow-hidden">
-                <img src={topconGpsExcavator} alt="Topcon GPS Excavator on site" className="w-full h-full object-cover rounded-xl" />
+                <img
+                  src={topconGpsExcavator}
+                  alt="Topcon GPS Excavator on site"
+                  className="w-full h-full object-cover rounded-xl"
+                />
               </div>
             </div>
           </div>
@@ -231,9 +240,7 @@ const TicketsTraining = () => {
       {/* CTA Section */}
       <section className="py-20">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="font-display text-4xl text-foreground mb-6">
-            Not Sure Which Bundle Is Right for You?
-          </h2>
+          <h2 className="font-display text-4xl text-foreground mb-6">Not Sure Which Bundle Is Right for You?</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
             Book a free consultation and our team will help you choose the best bundle for your career goals.
           </p>
