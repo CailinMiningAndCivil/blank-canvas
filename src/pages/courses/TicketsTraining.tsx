@@ -13,6 +13,7 @@ import trainerWatchingLoader from "@/assets/photos/trainer-watching-loader.jpg";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import loaderDumptruckPair from "@/assets/photos/loader-dumptruck-pair.jpg";
 import topconGpsExcavator from "@/assets/photos/topcon-gps-excavator.jpg";
+import interstateBundleImg from "@/assets/photos/interstate-bundle.jpg";
 
 const bundles = [
   {
@@ -56,7 +57,7 @@ const bundles = [
     codes: ["RIIMPO337E", "RIIMPO206D", "RIIMPO317F"],
     description: "Designed for interstate visitors with accommodation-friendly scheduling. Same great training, flexible timing.",
     price: "$2,500",
-    image: loaderDumptruckPair,
+    image: interstateBundleImg,
     bookingUrl: "https://live.cailintraining.com.au/interstate_bundle_moxy_roller_watercart",
     highlight: false,
   },
