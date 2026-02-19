@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Award, Clock, Users, Briefcase, CheckCircle, ArrowRight } from "lucide-react";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { MachineCard } from "@/components/MachineCard";
+import { PartnersSection } from "@/components/PartnersSection";
 
 // Real Cailin photos
 import fleetLineupWide from "@/assets/photos/fleet-lineup-wide.jpg";
@@ -297,6 +298,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Partners Section */}
+      <PartnersSection />
 
       {/* Google Reviews */}
       <GoogleReviews />
