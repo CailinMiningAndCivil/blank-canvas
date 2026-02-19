@@ -7,28 +7,39 @@ import logo3 from "@/assets/logos/3.svg";
 import nawicLogo from "@/assets/logos/nawic-logo.svg";
 import chamberLogo from "@/assets/logos/chamber-of-commerce.svg";
 
+const logos = [
+  { src: ctfLogo, alt: "CTF Construction Training Fund" },
+  { src: tafeCentralLogo, alt: "TAFE Central Region" },
+  { src: tafeSouthLogo, alt: "TAFE South" },
+  { src: nrtLogo, alt: "Nationally Recognised Training" },
+  { src: cailinTrainingLogo, alt: "Cailin Training" },
+  { src: logo3, alt: "Partner Logo" },
+  { src: nawicLogo, alt: "NAWIC - National Association of Women in Construction" },
+  { src: chamberLogo, alt: "Chamber of Commerce" },
+];
+
 export const PartnersSection = () => {
   return (
     <section className="py-16 bg-secondary border-y border-border">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center gap-8">
-          {/* Logos row */}
-          <div className="flex items-center justify-center gap-6 md:gap-10 lg:gap-14 overflow-x-auto">
-            <img src={ctfLogo} alt="CTF Construction Training Fund" className="h-10 md:h-14 w-auto object-contain" />
-            <img src={tafeCentralLogo} alt="TAFE Central Region" className="h-10 md:h-14 w-auto object-contain" />
-            <img src={tafeSouthLogo} alt="TAFE South" className="h-10 md:h-14 w-auto object-contain" />
-            <img src={cailinTrainingLogo} alt="Cailin Training" className="h-10 md:h-14 w-auto object-contain" />
-            <img src={logo3} alt="Partner Logo" className="h-10 md:h-14 w-auto object-contain" />
-            <img src={nrtLogo} alt="Nationally Recognised Training" className="h-10 md:h-14 w-auto object-contain" />
-            <img src={nawicLogo} alt="NAWIC - National Association of Women in Construction" className="h-10 md:h-14 w-auto object-contain" />
-            <img src={chamberLogo} alt="Chamber of Commerce" className="h-10 md:h-14 w-auto object-contain" />
-          </div>
-
+      <div className="max-w-[1200px] mx-auto px-4">
+        <div className="flex flex-col items-center gap-10">
           {/* Heading */}
           <div className="text-center">
             <h2 className="font-display text-3xl md:text-4xl text-foreground">
               PARTNERED FOR <span className="text-primary">SUCCESS</span>
             </h2>
+          </div>
+
+          {/* Logos grid */}
+          <div className="flex flex-wrap justify-center md:justify-between items-center gap-8 md:gap-6 w-full">
+            {logos.map((logo) => (
+              <img
+                key={logo.alt}
+                src={logo.src}
+                alt={logo.alt}
+                className="h-16 sm:h-[72px] lg:h-[80px] w-auto object-contain opacity-90 hover:opacity-100 hover:scale-105 transition-all duration-300"
+              />
+            ))}
           </div>
         </div>
       </div>
