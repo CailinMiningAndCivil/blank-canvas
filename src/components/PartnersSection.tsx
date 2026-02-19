@@ -9,10 +9,10 @@ import chamberLogo from "@/assets/logos/chamber-of-commerce.png";
 
 const logos = [
   { src: ctfLogo, alt: "CTF Construction Training Fund" },
-  { src: tafeCentralLogo, alt: "TAFE Central Region" },
-  { src: tafeSouthLogo, alt: "TAFE South" },
   { src: nrtLogo, alt: "Nationally Recognised Training" },
   { src: cailinTrainingLogo, alt: "Cailin Training" },
+  { src: tafeCentralLogo, alt: "TAFE Central Region" },
+  { src: tafeSouthLogo, alt: "TAFE South" },
   { src: partnerLogo, alt: "Partner Logo" },
   { src: nawicLogo, alt: "NAWIC - National Association of Women in Construction" },
   { src: chamberLogo, alt: "Chamber of Commerce" },
