@@ -31,14 +31,18 @@ export const PartnersSection = () => {
           </div>
 
           {/* Logos grid */}
-          <div className="flex flex-wrap justify-center md:justify-between items-center gap-8 md:gap-6 w-full">
+          <div className="flex flex-wrap justify-center items-center gap-10 w-full">
             {logos.map((logo) => (
-              <img
+              <div
                 key={logo.alt}
-                src={logo.src}
-                alt={logo.alt}
-                className="h-16 sm:h-[72px] lg:h-[80px] w-auto object-contain opacity-90 hover:opacity-100 hover:scale-105 transition-all duration-300"
-              />
+                className="h-[60px] sm:h-[70px] lg:h-[80px] flex items-center justify-center hover:scale-105 hover:opacity-100 opacity-90 transition-all duration-300"
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  className="max-h-full w-auto object-contain"
+                />
+              </div>
             ))}
           </div>
         </div>
