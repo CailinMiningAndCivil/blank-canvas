@@ -1,11 +1,11 @@
-import ctfLogo from "@/assets/logos/ctf-logo-new.png";
-import tafeCentralLogo from "@/assets/logos/tafe-central-new.png";
-import tafeSouthLogo from "@/assets/logos/tafe-south-new.png";
-import nrtLogo from "@/assets/logos/nrt-logo-new.png";
+import ctfLogo from "@/assets/logos/ctf.png";
+import tafeCentralLogo from "@/assets/logos/tafe-central.png";
+import tafeSouthLogo from "@/assets/logos/tafe-south.png";
+import nrtLogo from "@/assets/logos/nrt.png";
 import cailinTrainingLogo from "@/assets/logos/cailin-training-logo.png";
-import logo3 from "@/assets/logos/logo3-new.png";
-import nawicLogo from "@/assets/logos/nawic-logo-new.png";
-import chamberLogo from "@/assets/logos/chamber-logo-new.png";
+import partnerLogo from "@/assets/logos/partnerlogo.png";
+import nawicLogo from "@/assets/logos/nawic.png";
+import chamberLogo from "@/assets/logos/chamber-of-commerce.png";
 
 const logos = [
   { src: ctfLogo, alt: "CTF Construction Training Fund" },
@@ -13,7 +13,7 @@ const logos = [
   { src: tafeSouthLogo, alt: "TAFE South" },
   { src: nrtLogo, alt: "Nationally Recognised Training" },
   { src: cailinTrainingLogo, alt: "Cailin Training" },
-  { src: logo3, alt: "Partner Logo" },
+  { src: partnerLogo, alt: "Partner Logo" },
   { src: nawicLogo, alt: "NAWIC - National Association of Women in Construction" },
   { src: chamberLogo, alt: "Chamber of Commerce" },
 ];
