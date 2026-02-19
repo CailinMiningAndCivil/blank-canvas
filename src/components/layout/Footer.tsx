@@ -122,9 +122,13 @@ export const Footer = () => {
           <p className="text-muted-foreground text-sm">
             © {new Date().getFullYear()} Cailin Mining & Civil. All rights reserved.
           </p>
-          <p className="text-muted-foreground text-sm">
-            Cailin Training (RTO 46489)
-          </p>
+          <div className="flex items-center gap-4 text-muted-foreground text-sm">
+            <Link to="/termsandconditions" className="hover:text-primary transition-colors">Terms & Conditions</Link>
+            <span>|</span>
+            <Link to="/privacypolicy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <span>|</span>
+            <span>Cailin Training (RTO 46489)</span>
+          </div>
         </div>
       </div>
     </footer>

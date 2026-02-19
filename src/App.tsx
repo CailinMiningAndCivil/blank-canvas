@@ -24,6 +24,8 @@ import Contact from "./pages/Contact";
 import DiscoveryCall from "./pages/DiscoveryCall";
 import CTFFunding from "./pages/CTFFunding";
 import NotFound from "./pages/NotFound";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +56,8 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/discovery-call" element={<DiscoveryCall />} />
           <Route path="/ctf-funding" element={<CTFFunding />} />
+          <Route path="/termsandconditions" element={<TermsAndConditions />} />
+          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
