@@ -13,7 +13,7 @@ const logos = [
   { src: tafeSouthLogo, alt: "TAFE South" },
   { src: nrtLogo, alt: "Nationally Recognised Training" },
   { src: cailinTrainingLogo, alt: "Cailin Training" },
-  { src: logo3, alt: "Partner Logo" },
+  { src: partnerLogo, alt: "Partner Logo" },
   { src: nawicLogo, alt: "NAWIC - National Association of Women in Construction" },
   { src: chamberLogo, alt: "Chamber of Commerce" },
 ];
