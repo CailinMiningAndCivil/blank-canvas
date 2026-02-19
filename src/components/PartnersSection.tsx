@@ -1,11 +1,11 @@
-import ctfLogo from "@/assets/logos/ctf-logo-new.png";
-import tafeCentralLogo from "@/assets/logos/tafe-central-new.png";
-import tafeSouthLogo from "@/assets/logos/tafe-south-new.png";
-import nrtLogo from "@/assets/logos/nrt-logo-new.png";
+import ctfLogo from "@/assets/logos/ctf.png";
+import tafeCentralLogo from "@/assets/logos/tafe-central.png";
+import tafeSouthLogo from "@/assets/logos/tafe-south.png";
+import nrtLogo from "@/assets/logos/nrt.png";
 import cailinTrainingLogo from "@/assets/logos/cailin-training-logo.png";
-import logo3 from "@/assets/logos/logo3-new.png";
-import nawicLogo from "@/assets/logos/nawic-logo-new.png";
-import chamberLogo from "@/assets/logos/chamber-logo-new.png";
+import partnerLogo from "@/assets/logos/partnerlogo.png";
+import nawicLogo from "@/assets/logos/nawic.png";
+import chamberLogo from "@/assets/logos/chamber-of-commerce.png";
 
 const logos = [
   { src: ctfLogo, alt: "CTF Construction Training Fund" },
