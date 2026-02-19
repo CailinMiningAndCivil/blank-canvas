@@ -13,7 +13,7 @@ export const PartnersSection = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center gap-8">
           {/* Logos row */}
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 lg:gap-14">
+          <div className="flex items-center justify-center gap-6 md:gap-10 lg:gap-14 overflow-x-auto">
             <img src={ctfLogo} alt="CTF Construction Training Fund" className="h-10 md:h-14 w-auto object-contain" />
             <img src={tafeCentralLogo} alt="TAFE Central Region" className="h-10 md:h-14 w-auto object-contain" />
             <img src={tafeSouthLogo} alt="TAFE South" className="h-10 md:h-14 w-auto object-contain" />
