@@ -138,7 +138,7 @@ const Excavator = () => {
                 <p className="text-foreground text-sm text-center mb-6">{option.description}</p>
                 <Button variant={option.highlight ? "hero" : "outline"} className="w-full" onClick={() => {
                   if (option.title === "RPL Assessment") {
-                    window.location.href = "/courses/rpl#rpl-form";
+                    window.location.href = "/rpl#rpl-form";
                   } else {
                     window.open(option.bookingUrl, '_blank');
                   }

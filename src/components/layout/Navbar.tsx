@@ -24,7 +24,7 @@ const courseLinks = [
   { name: "$600 Courses", path: "/courses/short-courses" },
   { name: "Bundles", path: "/courses/bundles" },
   { name: "Full Day", path: "/courses/full-day" },
-  { name: "RPL (Assessments Only)", path: "/courses/rpl" },
+  { name: "RPL (Assessments Only)", path: "/rpl" },
   { name: "VOC (Verification)", path: "/courses/voc" },
 ];
 

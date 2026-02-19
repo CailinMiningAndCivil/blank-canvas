@@ -61,7 +61,7 @@ const courseCategories = [
     price: "$350*",
     priceNote: "per machine assessment",
     image: training1on1Dumptruck,
-    link: "/courses/rpl",
+    link: "/rpl",
     features: ["Fast-track certification", "No training required", "Work referral included"],
     icon: FileCheck,
   },
