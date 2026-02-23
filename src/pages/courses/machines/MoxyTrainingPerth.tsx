@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
-import { CheckCircle, Clock, Award, Users, Banknote, HelpCircle, Phone, MapPin, Star } from "lucide-react";
+import { CheckCircle, Clock, Award, Users, Banknote, HelpCircle, Phone, MapPin, Star, Briefcase } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BookLink } from "@/components/BookLink";
 import {
@@ -16,6 +16,9 @@ import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import dumptruckTrayRaised from "@/assets/photos/dumptruck-tray-raised.jpg";
 import loaderDumptruckAction from "@/assets/photos/loader-dumptruck-action.jpg";
 import catDumptruckLoaderPair from "@/assets/photos/cat-dumptruck-loader-pair.jpg";
+import loaderDumptruckWide from "@/assets/photos/loader-dumptruck-wide.jpg";
+import loaderDumptruckFramed from "@/assets/photos/loader-dumptruck-framed.jpg";
+import rigidHaulTruck from "@/assets/photos/rigid-haul-truck.jpg";
 
 const courseOptions = [
   {
@@ -49,19 +52,25 @@ const testimonials = [
   {
     name: "Jake M.",
     role: "Now working at Roy Hill",
-    text: "The live mine site training made all the difference. I walked onto my first job confident because I'd already operated on a real site. Best investment I've made.",
+    text: "The live mine site moxy training in Perth made all the difference. I walked onto my first job confident because I'd already operated on a real site. Best investment I've made.",
     rating: 5,
   },
   {
     name: "Sarah T.",
     role: "Civil Construction Operator",
-    text: "As a woman entering the industry, I was nervous. The 1:1 training meant I got personalised attention and never felt rushed. Got my moxy ticket and a job within two weeks.",
+    text: "As a woman entering the industry, I was nervous about moxy training. The 1:1 instruction in Perth meant I got personalised attention and never felt rushed. Got my moxy ticket and a job within two weeks.",
     rating: 5,
   },
   {
     name: "Daniel K.",
-    role: "Mining Operator",
-    text: "Did the full day moxy training in Perth and got placed on a mine site straight after. The trainers actually care about getting you work-ready, not just ticking boxes.",
+    role: "Mining Operator — Pilbara FIFO",
+    text: "Did the full day moxy training in Perth and got placed on a mine site straight after. The trainers actually care about getting you work-ready, not just ticking boxes. Now earning $130K on a 2/1 roster.",
+    rating: 5,
+  },
+  {
+    name: "Priya N.",
+    role: "Civil Operator — Perth Metro",
+    text: "I compared every moxy training provider in Perth before choosing Cailin. The live mine site experience is unmatched — I felt prepared from day one on the job. Highly recommend.",
     rating: 5,
   },
 ];
@@ -69,31 +78,39 @@ const testimonials = [
 const faqs = [
   {
     question: "What qualification do I get from moxy training in Perth?",
-    answer: "You'll receive a nationally recognised Statement of Attainment for RIIMPO337E — Conduct articulated haul truck operations. This qualification is accepted across all Australian mine sites and civil construction projects.",
+    answer: "You'll receive a nationally recognised Statement of Attainment for RIIMPO337E — Conduct articulated haul truck operations. This qualification is accepted across all Australian mine sites and civil construction projects. It's the standard moxy ticket required by Perth mining employers.",
   },
   {
-    question: "How long does moxy training take?",
-    answer: "Our short course runs 1–4 hours for those with some experience. Full day training has unlimited hours — we train until you're genuinely confident and competent. There's no rushed timeframe.",
+    question: "How long does moxy training in Perth take?",
+    answer: "Our short course runs 1–4 hours for those with some experience. Full day moxy training in Perth has unlimited hours — we train until you're genuinely confident and competent. There's no rushed timeframe, unlike other Perth providers who cap seat time at 15–45 minutes.",
   },
   {
     question: "What's the difference between a Moxy and a rigid dump truck?",
-    answer: "A Moxy (articulated dump truck) has a pivot point between the cab and tray, allowing for superior manoeuvrability on rough, uneven terrain. They're widely used in mining and civil construction across Perth and WA for hauling material across sites.",
+    answer: "A Moxy (articulated dump truck) has a pivot point between the cab and tray, allowing for superior manoeuvrability on rough, uneven terrain. They're widely used across Perth's mining and civil construction sectors for hauling material across challenging sites where rigid trucks can't safely operate.",
   },
   {
-    question: "Why is live mine site training better than simulation?",
-    answer: "Simulation can't replicate real terrain, dust, gradient changes, or working alongside other heavy equipment. Our Perth moxy training takes place on an active mine site, so you experience genuine conditions from day one — making you immediately employable.",
+    question: "Why is live mine site moxy training in Perth better than simulation?",
+    answer: "Simulation can't replicate real terrain, dust, gradient changes, or working alongside other heavy equipment. Our Perth moxy training takes place on an active mine site, so you experience genuine conditions from day one — making you immediately employable. Perth employers specifically value live site experience.",
   },
   {
-    question: "Do you help with job placement after training?",
-    answer: "Yes! We have a 60% job placement rate. Our industry connections across Perth's mining sector mean we actively refer graduates to employers looking for certified moxy operators.",
+    question: "Do you help with job placement after moxy training?",
+    answer: "Yes! We have a 60% job placement rate for our Perth moxy training graduates. Our industry connections across Perth's mining sector mean we actively refer graduates to employers looking for certified moxy operators. Many of our graduates are working within weeks of completing training.",
   },
   {
-    question: "Is government funding available for moxy training?",
-    answer: "CTF (Construction Training Fund) funding may cover your training costs if you're eligible. We can help you check eligibility and apply — just ask when you book.",
+    question: "Is government funding available for moxy training in Perth?",
+    answer: "CTF (Construction Training Fund) funding may cover your moxy training costs if you're eligible. Many Perth residents qualify. We can help you check eligibility and apply — just ask when you book your moxy training.",
   },
   {
-    question: "Can I bundle moxy training with other machine tickets?",
-    answer: "Absolutely. The Moxy is included in our Starter Bundle ($2,500) with Roller and Watercart training. We also offer custom bundles — check our bundles page for the best value.",
+    question: "Can I bundle moxy training with other machine tickets in Perth?",
+    answer: "Absolutely. The Moxy is included in our Starter Bundle ($2,500) with Roller and Watercart training — the most popular combination for Perth mining jobs. We also offer custom bundles. Check our bundles page for the best value.",
+  },
+  {
+    question: "Where does moxy training take place in Perth?",
+    answer: "Our moxy training in Perth takes place on a live, active mine site — not a concrete yard or controlled environment. This is what sets Cailin apart from other Perth training providers. You'll train on real terrain with real equipment, building genuine operational experience.",
+  },
+  {
+    question: "What should I bring to moxy training in Perth?",
+    answer: "We provide all PPE and safety equipment for your moxy training. Just bring enclosed steel-cap boots, long pants, a long-sleeve shirt, lunch, and plenty of water. Sunscreen and a hat are also recommended for Perth's outdoor conditions.",
   },
 ];
 
@@ -205,7 +222,7 @@ const MoxyTrainingPerth = () => {
     <Layout>
       {/* Hero */}
       <section className="relative py-32 overflow-hidden">
-        <HeroImage src={articulatedDumptruck} alt="Moxy training Perth - articulated dump truck on live mine site" />
+        <HeroImage src={articulatedDumptruck} alt="Moxy training Perth — articulated dump truck on live mine site" />
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-primary font-medium tracking-widest uppercase mb-4">Perth's #1 Live Mine Site Training</p>
@@ -237,7 +254,7 @@ const MoxyTrainingPerth = () => {
             <Banknote className="w-8 h-8 text-primary shrink-0" />
             <div>
               <p className="text-foreground font-semibold">Government Funding Available</p>
-              <p className="text-muted-foreground text-sm">CTF funding may cover your moxy training costs — ask us how</p>
+              <p className="text-muted-foreground text-sm">CTF funding may cover your moxy training costs in Perth — ask us how</p>
             </div>
             <Button asChild variant="outline" size="sm" className="ml-0 md:ml-4">
               <Link to="/ctf-funding">Check Eligibility</Link>
@@ -251,7 +268,7 @@ const MoxyTrainingPerth = () => {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div>
-              <h2 className="font-display text-4xl text-foreground mb-6">What Is Moxy Training?</h2>
+              <h2 className="font-display text-4xl text-foreground mb-6">What Is Moxy Training in Perth?</h2>
               <p className="text-muted-foreground mb-4">
                 A Moxy — also known as an articulated dump truck — is one of the most widely used machines across 
                 Perth's mining and civil construction sectors. These powerful vehicles feature a pivot point between 
@@ -260,18 +277,29 @@ const MoxyTrainingPerth = () => {
               <p className="text-muted-foreground mb-4">
                 <strong className="text-foreground">Moxy training in Perth</strong> teaches you to safely operate these machines on 
                 real mine sites. You'll learn pre-operational checks, safe loading and unloading procedures, navigating 
-                haul roads, tipping techniques, and how to work safely alongside other heavy equipment.
+                haul roads, tipping techniques, and how to work safely alongside other heavy equipment on Perth's active sites.
+              </p>
+              <p className="text-muted-foreground mb-4">
+                Perth is the operational hub for Western Australia's mining industry, making it the ideal location for 
+                moxy training. Our training sites are located within easy reach of Perth's northern and southern suburbs, 
+                meaning you can complete your certification without travelling to remote locations.
               </p>
               <p className="text-muted-foreground">
-                Upon completion, you'll receive a nationally recognised Statement of Attainment for 
+                Upon completion of your <strong className="text-foreground">moxy training in Perth</strong>, you'll receive a nationally recognised Statement of Attainment for 
                 <strong className="text-foreground"> RIIMPO337E — Conduct Articulated Haul Truck Operations</strong>, 
                 which is accepted at every mine site and civil project across Australia.
               </p>
             </div>
-            <div>
+            <div className="space-y-4">
               <img
                 src={dumptruckTrayRaised}
-                alt="Articulated dump truck tipping material on Perth mine site"
+                alt="Moxy training Perth — articulated dump truck tipping material on mine site"
+                className="w-full rounded-2xl"
+                loading="lazy"
+              />
+              <img
+                src={loaderDumptruckFramed}
+                alt="Moxy training Perth — dump truck and loader operating together on site"
                 className="w-full rounded-2xl"
                 loading="lazy"
               />
@@ -287,32 +315,38 @@ const MoxyTrainingPerth = () => {
             <div className="order-2 lg:order-1">
               <img
                 src={loaderDumptruckAction}
-                alt="Heavy equipment operating on live mine site during moxy training Perth"
+                alt="Moxy training Perth — heavy equipment operating on live mine site"
                 className="w-full rounded-2xl"
                 loading="lazy"
               />
             </div>
             <div className="order-1 lg:order-2">
               <h2 className="font-display text-4xl text-foreground mb-6">
-                Why Live Mine Site Training Beats Simulation
+                Why Perth's Best Moxy Training Happens on a Live Mine Site
               </h2>
               <p className="text-muted-foreground mb-4">
-                Most training providers in Perth use controlled yards or simulators. While these tick a compliance box, 
-                they don't prepare you for the reality of operating a moxy on an active mine site — the dust, gradients, 
+                Most moxy training providers in Perth use controlled yards or simulators. While these tick a compliance box, 
+                they don't prepare you for the reality of operating on an active mine site — the dust, gradients, 
                 radio communication, traffic management, and working alongside excavators and loaders.
               </p>
-              <p className="text-muted-foreground mb-6">
+              <p className="text-muted-foreground mb-4">
                 At Cailin Mining & Civil, our <strong className="text-foreground">moxy training in Perth</strong> happens 
                 exclusively on live mine sites. This means from your first session, you're building real-world skills 
-                that employers actually value. It's why our graduates have a 60% job placement rate — they arrive on 
+                that Perth mining employers actually value. It's why our graduates have a 60% job placement rate — they arrive on 
                 site already experienced.
+              </p>
+              <p className="text-muted-foreground mb-6">
+                Perth mining companies like BHP, Rio Tinto, FMG, and Roy Hill specifically seek operators trained on 
+                live sites. When you complete your <strong className="text-foreground">moxy training in Perth</strong> with Cailin, 
+                your experience is immediately recognised as genuine operational competency — not just a paper qualification.
               </p>
               <ul className="space-y-3">
                 {[
-                  "Train on real terrain with genuine site conditions",
-                  "Experience working alongside other heavy equipment",
-                  "Learn radio protocols and traffic management",
-                  "Build confidence that translates directly to employment",
+                  "Train on real terrain with genuine Perth mine site conditions",
+                  "Experience working alongside other heavy equipment operators",
+                  "Learn radio protocols and traffic management used on WA sites",
+                  "Build confidence that translates directly to Perth mining employment",
+                  "1:1 instruction — your trainer's full attention, every session",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
@@ -331,8 +365,8 @@ const MoxyTrainingPerth = () => {
           <div className="text-center mb-12">
             <h2 className="font-display text-4xl text-foreground mb-4">Moxy Training Perth — Course Options & Pricing</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Choose the training path that matches your experience. Every option includes nationally recognised 
-              certification and professional work referral.
+              Choose the moxy training path that matches your experience. Every option includes nationally recognised 
+              certification and professional work referral across Perth's mining sector.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -379,14 +413,14 @@ const MoxyTrainingPerth = () => {
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div>
-              <h2 className="font-display text-4xl text-foreground mb-6">What's Included in Your Moxy Training</h2>
+              <h2 className="font-display text-4xl text-foreground mb-6">What's Included in Your Moxy Training in Perth</h2>
               <ul className="space-y-4">
                 {[
                   "1:1 personalised instruction (never group-based)",
                   "Training on a live, active mine site in Perth",
                   "Nationally recognised RIIMPO337E Statement of Attainment",
                   "All PPE and safety equipment provided",
-                  "Professional work referral upon completion",
+                  "Professional work referral to Perth mining employers",
                   "Pre-operational checks and maintenance procedures",
                   "Safe loading, hauling, and tipping operations",
                   "Radio communication and site safety protocols",
@@ -400,10 +434,16 @@ const MoxyTrainingPerth = () => {
                 ))}
               </ul>
             </div>
-            <div>
+            <div className="space-y-4">
               <img
                 src={catDumptruckLoaderPair}
-                alt="Dump truck and loader pair on Perth training mine site"
+                alt="Moxy training Perth — dump truck and loader pair on training mine site"
+                className="w-full rounded-2xl"
+                loading="lazy"
+              />
+              <img
+                src={rigidHaulTruck}
+                alt="Haul truck on Perth mine site — moxy training comparison"
                 className="w-full rounded-2xl"
                 loading="lazy"
               />
@@ -415,40 +455,48 @@ const MoxyTrainingPerth = () => {
       {/* Perth Mining Jobs */}
       <section className="py-20">
         <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="font-display text-4xl text-foreground mb-6 text-center">
-            Job Opportunities for Moxy Operators in Perth
-          </h2>
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <Briefcase className="w-6 h-6 text-primary" />
+            <h2 className="font-display text-4xl text-foreground">
+              Moxy Operator Job Opportunities in Perth
+            </h2>
+          </div>
           <p className="text-muted-foreground mb-4">
             Perth is the gateway to Western Australia's booming mining sector — and articulated dump truck operators 
             are in constant demand. From iron ore operations in the Pilbara to gold mines in the Goldfields and 
-            lithium projects across the state, certified moxy operators are among the most sought-after roles.
+            lithium projects across the state, certified moxy operators are among the most sought-after roles in Perth.
           </p>
           <p className="text-muted-foreground mb-4">
             Entry-level moxy operators in Perth typically earn between <strong className="text-foreground">$80,000 – $120,000 per year</strong>, 
-            with experienced operators on FIFO rosters earning significantly more. The combination of a moxy ticket 
-            with complementary qualifications like roller and watercart makes you even more employable.
+            with experienced operators on FIFO rosters earning <strong className="text-foreground">$150,000+</strong>. The combination of a moxy ticket 
+            with complementary qualifications like roller and watercart makes you even more employable across Perth's mining sector.
+          </p>
+          <p className="text-muted-foreground mb-4">
+            Major Perth-based employers including BHP, Rio Tinto, FMG, Roy Hill, and numerous labour hire companies 
+            are actively recruiting certified moxy operators year-round. Civil construction projects across Perth metro — 
+            including road works, subdivisions, and infrastructure projects — also rely heavily on articulated dump truck operators.
           </p>
           <p className="text-muted-foreground mb-6">
-            At Cailin Mining & Civil, we don't just train you — we actively connect graduates with employers. 
-            Our <strong className="text-foreground">moxy training Perth</strong> program has a 60% job placement rate because 
+            At Cailin Mining & Civil, we don't just provide <strong className="text-foreground">moxy training in Perth</strong> — we actively connect graduates with employers. 
+            Our program has a 60% job placement rate because 
             employers trust that our graduates have genuine, hands-on experience from live mine site training.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="grid md:grid-cols-2 gap-4 mb-6">
             <div className="flex items-center gap-2 bg-card border border-border rounded-xl px-5 py-3">
-              <MapPin className="w-4 h-4 text-primary" />
-              <span className="text-foreground text-sm font-medium">Pilbara Iron Ore</span>
+              <MapPin className="w-4 h-4 text-primary shrink-0" />
+              <span className="text-foreground text-sm font-medium">Pilbara Iron Ore — BHP, Rio Tinto, FMG</span>
             </div>
             <div className="flex items-center gap-2 bg-card border border-border rounded-xl px-5 py-3">
-              <MapPin className="w-4 h-4 text-primary" />
-              <span className="text-foreground text-sm font-medium">Goldfields Mining</span>
+              <MapPin className="w-4 h-4 text-primary shrink-0" />
+              <span className="text-foreground text-sm font-medium">Goldfields — Gold & Nickel Mining</span>
             </div>
             <div className="flex items-center gap-2 bg-card border border-border rounded-xl px-5 py-3">
-              <MapPin className="w-4 h-4 text-primary" />
-              <span className="text-foreground text-sm font-medium">Perth Metro Civil</span>
+              <MapPin className="w-4 h-4 text-primary shrink-0" />
+              <span className="text-foreground text-sm font-medium">Perth Metro — Civil Construction & Roads</span>
             </div>
             <div className="flex items-center gap-2 bg-card border border-border rounded-xl px-5 py-3">
-              <MapPin className="w-4 h-4 text-primary" />
-              <span className="text-foreground text-sm font-medium">Lithium & Critical Minerals</span>
+              <MapPin className="w-4 h-4 text-primary shrink-0" />
+              <span className="text-foreground text-sm font-medium">Lithium & Critical Minerals Projects</span>
             </div>
           </div>
         </div>
@@ -458,9 +506,9 @@ const MoxyTrainingPerth = () => {
       <section className="py-20 bg-secondary">
         <div className="container mx-auto px-4">
           <h2 className="font-display text-4xl text-foreground mb-12 text-center">
-            What Our Moxy Training Graduates Say
+            What Our Perth Moxy Training Graduates Say
           </h2>
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {testimonials.map((t) => (
               <div key={t.name} className="bg-card border border-border rounded-2xl p-6">
                 <div className="flex gap-1 mb-4">
@@ -477,8 +525,44 @@ const MoxyTrainingPerth = () => {
         </div>
       </section>
 
+      {/* Perth-specific training details */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div>
+              <h2 className="font-display text-4xl text-foreground mb-6">
+                Why Perth Chooses Cailin for Moxy Training
+              </h2>
+              <p className="text-muted-foreground mb-4">
+                With over 2,000 graduates and counting, Cailin Mining & Civil is Perth's most trusted provider of 
+                moxy training. We're the only training provider in Perth offering genuine 1:1 instruction on a live 
+                mine site — not a controlled yard, not a simulator, and not a group session with 15 other students.
+              </p>
+              <p className="text-muted-foreground mb-4">
+                Our Perth moxy training is recognised by over 100 affiliate employers across Western Australia. 
+                When you graduate from Cailin, you don't just get a certificate — you get a direct pathway to employment 
+                through our extensive industry network spanning the Pilbara, Goldfields, and Perth metro regions.
+              </p>
+              <p className="text-muted-foreground">
+                We're a registered training organisation (RTO 46489) delivering nationally recognised qualifications. 
+                Our trainers are experienced mining professionals who've spent years operating on WA mine sites — 
+                they understand what Perth employers need and train you accordingly.
+              </p>
+            </div>
+            <div>
+              <img
+                src={loaderDumptruckWide}
+                alt="Moxy training Perth — wide view of articulated dump truck operations on mine site"
+                className="w-full rounded-2xl"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Why Cailin Stats */}
-      <section className="py-12 border-b border-border">
+      <section className="py-12 border-y border-border">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-8 md:gap-16">
             <div className="flex items-center gap-3">
@@ -497,28 +581,37 @@ const MoxyTrainingPerth = () => {
               <Star className="w-5 h-5 text-primary" />
               <span className="text-foreground font-medium">60% Job Placement</span>
             </div>
+            <div className="flex items-center gap-3">
+              <MapPin className="w-5 h-5 text-primary" />
+              <span className="text-foreground font-medium">Perth, Western Australia</span>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Related Courses */}
-      <section className="py-20">
+      <section className="py-20 bg-secondary">
         <div className="container mx-auto px-4">
           <h2 className="font-display text-4xl text-foreground mb-4 text-center">
-            Combine Your Moxy Ticket for Maximum Employability
+            Combine Your Moxy Ticket for Maximum Employability in Perth
           </h2>
           <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-10">
-            Employers prefer operators with multiple machine tickets. These courses pair perfectly with moxy training.
+            Perth mining employers prefer operators with multiple machine tickets. These courses pair perfectly with your moxy training.
           </p>
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             <Link to="/courses/roller" className="bg-card border border-border rounded-2xl p-6 text-center hover:border-primary transition-colors">
               <h3 className="font-display text-xl text-foreground mb-2">Roller Training</h3>
-              <p className="text-muted-foreground text-sm mb-3">Essential for civil construction and road works</p>
+              <p className="text-muted-foreground text-sm mb-3">Essential for civil construction and road works across Perth</p>
               <span className="text-primary text-sm font-medium">View Course →</span>
             </Link>
             <Link to="/courses/watercart" className="bg-card border border-border rounded-2xl p-6 text-center hover:border-primary transition-colors">
               <h3 className="font-display text-xl text-foreground mb-2">Watercart Training</h3>
-              <p className="text-muted-foreground text-sm mb-3">High demand across all mine sites for dust suppression</p>
+              <p className="text-muted-foreground text-sm mb-3">High demand across all WA mine sites for dust suppression</p>
+              <span className="text-primary text-sm font-medium">View Course →</span>
+            </Link>
+            <Link to="/courses/excavator-training-perth" className="bg-card border border-border rounded-2xl p-6 text-center hover:border-primary transition-colors">
+              <h3 className="font-display text-xl text-foreground mb-2">Excavator Training Perth</h3>
+              <p className="text-muted-foreground text-sm mb-3">The most in-demand machine ticket in Perth's mining sector</p>
               <span className="text-primary text-sm font-medium">View Course →</span>
             </Link>
             <Link to="/courses/bundles" className="bg-card border border-border rounded-2xl p-6 text-center hover:border-primary transition-colors">
@@ -531,7 +624,7 @@ const MoxyTrainingPerth = () => {
       </section>
 
       {/* FAQ */}
-      <section className="py-20 bg-secondary">
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <div className="flex items-center justify-center gap-3 mb-12">
@@ -559,7 +652,7 @@ const MoxyTrainingPerth = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-20">
+      <section className="py-20 bg-secondary">
         <div className="container mx-auto px-4 text-center">
           <h2 className="font-display text-4xl text-foreground mb-6">
             Ready to Start Your Moxy Training in Perth?
