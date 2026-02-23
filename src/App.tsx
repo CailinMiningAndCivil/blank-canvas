@@ -12,6 +12,7 @@ import ShortCourses from "./pages/courses/ShortCourses";
 import VOC from "./pages/courses/VOC";
 import FullDay from "./pages/courses/FullDay";
 import Excavator from "./pages/courses/machines/Excavator";
+import ExcavatorTrainingPerth from "./pages/courses/machines/ExcavatorTrainingPerth";
 import WheelLoader from "./pages/courses/machines/WheelLoader";
 import Moxy from "./pages/courses/machines/Moxy";
 import MoxyTrainingPerth from "./pages/courses/machines/MoxyTrainingPerth";
@@ -51,6 +52,7 @@ const App = () => (
           <Route path="/courses/voc" element={<VOC />} />
           <Route path="/courses/full-day" element={<FullDay />} />
           <Route path="/courses/excavator" element={<Excavator />} />
+          <Route path="/courses/excavator-training-perth" element={<ExcavatorTrainingPerth />} />
           <Route path="/courses/wheel-loader" element={<WheelLoader />} />
           <Route path="/courses/moxy" element={<Moxy />} />
           <Route path="/courses/moxy-training-perth" element={<MoxyTrainingPerth />} />
