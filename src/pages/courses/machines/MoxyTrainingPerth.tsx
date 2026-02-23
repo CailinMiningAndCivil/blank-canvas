@@ -112,9 +112,9 @@ const MoxyTrainingPerth = () => {
     }
 
     // Course schema markup
-    const schema = document.createElement("script");
-    schema.type = "application/ld+json";
-    schema.text = JSON.stringify({
+    const courseSchema = document.createElement("script");
+    courseSchema.type = "application/ld+json";
+    courseSchema.text = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Course",
       "name": "Moxy Training Perth - Articulated Dump Truck Certification",
@@ -148,10 +148,56 @@ const MoxyTrainingPerth = () => {
       ],
       "educationalCredentialAwarded": "RIIMPO337E — Conduct Articulated Haul Truck Operations",
     });
-    document.head.appendChild(schema);
+    document.head.appendChild(courseSchema);
+
+    // LocalBusiness schema markup
+    const businessSchema = document.createElement("script");
+    businessSchema.type = "application/ld+json";
+    businessSchema.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Cailin Mining & Civil",
+      "description": "Perth's leading moxy and articulated dump truck training provider. Live mine site training with 1:1 instruction and nationally recognised certification.",
+      "url": "https://www.cailinminingcivil.com",
+      "telephone": "+61483951501",
+      "image": "https://www.cailinminingcivil.com/images/social.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Perth",
+        "addressRegion": "Western Australia",
+        "addressCountry": "AU",
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -31.9505,
+        "longitude": 115.8605,
+      },
+      "areaServed": {
+        "@type": "State",
+        "name": "Western Australia",
+        "description": "WA mining sites including Pilbara, Goldfields, and Perth metro civil projects",
+      },
+      "makesOffer": {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Moxy / Articulated Dump Truck Training",
+          "description": "Live mine site moxy training in Perth with RIIMPO337E certification. 1:1 instruction, unlimited hours, and 60% job placement rate.",
+          "serviceType": "Vocational Training",
+        },
+      },
+      "priceRange": "$350 - $2,500",
+      "openingHours": "Mo-Fr 07:00-17:00",
+      "sameAs": [
+        "https://www.facebook.com/cailinminingcivil",
+        "https://www.instagram.com/cailinminingcivil",
+      ],
+    });
+    document.head.appendChild(businessSchema);
 
     return () => {
-      document.head.removeChild(schema);
+      document.head.removeChild(courseSchema);
+      document.head.removeChild(businessSchema);
     };
   }, []);
 
