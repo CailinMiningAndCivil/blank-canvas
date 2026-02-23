@@ -70,7 +70,7 @@ const individualMachines = [
     code: "RIIMPO337E",
     description: "Live mine site moxy training in Perth for articulated haul truck operations. Essential for mining and civil sites.",
     image: articulatedDumptruck,
-    link: "/courses/moxy",
+    link: "/courses/moxy-training-perth",
     alt: "Moxy training Perth — articulated dump truck on live mine site",
   },
   {

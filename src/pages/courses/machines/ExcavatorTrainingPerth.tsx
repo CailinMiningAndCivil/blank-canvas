@@ -103,7 +103,7 @@ const ExcavatorTrainingPerth = () => {
 
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.setAttribute("content", "Become a certified excavator operator in Perth. Live mine site training, 1:1 instruction, RIIMPO certification. 60% job placement - Book now");
+      metaDesc.setAttribute("content", "Become a certified excavator operator in Perth. Live mine site training, 1:1 instruction, RIIMPO certification. Book now - 0483 951 501");
     }
 
     const canonical = document.querySelector('link[rel="canonical"]');
@@ -150,49 +150,54 @@ const ExcavatorTrainingPerth = () => {
     });
     document.head.appendChild(courseSchema);
 
-    // JobPosting schema
-    const jobSchema = document.createElement("script");
-    jobSchema.type = "application/ld+json";
-    jobSchema.text = JSON.stringify({
+    // LocalBusiness schema
+    const businessSchema = document.createElement("script");
+    businessSchema.type = "application/ld+json";
+    businessSchema.text = JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "JobPosting",
-      "title": "Excavator Operator",
-      "description": "Certified excavator operators needed for mining and civil construction projects across Perth and Western Australia. RIIMPO320F qualification required.",
-      "hiringOrganization": {
-        "@type": "Organization",
-        "name": "Perth Mining & Civil Employers (via Cailin Mining & Civil job placement)",
-        "sameAs": "https://www.cailinminingcivil.com",
+      "@type": "LocalBusiness",
+      "name": "Cailin Mining & Civil",
+      "description": "Perth's leading excavator operator training provider. Live mine site excavator training with 1:1 instruction and nationally recognised RIIMPO certification.",
+      "url": "https://www.cailinminingcivil.com",
+      "telephone": "+61483951501",
+      "image": "https://www.cailinminingcivil.com/images/social.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Perth",
+        "addressRegion": "Western Australia",
+        "addressCountry": "AU",
       },
-      "jobLocation": {
-        "@type": "Place",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Perth",
-          "addressRegion": "Western Australia",
-          "addressCountry": "AU",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -31.9505,
+        "longitude": 115.8605,
+      },
+      "areaServed": {
+        "@type": "State",
+        "name": "Western Australia",
+        "description": "WA mining sites including Pilbara, Goldfields, and Perth metro civil projects",
+      },
+      "makesOffer": {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Excavator Operator Training Perth",
+          "description": "Live mine site excavator training in Perth with RIIMPO320F & RIIMPO301E certification. 1:1 instruction, unlimited hours, and 60% job placement rate.",
+          "serviceType": "Vocational Training",
         },
       },
-      "baseSalary": {
-        "@type": "MonetaryAmount",
-        "currency": "AUD",
-        "value": {
-          "@type": "QuantitativeValue",
-          "minValue": 80000,
-          "maxValue": 150000,
-          "unitText": "YEAR",
-        },
-      },
-      "employmentType": "FULL_TIME",
-      "industry": "Mining & Civil Construction",
-      "qualifications": "RIIMPO320F — Conduct civil construction excavator operations",
-      "datePosted": "2026-02-01",
-      "validThrough": "2026-12-31",
+      "priceRange": "$350 - $2,500",
+      "openingHours": "Mo-Fr 07:00-17:00",
+      "sameAs": [
+        "https://www.facebook.com/cailinminingcivil",
+        "https://www.instagram.com/cailinminingcivil",
+      ],
     });
-    document.head.appendChild(jobSchema);
+    document.head.appendChild(businessSchema);
 
     return () => {
       document.head.removeChild(courseSchema);
-      document.head.removeChild(jobSchema);
+      document.head.removeChild(businessSchema);
     };
   }, []);
 
