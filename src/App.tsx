@@ -64,6 +64,7 @@ const App = () => (
           <Route path="/termsandconditions" element={<TermsAndConditions />} />
           <Route path="/privacypolicy" element={<PrivacyPolicy />} />
           <Route path="/practical-assessments" element={<Navigate to="/courses" replace />} />
+          <Route path="/cailin-courses" element={<Navigate to="/courses" replace />} />
           <Route path="/careers" element={<CareersRedirect />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
