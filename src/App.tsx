@@ -27,6 +27,11 @@ import NotFound from "./pages/NotFound";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 
+const CareersRedirect = () => {
+  window.location.href = "https://live.cailintraining.com.au/join_cailin_portal";
+  return null;
+};
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -59,6 +64,7 @@ const App = () => (
           <Route path="/termsandconditions" element={<TermsAndConditions />} />
           <Route path="/privacypolicy" element={<PrivacyPolicy />} />
           <Route path="/practical-assessments" element={<Navigate to="/courses" replace />} />
+          <Route path="/careers" element={<CareersRedirect />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
