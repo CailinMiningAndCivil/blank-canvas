@@ -14,6 +14,7 @@ import FullDay from "./pages/courses/FullDay";
 import Excavator from "./pages/courses/machines/Excavator";
 import WheelLoader from "./pages/courses/machines/WheelLoader";
 import Moxy from "./pages/courses/machines/Moxy";
+import MoxyTrainingPerth from "./pages/courses/machines/MoxyTrainingPerth";
 import Roller from "./pages/courses/machines/Roller";
 import Watercart from "./pages/courses/machines/Watercart";
 import Book from "./pages/Book";
@@ -52,6 +53,7 @@ const App = () => (
           <Route path="/courses/excavator" element={<Excavator />} />
           <Route path="/courses/wheel-loader" element={<WheelLoader />} />
           <Route path="/courses/moxy" element={<Moxy />} />
+          <Route path="/courses/moxy-training-perth" element={<MoxyTrainingPerth />} />
           <Route path="/courses/roller" element={<Roller />} />
           <Route path="/courses/watercart" element={<Watercart />} />
           <Route path="/book" element={<Book />} />
