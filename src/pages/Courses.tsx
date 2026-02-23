@@ -98,11 +98,12 @@ const individualMachines = [
   },
   {
     id: "moxy",
-    title: "Articulated Haul Truck (Moxy)",
+    title: "Moxy Training Perth — Articulated Dump Truck",
     code: "RIIMPO337E",
-    description: "Dump Truck training for articulated haul truck operations. Essential for mining and civil sites.",
+    description: "Live mine site moxy training in Perth for articulated haul truck operations. 1:1 instruction with job placement.",
     image: articulatedDumptruck,
     link: "/courses/moxy",
+    alt: "Moxy training Perth — articulated dump truck on live mine site",
   },
   {
     id: "roller",
@@ -210,7 +211,7 @@ const Courses = () => {
                   <div className="relative h-48 overflow-hidden">
                     <img
                       src={category.image}
-                      alt={category.title}
+                      alt={category.id === "short-courses" ? "Moxy training Perth — articulated dump truck course" : category.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
@@ -333,6 +334,7 @@ const Courses = () => {
                 description={machine.description}
                 image={machine.image}
                 link={machine.link}
+                alt={machine.alt}
               />
             ))}
           </div>

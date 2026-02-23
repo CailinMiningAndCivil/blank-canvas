@@ -66,11 +66,12 @@ const individualMachines = [
   },
   {
     id: "moxy",
-    title: "Articulated Haul Truck (Moxy)",
+    title: "Moxy Training Perth — Articulated Dump Truck",
     code: "RIIMPO337E",
-    description: "Dump Truck training for articulated haul truck operations. Essential for mining and civil sites.",
+    description: "Live mine site moxy training in Perth for articulated haul truck operations. Essential for mining and civil sites.",
     image: articulatedDumptruck,
     link: "/courses/moxy",
+    alt: "Moxy training Perth — articulated dump truck on live mine site",
   },
   {
     id: "roller",
@@ -287,6 +288,7 @@ const Index = () => {
                 description={machine.description}
                 image={machine.image}
                 link={machine.link}
+                alt={machine.alt}
               />
             ))}
           </div>
