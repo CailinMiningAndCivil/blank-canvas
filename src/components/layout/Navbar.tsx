@@ -118,6 +118,13 @@ export const Navbar = () => {
               Affiliates
             </a>
 
+            <Link
+              to="/careers"
+              className="font-medium text-sm uppercase tracking-wider transition-colors duration-300 text-muted-foreground hover:text-foreground"
+            >
+              Careers
+            </Link>
+
             {navLinks.slice(1).map((link) => (
               <Link
                 key={link.path}
@@ -225,6 +232,14 @@ export const Navbar = () => {
             >
               Affiliates
             </a>
+
+            <Link
+              to="/careers"
+              onClick={() => setIsOpen(false)}
+              className="font-medium text-lg uppercase tracking-wider transition-colors duration-300 text-muted-foreground hover:text-foreground"
+            >
+              Careers
+            </Link>
 
             {navLinks.slice(1).map((link) => (
               <Link
