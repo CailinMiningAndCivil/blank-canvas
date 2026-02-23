@@ -7,9 +7,10 @@ interface MachineCardProps {
   description: string;
   image: string;
   link: string;
+  alt?: string;
 }
 
-export const MachineCard = ({ title, code, description, image, link }: MachineCardProps) => {
+export const MachineCard = ({ title, code, description, image, link, alt }: MachineCardProps) => {
   return (
     <Link
       to={link}
@@ -18,7 +19,7 @@ export const MachineCard = ({ title, code, description, image, link }: MachineCa
       <div className="relative h-48 overflow-hidden">
         <img
           src={image}
-          alt={title}
+          alt={alt || title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
       </div>
