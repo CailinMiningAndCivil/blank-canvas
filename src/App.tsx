@@ -28,6 +28,7 @@ import CTFFunding from "./pages/CTFFunding";
 import NotFound from "./pages/NotFound";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import RtoDataSuccess from "./pages/RtoDataSuccess";
 
 const CareersRedirect = () => {
   window.location.href = "https://live.cailintraining.com.au/join_cailin_portal";
@@ -67,6 +68,7 @@ const App = () => (
           <Route path="/ctf-funding" element={<CTFFunding />} />
           <Route path="/termsandconditions" element={<TermsAndConditions />} />
           <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+          <Route path="/rtodata-success" element={<RtoDataSuccess />} />
           <Route path="/practical-assessments" element={<Navigate to="/courses" replace />} />
           <Route path="/cailin-courses" element={<Navigate to="/courses" replace />} />
           <Route path="/careers" element={<CareersRedirect />} />
