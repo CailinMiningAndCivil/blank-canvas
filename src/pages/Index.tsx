@@ -301,6 +301,54 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Mining Training Perth Section */}
+      <section className="py-24">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="relative">
+              <img
+                src={fleetLineupWide}
+                alt="Mining training Perth — fleet of heavy machinery on live mine site"
+                className="rounded-2xl shadow-card w-full"
+              />
+            </div>
+            <div>
+              <p className="text-primary font-medium tracking-widest uppercase mb-4">Mining Training Perth</p>
+              <h2 className="font-display text-4xl md:text-5xl text-foreground mb-6">
+                Get Your Mining Tickets in Perth
+              </h2>
+              <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
+                Looking for <strong className="text-foreground">mine training in Perth</strong>? Cailin Mining &amp; Civil 
+                is Western Australia's leading provider of hands-on mining training in Perth, delivering nationally 
+                recognised certifications on a live mine site — not a car park.
+              </p>
+              <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
+                Our <strong className="text-foreground">mining tickets Perth</strong> courses cover excavators, front-end 
+                loaders, articulated dump trucks, rollers, and watercarts. Every certification is issued under 
+                the national RII training package, recognised by employers across Australia.
+              </p>
+              <ul className="space-y-3 mb-8">
+                {[
+                  "Excavator ticket (RIIMPO320F & RIIMPO301E)",
+                  "Front End Loader ticket (RIIMPO304E)",
+                  "Articulated Dump Truck / Moxy ticket (RIIMPO337E)",
+                  "Roller ticket (RIIMPO317F)",
+                  "Watercart ticket (RIIMPO206D)",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-1" />
+                    <span className="text-foreground">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button asChild variant="hero" size="lg">
+                <Link to="/courses">View All Mining Tickets</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Partners Section */}
       <PartnersSection />
 
