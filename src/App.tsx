@@ -72,6 +72,7 @@ const App = () => (
           <Route path="/practical-assessments" element={<Navigate to="/courses" replace />} />
           <Route path="/cailin-courses" element={<Navigate to="/courses" replace />} />
           <Route path="/e-book" element={<Navigate to="/courses" replace />} />
+          <Route path="/groups" element={<Navigate to="/" replace />} />
           <Route path="/careers" element={<CareersRedirect />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
