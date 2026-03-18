@@ -178,20 +178,6 @@ const RPLAd = () => {
         </div>
       </section>
 
-      {/* Form Widget */}
-      <section id="rpl-form" className="py-20 bg-card">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <iframe
-              src="https://link.cailinminingcivil.com/widget/form/g2PmRJY4Hl7Y2npm7W12"
-              style={{ width: '100%', height: '1200px', border: 'none' }}
-              id="g2PmRJY4Hl7Y2npm7W12"
-              title="RPL Application Form"
-              className="rounded-2xl"
-            />
-          </div>
-        </div>
-      </section>
 
       {/* CTA Section */}
       <section className="py-20">
