@@ -7,6 +7,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import Courses from "./pages/Courses";
 import RPL from "./pages/courses/RPL";
+import RPLAd from "./pages/courses/RPLAd";
 import TicketsTraining from "./pages/courses/TicketsTraining";
 import ShortCourses from "./pages/courses/ShortCourses";
 import VOC from "./pages/courses/VOC";
@@ -48,6 +49,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/rpl" element={<RPL />} />
+          <Route path="/rplad" element={<RPLAd />} />
           <Route path="/courses/bundles" element={<TicketsTraining />} />
           <Route path="/courses/short-courses" element={<ShortCourses />} />
           <Route path="/courses/voc" element={<VOC />} />
