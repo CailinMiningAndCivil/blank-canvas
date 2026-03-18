@@ -7,6 +7,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import Courses from "./pages/Courses";
 import RPL from "./pages/courses/RPL";
+import RPLAd from "./pages/courses/RPLAd";
 import TicketsTraining from "./pages/courses/TicketsTraining";
 import ShortCourses from "./pages/courses/ShortCourses";
 import VOC from "./pages/courses/VOC";
