@@ -142,6 +142,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Awards Section */}
+      <AwardsSection />
+
       {/* Features Section */}
       <section className="py-20 bg-secondary">
         <div className="container mx-auto px-4">
