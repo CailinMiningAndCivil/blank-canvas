@@ -29,22 +29,12 @@ export const AwardsSection = () => {
         </div>
         <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20">
           {awards.map((award) => (
-            <div key={award.title} className="flex flex-col items-center text-center">
-              <div className="relative w-[140px] h-[140px] md:w-[170px] md:h-[170px] flex items-center justify-center">
-                <img
-                  src={award.image}
-                  alt={`${award.title} ${award.subtitle}`}
-                  className="absolute inset-0 w-full h-full object-contain"
-                />
-                <div className="relative z-10 px-4 pt-2">
-                  <p className="font-display text-sm md:text-base text-primary font-bold leading-tight">
-                    {award.title}
-                  </p>
-                  <p className="text-xs md:text-sm text-muted-foreground mt-0.5">
-                    {award.subtitle}
-                  </p>
-                </div>
-              </div>
+            <div key={award.title} className="flex flex-col items-center">
+              <img
+                src={award.image}
+                alt={`${award.title} ${award.subtitle}`}
+                className="w-[150px] h-[150px] md:w-[180px] md:h-[180px] object-contain"
+              />
             </div>
           ))}
         </div>
