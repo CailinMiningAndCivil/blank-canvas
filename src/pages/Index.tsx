@@ -5,6 +5,7 @@ import { Award, Clock, Users, Briefcase, CheckCircle, ArrowRight } from "lucide-
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { MachineCard } from "@/components/MachineCard";
 import { PartnersSection } from "@/components/PartnersSection";
+import { AwardsSection } from "@/components/AwardsSection";
 
 // Real Cailin photos
 import fleetLineupWide from "@/assets/photos/fleet-lineup-wide.jpg";
@@ -175,6 +176,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Awards Section */}
+      <AwardsSection />
 
       {/* About Section */}
       <section className="py-24">
