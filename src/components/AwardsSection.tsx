@@ -22,7 +22,7 @@ const awards = [
 
 export const AwardsSection = () => {
   return (
-    <section className="pt-16 pb-[30px] bg-background">
+    <section className="pt-16 pb-[10px] bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
           <p className="text-primary font-medium tracking-widest uppercase mb-3">Award-Winning Training</p>
