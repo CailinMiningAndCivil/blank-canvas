@@ -180,9 +180,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Awards Section */}
-      <AwardsSection />
-
       {/* About Section */}
       <section className="py-24">
         <div className="container mx-auto px-4">
