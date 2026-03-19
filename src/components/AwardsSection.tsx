@@ -33,7 +33,7 @@ export const AwardsSection = () => {
               <img
                 src={award.image}
                 alt={`${award.title} ${award.subtitle}`}
-                className="w-[150px] h-[150px] md:w-[180px] md:h-[180px] object-contain"
+                className="w-[180px] h-[180px] md:w-[220px] md:h-[220px] object-contain"
               />
             </div>
           ))}
