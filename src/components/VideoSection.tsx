@@ -114,11 +114,15 @@ export const VideoSection = () => {
     setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   }, [maxIndex]);
 
-  // Auto-advance every 5 seconds
+  // Auto-advance every 5 seconds, pause when a video is playing
   useEffect(() => {
+    if (anyVideoPlaying) {
+      clearInterval(autoPlayRef.current);
+      return;
+    }
     autoPlayRef.current = setInterval(next, 5000);
     return () => clearInterval(autoPlayRef.current);
-  }, [next]);
+  }, [next, anyVideoPlaying]);
 
   // Touch/swipe support
   const handleTouchStart = (e: React.TouchEvent) => {
