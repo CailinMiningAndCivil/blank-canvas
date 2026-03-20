@@ -6,6 +6,7 @@ import { GoogleReviews } from "@/components/GoogleReviews";
 import { MachineCard } from "@/components/MachineCard";
 import { PartnersSection } from "@/components/PartnersSection";
 import { AwardsSection } from "@/components/AwardsSection";
+import { VideoSection } from "@/components/VideoSection";
 
 // Real Cailin photos
 import fleetLineupWide from "@/assets/photos/fleet-lineup-wide.jpg";
@@ -358,6 +359,9 @@ const Index = () => {
 
       {/* Google Reviews */}
       <GoogleReviews />
+
+      {/* Video Section */}
+      <VideoSection />
 
       {/* CTA Section */}
       <section className="py-24 bg-gradient-to-r from-primary/20 to-accent/20">
