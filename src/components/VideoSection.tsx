@@ -38,18 +38,20 @@ const videos = [
   "https://assets.cdn.filesafe.space/rHdckncf62VIX9k55LFy/media/681c6bffa418b3236e88bc34.mp4",
 ];
 
-const VideoCard = ({ src }: { src: string }) => {
+const VideoCard = ({ src, onPlayChange }: { src: string; onPlayChange: (playing: boolean) => void }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-    } else {
+    const willPlay = !isPlaying;
+    if (willPlay) {
       videoRef.current.play();
+    } else {
+      videoRef.current.pause();
     }
-    setIsPlaying(!isPlaying);
+    setIsPlaying(willPlay);
+    onPlayChange(willPlay);
   };
 
   return (
@@ -60,7 +62,7 @@ const VideoCard = ({ src }: { src: string }) => {
         src={src}
         playsInline
         preload="metadata"
-        onEnded={() => setIsPlaying(false)}
+        onEnded={() => { setIsPlaying(false); onPlayChange(false); }}
       />
       <button
         onClick={togglePlay}
