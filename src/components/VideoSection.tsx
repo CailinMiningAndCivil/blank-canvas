@@ -19,9 +19,9 @@ export const VideoSection = () => {
     <section className="py-24 bg-secondary">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <p className="text-primary font-medium tracking-widest uppercase mb-4">See It In Action</p>
+          <p className="text-primary font-medium tracking-widest uppercase mb-4">Success Stories</p>
           <h2 className="font-display text-4xl md:text-5xl text-foreground mb-6">
-            Training on a Live Mine Site
+            Hear From Our Graduates
           </h2>
         </div>
         <div className="max-w-md mx-auto">
