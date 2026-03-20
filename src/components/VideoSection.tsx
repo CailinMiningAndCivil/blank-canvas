@@ -2,7 +2,6 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { Play, Pause, ChevronLeft, ChevronRight } from "lucide-react";
 
 const videos = [
-  "https://assets.cdn.filesafe.space/rHdckncf62VIX9k55LFy/media/681c6bffa418b3236e88bc34.mp4",
   "https://assets.cdn.filesafe.space/rHdckncf62VIX9k55LFy/media/681adc6417c9f21e78eb992c.mp4",
   "https://assets.cdn.filesafe.space/rHdckncf62VIX9k55LFy/media/681c7055417f8b6e62837f76.mp4",
   "https://assets.cdn.filesafe.space/rHdckncf62VIX9k55LFy/media/681c711e417f8b04b5838075.mp4",
@@ -36,7 +35,7 @@ const videos = [
   "https://assets.cdn.filesafe.space/rHdckncf62VIX9k55LFy/media/686e0436038ba858f43fc811.mp4",
   "https://assets.cdn.filesafe.space/rHdckncf62VIX9k55LFy/media/686e0436038ba83a593fc814.mp4",
   "https://assets.cdn.filesafe.space/rHdckncf62VIX9k55LFy/media/686e0436000e73b281e3c236.mp4",
-  "https://assets.cdn.filesafe.space/rHdckncf62VIX9k55LFy/media/681c711e6d9caf35aedc411c.mp4",
+  "https://assets.cdn.filesafe.space/rHdckncf62VIX9k55LFy/media/681c6bffa418b3236e88bc34.mp4",
 ];
 
 const VideoCard = ({ src }: { src: string }) => {
