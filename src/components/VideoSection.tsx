@@ -38,18 +38,20 @@ const videos = [
   "https://assets.cdn.filesafe.space/rHdckncf62VIX9k55LFy/media/681c6bffa418b3236e88bc34.mp4",
 ];
 
-const VideoCard = ({ src }: { src: string }) => {
+const VideoCard = ({ src, onPlayChange }: { src: string; onPlayChange: (playing: boolean) => void }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-    } else {
+    const willPlay = !isPlaying;
+    if (willPlay) {
       videoRef.current.play();
+    } else {
+      videoRef.current.pause();
     }
-    setIsPlaying(!isPlaying);
+    setIsPlaying(willPlay);
+    onPlayChange(willPlay);
   };
 
   return (
@@ -60,7 +62,7 @@ const VideoCard = ({ src }: { src: string }) => {
         src={src}
         playsInline
         preload="metadata"
-        onEnded={() => setIsPlaying(false)}
+        onEnded={() => { setIsPlaying(false); onPlayChange(false); }}
       />
       <button
         onClick={togglePlay}
@@ -82,6 +84,7 @@ const VideoCard = ({ src }: { src: string }) => {
 export const VideoSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [anyVideoPlaying, setAnyVideoPlaying] = useState(false);
   const autoPlayRef = useRef<ReturnType<typeof setInterval>>();
 
   // Responsive: 1 on mobile, 2 on sm, 3 on md, 5 on lg+
@@ -111,11 +114,15 @@ export const VideoSection = () => {
     setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   }, [maxIndex]);
 
-  // Auto-advance every 5 seconds
+  // Auto-advance every 5 seconds, pause when a video is playing
   useEffect(() => {
+    if (anyVideoPlaying) {
+      clearInterval(autoPlayRef.current);
+      return;
+    }
     autoPlayRef.current = setInterval(next, 5000);
     return () => clearInterval(autoPlayRef.current);
-  }, [next]);
+  }, [next, anyVideoPlaying]);
 
   // Touch/swipe support
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -177,7 +184,7 @@ export const VideoSection = () => {
                   className="flex-shrink-0"
                   style={{ width: `calc(${100 / visibleCount}% - ${((visibleCount - 1) * 16) / visibleCount}px)` }}
                 >
-                  <VideoCard src={src} />
+                  <VideoCard src={src} onPlayChange={setAnyVideoPlaying} />
                 </div>
               ))}
             </div>
