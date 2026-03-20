@@ -84,6 +84,7 @@ const VideoCard = ({ src, onPlayChange }: { src: string; onPlayChange: (playing:
 export const VideoSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [anyVideoPlaying, setAnyVideoPlaying] = useState(false);
   const autoPlayRef = useRef<ReturnType<typeof setInterval>>();
 
   // Responsive: 1 on mobile, 2 on sm, 3 on md, 5 on lg+
