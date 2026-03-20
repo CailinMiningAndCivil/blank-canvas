@@ -360,6 +360,9 @@ const Index = () => {
       {/* Google Reviews */}
       <GoogleReviews />
 
+      {/* Video Section */}
+      <VideoSection />
+
       {/* CTA Section */}
       <section className="py-24 bg-gradient-to-r from-primary/20 to-accent/20">
         <div className="container mx-auto px-4 text-center">
