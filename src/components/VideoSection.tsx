@@ -184,7 +184,7 @@ export const VideoSection = () => {
                   className="flex-shrink-0"
                   style={{ width: `calc(${100 / visibleCount}% - ${((visibleCount - 1) * 16) / visibleCount}px)` }}
                 >
-                  <VideoCard src={src} />
+                  <VideoCard src={src} onPlayChange={setAnyVideoPlaying} />
                 </div>
               ))}
             </div>
