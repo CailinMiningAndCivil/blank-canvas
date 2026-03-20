@@ -36,7 +36,7 @@ export const VideoSection = () => {
             />
             <button
               onClick={togglePlay}
-              className="absolute inset-0 flex items-center justify-center bg-background/20 hover:bg-background/30 transition-colors group"
+              className={`absolute inset-0 flex items-center justify-center transition-opacity ${isPlaying ? 'opacity-0 hover:opacity-100' : 'opacity-100'} bg-background/20 hover:bg-background/30 transition-colors group`}
               aria-label={isPlaying ? "Pause video" : "Play video"}
             >
               <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
