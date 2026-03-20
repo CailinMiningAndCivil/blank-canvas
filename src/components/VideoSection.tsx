@@ -173,16 +173,17 @@ export const VideoSection = () => {
             onTouchEnd={handleTouchEnd}
           >
             <div
-              className="flex gap-4 transition-transform duration-500 ease-in-out"
+              className="flex transition-transform duration-500 ease-in-out"
               style={{
-                transform: `translateX(-${currentIndex * (100 / visibleCount)}%)`,
+                gap: '16px',
+                transform: `translateX(calc(-${currentIndex} * (${100 / visibleCount}% + ${16 / visibleCount}px)))`,
               }}
             >
               {videos.map((src, i) => (
                 <div
                   key={i}
                   className="flex-shrink-0"
-                  style={{ width: `calc(${100 / visibleCount}% - ${((visibleCount - 1) * 16) / visibleCount}px)` }}
+                  style={{ width: `calc((100% - ${(visibleCount - 1) * 16}px) / ${visibleCount})` }}
                 >
                   <VideoCard src={src} onPlayChange={setAnyVideoPlaying} />
                 </div>
