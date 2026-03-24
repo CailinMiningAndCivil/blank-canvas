@@ -68,6 +68,28 @@ serve(async (req) => {
 
     console.log("Email sent successfully:", data);
 
+    // Send to GoHighLevel webhook
+    const GHL_WEBHOOK_URL = Deno.env.get("GHL_WEBHOOK_URL");
+    if (GHL_WEBHOOK_URL) {
+      try {
+        const ghlRes = await fetch(GHL_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            email,
+            phone,
+            message,
+            source: "Cailin Training Website",
+            submitted_at: created_at,
+          }),
+        });
+        console.log("GHL webhook response:", ghlRes.status);
+      } catch (ghlError) {
+        console.error("GHL webhook error (non-blocking):", ghlError);
+      }
+    }
+
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
