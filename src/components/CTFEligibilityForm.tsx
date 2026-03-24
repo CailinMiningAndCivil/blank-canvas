@@ -144,11 +144,20 @@ Work Status:
 
 This person has submitted the CTF eligibility form and would like more information about funding options.`;
 
-      const submissionData: ContactSubmission = {
+      const workTypeLabel = workTypes.find((w) => w.value === formData.workType)?.label || "Not specified";
+      const workLocationLabel = workLocations.find((w) => w.value === formData.workLocation)?.label || "Not specified";
+
+      const submissionData: ContactSubmission & { _ctfFields?: Record<string, string> } = {
         name: formData.fullName.trim().slice(0, 100),
         email: formData.email.trim().toLowerCase().slice(0, 255),
         phone: formData.phone.trim().slice(0, 20),
         message: message.slice(0, 2000),
+        _ctfFields: {
+          job_title: formData.jobTitle || "Not specified",
+          working_in_wa: formData.workingInConstruction === "yes" ? "Yes" : "No",
+          work_location: workLocationLabel,
+          type_of_work: workTypeLabel,
+        },
       };
 
       await insertContactSubmission(submissionData);
