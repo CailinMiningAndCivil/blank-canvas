@@ -129,8 +129,8 @@ export const CTFEligibilityForm = () => {
     setIsSubmitting(true);
 
     try {
-      const workTypeLabel = workTypes.find((w) => w.value === formData.workType)?.label || "Not specified";
-      const workLocationLabel = workLocations.find((w) => w.value === formData.workLocation)?.label || "Not specified";
+      const eligibleWorkTypeLabel = workTypes.find((w) => w.value === formData.workType)?.label || "Not specified";
+      const eligibleWorkLocationLabel = workLocations.find((w) => w.value === formData.workLocation)?.label || "Not specified";
       const eligibilityStatus = isEligible ? "LIKELY ELIGIBLE" : "MAY NOT BE ELIGIBLE";
 
       const message = `[CTF Eligibility Check - ${eligibilityStatus}]
