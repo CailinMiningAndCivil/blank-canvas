@@ -234,7 +234,7 @@ export const Navbar = () => {
             </a>
 
             <Link
-              to="/careers"
+              to="/recruitment"
               onClick={() => setIsOpen(false)}
               className="font-medium text-lg uppercase tracking-wider transition-colors duration-300 text-muted-foreground hover:text-foreground"
             >
