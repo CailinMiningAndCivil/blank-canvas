@@ -33,6 +33,10 @@ type ContactSubmission = {
   message: string;
 };
 
+type CTFSubmissionNotification = ContactSubmission & {
+  _ctfFields?: Record<string, string>;
+};
+
 const insertContactSubmission = async (submissionData: ContactSubmission) => {
   const response = await fetch(CONTACT_SUBMISSIONS_ENDPOINT, {
     method: "POST",
@@ -51,7 +55,7 @@ const insertContactSubmission = async (submissionData: ContactSubmission) => {
   }
 };
 
-const triggerSubmissionNotification = async (submissionData: ContactSubmission) => {
+const triggerSubmissionNotification = async (submissionData: CTFSubmissionNotification) => {
   const response = await fetch(NOTIFY_SUBMISSION_ENDPOINT, {
     method: "POST",
     headers: {
@@ -145,7 +149,7 @@ Work Status:
 
 This person has submitted the CTF eligibility form and would like more information about funding options.`;
 
-      const submissionData: ContactSubmission & { _ctfFields?: Record<string, string> } = {
+      const submissionData: CTFSubmissionNotification = {
         name: formData.fullName.trim().slice(0, 100),
         email: formData.email.trim().toLowerCase().slice(0, 255),
         phone: formData.phone.trim().slice(0, 20),
@@ -158,7 +162,12 @@ This person has submitted the CTF eligibility form and would like more informati
         },
       };
 
-      await insertContactSubmission(submissionData);
+      await insertContactSubmission({
+        name: submissionData.name,
+        email: submissionData.email,
+        phone: submissionData.phone,
+        message: submissionData.message,
+      });
       void triggerSubmissionNotification(submissionData);
 
       toast({
