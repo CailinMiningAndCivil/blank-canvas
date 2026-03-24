@@ -43,12 +43,16 @@ export const RPLApplicationForm = () => {
     );
   };
 
-  const uploadFile = async (file: File, folder: string): Promise<string | null> => {
+  const uploadFile = async (
+    supabaseClient: Awaited<typeof import("@/integrations/supabase/client")>["supabase"],
+    file: File,
+    folder: string,
+  ): Promise<string | null> => {
     const timestamp = Date.now();
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
     const path = `${folder}/${timestamp}_${safeName}`;
 
-    const { error } = await supabase.storage
+    const { error } = await supabaseClient.storage
       .from("rpl-documents")
       .upload(path, file);
 
