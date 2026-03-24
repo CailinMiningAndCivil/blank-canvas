@@ -21,6 +21,58 @@ const workLocations = [
   { value: "combination", label: "Combination of sites and workshop" },
 ];
 
+const CLOUD_BASE_URL = "https://opdxvpqimcfhawcznxyc.supabase.co";
+const PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZHh2cHFpbWNmaGF3Y3pueHljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMTY3NzksImV4cCI6MjA4OTg5Mjc3OX0.fQ32jaRclUNFt-8KsNf0VYLyRZCly4xLYX-f-AxUIzA";
+const CONTACT_SUBMISSIONS_ENDPOINT = `${CLOUD_BASE_URL}/rest/v1/contact_submissions`;
+const NOTIFY_SUBMISSION_ENDPOINT = `${CLOUD_BASE_URL}/functions/v1/notify-submission`;
+
+type ContactSubmission = {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+};
+
+const insertContactSubmission = async (submissionData: ContactSubmission) => {
+  const response = await fetch(CONTACT_SUBMISSIONS_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      apikey: PUBLISHABLE_KEY,
+      Authorization: `Bearer ${PUBLISHABLE_KEY}`,
+      Prefer: "return=minimal",
+    },
+    body: JSON.stringify(submissionData),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText || "Failed to save submission");
+  }
+};
+
+const triggerSubmissionNotification = async (submissionData: ContactSubmission) => {
+  const response = await fetch(NOTIFY_SUBMISSION_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      apikey: PUBLISHABLE_KEY,
+      Authorization: `Bearer ${PUBLISHABLE_KEY}`,
+    },
+    body: JSON.stringify({
+      record: {
+        ...submissionData,
+        created_at: new Date().toISOString(),
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error("Notify submission failed:", errorText);
+  }
+};
+
 export const CTFEligibilityForm = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,7 +96,6 @@ export const CTFEligibilityForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate required fields
     if (!formData.fullName.trim() || !formData.email.trim() || !formData.phone.trim()) {
       toast({
         title: "Missing Information",
@@ -54,7 +105,6 @@ export const CTFEligibilityForm = () => {
       return;
     }
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email.trim())) {
       toast({
@@ -65,7 +115,6 @@ export const CTFEligibilityForm = () => {
       return;
     }
 
-    // Validate phone (basic Australian format)
     const phoneClean = formData.phone.replace(/\s/g, "");
     if (phoneClean.length < 10) {
       toast({
@@ -79,14 +128,10 @@ export const CTFEligibilityForm = () => {
     setIsSubmitting(true);
 
     try {
-      const { supabase } = await import("@/integrations/supabase/client");
-
-      // Build the message with eligibility details
       const workTypeLabel = workTypes.find((w) => w.value === formData.workType)?.label || "Not specified";
       const workLocationLabel = workLocations.find((w) => w.value === formData.workLocation)?.label || "Not specified";
-      
       const eligibilityStatus = isEligible ? "LIKELY ELIGIBLE" : "MAY NOT BE ELIGIBLE";
-      
+
       const message = `[CTF Eligibility Check - ${eligibilityStatus}]
 
 Job Title: ${formData.jobTitle || "Not specified"}
@@ -98,28 +143,23 @@ Work Status:
 
 This person has submitted the CTF eligibility form and would like more information about funding options.`;
 
-      const submissionData = {
+      const submissionData: ContactSubmission = {
         name: formData.fullName.trim().slice(0, 100),
         email: formData.email.trim().toLowerCase().slice(0, 255),
         phone: formData.phone.trim().slice(0, 20),
         message: message.slice(0, 2000),
       };
 
-      const { error } = await supabase.from("contact_submissions").insert(submissionData);
-      if (error) throw error;
-
-      supabase.functions.invoke("notify-submission", {
-        body: { record: { ...submissionData, created_at: new Date().toISOString() } },
-      }).catch((err) => console.error("Notify error:", err));
+      await insertContactSubmission(submissionData);
+      void triggerSubmissionNotification(submissionData);
 
       toast({
         title: "Application Submitted!",
-        description: isEligible 
+        description: isEligible
           ? "Great news! You appear to be eligible. We'll be in touch soon."
           : "Thank you for your submission. We'll review your details and contact you.",
       });
 
-      // Reset form
       setFormData({
         fullName: "",
         jobTitle: "",
@@ -130,6 +170,7 @@ This person has submitted the CTF eligibility form and would like more informati
         workType: "",
       });
     } catch (error) {
+      console.error("CTF submission failed:", error);
       toast({
         title: "Submission Failed",
         description: "There was an error submitting your application. Please try again.",
