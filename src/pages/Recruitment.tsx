@@ -1,24 +1,6 @@
-import { useState } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { toast } from "sonner";
-import { Loader2, Users, Briefcase, Award, ArrowRight } from "lucide-react";
-
-const CLOUD_BASE_URL = "https://opdxvpqimcfhawcznxyc.supabase.co";
-const PUBLISHABLE_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZHh2cHFpbWNmaGF3Y3pueHljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMTY3NzksImV4cCI6MjA4OTg5Mjc3OX0.fQ32jaRclUNFt-8KsNf0VYLyRZCly4xLYX-f-AxUIzA";
-const CONTACT_SUBMISSIONS_ENDPOINT = `${CLOUD_BASE_URL}/rest/v1/contact_submissions`;
-const NOTIFY_SUBMISSION_ENDPOINT = `${CLOUD_BASE_URL}/functions/v1/notify-submission`;
-
-type RecruitmentSubmission = {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-};
+import { Users, Briefcase, Award, ArrowRight } from "lucide-react";
 
 const benefits = [
   {
@@ -41,86 +23,7 @@ const benefits = [
   },
 ];
 
-const insertContactSubmission = async (submissionData: RecruitmentSubmission) => {
-  const response = await fetch(CONTACT_SUBMISSIONS_ENDPOINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      apikey: PUBLISHABLE_KEY,
-      Authorization: `Bearer ${PUBLISHABLE_KEY}`,
-      Prefer: "return=minimal",
-    },
-    body: JSON.stringify(submissionData),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || "Failed to save submission");
-  }
-};
-
-const triggerSubmissionNotification = async (submissionData: RecruitmentSubmission) => {
-  const response = await fetch(NOTIFY_SUBMISSION_ENDPOINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      apikey: PUBLISHABLE_KEY,
-      Authorization: `Bearer ${PUBLISHABLE_KEY}`,
-    },
-    body: JSON.stringify({
-      record: {
-        ...submissionData,
-        created_at: new Date().toISOString(),
-      },
-    }),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error("Recruitment notify submission failed:", errorText);
-  }
-};
-
 const Recruitment = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!formData.fullName.trim() || !formData.email.trim() || !formData.phone.trim()) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      const submissionData: RecruitmentSubmission = {
-        name: formData.fullName.trim().slice(0, 100),
-        email: formData.email.trim().toLowerCase().slice(0, 255),
-        phone: formData.phone.trim().slice(0, 20),
-        message: `[Recruitment Portal Enquiry]\n\n${(formData.message.trim() || "No additional details provided.").slice(0, 2000)}`,
-      };
-
-      await insertContactSubmission(submissionData);
-      await triggerSubmissionNotification(submissionData);
-
-      toast.success("Your enquiry has been submitted! We'll be in touch soon.");
-      setFormData({ fullName: "", email: "", phone: "", message: "" });
-    } catch (error) {
-      console.error("Recruitment submission failed:", error);
-      toast.error("Something went wrong. Please try again or call us.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <Layout>
       <section className="relative overflow-hidden py-20 md:py-32">
@@ -186,68 +89,14 @@ const Recruitment = () => {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6 rounded-2xl border border-border bg-card p-8">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="fullName">Full Name *</Label>
-                  <Input
-                    id="fullName"
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    placeholder="Your full name"
-                    maxLength={100}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email *</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="you@example.com"
-                    maxLength={255}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone *</Label>
-                <Input
-                  id="phone"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="Your phone number"
-                  maxLength={20}
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="message">Tell us about your experience & what you're looking for</Label>
-                <Textarea
-                  id="message"
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="E.g. machines you're experienced with, preferred work location, availability..."
-                  rows={5}
-                  maxLength={2000}
-                />
-              </div>
-
-              <Button type="submit" variant="hero" size="lg" disabled={isSubmitting} className="w-full">
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Submitting...
-                  </>
-                ) : (
-                  "Submit Enquiry"
-                )}
-              </Button>
-            </form>
+            <iframe
+              src="https://link.cailinminingcivil.com/widget/form/iby4GFge0DUMLO4ARaSE"
+              style={{ width: "100%", border: "none", overflow: "hidden" }}
+              scrolling="no"
+              id="iby4GFge0DUMLO4ARaSE"
+              title="Recruitment Enquiry Form"
+              className="min-h-[600px] rounded-2xl"
+            />
           </div>
         </div>
       </section>
