@@ -2,7 +2,6 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { ArrowLeft, Calendar, Tag } from "lucide-react";
 
@@ -13,6 +12,7 @@ const BlogPost = () => {
   const { data: post, isLoading, error } = useQuery({
     queryKey: ["blog-post", slug],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("blog_posts")
         .select("*")
@@ -29,6 +29,7 @@ const BlogPost = () => {
   const { data: relatedPosts } = useQuery({
     queryKey: ["related-posts", post?.category, post?.id],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("blog_posts")
         .select("id, title, slug, featured_image, published_at")

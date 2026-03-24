@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { HeroImage } from "@/components/ui/hero-image";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { ArrowRight, Calendar } from "lucide-react";
 
@@ -12,6 +11,7 @@ const Blog = () => {
   const { data: posts, isLoading } = useQuery({
     queryKey: ["blog-posts"],
     queryFn: async () => {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase
         .from("blog_posts")
         .select("*")
