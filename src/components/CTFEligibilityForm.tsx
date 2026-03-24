@@ -133,6 +133,9 @@ export const CTFEligibilityForm = () => {
       const eligibleWorkLocationLabel = workLocations.find((w) => w.value === formData.workLocation)?.label || "Not specified";
       const eligibilityStatus = isEligible ? "LIKELY ELIGIBLE" : "MAY NOT BE ELIGIBLE";
 
+      const workTypeLabel = workTypes.find((w) => w.value === formData.workType)?.label || "Not specified";
+      const workLocationLabel = workLocations.find((w) => w.value === formData.workLocation)?.label || "Not specified";
+
       const message = `[CTF Eligibility Check - ${eligibilityStatus}]
 
 Job Title: ${formData.jobTitle || "Not specified"}
@@ -143,9 +146,6 @@ Work Status:
 - Type of work: ${workTypeLabel}
 
 This person has submitted the CTF eligibility form and would like more information about funding options.`;
-
-      const workTypeLabel = workTypes.find((w) => w.value === formData.workType)?.label || "Not specified";
-      const workLocationLabel = workLocations.find((w) => w.value === formData.workLocation)?.label || "Not specified";
 
       const submissionData: ContactSubmission & { _ctfFields?: Record<string, string> } = {
         name: formData.fullName.trim().slice(0, 100),
