@@ -74,20 +74,22 @@ export const RPLApplicationForm = () => {
     setIsSubmitting(true);
 
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
+
       // Upload files
       const uploadedFiles: string[] = [];
       if (resumeFile) {
-        const path = await uploadFile(resumeFile, "resumes");
+        const path = await uploadFile(supabase, resumeFile, "resumes");
         if (path) uploadedFiles.push(`Resume: ${path}`);
         else uploadedFiles.push(`Resume: ${resumeFile.name} (upload failed)`);
       }
       if (referencesFile) {
-        const path = await uploadFile(referencesFile, "references");
+        const path = await uploadFile(supabase, referencesFile, "references");
         if (path) uploadedFiles.push(`References: ${path}`);
         else uploadedFiles.push(`References: ${referencesFile.name} (upload failed)`);
       }
       if (ticketsFile) {
-        const path = await uploadFile(ticketsFile, "tickets");
+        const path = await uploadFile(supabase, ticketsFile, "tickets");
         if (path) uploadedFiles.push(`Tickets: ${path}`);
         else uploadedFiles.push(`Tickets: ${ticketsFile.name} (upload failed)`);
       }
@@ -119,7 +121,6 @@ export const RPLApplicationForm = () => {
       const { error } = await supabase.from("contact_submissions").insert(submissionData);
       if (error) throw error;
 
-      // Trigger GHL webhook via edge function (non-blocking)
       supabase.functions.invoke("notify-submission", {
         body: { record: { ...submissionData, created_at: new Date().toISOString() } },
       }).catch((err) => console.error("Notify error:", err));
