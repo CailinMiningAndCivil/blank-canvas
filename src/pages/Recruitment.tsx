@@ -91,11 +91,10 @@ const Recruitment = () => {
 
             <iframe
               src="https://link.cailinminingcivil.com/widget/form/iby4GFge0DUMLO4ARaSE"
-              style={{ width: "100%", border: "none", overflow: "hidden" }}
-              scrolling="no"
+              style={{ width: "100%", height: "100%", border: "none" }}
               id="iby4GFge0DUMLO4ARaSE"
               title="Recruitment Enquiry Form"
-              className="min-h-[600px] rounded-2xl"
+              className="min-h-[900px] rounded-2xl"
             />
           </div>
         </div>
