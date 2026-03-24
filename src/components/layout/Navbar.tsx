@@ -119,7 +119,7 @@ export const Navbar = () => {
             </a>
 
             <Link
-              to="/careers"
+              to="/recruitment"
               className="font-medium text-sm uppercase tracking-wider transition-colors duration-300 text-muted-foreground hover:text-foreground"
             >
               Careers
