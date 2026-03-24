@@ -59,10 +59,11 @@ const triggerSubmissionNotification = async (submissionData: ContactSubmission) 
       apikey: PUBLISHABLE_KEY,
       Authorization: `Bearer ${PUBLISHABLE_KEY}`,
     },
-    body: JSON.stringify({
+      body: JSON.stringify({
       record: {
         ...submissionData,
         created_at: new Date().toISOString(),
+        ...(submissionData as any)._ctfFields,
       },
     }),
   });

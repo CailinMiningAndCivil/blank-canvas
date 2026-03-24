@@ -30,17 +30,25 @@ serve(async (req) => {
     const GHL_WEBHOOK_URL = Deno.env.get("GHL_WEBHOOK_URL");
     if (GHL_WEBHOOK_URL) {
       try {
-        const ghlRes = await fetch(GHL_WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
+        const ghlPayload: Record<string, string> = {
             name,
             email,
             phone,
-            message,
             source: "Cailin Training Website",
             submitted_at: created_at,
-          }),
+          };
+
+        // Add individual CTF fields if present
+        if (payload.record?.job_title) ghlPayload.job_title = payload.record.job_title;
+        if (payload.record?.working_in_wa) ghlPayload.working_in_wa = payload.record.working_in_wa;
+        if (payload.record?.work_location) ghlPayload.work_location = payload.record.work_location;
+        if (payload.record?.type_of_work) ghlPayload.type_of_work = payload.record.type_of_work;
+        if (message) ghlPayload.message = message;
+
+        const ghlRes = await fetch(GHL_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(ghlPayload),
         });
         console.log("GHL webhook response:", ghlRes.status);
       } catch (ghlError) {
