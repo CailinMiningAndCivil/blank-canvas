@@ -110,14 +110,20 @@ export const RPLApplicationForm = () => {
         .filter(Boolean)
         .join("\n");
 
-      const { error } = await supabase.from("contact_submissions").insert({
+      const submissionData = {
         name: formData.fullName,
         email: formData.email,
         phone: formData.phone,
         message,
-      });
+      };
 
+      const { error } = await supabase.from("contact_submissions").insert(submissionData);
       if (error) throw error;
+
+      // Trigger GHL webhook via edge function (non-blocking)
+      supabase.functions.invoke("notify-submission", {
+        body: { record: { ...submissionData, created_at: new Date().toISOString() } },
+      }).catch((err) => console.error("Notify error:", err));
 
       toast.success("Your RPL enquiry has been submitted! We'll be in touch soon.");
       setFormData({ fullName: "", email: "", phone: "", address: "", otherInfo: "" });
