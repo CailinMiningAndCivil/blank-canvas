@@ -37,7 +37,7 @@ const DiscoveryCall = () => {
             </p>
             
             <h1 className="text-3xl md:text-5xl font-bold font-display mb-6 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-              Book Your <span className="text-gradient">Free Consultation</span> With Our Team
+              Book Your <span className="text-gradient">Free 1:1 Call</span> With Niamh
             </h1>
             
             <p className="text-xl md:text-2xl font-semibold text-foreground mb-8 animate-fade-up" style={{ animationDelay: "0.3s" }}>
@@ -49,12 +49,10 @@ const DiscoveryCall = () => {
               variant="hero"
               className="text-lg py-6 px-8 shadow-glow animate-fade-up"
               style={{ animationDelay: "0.4s" }}
-              asChild
+              onClick={() => document.getElementById("booking-widget")?.scrollIntoView({ behavior: "smooth" })}
             >
-              <a href="https://live.cailintraining.com.au/discovery_call_qualification_page" target="_blank" rel="noopener noreferrer">
-                <ArrowRight className="w-5 h-5 mr-2" />
-                Book a Call Now
-              </a>
+              <ArrowRight className="w-5 h-5 mr-2" />
+              Book a Call Now
             </Button>
           </div>
         </div>
@@ -94,29 +92,51 @@ const DiscoveryCall = () => {
                   Ready to Start Your Career?
                 </h3>
                 <p className="text-muted-foreground text-center mb-6">
-                  Speak with our team today — no obligation, just expert guidance.
+                  Speak with Niamh today — no obligation, just expert guidance on your training pathway.
                 </p>
                 
                 <Button 
                   size="lg" 
                   variant="hero"
                   className="w-full text-lg py-6 shadow-glow"
-                  asChild
+                  onClick={() => document.getElementById("booking-widget")?.scrollIntoView({ behavior: "smooth" })}
                 >
-                  <a href="https://live.cailintraining.com.au/discovery_call_qualification_page" target="_blank" rel="noopener noreferrer">
-                    <ArrowRight className="w-5 h-5 mr-2" />
-                    Book a Call Now
-                  </a>
+                  <ArrowRight className="w-5 h-5 mr-2" />
+                  Book Your 1:1 Call
                 </Button>
                 
                 <p className="text-xs text-muted-foreground text-center mt-4">
                   *This is not an employment service. For employment opportunities{" "}
-                  <Link to="/careers" className="text-primary hover:underline font-semibold">
+                  <Link to="/recruitment" className="text-primary hover:underline font-semibold">
                     click here
                   </Link>
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Booking Widget Section */}
+      <section id="booking-widget" className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl">
+            <div className="mb-10 text-center">
+              <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
+                Schedule Your <span className="text-gradient">1:1 Call</span>
+              </h2>
+              <p className="text-muted-foreground">
+                Pick a time that works for you and Niamh will personally guide you through your options.
+              </p>
+            </div>
+
+            <iframe
+              src="https://link.cailinminingcivil.com/widget/booking/w0QHdI6U4F0SzOF5pThM"
+              style={{ width: "100%", height: "100%", border: "none" }}
+              id="aHGnZe8ngh7CkTC1bmHF_1774419519005"
+              title="Book a 1:1 Call with Niamh"
+              className="min-h-[700px] rounded-2xl"
+            />
           </div>
         </div>
       </section>
@@ -130,11 +150,14 @@ const DiscoveryCall = () => {
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
             Our team is ready to guide you through every step of your training journey.
           </p>
-          <Button size="lg" variant="hero" className="shadow-glow" asChild>
-            <a href="https://live.cailintraining.com.au/discovery_call_qualification_page" target="_blank" rel="noopener noreferrer">
-              <ArrowRight className="w-5 h-5 mr-2" />
-              Book a Call Now
-            </a>
+          <Button 
+            size="lg" 
+            variant="hero" 
+            className="shadow-glow"
+            onClick={() => document.getElementById("booking-widget")?.scrollIntoView({ behavior: "smooth" })}
+          >
+            <ArrowRight className="w-5 h-5 mr-2" />
+            Book a Call Now
           </Button>
         </div>
       </section>
