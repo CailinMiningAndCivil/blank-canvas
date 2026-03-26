@@ -128,7 +128,7 @@ const CTFFunding = () => {
             </h1>
             <p className="text-muted-foreground text-lg">
               The Construction Training Fund (CTF) helps WA construction workers offset training costs 
-              with rebates of up to 70%. Our courses are CTF-approved — you could save hundreds on your qualification.
+              with rebates on approved courses. To confirm your eligibility and rebate amount, please contact CTF directly.
             </p>
           </div>
         </div>
