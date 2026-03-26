@@ -28,8 +28,8 @@ import staffPortraitDumptruck from "@/assets/photos/staff-portrait-dumptruck.jpg
 const benefits = [
   {
     icon: DollarSign,
-    title: "Up to 70% Rebate",
-    description: "CTF covers up to 70% of approved training costs, significantly reducing your out-of-pocket expenses.",
+    title: "Training Rebates Available",
+    description: "CTF provides rebates on approved training costs. Contact CTF directly to confirm your eligibility and rebate amount.",
   },
   {
     icon: MapPin,
