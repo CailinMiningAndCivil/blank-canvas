@@ -205,7 +205,7 @@ This person has submitted the CTF eligibility form and would like more informati
           CTF <span className="text-primary">Eligibility Check</span>
         </h2>
         <p className="text-muted-foreground text-sm">
-          Complete this form to check your eligibility for Construction Training Fund subsidies.
+          Complete this preliminary check to see if you may be eligible for CTF funding. To confirm your eligibility and rebate amount, please contact CTF directly.
         </p>
       </div>
 
@@ -401,9 +401,9 @@ This person has submitted the CTF eligibility form and would like more informati
         <div className="bg-secondary rounded-xl p-4">
           <h4 className="font-semibold text-foreground text-sm mb-2">What is CTF Funding?</h4>
           <p className="text-muted-foreground text-xs">
-            The Construction Training Fund provides subsidies up to 70-80% of course costs for 
-            eligible workers in WA's construction industry. Metro workers can receive up to $1,300 
-            per course, while regional workers can receive up to $1,700.
+            The Construction Training Fund provides rebates on approved training costs for 
+            eligible workers in WA's construction industry. To confirm your eligibility and rebate amount, 
+            please contact CTF directly on (08) 9244 0100. This form is a preliminary check only.
           </p>
         </div>
       </form>
