@@ -90,7 +90,7 @@ const claimSteps = [
 const faqs = [
   {
     question: "How much can I claim back?",
-    answer: "CTF provides rebates of up to 70% of course costs. Metro workers can claim up to $1,300 per course, while regional workers can claim up to $1,700 per course.",
+    answer: "Rebate amounts vary depending on your circumstances. To confirm your eligibility and rebate amount, please contact CTF directly on (08) 9244 0100.",
   },
   {
     question: "Are Cailin's courses CTF-approved?",
