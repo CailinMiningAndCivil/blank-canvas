@@ -163,7 +163,7 @@ const CTFFunding = () => {
               </p>
               <p className="text-muted-foreground mb-4">
                 CTF's Upskilling & Short Course Funding program helps diversify your expertise and build 
-                a safer, more sustainable future. Rebates cover up to 70% of approved training costs.
+                a safer, more sustainable future. To confirm your eligibility and rebate amount, please contact CTF directly.
               </p>
               <p className="text-muted-foreground mb-8">
                 Our courses at Cailin are delivered by a Registered Training Organisation and qualify 
