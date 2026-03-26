@@ -28,8 +28,8 @@ import staffPortraitDumptruck from "@/assets/photos/staff-portrait-dumptruck.jpg
 const benefits = [
   {
     icon: DollarSign,
-    title: "Up to 70% Rebate",
-    description: "CTF covers up to 70% of approved training costs, significantly reducing your out-of-pocket expenses.",
+    title: "Training Rebates Available",
+    description: "CTF provides rebates on approved training costs. Contact CTF directly to confirm your eligibility and rebate amount.",
   },
   {
     icon: MapPin,
@@ -90,7 +90,7 @@ const claimSteps = [
 const faqs = [
   {
     question: "How much can I claim back?",
-    answer: "CTF provides rebates of up to 70% of course costs. Metro workers can claim up to $1,300 per course, while regional workers can claim up to $1,700 per course.",
+    answer: "Rebate amounts vary depending on your circumstances. To confirm your eligibility and rebate amount, please contact CTF directly on (08) 9244 0100.",
   },
   {
     question: "Are Cailin's courses CTF-approved?",
@@ -128,7 +128,7 @@ const CTFFunding = () => {
             </h1>
             <p className="text-muted-foreground text-lg">
               The Construction Training Fund (CTF) helps WA construction workers offset training costs 
-              with rebates of up to 70%. Our courses are CTF-approved — you could save hundreds on your qualification.
+              with rebates on approved courses. To confirm your eligibility and rebate amount, please contact CTF directly.
             </p>
           </div>
         </div>
@@ -163,7 +163,7 @@ const CTFFunding = () => {
               </p>
               <p className="text-muted-foreground mb-4">
                 CTF's Upskilling & Short Course Funding program helps diversify your expertise and build 
-                a safer, more sustainable future. Rebates cover up to 70% of approved training costs.
+                a safer, more sustainable future. To confirm your eligibility and rebate amount, please contact CTF directly.
               </p>
               <p className="text-muted-foreground mb-8">
                 Our courses at Cailin are delivered by a Registered Training Organisation and qualify 
