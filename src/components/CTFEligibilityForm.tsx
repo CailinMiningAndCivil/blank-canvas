@@ -205,7 +205,7 @@ This person has submitted the CTF eligibility form and would like more informati
           CTF <span className="text-primary">Eligibility Check</span>
         </h2>
         <p className="text-muted-foreground text-sm">
-          Complete this form to check your eligibility for Construction Training Fund subsidies.
+          Complete this preliminary check to see if you may be eligible for CTF funding. To confirm your eligibility and rebate amount, please contact CTF directly.
         </p>
       </div>
 
