@@ -11,7 +11,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import loaderDumptruckWide from "@/assets/photos/loader-dumptruck-wide.jpg";
+import watercartNew from "@/assets/photos/watercart-new.jpg";
 import trainerSiteSafety from "@/assets/photos/trainer-site-safety.jpg";
 
 const courseOptions = [
@@ -75,7 +75,7 @@ const Watercart = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
-        <HeroImage src={loaderDumptruckWide} alt="Mining site operations" />
+        <HeroImage src={watercartNew} alt="Watercart training operations" />
         
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
