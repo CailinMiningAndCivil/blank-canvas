@@ -39,7 +39,7 @@ const machines = [
     title: "Watercart Ticket",
     code: "RIIMPO206D",
     description: "Bulk water truck operations training for dust suppression and site maintenance.",
-    image: loaderDumptruckWide,
+    image: watercartNew,
     link: "/courses/watercart",
   },
   {
