@@ -11,7 +11,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import loaderDumptruckWide from "@/assets/photos/loader-dumptruck-wide.jpg";
+import watercartNew from "@/assets/photos/watercart-new.jpg";
 import trainerSiteSafety from "@/assets/photos/trainer-site-safety.jpg";
 
 const courseOptions = [
