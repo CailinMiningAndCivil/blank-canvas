@@ -50,7 +50,7 @@ const courseCategories = [
     description: "Master any single machine with unlimited return sessions. Train until you're fully confident — no rushing, no time limits.",
     price: "$2,500",
     priceNote: "Request Only",
-    image: training1on1Dumptruck,
+    image: fullDayCourses,
     link: "/courses/full-day",
     features: ["Unlimited return training*", "1:1 instruction", "Work experience reference"],
     icon: RefreshCw,
