@@ -1,13 +1,21 @@
+import { useState } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { HeroImage } from "@/components/ui/hero-image";
-import { CheckCircle, Phone, ArrowRight } from "lucide-react";
+import { CheckCircle, Phone, ArrowRight, XCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 import cailinLogo from "@/assets/cailin-logo.svg";
 
 // Real Cailin photos
 import trainerSiteSafety from "@/assets/photos/trainer-site-safety.jpg";
 import loaderDumpingAction from "@/assets/photos/loader-dumping-action.jpg";
+
+const SUPABASE_URL = "https://opdxvpqimcfhawcznxyc.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZHh2cHFpbWNmaGF3Y3pueHljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMTY3NzksImV4cCI6MjA4OTg5Mjc3OX0.fQ32jaRclUNFt-8KsNf0VYLyRZCly4xLYX-f-AxUIzA";
 
 const benefits = [
   "Join 2,000+ students who've launched successful careers in mining & civil construction.",
@@ -18,7 +26,57 @@ const benefits = [
   "Find out why we're different from typical providers — maximum seat time, unlimited return training.",
 ];
 
+type FormState = "form" | "qualified" | "not-qualified";
+
 const DiscoveryCall = () => {
+  const { toast } = useToast();
+  const [formState, setFormState] = useState<FormState>("form");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [hasFlights, setHasFlights] = useState<string>("");
+  const [isEnglishFluent, setIsEnglishFluent] = useState<string>("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!fullName.trim() || !phone.trim() || !email.trim() || !hasFlights || !isEnglishFluent) {
+      toast({ title: "Please fill in all fields", variant: "destructive" });
+      return;
+    }
+
+    const qualified = hasFlights === "yes" && isEnglishFluent === "yes";
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/discovery_call_submissions`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({
+          full_name: fullName.trim(),
+          phone: phone.trim(),
+          email: email.trim(),
+          has_flights_or_visa: hasFlights === "yes",
+          is_english_fluent: isEnglishFluent === "yes",
+          qualified,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Submission failed");
+
+      setFormState(qualified ? "qualified" : "not-qualified");
+    } catch {
+      toast({ title: "Something went wrong. Please try again.", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -52,7 +110,7 @@ const DiscoveryCall = () => {
               onClick={() => document.getElementById("booking-widget")?.scrollIntoView({ behavior: "smooth" })}
             >
               <ArrowRight className="w-5 h-5 mr-2" />
-              Book a Call Now
+              Get Started
             </Button>
           </div>
         </div>
@@ -102,7 +160,7 @@ const DiscoveryCall = () => {
                   onClick={() => document.getElementById("booking-widget")?.scrollIntoView({ behavior: "smooth" })}
                 >
                   <ArrowRight className="w-5 h-5 mr-2" />
-                  Book Your 1:1 Call
+                  Get Started
                 </Button>
                 
                 <p className="text-xs text-muted-foreground text-center mt-4">
@@ -117,26 +175,134 @@ const DiscoveryCall = () => {
         </div>
       </section>
 
-      {/* Booking Widget Section */}
+      {/* Pre-Qualification Form / Booking Widget Section */}
       <section id="booking-widget" className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl">
-            <div className="mb-10 text-center">
-              <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
-                Schedule Your <span className="text-gradient">1:1 Call</span>
-              </h2>
-              <p className="text-muted-foreground">
-                Pick a time that works for you and Niamh will personally guide you through your options.
-              </p>
-            </div>
+            {formState === "form" && (
+              <>
+                <div className="mb-10 text-center">
+                  <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
+                    Quick <span className="text-gradient">Pre-Qualification</span>
+                  </h2>
+                  <p className="text-muted-foreground">
+                    Answer a few quick questions so we can best prepare for your call with Niamh.
+                  </p>
+                </div>
 
-            <iframe
-              src="https://link.cailinminingcivil.com/widget/booking/w0QHdI6U4F0SzOF5pThM"
-              style={{ width: "100%", height: "100%", border: "none" }}
-              id="aHGnZe8ngh7CkTC1bmHF_1774419519005"
-              title="Book a 1:1 Call with Niamh"
-              className="min-h-[700px] rounded-2xl"
-            />
+                <form onSubmit={handleSubmit} className="space-y-6 bg-card rounded-xl p-6 md:p-8 border border-border shadow-card">
+                  <div className="space-y-2">
+                    <Label htmlFor="fullName">Full Name</Label>
+                    <Input
+                      id="fullName"
+                      placeholder="Enter your full name"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      maxLength={100}
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="phone">Phone Number</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="Enter your phone number"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      maxLength={20}
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      maxLength={255}
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-3">
+                    <Label>Do you have flights booked or a visa secured?</Label>
+                    <RadioGroup value={hasFlights} onValueChange={setHasFlights} className="flex gap-6">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="yes" id="flights-yes" />
+                        <Label htmlFor="flights-yes" className="cursor-pointer">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="no" id="flights-no" />
+                        <Label htmlFor="flights-no" className="cursor-pointer">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="space-y-3">
+                    <Label>Is your English fluent?</Label>
+                    <RadioGroup value={isEnglishFluent} onValueChange={setIsEnglishFluent} className="flex gap-6">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="yes" id="english-yes" />
+                        <Label htmlFor="english-yes" className="cursor-pointer">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="no" id="english-no" />
+                        <Label htmlFor="english-no" className="cursor-pointer">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    size="lg"
+                    variant="hero"
+                    className="w-full text-lg py-6 shadow-glow"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Submitting..." : "Continue"}
+                    {!isSubmitting && <ArrowRight className="w-5 h-5 ml-2" />}
+                  </Button>
+                </form>
+              </>
+            )}
+
+            {formState === "qualified" && (
+              <>
+                <div className="mb-10 text-center">
+                  <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
+                    Schedule Your <span className="text-gradient">1:1 Call</span>
+                  </h2>
+                  <p className="text-muted-foreground">
+                    Pick a time that works for you and Niamh will personally guide you through your options.
+                  </p>
+                </div>
+
+                <iframe
+                  src="https://link.cailinminingcivil.com/widget/booking/w0QHdI6U4F0SzOF5pThM"
+                  style={{ width: "100%", height: "100%", border: "none" }}
+                  id="aHGnZe8ngh7CkTC1bmHF_1774419519005"
+                  title="Book a 1:1 Call with Niamh"
+                  className="min-h-[700px] rounded-2xl"
+                />
+              </>
+            )}
+
+            {formState === "not-qualified" && (
+              <div className="text-center bg-card rounded-xl p-8 md:p-12 border border-border shadow-card">
+                <XCircle className="w-16 h-16 text-destructive mx-auto mb-6" />
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+                  Unfortunately, You Don't Qualify Yet
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+                  Sorry, you must have flights booked or a visa secured and be fluent in English before booking a call.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -157,7 +323,7 @@ const DiscoveryCall = () => {
             onClick={() => document.getElementById("booking-widget")?.scrollIntoView({ behavior: "smooth" })}
           >
             <ArrowRight className="w-5 h-5 mr-2" />
-            Book a Call Now
+            Get Started
           </Button>
         </div>
       </section>
