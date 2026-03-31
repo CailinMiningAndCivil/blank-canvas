@@ -91,7 +91,7 @@ const ShortCourses = () => {
     <Layout>
       {/* Hero Section with Image */}
       <section className="relative py-32 overflow-hidden">
-        <HeroImage src={dumptruckTrayRaised} alt="Dump truck with tray raised" />
+        <HeroImage src={machinesCollage} alt="Mining and civil machinery collage" />
         
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
