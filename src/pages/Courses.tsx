@@ -10,6 +10,7 @@ import { CTFFundingBanner } from "@/components/CTFFundingBanner";
 import training1on1Dumptruck from "@/assets/photos/training-1on1-dumptruck.jpg";
 import bundlesMachines from "@/assets/photos/bundles-machines.png";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
+import sixHundredCourses from "@/assets/photos/600-courses.png";
 import loaderDumptruckAction from "@/assets/photos/loader-dumptruck-action.jpg";
 import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
@@ -25,7 +26,7 @@ const courseCategories = [
     description: "Get a recognised national qualification and professional work referral in just 1-4 hours. Perfect for career exploration.",
     price: "$600",
     priceNote: "per machine",
-    image: articulatedDumptruck,
+    image: sixHundredCourses,
     link: "/courses/short-courses",
     features: ["1-4 hour assessment", "National qualification", "Upgrade options available"],
     icon: Zap,
