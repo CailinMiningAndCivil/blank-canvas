@@ -17,6 +17,7 @@ import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import rollerArtistic from "@/assets/photos/roller-artistic.jpg";
 import watercartNew from "@/assets/photos/watercart-new.jpg";
 import safetyEquipmentCheck from "@/assets/photos/safety-equipment-check.jpg";
+import rplHero from "@/assets/photos/rpl-hero.png";
 
 const courseCategories = [
   {
