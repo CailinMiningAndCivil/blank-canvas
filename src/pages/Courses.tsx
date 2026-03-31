@@ -76,6 +76,7 @@ const courseCategories = [
     description: "Get a professional work reference from us. Perfect for those with existing qualifications wanting to boost employability.",
     price: "Quick Assessment",
     priceNote: "~30 minutes",
+    image: vocHero,
     link: "/courses/voc",
     features: ["30-minute assessment", "Professional reference", "Boost your CV"],
     icon: Award,
