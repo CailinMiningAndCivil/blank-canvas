@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/accordion";
 
 // Real Cailin photos
-import safetyEquipmentCheck from "@/assets/photos/safety-equipment-check.jpg";
+import vocPageHero from "@/assets/photos/voc-page-hero.png";
 import graderCabinAccess from "@/assets/photos/grader-cabin-access.jpg";
 import excavatorNew from "@/assets/photos/excavator-new.jpg";
 import wheelloaderProfile from "@/assets/photos/wheelloader-profile.jpg";
@@ -117,7 +117,7 @@ const VOC = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
-        <HeroImage src={safetyEquipmentCheck} alt="Safety equipment check" />
+        <HeroImage src={vocPageHero} alt="Workers inspecting mining equipment on site" />
         
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
