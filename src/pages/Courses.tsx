@@ -37,7 +37,7 @@ const courseCategories = [
     description: "Double or triple your employment opportunities. Get 1:1 training with unlimited hours on a live mine site.",
     price: "$2,500",
     priceNote: "CTF Funding Available",
-    image: wheelloaderHero,
+    image: bundlesMachines,
     link: "/courses/bundles",
     features: ["2-3x more employable", "1:1 instruction", "Multiple certifications"],
     icon: Users,
