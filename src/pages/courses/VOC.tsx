@@ -117,7 +117,7 @@ const VOC = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
-        <HeroImage src={safetyEquipmentCheck} alt="Safety equipment check" />
+        <HeroImage src={vocPageHero} alt="Workers inspecting mining equipment on site" />
         
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
