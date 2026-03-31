@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, ArrowRight, RefreshCw, Phone } from "lucide-react";
 
-import loaderDumptruckAction from "@/assets/photos/loader-dumptruck-action.jpg";
+import machinesCollage from "@/assets/photos/machines-collage.png";
 import excavatorTraining1on1 from "@/assets/photos/excavator-training-1on1.jpg";
 
 const returnTimeTable = [
@@ -51,7 +51,7 @@ const FullDay = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
-        <HeroImage src={loaderDumptruckAction} alt="Loader and dump truck training on site" />
+        <HeroImage src={machinesCollage} alt="Mining and civil machinery collage" />
         
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">

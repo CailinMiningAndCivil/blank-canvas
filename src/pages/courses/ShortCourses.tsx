@@ -13,7 +13,7 @@ import { CTFFundingBanner } from "@/components/CTFFundingBanner";
 import { MachineCard } from "@/components/MachineCard";
 
 // Real Cailin photos
-import dumptruckTrayRaised from "@/assets/photos/dumptruck-tray-raised.jpg";
+import machinesCollage from "@/assets/photos/machines-collage.png";
 import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
@@ -91,7 +91,7 @@ const ShortCourses = () => {
     <Layout>
       {/* Hero Section with Image */}
       <section className="relative py-32 overflow-hidden">
-        <HeroImage src={dumptruckTrayRaised} alt="Dump truck with tray raised" />
+        <HeroImage src={machinesCollage} alt="Mining and civil machinery collage" />
         
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
