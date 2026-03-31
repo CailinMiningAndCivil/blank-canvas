@@ -97,7 +97,7 @@ const TicketsTraining = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
-        <HeroImage src={trainerWatchingLoader} alt="Trainer watching loader operation" />
+        <HeroImage src={bundlesHero} alt="Fleet of mining machines on site" />
 
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
