@@ -63,7 +63,7 @@ const courseCategories = [
     description: "Turn your prior industry experience, expired machine tickets, or international qualifications into recognised Australian qualifications.",
     price: "$350*",
     priceNote: "per machine assessment",
-    image: safetyEquipmentCheck,
+    image: rplHero,
     link: "/rpl",
     features: ["Fast-track certification", "No training required", "Work referral included"],
     icon: FileCheck,
