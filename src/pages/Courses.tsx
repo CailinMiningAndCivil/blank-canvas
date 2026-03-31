@@ -7,7 +7,7 @@ import { MachineCard } from "@/components/MachineCard";
 import { CTFFundingBanner } from "@/components/CTFFundingBanner";
 
 // Real Cailin photos
-import training1on1Dumptruck from "@/assets/photos/training-1on1-dumptruck.jpg";
+import fullDayCourses from "@/assets/photos/full-day-courses.png";
 import bundlesMachines from "@/assets/photos/bundles-machines.png";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import sixHundredCourses from "@/assets/photos/600-courses.png";
@@ -50,7 +50,7 @@ const courseCategories = [
     description: "Master any single machine with unlimited return sessions. Train until you're fully confident — no rushing, no time limits.",
     price: "$2,500",
     priceNote: "Request Only",
-    image: training1on1Dumptruck,
+    image: fullDayCourses,
     link: "/courses/full-day",
     features: ["Unlimited return training*", "1:1 instruction", "Work experience reference"],
     icon: RefreshCw,
