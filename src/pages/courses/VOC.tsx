@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/accordion";
 
 // Real Cailin photos
-import safetyEquipmentCheck from "@/assets/photos/safety-equipment-check.jpg";
+import vocPageHero from "@/assets/photos/voc-page-hero.png";
 import graderCabinAccess from "@/assets/photos/grader-cabin-access.jpg";
 import excavatorNew from "@/assets/photos/excavator-new.jpg";
 import wheelloaderProfile from "@/assets/photos/wheelloader-profile.jpg";
