@@ -13,7 +13,7 @@ import { CTFFundingBanner } from "@/components/CTFFundingBanner";
 import { MachineCard } from "@/components/MachineCard";
 
 // Real Cailin photos
-import dumptruckTrayRaised from "@/assets/photos/dumptruck-tray-raised.jpg";
+import machinesCollage from "@/assets/photos/machines-collage.png";
 import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
