@@ -31,7 +31,7 @@ const RPL = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
-        <HeroImage src={trainerRadioSignaling} alt="Trainer with radio signaling on mine site" />
+        <HeroImage src={rplPageHero} alt="Worker inspecting mining equipment on site" />
         
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
