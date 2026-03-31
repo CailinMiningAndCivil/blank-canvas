@@ -95,7 +95,7 @@ const DiscoveryCall = () => {
             </p>
             
             <h1 className="text-3xl md:text-5xl font-bold font-display mb-6 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-              Book Your <span className="text-gradient">Free 1:1 Call</span> With Niamh
+              Book Your <span className="text-gradient">1:1 Call</span> With Niamh
             </h1>
             
             <p className="text-xl md:text-2xl font-semibold text-foreground mb-8 animate-fade-up" style={{ animationDelay: "0.3s" }}>
