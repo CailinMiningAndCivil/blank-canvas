@@ -18,6 +18,7 @@ import rollerArtistic from "@/assets/photos/roller-artistic.jpg";
 import watercartNew from "@/assets/photos/watercart-new.jpg";
 import safetyEquipmentCheck from "@/assets/photos/safety-equipment-check.jpg";
 import rplHero from "@/assets/photos/rpl-hero.png";
+import vocHero from "@/assets/photos/voc-hero.png";
 
 const courseCategories = [
   {
@@ -75,6 +76,7 @@ const courseCategories = [
     description: "Get a professional work reference from us. Perfect for those with existing qualifications wanting to boost employability.",
     price: "Quick Assessment",
     priceNote: "~30 minutes",
+    image: vocHero,
     link: "/courses/voc",
     features: ["30-minute assessment", "Professional reference", "Boost your CV"],
     icon: Award,
