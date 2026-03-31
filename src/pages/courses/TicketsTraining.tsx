@@ -9,7 +9,7 @@ import { BookLink } from "@/components/BookLink";
 import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import loaderMoxyBundle from "@/assets/photos/loader-moxy-bundle.png";
-import trainerWatchingLoader from "@/assets/photos/trainer-watching-loader.jpg";
+import bundlesHero from "@/assets/photos/bundles-hero.png";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import starterBundleImg from "@/assets/photos/starter-bundle.jpg";
 import loaderDumptruckPair from "@/assets/photos/loader-dumptruck-pair.jpg";
@@ -96,7 +96,7 @@ const TicketsTraining = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
-        <HeroImage src={trainerWatchingLoader} alt="Trainer watching loader operation" />
+        <HeroImage src={bundlesHero} alt="Fleet of mining machines on site" />
 
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
