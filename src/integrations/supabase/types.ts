@@ -86,6 +86,39 @@ export type Database = {
         }
         Relationships: []
       }
+      discovery_call_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          has_flights_or_visa: boolean
+          id: string
+          is_english_fluent: boolean
+          phone: string
+          qualified: boolean
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          has_flights_or_visa: boolean
+          id?: string
+          is_english_fluent: boolean
+          phone: string
+          qualified?: boolean
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          has_flights_or_visa?: boolean
+          id?: string
+          is_english_fluent?: boolean
+          phone?: string
+          qualified?: boolean
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
