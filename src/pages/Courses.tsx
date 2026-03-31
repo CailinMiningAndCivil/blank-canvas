@@ -14,7 +14,8 @@ import loaderDumptruckAction from "@/assets/photos/loader-dumptruck-action.jpg";
 import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import rollerArtistic from "@/assets/photos/roller-artistic.jpg";
-import loaderDumptruckWide from "@/assets/photos/loader-dumptruck-wide.jpg";
+import watercartNew from "@/assets/photos/watercart-new.jpg";
+import safetyEquipmentCheck from "@/assets/photos/safety-equipment-check.jpg";
 
 const courseCategories = [
   {
