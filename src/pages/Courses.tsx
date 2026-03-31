@@ -14,7 +14,8 @@ import loaderDumptruckAction from "@/assets/photos/loader-dumptruck-action.jpg";
 import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import rollerArtistic from "@/assets/photos/roller-artistic.jpg";
-import loaderDumptruckWide from "@/assets/photos/loader-dumptruck-wide.jpg";
+import watercartNew from "@/assets/photos/watercart-new.jpg";
+import safetyEquipmentCheck from "@/assets/photos/safety-equipment-check.jpg";
 
 const courseCategories = [
   {
@@ -60,7 +61,7 @@ const courseCategories = [
     description: "Turn your prior industry experience, expired machine tickets, or international qualifications into recognised Australian qualifications.",
     price: "$350*",
     priceNote: "per machine assessment",
-    image: training1on1Dumptruck,
+    image: safetyEquipmentCheck,
     link: "/rpl",
     features: ["Fast-track certification", "No training required", "Work referral included"],
     icon: FileCheck,
@@ -118,7 +119,7 @@ const individualMachines = [
     title: "Watercart Ticket",
     code: "RIIMPO206D",
     description: "Bulk water truck operations training for dust suppression and site maintenance.",
-    image: loaderDumptruckWide,
+    image: watercartNew,
     link: "/courses/watercart",
   },
 ];
