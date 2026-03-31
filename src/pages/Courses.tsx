@@ -8,7 +8,7 @@ import { CTFFundingBanner } from "@/components/CTFFundingBanner";
 
 // Real Cailin photos
 import training1on1Dumptruck from "@/assets/photos/training-1on1-dumptruck.jpg";
-import wheelloaderHero from "@/assets/photos/wheelloader-hero.jpg";
+import bundlesMachines from "@/assets/photos/bundles-machines.png";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import loaderDumptruckAction from "@/assets/photos/loader-dumptruck-action.jpg";
 import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
