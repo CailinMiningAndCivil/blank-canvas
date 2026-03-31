@@ -7,7 +7,7 @@ import { HeroImage } from "@/components/ui/hero-image";
 import { RPLApplicationForm } from "@/components/RPLApplicationForm";
 
 // Real Cailin photos
-import trainerRadioSignaling from "@/assets/photos/trainer-radio-signaling.jpg";
+import rplPageHero from "@/assets/photos/rpl-page-hero.png";
 import rollerInspection from "@/assets/photos/roller-inspection.jpg";
 
 const benefits = [
