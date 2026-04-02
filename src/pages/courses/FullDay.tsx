@@ -64,8 +64,7 @@ const FullDay = () => {
               and job-ready — no rushing, no time limits.
             </p>
             <div className="inline-block bg-primary/10 px-8 py-4 rounded-xl">
-              <span className="text-primary font-display text-4xl">$2,500</span>
-              <span className="text-foreground ml-2">per machine</span>
+              <span className="text-primary font-display text-4xl">Starts at $1,200</span>
             </div>
           </div>
         </div>
@@ -199,7 +198,7 @@ const FullDay = () => {
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li className="flex justify-between">
                       <span>Price:</span>
-                      <span className="text-primary font-semibold">$2,500</span>
+                       <span className="text-primary font-semibold">From $1,200</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Duration:</span>
