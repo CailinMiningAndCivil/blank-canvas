@@ -198,7 +198,7 @@ const FullDay = () => {
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li className="flex justify-between">
                       <span>Price:</span>
-                      <span className="text-primary font-semibold">$2,500</span>
+                       <span className="text-primary font-semibold">From $1,200</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Duration:</span>
