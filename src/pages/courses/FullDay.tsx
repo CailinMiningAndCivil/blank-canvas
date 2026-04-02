@@ -64,8 +64,7 @@ const FullDay = () => {
               and job-ready — no rushing, no time limits.
             </p>
             <div className="inline-block bg-primary/10 px-8 py-4 rounded-xl">
-              <span className="text-primary font-display text-4xl">$2,500</span>
-              <span className="text-foreground ml-2">per machine</span>
+              <span className="text-primary font-display text-4xl">Starts at $1,200</span>
             </div>
           </div>
         </div>
