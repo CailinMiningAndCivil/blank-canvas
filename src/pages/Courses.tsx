@@ -10,7 +10,7 @@ import { CTFFundingBanner } from "@/components/CTFFundingBanner";
 import fullDayCourses from "@/assets/photos/full-day-courses.png";
 import bundlesHero from "@/assets/photos/bundles-hero.png";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
-import sixHundredCourses from "@/assets/photos/600-courses.png";
+import machinesCollage from "@/assets/photos/machines-collage.png";
 import loaderDumptruckAction from "@/assets/photos/loader-dumptruck-action.jpg";
 import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
