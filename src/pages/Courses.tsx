@@ -7,7 +7,7 @@ import { MachineCard } from "@/components/MachineCard";
 import { CTFFundingBanner } from "@/components/CTFFundingBanner";
 
 // Real Cailin photos
-import fullDayCourses from "@/assets/photos/full-day-courses.png";
+import fullDayHero from "@/assets/photos/full-day-hero.jpg";
 import bundlesHero from "@/assets/photos/bundles-hero.png";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import machinesCollage from "@/assets/photos/machines-collage.png";
