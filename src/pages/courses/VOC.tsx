@@ -124,10 +124,10 @@ const VOC = () => {
               Verification of Competency (VOC)
             </h1>
             <p className="text-muted-foreground text-lg mb-4">
-              Already qualified? Get a professional work reference from us to boost your employment prospects.
+              Already qualified? Verify your competency to boost your employment prospects.
             </p>
             <p className="text-foreground font-semibold text-lg mb-8">
-              Receive a Professional Work Reference From Us
+              Get Your Competency Verified
             </p>
             <div className="inline-block bg-primary/10 px-8 py-4 rounded-xl">
               <span className="text-primary font-display text-4xl">Quick Assessment</span>
