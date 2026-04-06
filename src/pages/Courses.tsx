@@ -66,7 +66,7 @@ const courseCategories = [
     priceNote: "per machine assessment",
     image: rplHero,
     link: "/rpl",
-    features: ["Fast-track certification", "No training required", "Work referral included"],
+    features: ["Fast-track certification", "No training required", "Valid nationwide"],
     icon: FileCheck,
   },
   {
