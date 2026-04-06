@@ -292,7 +292,7 @@ const VOC = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button asChild variant="hero" size="xl">
-              <Link to="/discovery-call">Contact Us</Link>
+              <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Contact Us</a>
             </Button>
             <Button asChild variant="outline" size="xl">
               <a href="tel:0483951501">

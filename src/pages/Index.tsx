@@ -129,7 +129,7 @@ const Index = () => {
                 <Link to="/courses">View Courses</Link>
               </Button>
               <Button asChild variant="heroOutline" size="xl">
-                <Link to="/discovery-call">Book Free Consultation</Link>
+                <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Book Free Consultation</a>
               </Button>
             </div>
           </div>
@@ -374,7 +374,7 @@ const Index = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild variant="hero" size="xl">
-              <Link to="/discovery-call">Book Free Consultation</Link>
+              <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Book Free Consultation</a>
             </Button>
             <Button asChild variant="heroOutline" size="xl">
               <a href="tel:0483951501">Call 0483 951 501</a>

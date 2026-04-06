@@ -245,7 +245,7 @@ const Moxy = () => {
               </BookLink>
             </Button>
             <Button asChild variant="outline" size="xl">
-              <Link to="/discovery-call">Free Consultation</Link>
+              <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Free Consultation</a>
             </Button>
           </div>
         </div>
