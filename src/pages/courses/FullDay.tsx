@@ -49,7 +49,7 @@ const FullDay = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
-        <HeroImage src={machinesCollage} alt="Mining and civil machinery collage" />
+        <HeroImage src={fullDayHero} alt="CAT roller on Cailin Mining site" />
         
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
