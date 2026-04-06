@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, ArrowRight, RefreshCw, Phone } from "lucide-react";
 
-import machinesCollage from "@/assets/photos/machines-collage.png";
+import fullDayHero from "@/assets/photos/full-day-hero.jpg";
 import excavatorTraining1on1 from "@/assets/photos/excavator-training-1on1.jpg";
 
 const returnTimeTable = [
