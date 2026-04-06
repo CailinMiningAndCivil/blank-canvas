@@ -146,7 +146,7 @@ const features = [
   },
   {
     icon: Briefcase,
-    title: "100+ Employers",
+    title: "Career Ready",
     description: "Only training recognised as work experience",
   },
 ];

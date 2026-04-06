@@ -85,7 +85,7 @@ const Watercart = () => {
             </h1>
             <p className="text-muted-foreground text-lg mb-4">
               Get certified to operate water carts for dust suppression in mining and civil construction. 
-              Nationally recognised qualification with professional work referral.
+              Nationally recognised qualification included.
             </p>
             <p className="text-xs text-muted-foreground">
               RIIMPO206D

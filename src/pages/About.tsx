@@ -173,11 +173,8 @@ const About = () => {
                   "1:1 personal instruction from experienced operators",
                   "Nationally recognised qualifications (RTO 46489)",
                   "Only training recognised as work experience",
-                  "Comprehensive job placement with 100+ employers",
-                  "Direct connections with mining employers",
                   "Recognition of Prior Learning (RPL) available",
                   "Flexible scheduling to suit your needs",
-                  "Can supply work references",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-1" />

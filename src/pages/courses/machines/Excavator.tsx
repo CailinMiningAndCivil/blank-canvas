@@ -85,7 +85,7 @@ const Excavator = () => {
             </h1>
             <p className="text-muted-foreground text-lg mb-4">
               Get certified to operate excavators in civil construction and mining. 
-              Nationally recognised qualification with professional work referral.
+              Nationally recognised qualification included.
             </p>
             <p className="text-xs text-muted-foreground">
               RIIMPO320F & RIIMPO301E

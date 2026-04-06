@@ -22,7 +22,7 @@ const courseOptions = [
     title: "$600 Short Course",
     duration: "1-4 hours",
     price: "$600",
-    description: "Quick excavator certification with national qualification and work referral",
+    description: "Quick excavator certification with nationally recognised qualification",
     bookingUrl: "https://live.cailintraining.com.au/short_course_excavator-book",
     highlight: false,
   },

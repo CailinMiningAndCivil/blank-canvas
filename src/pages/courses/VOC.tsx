@@ -150,7 +150,7 @@ const VOC = () => {
             </div>
             <div className="flex items-center gap-3">
               <CheckCircle className="w-5 h-5 text-primary" />
-              <span className="text-foreground font-medium">100+ Employers</span>
+              <span className="text-foreground font-medium">Valid Nationwide</span>
             </div>
           </div>
         </div>

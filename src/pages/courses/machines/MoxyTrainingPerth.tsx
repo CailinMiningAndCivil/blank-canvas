@@ -420,7 +420,7 @@ const MoxyTrainingPerth = () => {
                   "Training on a live, active mine site in Perth",
                   "Nationally recognised RIIMPO337E Statement of Attainment",
                   "All PPE and safety equipment provided",
-                  "Professional work referral to Perth mining employers",
+                  "Training recognised as work experience",
                   "Pre-operational checks and maintenance procedures",
                   "Safe loading, hauling, and tipping operations",
                   "Radio communication and site safety protocols",
