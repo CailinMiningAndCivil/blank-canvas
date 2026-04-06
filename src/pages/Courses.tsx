@@ -25,7 +25,7 @@ const courseCategories = [
     id: "short-courses",
     title: "$600 Courses",
     subtitle: "Quick Certification",
-    description: "Get a recognised national qualification and professional work referral in just 1-4 hours. Perfect for career exploration.",
+    description: "Get a recognised national qualification in just 1-4 hours. Perfect for career exploration.",
     price: "$600",
     priceNote: "per machine",
     image: sixHundredCourses,
