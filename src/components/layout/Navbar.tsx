@@ -109,14 +109,17 @@ export const Navbar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <a
-              href="https://live.cailintraining.com.au/affiliate-program"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-sm uppercase tracking-wider transition-colors duration-300 text-muted-foreground hover:text-foreground"
+            <Link
+              to="/affiliate"
+              className={cn(
+                "font-medium text-sm uppercase tracking-wider transition-colors duration-300",
+                location.pathname === "/affiliate"
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
             >
               Affiliates
-            </a>
+            </Link>
 
             <Link
               to="/recruitment"
@@ -223,15 +226,18 @@ export const Navbar = () => {
               </div>
             </div>
 
-            <a
-              href="https://live.cailintraining.com.au/affiliate-program"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/affiliate"
               onClick={() => setIsOpen(false)}
-              className="font-medium text-lg uppercase tracking-wider transition-colors duration-300 text-muted-foreground hover:text-foreground"
+              className={cn(
+                "font-medium text-lg uppercase tracking-wider transition-colors duration-300",
+                location.pathname === "/affiliate"
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
             >
               Affiliates
-            </a>
+            </Link>
 
             <Link
               to="/recruitment"
