@@ -28,7 +28,7 @@ const courseCategories = [
     description: "Get a recognised national qualification in just 1-4 hours. Perfect for career exploration.",
     price: "$600",
     priceNote: "per machine",
-    image: sixHundredCourses,
+    image: machinesCollage,
     link: "/courses/short-courses",
     features: ["1-4 hour assessment", "National qualification", "Upgrade options available"],
     icon: Zap,
