@@ -19,7 +19,7 @@ const courseOptions = [
     title: "$600 Course",
     duration: "1-4 hours",
     price: "$600",
-    description: "Quick certification with national qualification and work referral",
+    description: "Quick certification with nationally recognised qualification",
     bookingUrl: "https://live.cailintraining.com.au/short_course_watercart-book",
     highlight: false,
   },
@@ -85,7 +85,7 @@ const Watercart = () => {
             </h1>
             <p className="text-muted-foreground text-lg mb-4">
               Get certified to operate water carts for dust suppression in mining and civil construction. 
-              Nationally recognised qualification with professional work referral.
+              Nationally recognised qualification included.
             </p>
             <p className="text-xs text-muted-foreground">
               RIIMPO206D

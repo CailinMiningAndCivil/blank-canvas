@@ -92,7 +92,7 @@ const faqs = [
   },
   {
     question: "What do I receive at the end of the course?",
-    answer: "Upon successful completion, you receive a professional work reference from us that validates your competency to potential employers.",
+    answer: "Upon successful completion, you receive a verification of competency that validates your skills to potential employers.",
   },
 ];
 
@@ -105,11 +105,9 @@ const requirements = [
 
 const benefits = [
   "Quick 30-minute assessment",
-  "Professional work reference",
   "Industry-recognised verification",
   "Boost your employability",
   "Validate your existing skills",
-  "Access to our 100+ employer network",
 ];
 
 const VOC = () => {
@@ -126,10 +124,10 @@ const VOC = () => {
               Verification of Competency (VOC)
             </h1>
             <p className="text-muted-foreground text-lg mb-4">
-              Already qualified? Get a professional work reference from us to boost your employment prospects.
+              Already qualified? Verify your competency to boost your employment prospects.
             </p>
             <p className="text-foreground font-semibold text-lg mb-8">
-              Receive a Professional Work Reference From Us
+              Get Your Competency Verified
             </p>
             <div className="inline-block bg-primary/10 px-8 py-4 rounded-xl">
               <span className="text-primary font-display text-4xl">Quick Assessment</span>
@@ -152,7 +150,7 @@ const VOC = () => {
             </div>
             <div className="flex items-center gap-3">
               <CheckCircle className="w-5 h-5 text-primary" />
-              <span className="text-foreground font-medium">100+ Employers</span>
+              <span className="text-foreground font-medium">Valid Nationwide</span>
             </div>
           </div>
         </div>

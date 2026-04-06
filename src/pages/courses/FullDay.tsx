@@ -41,9 +41,7 @@ const features = [
   "1:1 personal instruction",
   "Live mine site training",
   "Nationally recognised qualification",
-  "Work reference included",
   "Unlimited return training*",
-  "100+ employer network access",
 ];
 
 const FullDay = () => {

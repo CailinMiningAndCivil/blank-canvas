@@ -25,7 +25,7 @@ const courseOptions = [
     title: "$600 Short Course",
     duration: "1-4 hours",
     price: "$600",
-    description: "Quick moxy certification with national qualification and work referral",
+    description: "Quick moxy certification with nationally recognised qualification",
     bookingUrl: "https://live.cailintraining.com.au/short_course_moxy-book",
     highlight: false,
   },
@@ -366,7 +366,7 @@ const MoxyTrainingPerth = () => {
             <h2 className="font-display text-4xl text-foreground mb-4">Moxy Training Perth — Course Options & Pricing</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Choose the moxy training path that matches your experience. Every option includes nationally recognised 
-              certification and professional work referral across Perth's mining sector.
+              certification across Perth's mining sector.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -420,7 +420,7 @@ const MoxyTrainingPerth = () => {
                   "Training on a live, active mine site in Perth",
                   "Nationally recognised RIIMPO337E Statement of Attainment",
                   "All PPE and safety equipment provided",
-                  "Professional work referral to Perth mining employers",
+                  "Training recognised as work experience",
                   "Pre-operational checks and maintenance procedures",
                   "Safe loading, hauling, and tipping operations",
                   "Radio communication and site safety protocols",

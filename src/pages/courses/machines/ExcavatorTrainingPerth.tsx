@@ -22,7 +22,7 @@ const courseOptions = [
     title: "$600 Short Course",
     duration: "1-4 hours",
     price: "$600",
-    description: "Quick excavator certification with national qualification and work referral",
+    description: "Quick excavator certification with nationally recognised qualification",
     bookingUrl: "https://live.cailintraining.com.au/short_course_excavator-book",
     highlight: false,
   },
@@ -332,7 +332,7 @@ const ExcavatorTrainingPerth = () => {
             <h2 className="font-display text-4xl text-foreground mb-4">Excavator Training Perth — Course Options & Pricing</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Choose the training path that matches your experience. Every option includes nationally recognised 
-              certification and professional work referral.
+              certification.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">

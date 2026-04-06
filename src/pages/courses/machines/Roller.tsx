@@ -19,7 +19,7 @@ const courseOptions = [
     title: "$600 Course",
     duration: "1-4 hours",
     price: "$600",
-    description: "Quick certification with national qualification and work referral",
+    description: "Quick certification with nationally recognised qualification",
     bookingUrl: "https://live.cailintraining.com.au/short_course_roller-book",
     highlight: false,
   },
@@ -85,7 +85,7 @@ const Roller = () => {
             </h1>
             <p className="text-muted-foreground text-lg mb-4">
               Get certified to operate rollers in civil construction and road building. 
-              Nationally recognised qualification with professional work referral.
+              Nationally recognised qualification included.
             </p>
             <p className="text-xs text-muted-foreground">
               RIIMPO317F

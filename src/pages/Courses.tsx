@@ -25,7 +25,7 @@ const courseCategories = [
     id: "short-courses",
     title: "$600 Courses",
     subtitle: "Quick Certification",
-    description: "Get a recognised national qualification and professional work referral in just 1-4 hours. Perfect for career exploration.",
+    description: "Get a recognised national qualification in just 1-4 hours. Perfect for career exploration.",
     price: "$600",
     priceNote: "per machine",
     image: sixHundredCourses,
@@ -54,7 +54,7 @@ const courseCategories = [
     priceNote: "Request Only",
     image: fullDayCourses,
     link: "/courses/full-day",
-    features: ["Unlimited return training*", "1:1 instruction", "Work experience reference"],
+    features: ["Unlimited return training*", "1:1 instruction", "Live mine site training"],
     icon: RefreshCw,
   },
   {
@@ -66,14 +66,14 @@ const courseCategories = [
     priceNote: "per machine assessment",
     image: rplHero,
     link: "/rpl",
-    features: ["Fast-track certification", "No training required", "Work referral included"],
+    features: ["Fast-track certification", "No training required", "Valid nationwide"],
     icon: FileCheck,
   },
   {
     id: "voc",
     title: "Verification of Competency",
     subtitle: "Already Qualified?",
-    description: "Get a professional work reference from us. Perfect for those with existing qualifications wanting to boost employability.",
+    description: "Verify your existing competency. Perfect for those with existing qualifications wanting to boost employability.",
     price: "Quick Assessment",
     priceNote: "~30 minutes",
     image: vocHero,
@@ -146,7 +146,7 @@ const features = [
   },
   {
     icon: Briefcase,
-    title: "100+ Employers",
+    title: "Career Ready",
     description: "Only training recognised as work experience",
   },
 ];

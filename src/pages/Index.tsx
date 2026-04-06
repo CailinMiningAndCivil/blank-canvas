@@ -37,7 +37,7 @@ const features = [
   },
   {
     icon: Briefcase,
-    title: "100+ Employers",
+    title: "Career Ready",
     description: "Only training recognised as work experience",
   },
 ];
@@ -122,7 +122,7 @@ const Index = () => {
             </h1>
             <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10">
               Join 2,000+ graduates who've launched their mining & civil careers. 
-              Recognised by 100+ employers. 60% employment rate.
+              60% employment rate.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild variant="hero" size="xl">

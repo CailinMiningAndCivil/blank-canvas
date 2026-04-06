@@ -21,7 +21,7 @@ const benefits = [
   "Join 2,000+ students who've launched successful careers in mining & civil construction.",
   "Learn how our graduates earn on average $150k per year — we've helped generate $180M+ in income.",
   "Get trained on a LIVE mine site with 1:1 student to trainer ratio — not a concrete yard.",
-  "Access our network of 100+ employers who actively recruit our graduates.",
+  "Discover how our training is recognised as real work experience by employers.",
   "Discover CTF government funding that may cover your training costs.",
   "Find out why we're different from typical providers — maximum seat time, unlimited return training.",
 ];
