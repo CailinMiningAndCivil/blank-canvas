@@ -7,7 +7,7 @@ import { MachineCard } from "@/components/MachineCard";
 import { CTFFundingBanner } from "@/components/CTFFundingBanner";
 
 // Real Cailin photos
-import fullDayCourses from "@/assets/photos/full-day-courses.png";
+import fullDayHero from "@/assets/photos/full-day-hero.jpg";
 import bundlesHero from "@/assets/photos/bundles-hero.png";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import machinesCollage from "@/assets/photos/machines-collage.png";
@@ -52,7 +52,7 @@ const courseCategories = [
     description: "Master any single machine with unlimited return sessions. Train until you're fully confident — no rushing, no time limits.",
     price: "Starts at $1,200",
     priceNote: "Request Only",
-    image: fullDayCourses,
+    image: fullDayHero,
     link: "/courses/full-day",
     features: ["Unlimited return training*", "1:1 instruction", "Live mine site training"],
     icon: RefreshCw,
