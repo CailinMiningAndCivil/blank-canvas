@@ -73,7 +73,7 @@ const courseCategories = [
     id: "voc",
     title: "Verification of Competency",
     subtitle: "Already Qualified?",
-    description: "Get a professional work reference from us. Perfect for those with existing qualifications wanting to boost employability.",
+    description: "Verify your existing competency. Perfect for those with existing qualifications wanting to boost employability.",
     price: "Quick Assessment",
     priceNote: "~30 minutes",
     image: vocHero,
