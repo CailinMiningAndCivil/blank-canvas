@@ -12,9 +12,7 @@ const benefits = [
   "Turn prior experience into recognised qualifications",
   "Fast-track your certification",
   "Competency assessment only - no lengthy training",
-  "Professional work referral upon completion",
   "Valid across all Australian civil and mine sites",
-  "Access to our 100+ employer recruitment network",
 ];
 
 const eligibility = [
