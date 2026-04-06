@@ -332,7 +332,7 @@ const ExcavatorTrainingPerth = () => {
             <h2 className="font-display text-4xl text-foreground mb-4">Excavator Training Perth — Course Options & Pricing</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Choose the training path that matches your experience. Every option includes nationally recognised 
-              certification and professional work referral.
+              certification.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
