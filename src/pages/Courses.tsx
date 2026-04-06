@@ -50,7 +50,7 @@ const courseCategories = [
     title: "Full Day Course",
     subtitle: "Unlimited Return Training",
     description: "Master any single machine with unlimited return sessions. Train until you're fully confident — no rushing, no time limits.",
-    price: "$2,500",
+    price: "From $1,200",
     priceNote: "Request Only",
     image: fullDayCourses,
     link: "/courses/full-day",
