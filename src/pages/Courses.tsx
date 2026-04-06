@@ -356,7 +356,7 @@ const Courses = () => {
             Book a free consultation and our team will help you choose the best path for your career goals.
           </p>
           <Button asChild variant="hero" size="xl">
-            <Link to="/discovery-call">Book Free Consultation</Link>
+            <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Book Free Consultation</a>
           </Button>
         </div>
       </section>

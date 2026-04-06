@@ -246,7 +246,7 @@ const TicketsTraining = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button asChild variant="hero" size="xl">
-              <Link to="/discovery-call">Book Free Consultation</Link>
+              <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Book Free Consultation</a>
             </Button>
             <Button asChild variant="outline" size="xl">
               <Link to="/courses">View All Courses</Link>
