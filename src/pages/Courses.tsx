@@ -8,7 +8,7 @@ import { CTFFundingBanner } from "@/components/CTFFundingBanner";
 
 // Real Cailin photos
 import fullDayCourses from "@/assets/photos/full-day-courses.png";
-import bundlesMachines from "@/assets/photos/bundles-machines.png";
+import bundlesHero from "@/assets/photos/bundles-hero.png";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import sixHundredCourses from "@/assets/photos/600-courses.png";
 import loaderDumptruckAction from "@/assets/photos/loader-dumptruck-action.jpg";
@@ -40,7 +40,7 @@ const courseCategories = [
     description: "Double or triple your employment opportunities. Get 1:1 training with unlimited hours on a live mine site.",
     price: "$2,500",
     priceNote: "CTF Funding Available",
-    image: bundlesMachines,
+    image: bundlesHero,
     link: "/courses/bundles",
     features: ["2-3x more employable", "1:1 instruction", "Multiple certifications"],
     icon: Users,
