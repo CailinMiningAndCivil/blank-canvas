@@ -54,7 +54,7 @@ const courseCategories = [
     priceNote: "Request Only",
     image: fullDayCourses,
     link: "/courses/full-day",
-    features: ["Unlimited return training*", "1:1 instruction", "Work experience reference"],
+    features: ["Unlimited return training*", "1:1 instruction", "Live mine site training"],
     icon: RefreshCw,
   },
   {
