@@ -105,11 +105,9 @@ const requirements = [
 
 const benefits = [
   "Quick 30-minute assessment",
-  "Professional work reference",
   "Industry-recognised verification",
   "Boost your employability",
   "Validate your existing skills",
-  "Access to our 100+ employer network",
 ];
 
 const VOC = () => {
