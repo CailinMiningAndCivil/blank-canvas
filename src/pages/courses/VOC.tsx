@@ -92,7 +92,7 @@ const faqs = [
   },
   {
     question: "What do I receive at the end of the course?",
-    answer: "Upon successful completion, you receive a professional work reference from us that validates your competency to potential employers.",
+    answer: "Upon successful completion, you receive a verification of competency that validates your skills to potential employers.",
   },
 ];
 
