@@ -17,7 +17,7 @@ import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import rollerArtistic from "@/assets/photos/roller-artistic.jpg";
 import watercartNew from "@/assets/photos/watercart-new.jpg";
 import safetyEquipmentCheck from "@/assets/photos/safety-equipment-check.jpg";
-import rplHero from "@/assets/photos/rpl-hero.png";
+import rplHero from "@/assets/photos/rpl-page-hero.png";
 import vocHero from "@/assets/photos/voc-page-hero.png";
 
 const courseCategories = [
@@ -64,7 +64,7 @@ const courseCategories = [
     description: "Turn your prior industry experience, expired machine tickets, or international qualifications into recognised Australian qualifications.",
     price: "$350*",
     priceNote: "per machine assessment",
-    image: vocHero,
+    image: rplHero,
     link: "/rpl",
     features: ["Fast-track certification", "No training required", "Valid nationwide"],
     icon: FileCheck,
