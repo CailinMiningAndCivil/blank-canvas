@@ -275,31 +275,6 @@ const DiscoveryCall = () => {
               </>
             )}
 
-            {formState === "qualified" && (
-              <>
-                <div className="mb-10 text-center">
-                  <h2 className="mb-4 font-display text-3xl font-bold text-foreground md:text-4xl">
-                    Schedule Your <span className="text-gradient">1:1 Call</span>
-                  </h2>
-                  <p className="text-muted-foreground">
-                    Pick a time that works for you and Niamh will personally guide you through your options.
-                  </p>
-                </div>
-
-                <iframe
-                  src="https://link.cailinminingcivil.com/widget/booking/w0QHdI6U4F0SzOF5pThM"
-                  style={{ width: "100%", height: "100%", border: "none" }}
-                  id="aHGnZe8ngh7CkTC1bmHF_1774419519005"
-                  title="Book a 1:1 Call with Niamh"
-                  className="min-h-[700px] rounded-2xl"
-                  allow="payment; camera; microphone"
-                  // @ts-ignore – legacy attribute needed by GHL payment flow
-                  allowpaymentrequest="true"
-                  target="_top"
-                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation allow-top-navigation-by-user-activation"
-                />
-              </>
-            )}
 
             {formState === "not-qualified" && (
               <div className="text-center bg-card rounded-xl p-8 md:p-12 border border-border shadow-card">
