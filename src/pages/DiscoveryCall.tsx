@@ -69,7 +69,11 @@ const DiscoveryCall = () => {
 
       if (!response.ok) throw new Error("Submission failed");
 
-      setFormState(qualified ? "qualified" : "not-qualified");
+      if (qualified) {
+        window.location.href = "https://link.cailinminingcivil.com/widget/booking/w0QHdI6U4F0SzOF5pThM";
+        return;
+      }
+      setFormState("not-qualified");
     } catch {
       toast({ title: "Something went wrong. Please try again.", variant: "destructive" });
     } finally {
