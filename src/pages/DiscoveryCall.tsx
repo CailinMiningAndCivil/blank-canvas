@@ -288,7 +288,10 @@ const DiscoveryCall = () => {
                   id="aHGnZe8ngh7CkTC1bmHF_1774419519005"
                   title="Book a 1:1 Call with Niamh"
                   className="min-h-[700px] rounded-2xl"
-                  allow="payment; camera; microphone; geolocation; fullscreen"
+                  allow="payment; camera; microphone"
+                  // @ts-ignore – legacy attribute needed by GHL payment flow
+                  allowpaymentrequest="true"
+                  target="_top"
                   sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation allow-top-navigation-by-user-activation"
                 />
               </>
