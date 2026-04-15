@@ -23,7 +23,7 @@ import rigidHaulTruck from "@/assets/photos/rigid-haul-truck.jpg";
 const courseOptions = [
   {
     title: "$600 Short Course",
-    duration: "1-4 hours",
+    duration: "1.5 hours initial",
     price: "$600",
     description: "Quick moxy certification with nationally recognised qualification",
     bookingUrl: "https://live.cailintraining.com.au/short_course_moxy-book",

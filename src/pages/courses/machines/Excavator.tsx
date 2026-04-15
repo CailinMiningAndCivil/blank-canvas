@@ -62,7 +62,7 @@ const faqs = [
   },
   {
     question: "How long does training take?",
-    answer: "Our $600 course takes 1-4 hours. Full training with unlimited hours continues until you're confident and competent — there's no rushed timeframe.",
+    answer: "Our $600 course takes 1.5 hours initial. Full training with unlimited hours continues until you're confident and competent — there's no rushed timeframe.",
   },
   {
     question: "Is GPS training included?",
