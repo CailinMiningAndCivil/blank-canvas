@@ -25,12 +25,12 @@ const courseCategories = [
     id: "short-courses",
     title: "$600 Courses",
     subtitle: "Quick Certification",
-    description: "Get a recognised national qualification in just 1-4 hours. Perfect for career exploration.",
+    description: "Get a recognised national qualification in just 1.5 hours initial. Perfect for career exploration.",
     price: "$600",
     priceNote: "per machine",
     image: machinesCollage,
     link: "/courses/short-courses",
-    features: ["1-4 hour assessment", "National qualification", "Upgrade options available"],
+    features: ["1.5 hours initial", "National qualification", "Upgrade options available"],
     icon: Zap,
   },
   {
@@ -287,7 +287,7 @@ const Courses = () => {
                 <tr className="border-b border-border">
                   <td className="p-4 text-foreground font-medium">$600 Courses</td>
                   <td className="p-4 text-muted-foreground">Career exploration or quick certification</td>
-                  <td className="p-4 text-muted-foreground">1-4 hours</td>
+                  <td className="p-4 text-muted-foreground">1.5 hours initial</td>
                   <td className="p-4 text-primary font-semibold">$600</td>
                 </tr>
                 <tr className="border-b border-border">

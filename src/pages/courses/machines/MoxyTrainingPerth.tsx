@@ -23,7 +23,7 @@ import rigidHaulTruck from "@/assets/photos/rigid-haul-truck.jpg";
 const courseOptions = [
   {
     title: "$600 Short Course",
-    duration: "1-4 hours",
+    duration: "1.5 hours initial",
     price: "$600",
     description: "Quick moxy certification with nationally recognised qualification",
     bookingUrl: "https://live.cailintraining.com.au/short_course_moxy-book",
@@ -82,7 +82,7 @@ const faqs = [
   },
   {
     question: "How long does moxy training in Perth take?",
-    answer: "Our short course runs 1–4 hours for those with some experience. Full day moxy training in Perth has unlimited hours — we train until you're genuinely confident and competent. There's no rushed timeframe, unlike other Perth providers who cap seat time at 15–45 minutes.",
+    answer: "Our short course runs 1.5 hours initial for those with some experience. Full day moxy training in Perth has unlimited hours — we train until you're genuinely confident and competent. There's no rushed timeframe, unlike other Perth providers who cap seat time at 15–45 minutes.",
   },
   {
     question: "What's the difference between a Moxy and a rigid dump truck?",
