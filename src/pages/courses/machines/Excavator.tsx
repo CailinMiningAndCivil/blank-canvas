@@ -17,7 +17,7 @@ import trainerExcavatorDistance from "@/assets/photos/trainer-excavator-distance
 const courseOptions = [
   {
     title: "$600 Course",
-    duration: "1-4 hours",
+    duration: "1.5 hours initial",
     price: "$600",
     description: "Quick certification with nationally recognised qualification",
     bookingUrl: "https://live.cailintraining.com.au/short_course_excavator-book",
