@@ -179,6 +179,57 @@ const DiscoveryCall = () => {
         </div>
       </section>
 
+      {/* Paid Coaching Call Section */}
+      <section className="py-16 md:py-20 bg-muted">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-2xl md:text-3xl font-bold font-display mb-4">
+                Don't Need a Course? Just Want a Job?
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Book a 1:1 paid coaching call with Niamh and get a personalised plan to break into the Mining & Civil industry — no matter where you are in the world.
+              </p>
+            </div>
+            
+            <div className="bg-card rounded-xl p-6 md:p-8 border border-border shadow-card mb-8">
+              <h3 className="text-xl font-semibold mb-4">What's included:</h3>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span>Personalised career strategy session with Niamh</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span>A full recap and action plan emailed to you directly after the call</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <span>Expert advice tailored to your situation</span>
+                </li>
+              </ul>
+              
+              <h3 className="text-xl font-semibold mb-4">This call is perfect if you are:</h3>
+              <ul className="space-y-2 mb-8 text-muted-foreground">
+                <li>Outside of Australia</li>
+                <li>Not looking for training — just want a job</li>
+                <li>Still exploring your options</li>
+                <li>Not yet ready to invest in a course</li>
+              </ul>
+              
+              <Button
+                size="lg"
+                variant="hero"
+                className="w-full text-lg py-6 shadow-glow"
+                onClick={() => window.open("https://calendly.com/niamh-cailin/coaching-call", "_blank")}
+              >
+                Book a 1:1 Coaching Call
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Pre-Qualification Form / Booking Widget Section */}
       <section id="booking-widget" className="py-16 md:py-24">
         <div className="container mx-auto px-4">
