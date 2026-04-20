@@ -18,12 +18,12 @@ const SUPABASE_URL = "https://opdxvpqimcfhawcznxyc.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZHh2cHFpbWNmaGF3Y3pueHljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMTY3NzksImV4cCI6MjA4OTg5Mjc3OX0.fQ32jaRclUNFt-8KsNf0VYLyRZCly4xLYX-f-AxUIzA";
 
 const benefits = [
-  "Join 2,000+ students who've launched successful careers in mining & civil construction.",
-  "Learn how our graduates earn on average $150k per year — we've helped generate $180M+ in income.",
-  "Get trained on a LIVE mine site with 1:1 student to trainer ratio — not a concrete yard.",
-  "Discover how our training is recognised as real work experience by employers.",
-  "Discover CTF government funding that may cover your training costs.",
-  "Find out why we're different from typical providers — maximum seat time, unlimited return training.",
+  "Personalised career strategy session with Niamh.",
+  "A full recap and action plan emailed to you directly after the call.",
+  "Expert advice tailored to your situation.",
+  "Perfect if you're outside of Australia.",
+  "Ideal if you're not looking for training — just want a job.",
+  "Great if you're still exploring your options or not yet ready to invest in a course.",
 ];
 
 type FormState = "form" | "qualified" | "not-qualified";
