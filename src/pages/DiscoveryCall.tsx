@@ -18,12 +18,12 @@ const SUPABASE_URL = "https://opdxvpqimcfhawcznxyc.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZHh2cHFpbWNmaGF3Y3pueHljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMTY3NzksImV4cCI6MjA4OTg5Mjc3OX0.fQ32jaRclUNFt-8KsNf0VYLyRZCly4xLYX-f-AxUIzA";
 
 const benefits = [
-  "Join 2,000+ students who've launched successful careers in mining & civil construction.",
-  "Learn how our graduates earn on average $150k per year — we've helped generate $180M+ in income.",
-  "Get trained on a LIVE mine site with 1:1 student to trainer ratio — not a concrete yard.",
-  "Discover how our training is recognised as real work experience by employers.",
-  "Discover CTF government funding that may cover your training costs.",
-  "Find out why we're different from typical providers — maximum seat time, unlimited return training.",
+  "Personalised career strategy session with Niamh.",
+  "A full recap and action plan emailed to you directly after the call.",
+  "Expert advice tailored to your situation.",
+  "Perfect if you're outside of Australia.",
+  "Ideal if you're not looking for training — just want a job.",
+  "Great if you're still exploring your options or not yet ready to invest in a course.",
 ];
 
 type FormState = "form" | "qualified" | "not-qualified";
@@ -95,15 +95,15 @@ const DiscoveryCall = () => {
         <div className="container relative z-10 mx-auto px-4 py-16 md:py-24">
           <div className="max-w-2xl">
             <p className="text-lg md:text-xl text-muted-foreground mb-4 animate-fade-up" style={{ animationDelay: "0.1s" }}>
-              Looking to get trained as a machine operator to enter the Civil & Mining industries?
+              Don't need a course? Just want a job?
             </p>
             
             <h1 className="text-3xl md:text-5xl font-bold font-display mb-6 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-              Book Your <span className="text-gradient">1:1 Call</span> With Niamh
+              Book Your <span className="text-gradient">1:1 Paid Coaching Call</span> With Niamh
             </h1>
             
             <p className="text-xl md:text-2xl font-semibold text-foreground mb-8 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-              <span className="text-primary">60%</span> of our graduates secure employment — let us show you how!
+              Get a personalised plan to break into the Mining & Civil industry — no matter where you are in the world.
             </p>
             
             <Button 
@@ -127,7 +127,7 @@ const DiscoveryCall = () => {
             {/* Benefits List */}
             <div className="space-y-5">
               <h2 className="text-2xl md:text-3xl font-bold font-display mb-8">
-                Why Choose <span className="text-gradient">Cailin?</span>
+                What's <span className="text-gradient">Included</span>
               </h2>
               
               {benefits.map((benefit, index) => (
@@ -151,10 +151,10 @@ const DiscoveryCall = () => {
                 />
                 
                 <h3 className="text-xl md:text-2xl font-bold font-display text-center mb-2">
-                  Ready to Start Your Career?
+                  Ready to Map Out Your Path?
                 </h3>
                 <p className="text-muted-foreground text-center mb-6">
-                  Speak with Niamh today — no obligation, just expert guidance on your training pathway.
+                  Book a 1:1 paid coaching call with Niamh and walk away with a clear, personalised action plan.
                 </p>
                 
                 <Button 
@@ -174,57 +174,6 @@ const DiscoveryCall = () => {
                   </Link>
                 </p>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Paid Coaching Call Section */}
-      <section className="py-16 md:py-20 bg-muted">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-10">
-              <h2 className="text-2xl md:text-3xl font-bold font-display mb-4">
-                Don't Need a Course? Just Want a Job?
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Book a 1:1 paid coaching call with Niamh and get a personalised plan to break into the Mining & Civil industry — no matter where you are in the world.
-              </p>
-            </div>
-            
-            <div className="bg-card rounded-xl p-6 md:p-8 border border-border shadow-card mb-8">
-              <h3 className="text-xl font-semibold mb-4">What's included:</h3>
-              <ul className="space-y-3 mb-6">
-                <li className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span>Personalised career strategy session with Niamh</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span>A full recap and action plan emailed to you directly after the call</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span>Expert advice tailored to your situation</span>
-                </li>
-              </ul>
-              
-              <h3 className="text-xl font-semibold mb-4">This call is perfect if you are:</h3>
-              <ul className="space-y-2 mb-8 text-muted-foreground">
-                <li>Outside of Australia</li>
-                <li>Not looking for training — just want a job</li>
-                <li>Still exploring your options</li>
-                <li>Not yet ready to invest in a course</li>
-              </ul>
-              
-              <Button
-                size="lg"
-                variant="hero"
-                className="w-full text-lg py-6 shadow-glow"
-                onClick={() => window.open("https://calendly.com/niamh-cailin/coaching-call", "_blank")}
-              >
-                Book a 1:1 Coaching Call
-              </Button>
             </div>
           </div>
         </div>
