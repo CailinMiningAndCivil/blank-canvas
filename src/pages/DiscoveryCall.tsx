@@ -151,10 +151,10 @@ const DiscoveryCall = () => {
                 />
                 
                 <h3 className="text-xl md:text-2xl font-bold font-display text-center mb-2">
-                  Ready to Start Your Career?
+                  Ready to Map Out Your Path?
                 </h3>
                 <p className="text-muted-foreground text-center mb-6">
-                  Speak with Niamh today — no obligation, just expert guidance on your training pathway.
+                  Book a 1:1 paid coaching call with Niamh and walk away with a clear, personalised action plan.
                 </p>
                 
                 <Button 
