@@ -95,15 +95,15 @@ const DiscoveryCall = () => {
         <div className="container relative z-10 mx-auto px-4 py-16 md:py-24">
           <div className="max-w-2xl">
             <p className="text-lg md:text-xl text-muted-foreground mb-4 animate-fade-up" style={{ animationDelay: "0.1s" }}>
-              Looking to get trained as a machine operator to enter the Civil & Mining industries?
+              Don't need a course? Just want a job?
             </p>
             
             <h1 className="text-3xl md:text-5xl font-bold font-display mb-6 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-              Book Your <span className="text-gradient">1:1 Call</span> With Niamh
+              Book Your <span className="text-gradient">1:1 Paid Coaching Call</span> With Niamh
             </h1>
             
             <p className="text-xl md:text-2xl font-semibold text-foreground mb-8 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-              <span className="text-primary">60%</span> of our graduates secure employment — let us show you how!
+              Get a personalised plan to break into the Mining & Civil industry — no matter where you are in the world.
             </p>
             
             <Button 
