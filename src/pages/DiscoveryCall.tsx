@@ -127,7 +127,7 @@ const DiscoveryCall = () => {
             {/* Benefits List */}
             <div className="space-y-5">
               <h2 className="text-2xl md:text-3xl font-bold font-display mb-8">
-                Why Choose <span className="text-gradient">Cailin?</span>
+                What's <span className="text-gradient">Included</span>
               </h2>
               
               {benefits.map((benefit, index) => (
