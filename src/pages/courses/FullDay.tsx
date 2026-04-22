@@ -62,7 +62,8 @@ const FullDay = () => {
               and job-ready — no rushing, no time limits.
             </p>
             <div className="inline-block bg-primary/10 px-8 py-4 rounded-xl">
-              <span className="text-primary font-display text-4xl">Starts at $1,200</span>
+              <span className="text-primary font-display text-4xl block">Starts at $1,200</span>
+              <span className="text-foreground text-sm mt-1 block">4 hours — Roller / Watercart</span>
             </div>
           </div>
         </div>
