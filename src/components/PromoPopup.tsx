@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { X, Sparkles } from "lucide-react";
+import { X, Sparkles, Timer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const PromoPopup = () => {
