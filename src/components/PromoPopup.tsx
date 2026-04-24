@@ -38,26 +38,20 @@ export const PromoPopup = () => {
 
         <div className="bg-gradient-to-br from-primary to-primary/80 px-6 py-5 text-primary-foreground">
           <div className="flex items-center gap-2 mb-1">
-            <Sparkles className="h-5 w-5" />
+            <Timer className="h-5 w-5" />
             <span className="text-xs font-semibold uppercase tracking-wider">Limited Time Offer</span>
           </div>
           <h2 className="font-display text-2xl leading-tight">
-            Unlimited Free Returns
+            Offer Ends 30th April 2026
           </h2>
         </div>
 
         <div className="p-6 space-y-4">
           <p className="text-foreground text-base leading-relaxed">
-            Book <span className="font-semibold">any bundle</span> and unlock{" "}
+            Book <span className="font-semibold">any bundle</span> before{" "}
+            <span className="font-semibold text-primary">30th April 2026</span> and unlock{" "}
             <span className="font-semibold">unlimited free returns</span> on your training.
           </p>
-
-          <div className="bg-primary/10 border border-primary/20 rounded-xl px-4 py-3 flex items-center gap-3">
-            <Timer className="h-5 w-5 text-primary shrink-0" />
-            <span className="text-primary font-bold text-sm uppercase tracking-wide">
-              Offer Ends 30th April 2026
-            </span>
-          </div>
 
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li className="flex items-start gap-2">
