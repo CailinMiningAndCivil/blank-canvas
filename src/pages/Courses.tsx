@@ -155,6 +155,7 @@ const features = [
 const Courses = () => {
   return (
     <Layout>
+      <PromoPopup />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={loaderDumptruckAction} alt="Loader and dumptruck in action on site" />
