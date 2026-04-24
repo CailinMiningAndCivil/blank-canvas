@@ -4,6 +4,7 @@ import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, ArrowRight, Banknote, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BookLink } from "@/components/BookLink";
+import { PromoPopup } from "@/components/PromoPopup";
 
 // Real Cailin photos
 import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
@@ -94,6 +95,7 @@ const benefits = [
 const TicketsTraining = () => {
   return (
     <Layout>
+      <PromoPopup />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={bundlesHero} alt="Fleet of mining machines on site" />
