@@ -5,6 +5,7 @@ import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, ArrowRight, FileCheck, Zap, Briefcase, RefreshCw } from "lucide-react";
 import { MachineCard } from "@/components/MachineCard";
 import { CTFFundingBanner } from "@/components/CTFFundingBanner";
+import { PromoPopup } from "@/components/PromoPopup";
 
 // Real Cailin photos
 import fullDayHero from "@/assets/photos/full-day-hero.jpg";
