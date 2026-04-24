@@ -7,6 +7,7 @@ import { MachineCard } from "@/components/MachineCard";
 import { PartnersSection } from "@/components/PartnersSection";
 import { AwardsSection } from "@/components/AwardsSection";
 import { VideoSection } from "@/components/VideoSection";
+import { PromoPopup } from "@/components/PromoPopup";
 
 // Real Cailin photos
 import fleetLineupWide from "@/assets/photos/fleet-lineup-wide.jpg";
@@ -96,6 +97,7 @@ const individualMachines = [
 const Index = () => {
   return (
     <Layout>
+      <PromoPopup />
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         <video
