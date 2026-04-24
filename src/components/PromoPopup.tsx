@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { X, Sparkles } from "lucide-react";
+import { X, Sparkles, Timer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const PromoPopup = () => {
@@ -48,10 +48,16 @@ export const PromoPopup = () => {
 
         <div className="p-6 space-y-4">
           <p className="text-foreground text-base leading-relaxed">
-            Book <span className="font-semibold">any bundle</span> before{" "}
-            <span className="font-semibold text-primary">30th April 2026</span> and unlock{" "}
+            Book <span className="font-semibold">any bundle</span> and unlock{" "}
             <span className="font-semibold">unlimited free returns</span> on your training.
           </p>
+
+          <div className="bg-primary/10 border border-primary/20 rounded-xl px-4 py-3 flex items-center gap-3">
+            <Timer className="h-5 w-5 text-primary shrink-0" />
+            <span className="text-primary font-bold text-sm uppercase tracking-wide">
+              Offer Ends 30th April 2026
+            </span>
+          </div>
 
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li className="flex items-start gap-2">
@@ -61,10 +67,6 @@ export const PromoPopup = () => {
             <li className="flex items-start gap-2">
               <span className="text-primary mt-0.5">✓</span>
               <span>No extra cost to come back and refresh</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-primary mt-0.5">✓</span>
-              <span>Offer ends 30th April 2026</span>
             </li>
           </ul>
 
