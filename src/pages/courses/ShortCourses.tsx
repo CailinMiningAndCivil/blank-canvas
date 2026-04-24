@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/accordion";
 import { CTFFundingBanner } from "@/components/CTFFundingBanner";
 import { MachineCard } from "@/components/MachineCard";
+import { PromoPopup } from "@/components/PromoPopup";
 
 // Real Cailin photos
 import machinesCollage from "@/assets/photos/machines-collage.png";
@@ -89,6 +90,7 @@ const benefits = [
 const ShortCourses = () => {
   return (
     <Layout>
+      <PromoPopup />
       {/* Hero Section with Image */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={machinesCollage} alt="Mining and civil machinery collage" />
