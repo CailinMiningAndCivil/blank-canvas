@@ -154,7 +154,7 @@ const DiscoveryCall = () => {
                   Ready to Map Out Your Path?
                 </h3>
                 <p className="text-muted-foreground text-center mb-6">
-                  Book a 1:1 paid coaching call with Niamh and walk away with a clear, personalised action plan.
+                  Book a 1:1 coaching call with Niamh and walk away with a clear, personalised action plan.
                 </p>
                 
                 <Button 
