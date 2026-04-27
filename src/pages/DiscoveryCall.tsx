@@ -99,7 +99,7 @@ const DiscoveryCall = () => {
             </p>
             
             <h1 className="text-3xl md:text-5xl font-bold font-display mb-6 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-              Book Your <span className="text-gradient">1:1 Paid Coaching Call</span> With Niamh
+              Book Your <span className="text-gradient">1:1 Coaching Call</span> With Niamh
             </h1>
             
             <p className="text-xl md:text-2xl font-semibold text-foreground mb-8 animate-fade-up" style={{ animationDelay: "0.3s" }}>
@@ -154,7 +154,7 @@ const DiscoveryCall = () => {
                   Ready to Map Out Your Path?
                 </h3>
                 <p className="text-muted-foreground text-center mb-6">
-                  Book a 1:1 paid coaching call with Niamh and walk away with a clear, personalised action plan.
+                  Book a 1:1 coaching call with Niamh and walk away with a clear, personalised action plan.
                 </p>
                 
                 <Button 
