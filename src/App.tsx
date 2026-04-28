@@ -76,6 +76,7 @@ const App = () => (
           <Route path="/rtodata-success" element={<RtoDataSuccess />} />
           <Route path="/recruitment" element={<Recruitment />} />
           <Route path="/affiliate" element={<Affiliate />} />
+          <Route path="/returning-student" element={<ReturningStudent />} />
           <Route path="/practical-assessments" element={<Navigate to="/courses" replace />} />
           <Route path="/cailin-courses" element={<Navigate to="/courses" replace />} />
           <Route path="/e-book" element={<Navigate to="/courses" replace />} />
