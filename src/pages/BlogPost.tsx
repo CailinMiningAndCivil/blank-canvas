@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { ArrowLeft, Calendar, Tag } from "lucide-react";
+import { staticBlogPosts } from "@/data/blogPosts";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -20,8 +21,11 @@ const BlogPost = () => {
         .eq("published", true)
         .maybeSingle();
 
-      if (error) throw error;
-      return data;
+      if (error) {
+        console.error("Blog post fetch error:", error);
+        return staticBlogPosts.find((staticPost) => staticPost.slug === slug) ?? null;
+      }
+      return data ?? staticBlogPosts.find((staticPost) => staticPost.slug === slug) ?? null;
     },
     enabled: !!slug,
   });
@@ -39,8 +43,12 @@ const BlogPost = () => {
         .order("published_at", { ascending: false })
         .limit(3);
 
-      if (error) throw error;
-      return data;
+      if (error) return [];
+      return data?.length
+        ? data
+        : staticBlogPosts
+            .filter((staticPost) => staticPost.category === post!.category && staticPost.id !== post!.id)
+            .slice(0, 3);
     },
     enabled: !!post?.category && !!post?.id,
   });
