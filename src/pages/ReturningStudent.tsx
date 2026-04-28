@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import { HeroImage } from "@/components/ui/hero-image";
 import { ArrowRight, XCircle, Loader2, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import trainerSiteSafety from "@/assets/photos/trainer-site-safety.jpg";
 
 const MACHINES: { label: string; url: string }[] = [
@@ -42,6 +41,7 @@ const ReturningStudent = () => {
     setNotFound(false);
 
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       const { data, error } = await supabase.functions.invoke("verify-returning-student", {
         body: { email: trimmedEmail },
       });
@@ -79,6 +79,7 @@ const ReturningStudent = () => {
   const handleMachineSelect = async (label: string, url: string) => {
     // Record selection (best effort) then redirect
     try {
+      const { supabase } = await import("@/integrations/supabase/client");
       await supabase.from("returning_student_submissions").insert({
         full_name: fullName.trim(),
         email: email.trim(),
