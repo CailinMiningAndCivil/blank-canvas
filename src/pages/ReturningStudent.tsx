@@ -29,21 +29,13 @@ const ReturningStudent = () => {
     setNotFound(false);
 
     try {
-      const res = await fetch(FUNCTION_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          apikey: ANON_KEY,
-          Authorization: `Bearer ${ANON_KEY}`,
-        },
-        body: JSON.stringify({ email: trimmed }),
+      const { data, error } = await supabase.functions.invoke("verify-returning-student", {
+        body: { email: trimmed },
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
+      if (error) {
         toast({
-          title: data?.error || "Verification failed. Please try again.",
+          title: (data as { error?: string } | null)?.error || "Verification failed. Please try again.",
           variant: "destructive",
         });
         return;
