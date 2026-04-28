@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { ArrowRight, Calendar } from "lucide-react";
 
 import fleetLineupWide from "@/assets/photos/fleet-lineup-wide.jpg";
+import { staticBlogPosts } from "@/data/blogPosts";
 
 const Blog = () => {
   const { data: posts, isLoading, error: queryError } = useQuery({
@@ -20,14 +21,16 @@ const Blog = () => {
 
       if (error) {
         console.error("Blog posts fetch error:", error);
-        throw error;
+        return staticBlogPosts;
       }
       console.log("Blog posts loaded:", data?.length ?? 0);
-      return data ?? [];
+      return data?.length ? data : staticBlogPosts;
     },
     staleTime: 0,
     refetchOnMount: "always",
   });
+
+  const visiblePosts = posts?.length ? posts : staticBlogPosts;
 
   return (
     <Layout>
@@ -65,9 +68,9 @@ const Blog = () => {
                 </div>
               ))}
             </div>
-          ) : posts && posts.length > 0 ? (
+          ) : visiblePosts.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {posts.map((post) => (
+              {visiblePosts.map((post) => (
                 <Link
                   key={post.id}
                   to={`/blog/${post.slug}`}
