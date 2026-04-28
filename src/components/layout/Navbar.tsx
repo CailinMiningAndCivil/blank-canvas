@@ -43,6 +43,19 @@ export const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
+      {/* Top utility bar */}
+      <div className="hidden lg:block border-b border-border/50 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-end h-8 gap-4 text-xs">
+            <Link
+              to="/returning-student"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium"
+            >
+              Returning Student? →
+            </Link>
+          </div>
+        </div>
+      </div>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
