@@ -41,7 +41,7 @@ const ReturningStudent = () => {
         return;
       }
 
-      if (data?.matched) {
+      if ((data as { matched?: boolean } | null)?.matched) {
         window.location.href = REDIRECT_URL;
         return;
       }
