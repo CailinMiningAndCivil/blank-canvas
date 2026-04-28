@@ -119,6 +119,33 @@ export type Database = {
         }
         Relationships: []
       }
+      returning_student_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          matched: boolean
+          selected_machine: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          matched?: boolean
+          selected_machine?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          matched?: boolean
+          selected_machine?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

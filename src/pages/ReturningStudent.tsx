@@ -4,23 +4,36 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HeroImage } from "@/components/ui/hero-image";
-import { ArrowRight, CheckCircle, XCircle, Loader2 } from "lucide-react";
+import { ArrowRight, XCircle, Loader2, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import trainerSiteSafety from "@/assets/photos/trainer-site-safety.jpg";
 
-const REDIRECT_URL = "https://live.cailintraining.com.au/returnsession";
+const MACHINES: { label: string; url: string }[] = [
+  { label: "ADT Moxy", url: "https://live.cailintraining.com.au/moxy_returnsession" },
+  { label: "Wheel Loader", url: "https://live.cailintraining.com.au/wheel_loader_returnsession" },
+  { label: "Watercart", url: "https://live.cailintraining.com.au/watercart_returnsession" },
+  { label: "Roller", url: "https://live.cailintraining.com.au/roller_returnsession" },
+  { label: "Excavator", url: "https://live.cailintraining.com.au/excavator_returnsession" },
+];
 
 const ReturningStudent = () => {
   const { toast } = useToast();
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  const [verified, setVerified] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const trimmed = email.trim();
-    if (!trimmed) {
+    const trimmedName = fullName.trim();
+    const trimmedEmail = email.trim();
+    if (!trimmedName) {
+      toast({ title: "Please enter your full name", variant: "destructive" });
+      return;
+    }
+    if (!trimmedEmail) {
       toast({ title: "Please enter your email", variant: "destructive" });
       return;
     }
@@ -30,7 +43,7 @@ const ReturningStudent = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke("verify-returning-student", {
-        body: { email: trimmed },
+        body: { email: trimmedEmail },
       });
 
       if (error) {
@@ -41,8 +54,17 @@ const ReturningStudent = () => {
         return;
       }
 
-      if ((data as { matched?: boolean } | null)?.matched) {
-        window.location.href = REDIRECT_URL;
+      const matched = (data as { matched?: boolean } | null)?.matched ?? false;
+
+      // Store submission for record-keeping (best effort)
+      await supabase.from("returning_student_submissions").insert({
+        full_name: trimmedName,
+        email: trimmedEmail,
+        matched,
+      });
+
+      if (matched) {
+        setVerified(true);
         return;
       }
 
@@ -52,6 +74,21 @@ const ReturningStudent = () => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleMachineSelect = async (label: string, url: string) => {
+    // Record selection (best effort) then redirect
+    try {
+      await supabase.from("returning_student_submissions").insert({
+        full_name: fullName.trim(),
+        email: email.trim(),
+        matched: true,
+        selected_machine: label,
+      });
+    } catch {
+      // ignore — proceed with redirect regardless
+    }
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -73,21 +110,61 @@ const ReturningStudent = () => {
               Returning <span className="text-gradient">Student</span> Verification
             </h1>
             <p className="text-xl md:text-2xl font-semibold text-foreground animate-fade-up">
-              Enter the email address you used when you booked your original course to continue.
+              Confirm your details to choose the machine you'd like to book your return session for.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Form */}
+      {/* Content */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-xl">
-            {!notFound ? (
+            {verified ? (
+              <div className="bg-card rounded-xl p-6 md:p-8 border border-border shadow-card">
+                <div className="text-center mb-8">
+                  <CheckCircle className="w-14 h-14 text-primary mx-auto mb-4" />
+                  <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-2">
+                    You're verified, {fullName.trim().split(" ")[0]}!
+                  </h2>
+                  <p className="text-muted-foreground">
+                    Select the machine you'd like to book your return session for.
+                  </p>
+                </div>
+                <div className="grid gap-3">
+                  {MACHINES.map((m) => (
+                    <Button
+                      key={m.label}
+                      variant="outline"
+                      size="lg"
+                      className="w-full justify-between text-base py-6"
+                      onClick={() => handleMachineSelect(m.label, m.url)}
+                    >
+                      <span>{m.label}</span>
+                      <ArrowRight className="w-5 h-5" />
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            ) : !notFound ? (
               <form
                 onSubmit={handleSubmit}
                 className="space-y-6 bg-card rounded-xl p-6 md:p-8 border border-border shadow-card"
               >
+                <div className="space-y-2">
+                  <Label htmlFor="fullName">Full Name</Label>
+                  <Input
+                    id="fullName"
+                    type="text"
+                    placeholder="Your full name"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    maxLength={120}
+                    required
+                    autoComplete="name"
+                  />
+                </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="email">Email Address</Label>
                   <Input
@@ -146,14 +223,6 @@ const ReturningStudent = () => {
                 </Button>
               </div>
             )}
-
-            <div className="mt-8 flex items-start gap-3 text-sm text-muted-foreground">
-              <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <p>
-                Your email is checked securely against our student records. We don't store anything
-                you enter on this page.
-              </p>
-            </div>
           </div>
         </div>
       </section>
