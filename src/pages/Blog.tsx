@@ -8,7 +8,7 @@ import { ArrowRight, Calendar } from "lucide-react";
 import fleetLineupWide from "@/assets/photos/fleet-lineup-wide.jpg";
 
 const Blog = () => {
-  const { data: posts, isLoading } = useQuery({
+  const { data: posts, isLoading, error: queryError } = useQuery({
     queryKey: ["blog-posts"],
     queryFn: async () => {
       const { supabase } = await import("@/integrations/supabase/client");
@@ -18,9 +18,15 @@ const Blog = () => {
         .eq("published", true)
         .order("published_at", { ascending: false });
 
-      if (error) throw error;
-      return data;
+      if (error) {
+        console.error("Blog posts fetch error:", error);
+        throw error;
+      }
+      console.log("Blog posts loaded:", data?.length ?? 0);
+      return data ?? [];
     },
+    staleTime: 0,
+    refetchOnMount: "always",
   });
 
   return (
