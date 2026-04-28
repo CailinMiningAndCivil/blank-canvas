@@ -6,11 +6,10 @@ import { Label } from "@/components/ui/label";
 import { HeroImage } from "@/components/ui/hero-image";
 import { ArrowRight, CheckCircle, XCircle, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import trainerSiteSafety from "@/assets/photos/trainer-site-safety.jpg";
 
 const REDIRECT_URL = "https://live.cailintraining.com.au/returnsession";
-const FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/verify-returning-student`;
-const ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 const ReturningStudent = () => {
   const { toast } = useToast();
@@ -30,27 +29,19 @@ const ReturningStudent = () => {
     setNotFound(false);
 
     try {
-      const res = await fetch(FUNCTION_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          apikey: ANON_KEY,
-          Authorization: `Bearer ${ANON_KEY}`,
-        },
-        body: JSON.stringify({ email: trimmed }),
+      const { data, error } = await supabase.functions.invoke("verify-returning-student", {
+        body: { email: trimmed },
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
+      if (error) {
         toast({
-          title: data?.error || "Verification failed. Please try again.",
+          title: (data as { error?: string } | null)?.error || "Verification failed. Please try again.",
           variant: "destructive",
         });
         return;
       }
 
-      if (data?.matched) {
+      if ((data as { matched?: boolean } | null)?.matched) {
         window.location.href = REDIRECT_URL;
         return;
       }
