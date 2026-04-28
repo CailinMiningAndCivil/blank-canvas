@@ -33,7 +33,7 @@ const Blog = () => {
           <div className="max-w-3xl">
             <p className="text-primary font-medium tracking-widest uppercase mb-4">News & Insights</p>
             <h1 className="font-display text-5xl md:text-6xl text-foreground mb-6">
-              Mining & Civil Blog
+              Cailin Mining & Civil
             </h1>
             <p className="text-muted-foreground text-lg">
               Tips, industry news, and success stories from the mining and civil construction world.
