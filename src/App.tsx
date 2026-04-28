@@ -32,6 +32,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import RtoDataSuccess from "./pages/RtoDataSuccess";
 import Recruitment from "./pages/Recruitment";
 import Affiliate from "./pages/Affiliate";
+import ReturningStudent from "./pages/ReturningStudent";
 
 const CareersRedirect = () => {
   window.location.href = "https://live.cailintraining.com.au/join_cailin_portal";
@@ -75,6 +76,7 @@ const App = () => (
           <Route path="/rtodata-success" element={<RtoDataSuccess />} />
           <Route path="/recruitment" element={<Recruitment />} />
           <Route path="/affiliate" element={<Affiliate />} />
+          <Route path="/returning-student" element={<ReturningStudent />} />
           <Route path="/practical-assessments" element={<Navigate to="/courses" replace />} />
           <Route path="/cailin-courses" element={<Navigate to="/courses" replace />} />
           <Route path="/e-book" element={<Navigate to="/courses" replace />} />
