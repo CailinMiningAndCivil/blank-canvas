@@ -26,7 +26,6 @@ const courseLinks = [
   { name: "Full Day", path: "/courses/full-day" },
   { name: "RPL (Assessments Only)", path: "/rpl" },
   { name: "VOC (Verification)", path: "/courses/voc" },
-  { name: "Returning Student", path: "/returning-student" },
 ];
 
 const machineLinks = [
