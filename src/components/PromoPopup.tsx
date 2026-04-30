@@ -7,13 +7,11 @@ export const PromoPopup = () => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem("promoPopupDismissed") === "true") return;
     const timer = setTimeout(() => setOpen(true), 1200);
     return () => clearTimeout(timer);
   }, []);
 
   const handleClose = () => {
-    sessionStorage.setItem("promoPopupDismissed", "true");
     setOpen(false);
   };
 
