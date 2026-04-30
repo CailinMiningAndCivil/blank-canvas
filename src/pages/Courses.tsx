@@ -38,7 +38,7 @@ const courseCategories = [
     id: "bundles",
     title: "Bundles",
     subtitle: "Full Training Programs",
-    description: "Double or triple your employment opportunities. Get 1:1 training with unlimited hours on a live mine site.",
+    description: "Double or triple your employment opportunities. Get 1:1 training on a live mine site.",
     price: "$2,500",
     priceNote: "CTF Funding Available",
     image: bundlesHero,
