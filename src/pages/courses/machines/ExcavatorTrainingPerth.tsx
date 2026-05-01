@@ -16,6 +16,7 @@ import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import trainerExcavatorDistance from "@/assets/photos/trainer-excavator-distance.jpg";
 import excavatorTraining1on1 from "@/assets/photos/excavator-training-1on1.jpg";
 import topconGpsExcavator from "@/assets/photos/topcon-gps-excavator.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseOptions = [
   {

@@ -19,6 +19,7 @@ import catDumptruckLoaderPair from "@/assets/photos/cat-dumptruck-loader-pair.jp
 import loaderDumptruckWide from "@/assets/photos/loader-dumptruck-wide.jpg";
 import loaderDumptruckFramed from "@/assets/photos/loader-dumptruck-framed.jpg";
 import rigidHaulTruck from "@/assets/photos/rigid-haul-truck.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseOptions = [
   {

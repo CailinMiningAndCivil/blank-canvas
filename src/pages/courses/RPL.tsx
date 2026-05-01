@@ -9,6 +9,7 @@ import { RPLApplicationForm } from "@/components/RPLApplicationForm";
 // Real Cailin photos
 import rplPageHero from "@/assets/photos/rpl-page-hero.png";
 import rollerInspection from "@/assets/photos/roller-inspection.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const benefits = [
   "Turn prior experience into recognised qualifications",

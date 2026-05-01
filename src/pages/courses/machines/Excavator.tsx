@@ -13,6 +13,7 @@ import {
 
 import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import trainerExcavatorDistance from "@/assets/photos/trainer-excavator-distance.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseOptions = [
   {

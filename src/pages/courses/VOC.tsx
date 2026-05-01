@@ -23,6 +23,7 @@ import skidSteerLoader from "@/assets/photos/skid-steer-loader.jpg";
 import dozer from "@/assets/photos/dozer.jpg";
 import rigidHaulTruck from "@/assets/photos/rigid-haul-truck.jpg";
 import integratedToolCarrier from "@/assets/photos/integrated-tool-carrier.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const machines = [
   {

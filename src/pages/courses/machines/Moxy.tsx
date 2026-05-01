@@ -13,6 +13,7 @@ import {
 
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import dumptruckTrayRaised from "@/assets/photos/dumptruck-tray-raised.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseOptions = [
   {

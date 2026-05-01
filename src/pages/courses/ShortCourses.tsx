@@ -20,6 +20,7 @@ import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import rollerArtistic from "@/assets/photos/roller-artistic.jpg";
 import watercartNew from "@/assets/photos/watercart-new.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const machines = [
   {

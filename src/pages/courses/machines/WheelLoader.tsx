@@ -13,6 +13,7 @@ import {
 
 import wheelloaderHero from "@/assets/photos/wheelloader-hero.jpg";
 import wheelloaderTraining from "@/assets/photos/wheelloader-training.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseOptions = [
   {

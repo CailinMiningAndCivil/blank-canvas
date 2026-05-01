@@ -13,6 +13,7 @@ import {
 
 import watercartNew from "@/assets/photos/watercart-new.jpg";
 import trainerSiteSafety from "@/assets/photos/trainer-site-safety.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseOptions = [
   {

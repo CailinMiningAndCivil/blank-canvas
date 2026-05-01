@@ -13,6 +13,7 @@ import {
 
 import rollerArtistic from "@/assets/photos/roller-artistic.jpg";
 import rollerInspection from "@/assets/photos/roller-inspection.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseOptions = [
   {

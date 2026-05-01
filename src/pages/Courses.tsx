@@ -20,6 +20,7 @@ import watercartNew from "@/assets/photos/watercart-new.jpg";
 import safetyEquipmentCheck from "@/assets/photos/safety-equipment-check.jpg";
 import rplHero from "@/assets/photos/rpl-page-hero.png";
 import vocHero from "@/assets/photos/voc-page-hero.png";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseCategories = [
   {

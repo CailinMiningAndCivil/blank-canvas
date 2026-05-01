@@ -16,6 +16,7 @@ import starterBundleImg from "@/assets/photos/starter-bundle.jpg";
 import loaderDumptruckPair from "@/assets/photos/loader-dumptruck-pair.jpg";
 import topconGpsExcavator from "@/assets/photos/topcon-gps-excavator.jpg";
 import interstateBundleImg from "@/assets/photos/interstate-bundle.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const bundles = [
   {

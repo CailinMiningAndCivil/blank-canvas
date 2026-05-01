@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { DollarSign, Link2, Share2, ArrowRight, CheckCircle } from "lucide-react";
 import affiliateHero from "@/assets/photos/affiliate-hero.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const benefits = [
   {

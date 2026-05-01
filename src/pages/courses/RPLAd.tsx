@@ -7,6 +7,7 @@ import { HeroImage } from "@/components/ui/hero-image";
 
 import trainerRadioSignaling from "@/assets/photos/trainer-radio-signaling.jpg";
 import rollerInspection from "@/assets/photos/roller-inspection.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const benefits = [
   "Turn prior experience into recognised qualifications",
