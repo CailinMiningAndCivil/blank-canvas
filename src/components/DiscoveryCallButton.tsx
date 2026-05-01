@@ -34,15 +34,16 @@ export const DiscoveryCallButton = ({ children, asChild, className }: DiscoveryC
       <DialogTrigger asChild>
         <Comp className={className}>{children}</Comp>
       </DialogTrigger>
-      <DialogContent className="max-w-3xl w-full p-0 overflow-hidden">
-        <DialogHeader className="px-6 pt-6 pb-2">
+      <DialogContent className="flex max-h-[94dvh] w-[calc(100vw-1rem)] max-w-4xl flex-col gap-0 overflow-hidden p-0 sm:w-full">
+        <DialogHeader className="shrink-0 px-6 pt-6 pb-2">
           <DialogTitle>Book Your Free Consultation</DialogTitle>
         </DialogHeader>
-        <div ref={containerRef} className="px-2 pb-4 max-h-[80vh] overflow-y-auto">
+        <div ref={containerRef} className="min-h-0 flex-1 overflow-y-auto px-2 pb-4">
           <iframe
             src="https://link.cailinminingcivil.com/widget/booking/piPnpnZ0UqdmekdW9Jsk"
-            style={{ width: "100%", border: "none", overflow: "hidden", minHeight: "650px" }}
-            scrolling="no"
+            className="h-[82dvh] min-h-[760px] w-full"
+            style={{ border: "none", overflow: "auto" }}
+            scrolling="yes"
             id="aHGnZe8ngh7CkTC1bmHF_1777611570281"
             title="Book a Discovery Call"
           />
