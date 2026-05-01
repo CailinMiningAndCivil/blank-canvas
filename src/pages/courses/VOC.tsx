@@ -289,9 +289,9 @@ const VOC = () => {
             Not sure if VOC is right for you? Contact our team to discuss your qualifications and requirements.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button asChild variant="hero" size="xl">
-              <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Contact Us</a>
-            </Button>
+            <DiscoveryCallButton asChild>
+              <Button variant="hero" size="xl">Contact Us</Button>
+            </DiscoveryCallButton>
             <Button asChild variant="outline" size="xl">
               <a href="tel:0483951501">
                 Call 0483 951 501

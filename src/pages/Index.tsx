@@ -130,9 +130,9 @@ const Index = () => {
               <Button asChild variant="hero" size="xl">
                 <Link to="/courses">View Courses</Link>
               </Button>
-              <Button asChild variant="heroOutline" size="xl">
-                <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Book Free Consultation</a>
-              </Button>
+              <DiscoveryCallButton asChild>
+              <Button variant="heroOutline" size="xl">Book Free Consultation</Button>
+            </DiscoveryCallButton>
             </div>
           </div>
         </div>
@@ -375,9 +375,9 @@ const Index = () => {
             Book a free consultation to learn how we can help you get started in the mining and civil industry.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild variant="hero" size="xl">
-              <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Book Free Consultation</a>
-            </Button>
+            <DiscoveryCallButton asChild>
+              <Button variant="hero" size="xl">Book Free Consultation</Button>
+            </DiscoveryCallButton>
             <Button asChild variant="heroOutline" size="xl">
               <a href="tel:0483951501">Call 0483 951 501</a>
             </Button>

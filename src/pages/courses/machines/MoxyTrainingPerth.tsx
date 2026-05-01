@@ -665,9 +665,9 @@ const MoxyTrainingPerth = () => {
             <Button asChild variant="hero" size="xl">
               <BookLink>Book Moxy Training Now</BookLink>
             </Button>
-            <Button asChild variant="outline" size="xl">
-              <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Free Consultation</a>
-            </Button>
+            <DiscoveryCallButton asChild>
+              <Button variant="outline" size="xl">Free Consultation</Button>
+            </DiscoveryCallButton>
           </div>
           <p className="text-muted-foreground text-sm mt-6">
             Or call us directly: <a href="tel:0483951501" className="text-primary font-medium">0483 951 501</a>

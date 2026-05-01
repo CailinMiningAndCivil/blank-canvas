@@ -247,9 +247,9 @@ const TicketsTraining = () => {
             Book a free consultation and our team will help you choose the best bundle for your career goals.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button asChild variant="hero" size="xl">
-              <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Book Free Consultation</a>
-            </Button>
+            <DiscoveryCallButton asChild>
+              <Button variant="hero" size="xl">Book Free Consultation</Button>
+            </DiscoveryCallButton>
             <Button asChild variant="outline" size="xl">
               <Link to="/courses">View All Courses</Link>
             </Button>

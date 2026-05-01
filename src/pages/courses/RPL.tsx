@@ -193,9 +193,9 @@ const RPL = () => {
               and qualifications.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild variant="hero" size="lg">
-                <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Book Consultation</a>
-              </Button>
+              <DiscoveryCallButton asChild>
+              <Button variant="hero" size="lg">Book Consultation</Button>
+            </DiscoveryCallButton>
               <Button asChild variant="outline" size="lg">
                 <a href="tel:0483951501">
                   Call Us <ArrowRight className="w-4 h-4 ml-2" />
