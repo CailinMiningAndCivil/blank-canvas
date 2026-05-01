@@ -13,6 +13,7 @@ import {
 
 import wheelloaderHero from "@/assets/photos/wheelloader-hero.jpg";
 import wheelloaderTraining from "@/assets/photos/wheelloader-training.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseOptions = [
   {
@@ -244,9 +245,9 @@ const WheelLoader = () => {
                 Book Now
               </BookLink>
             </Button>
-            <Button asChild variant="outline" size="xl">
-              <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Free Consultation</a>
-            </Button>
+            <DiscoveryCallButton asChild>
+              <Button variant="outline" size="xl">Free Consultation</Button>
+            </DiscoveryCallButton>
           </div>
         </div>
       </section>

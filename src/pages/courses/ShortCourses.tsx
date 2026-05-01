@@ -20,6 +20,7 @@ import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import rollerArtistic from "@/assets/photos/roller-artistic.jpg";
 import watercartNew from "@/assets/photos/watercart-new.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const machines = [
   {
@@ -229,9 +230,9 @@ const ShortCourses = () => {
             Our short courses are the quickest way to get certified and start your career in mining or civil construction.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button asChild variant="hero" size="xl">
-              <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Contact Us</a>
-            </Button>
+            <DiscoveryCallButton asChild>
+              <Button variant="hero" size="xl">Contact Us</Button>
+            </DiscoveryCallButton>
             <Button asChild variant="outline" size="xl">
               <a href="tel:0483951501">
                 Call 0483 951 501

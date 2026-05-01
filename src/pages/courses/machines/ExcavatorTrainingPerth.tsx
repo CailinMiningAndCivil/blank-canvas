@@ -16,6 +16,7 @@ import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import trainerExcavatorDistance from "@/assets/photos/trainer-excavator-distance.jpg";
 import excavatorTraining1on1 from "@/assets/photos/excavator-training-1on1.jpg";
 import topconGpsExcavator from "@/assets/photos/topcon-gps-excavator.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseOptions = [
   {
@@ -525,9 +526,9 @@ const ExcavatorTrainingPerth = () => {
             <Button asChild variant="hero" size="xl">
               <BookLink>Book Excavator Training Now</BookLink>
             </Button>
-            <Button asChild variant="outline" size="xl">
-              <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">Free Consultation</a>
-            </Button>
+            <DiscoveryCallButton asChild>
+              <Button variant="outline" size="xl">Free Consultation</Button>
+            </DiscoveryCallButton>
           </div>
         </div>
       </section>

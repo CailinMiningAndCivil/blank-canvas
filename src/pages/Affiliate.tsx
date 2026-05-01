@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { DollarSign, Link2, Share2, ArrowRight, CheckCircle } from "lucide-react";
 import affiliateHero from "@/assets/photos/affiliate-hero.jpg";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const benefits = [
   {
@@ -144,11 +145,9 @@ const Affiliate = () => {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
             Reach out to our team and we'll walk you through the affiliate program.
           </p>
-          <Button asChild variant="hero" size="xl">
-            <a href="https://live.cailintraining.com.au/discovery_call_landing_page" target="_blank" rel="noopener noreferrer">
-              Contact Us
-            </a>
-          </Button>
+          <DiscoveryCallButton asChild>
+              <Button variant="hero" size="xl">Contact Us</Button>
+            </DiscoveryCallButton>
         </div>
       </section>
     </Layout>
