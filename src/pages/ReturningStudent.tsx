@@ -69,7 +69,8 @@ const ReturningStudent = () => {
       }
 
       setNotFound(true);
-    } catch {
+    } catch (err) {
+      console.error("Returning student submit error:", err);
       toast({ title: "Something went wrong. Please try again.", variant: "destructive" });
     } finally {
       setIsSubmitting(false);
