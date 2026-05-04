@@ -16,6 +16,56 @@ const MACHINES: { label: string; url: string }[] = [
   { label: "Excavator", url: "https://live.cailintraining.com.au/excavator_returnsession" },
 ];
 
+const CLOUD_BASE_URL = "https://opdxvpqimcfhawcznxyc.supabase.co";
+const PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZHh2cHFpbWNmaGF3Y3pueHljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMTY3NzksImV4cCI6MjA4OTg5Mjc3OX0.fQ32jaRclUNFt-8KsNf0VYLyRZCly4xLYX-f-AxUIzA";
+const VERIFY_RETURNING_STUDENT_ENDPOINT = `${CLOUD_BASE_URL}/functions/v1/verify-returning-student`;
+const RETURNING_STUDENT_SUBMISSIONS_ENDPOINT = `${CLOUD_BASE_URL}/rest/v1/returning_student_submissions`;
+
+const cloudHeaders = {
+  "Content-Type": "application/json",
+  apikey: PUBLISHABLE_KEY,
+  Authorization: `Bearer ${PUBLISHABLE_KEY}`,
+};
+
+type VerificationResponse = {
+  matched?: boolean;
+  error?: string;
+};
+
+const verifyReturningStudent = async (email: string): Promise<VerificationResponse> => {
+  const response = await fetch(VERIFY_RETURNING_STUDENT_ENDPOINT, {
+    method: "POST",
+    headers: cloudHeaders,
+    body: JSON.stringify({ email }),
+  });
+
+  const data = (await response.json().catch(() => ({}))) as VerificationResponse;
+
+  if (!response.ok) {
+    throw new Error(data.error || "Verification failed. Please try again.");
+  }
+
+  return data;
+};
+
+const saveReturningStudentSubmission = async (submission: {
+  full_name: string;
+  email: string;
+  matched: boolean;
+  selected_machine?: string;
+}) => {
+  const response = await fetch(RETURNING_STUDENT_SUBMISSIONS_ENDPOINT, {
+    method: "POST",
+    headers: { ...cloudHeaders, Prefer: "return=minimal" },
+    body: JSON.stringify(submission),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText || "Failed to save returning student submission");
+  }
+};
+
 const ReturningStudent = () => {
   const { toast } = useToast();
   const [fullName, setFullName] = useState("");
