@@ -91,23 +91,11 @@ const ReturningStudent = () => {
     setNotFound(false);
 
     try {
-      const { supabase } = await import("@/integrations/supabase/client");
-      const { data, error } = await supabase.functions.invoke("verify-returning-student", {
-        body: { email: trimmedEmail },
-      });
-
-      if (error) {
-        toast({
-          title: (data as { error?: string } | null)?.error || "Verification failed. Please try again.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      const matched = (data as { matched?: boolean } | null)?.matched ?? false;
+      const data = await verifyReturningStudent(trimmedEmail);
+      const matched = data.matched ?? false;
 
       // Store submission for record-keeping (best effort)
-      await supabase.from("returning_student_submissions").insert({
+      await saveReturningStudentSubmission({
         full_name: trimmedName,
         email: trimmedEmail,
         matched,
@@ -130,8 +118,7 @@ const ReturningStudent = () => {
   const handleMachineSelect = async (label: string, url: string) => {
     // Record selection (best effort) then redirect
     try {
-      const { supabase } = await import("@/integrations/supabase/client");
-      await supabase.from("returning_student_submissions").insert({
+      await saveReturningStudentSubmission({
         full_name: fullName.trim(),
         email: email.trim(),
         matched: true,
