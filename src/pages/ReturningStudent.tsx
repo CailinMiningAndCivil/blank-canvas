@@ -115,19 +115,24 @@ const ReturningStudent = () => {
     }
   };
 
-  const handleMachineSelect = async (label: string, url: string) => {
-    // Record selection (best effort) then redirect
-    try {
-      await saveReturningStudentSubmission({
-        full_name: fullName.trim(),
-        email: email.trim(),
-        matched: true,
-        selected_machine: label,
-      });
-    } catch {
-      // ignore — proceed with redirect regardless
+  const handleMachineSelect = (label: string, url: string) => {
+    // Open synchronously so mobile browsers don't block the popup
+    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+
+    // Record selection in the background (best effort)
+    saveReturningStudentSubmission({
+      full_name: fullName.trim(),
+      email: email.trim(),
+      matched: true,
+      selected_machine: label,
+    }).catch(() => {
+      // ignore
+    });
+
+    // Fallback: if popup was blocked, navigate the current tab
+    if (!newWindow) {
+      window.location.href = url;
     }
-    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
