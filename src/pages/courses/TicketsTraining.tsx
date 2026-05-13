@@ -14,7 +14,7 @@ import bundlesHero from "@/assets/photos/bundles-hero.png";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import starterBundleImg from "@/assets/photos/starter-bundle.jpg";
 import loaderDumptruckPair from "@/assets/photos/loader-dumptruck-pair.jpg";
-import topconGpsExcavator from "@/assets/photos/topcon-gps-excavator.jpg";
+
 import interstateBundleImg from "@/assets/photos/interstate-bundle.jpg";
 import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
@@ -192,50 +192,6 @@ const TicketsTraining = () => {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* GPS Training */}
-      <section className="py-20 bg-secondary">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 rounded-2xl p-8 md:p-12">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div>
-                <p className="text-primary font-medium tracking-widest uppercase mb-2">Specialist Training</p>
-                <h2 className="font-display text-3xl text-foreground mb-4">Topcon GPS Excavator Training</h2>
-                <p className="text-muted-foreground mb-6">
-                  Western Australia's only private Topcon GPS excavator training program. Master the most widely used
-                  GPS system in civil construction for career advancement.
-                </p>
-                <ul className="space-y-3 mb-6">
-                  {["1 Day intensive training", "1:1 GPS technology experience", "Industry-standard equipment"].map(
-                    (item) => (
-                      <li key={item} className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-primary shrink-0" />
-                        <span className="text-foreground">{item}</span>
-                      </li>
-                    ),
-                  )}
-                </ul>
-                <Button
-                  variant="hero"
-                  size="lg"
-                  onClick={() => {
-                    window.open("https://live.cailintraining.com.au/topcon_excavator_1_day_course", "_blank");
-                  }}
-                >
-                  Book Now <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-              <div className="rounded-xl overflow-hidden">
-                <img
-                  src={topconGpsExcavator}
-                  alt="Topcon GPS Excavator on site"
-                  className="w-full h-full object-cover rounded-xl"
-                />
-              </div>
-            </div>
           </div>
         </div>
       </section>
