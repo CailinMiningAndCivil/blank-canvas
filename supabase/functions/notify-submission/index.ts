@@ -7,6 +7,30 @@ const corsHeaders = {
 
 const RECIPIENTS = ["info@cailinminingcivil.com"];
 
+// HTML-escape to prevent injection into admin notification emails
+const esc = (s: unknown): string =>
+  String(s ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+// Cap field lengths server-side (defence-in-depth against spam/abuse)
+const cap = (s: unknown, n: number): string => String(s ?? "").slice(0, n);
+
+// Simple in-memory per-IP rate limiter (best-effort within a single instance)
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const ipHits = new Map<string, number[]>();
+const isRateLimited = (ip: string): boolean => {
+  const now = Date.now();
+  const hits = (ipHits.get(ip) ?? []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+  hits.push(now);
+  ipHits.set(ip, hits);
+  return hits.length > RATE_LIMIT_MAX;
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
