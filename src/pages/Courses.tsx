@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, ArrowRight, FileCheck, Zap, Briefcase, RefreshCw } from "lucide-react";
@@ -157,6 +158,11 @@ const Courses = () => {
   return (
     <Layout>
       
+      <SEO
+        title="Machine Operator Courses Perth | Cailin Mining & Civil"
+        description="Nationally recognised machine operator courses in Perth. Excavator, loader, moxy, roller and watercart training with 1:1 live mine site instruction."
+        path="/courses"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={loaderDumptruckAction} alt="Loader and dumptruck in action on site" />
@@ -191,7 +197,7 @@ const Courses = () => {
                 <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
                   <feature.icon className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="font-display text-2xl text-foreground mb-3">{feature.title}</h3>
+                <h2 className="font-display text-2xl text-foreground mb-3">{feature.title}</h2>
                 <p className="text-muted-foreground">{feature.description}</p>
               </div>
             ))}
@@ -219,7 +225,7 @@ const Courses = () => {
                   <div className="relative h-48 overflow-hidden">
                     <img
                       src={category.image}
-                      alt={category.id === "short-courses" ? "Moxy training Perth — articulated dump truck course" : category.title}
+                      alt={category.id === "short-courses" ? "Moxy training Perth — articulated dump truck course" : category.id === "bundles" ? "Mining and civil training course bundles" : category.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
@@ -261,7 +267,7 @@ const Courses = () => {
                   </ul>
 
                   <div className="flex items-center text-primary font-medium">
-                    Learn More <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    Learn more about this training option <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </Link>

@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Clock, Award, FileCheck, ArrowRight, Banknote, Users } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -28,6 +29,11 @@ const eligibility = [
 const RPL = () => {
   return (
     <Layout>
+      <SEO
+        title="Recognition of Prior Learning (RPL) | Cailin Mining & Civil"
+        description="Turn prior experience, expired tickets or international qualifications into recognised Australian machine operator certifications. From $350 per assessment."
+        path="/rpl"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={rplPageHero} alt="Worker inspecting mining equipment on site" />
@@ -65,7 +71,7 @@ const RPL = () => {
               <p className="text-muted-foreground text-sm">CTF funding may cover your assessment costs – ask us how</p>
             </div>
             <Button asChild variant="outline" size="sm" className="ml-0 md:ml-4">
-              <Link to="/ctf-funding">Learn More</Link>
+              <Link to="/ctf-funding">Learn more about CTF funding</Link>
             </Button>
           </div>
         </div>

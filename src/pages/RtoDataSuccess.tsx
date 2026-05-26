@@ -14,6 +14,7 @@ const RtoDataSuccess = () => {
     <>
       <meta httpEquiv="refresh" content={`2;url=${REDIRECT_URL}`} />
       <div className="min-h-screen flex items-center justify-center bg-background">
+        <h1 className="sr-only">Redirection in Progress</h1>
         <p className="text-lg text-muted-foreground animate-pulse">Redirecting to thank you page...</p>
       </div>
     </>

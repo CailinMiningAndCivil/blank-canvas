@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { DollarSign, Link2, Share2, ArrowRight, CheckCircle } from "lucide-react";
@@ -36,6 +37,11 @@ const steps = [
 const Affiliate = () => {
   return (
     <Layout>
+      <SEO
+        title="Affiliate Program | Cailin Mining & Civil"
+        description="Earn commission by referring students to Cailin Mining & Civil. Join our affiliate program for Perth machine operator training courses."
+        path="/affiliate"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={affiliateHero} alt="Workers walking on a mine site" />

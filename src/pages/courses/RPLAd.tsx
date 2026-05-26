@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Clock, Award, FileCheck, ArrowRight, Banknote, Users } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -26,6 +27,11 @@ const eligibility = [
 const RPLAd = () => {
   return (
     <Layout>
+      <SEO
+        title="Fast-Track RPL Assessment | Cailin Mining & Civil"
+        description="Already an experienced operator? Get fast-tracked Recognition of Prior Learning assessments for nationally recognised machine certifications."
+        path="/rplad"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={trainerRadioSignaling} alt="Trainer with radio signaling on mine site" />

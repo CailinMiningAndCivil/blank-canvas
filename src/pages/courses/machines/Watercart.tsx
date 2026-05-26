@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, Banknote, HelpCircle } from "lucide-react";
@@ -74,6 +75,11 @@ const faqs = [
 const Watercart = () => {
   return (
     <Layout>
+      <SEO
+        title="Watercart Training Perth | RIIMPO206D | Cailin Mining & Civil"
+        description="Bulk water truck operations training in Perth. RIIMPO206D watercart ticket for dust suppression and site maintenance on mining and civil sites."
+        path="/courses/watercart"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={watercartNew} alt="Watercart training operations" />

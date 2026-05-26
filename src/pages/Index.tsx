@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Award, Clock, Users, Briefcase, CheckCircle, ArrowRight } from "lucide-react";
 import { GoogleReviews } from "@/components/GoogleReviews";
@@ -98,7 +99,38 @@ const individualMachines = [
 const Index = () => {
   return (
     <Layout>
-      
+      <SEO
+        title="Cailin Mining & Civil | Machine Operator Training Perth"
+        description="Australia's only award-winning 1:1 live mine site machine operator training. Get nationally recognised qualifications with unlimited training hours in Perth."
+        path="/"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            name: "Cailin Mining & Civil",
+            url: "https://www.cailinminingcivil.com",
+            telephone: "+61483951501",
+            email: "info@cailinminingcivil.com",
+            image: "https://www.cailinminingcivil.com/images/social.jpg",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Perth",
+              addressRegion: "WA",
+              addressCountry: "AU",
+            },
+            areaServed: "Western Australia",
+            description:
+              "Australia's only award-winning 1:1 live mine site machine operator training. Nationally recognised qualifications delivered by Cailin Training (RTO 46489).",
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Cailin Mining & Civil",
+            url: "https://www.cailinminingcivil.com",
+          },
+        ]}
+      />
+
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         <video
@@ -162,7 +194,7 @@ const Index = () => {
                 <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
                   <feature.icon className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="font-display text-2xl text-foreground mb-3">{feature.title}</h3>
+                <h2 className="font-display text-2xl text-foreground mb-3">{feature.title}</h2>
                 <p className="text-muted-foreground">{feature.description}</p>
               </div>
             ))}

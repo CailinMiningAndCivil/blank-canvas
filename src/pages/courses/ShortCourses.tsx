@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Award, ArrowRight, HelpCircle, Users } from "lucide-react";
@@ -92,6 +93,11 @@ const ShortCourses = () => {
   return (
     <Layout>
       
+      <SEO
+        title="$600 Short Courses | Cailin Mining & Civil Perth"
+        description="Quick nationally recognised machine operator certification from $600. Perfect for career exploration or fast-tracked tickets."
+        path="/courses/short-courses"
+      />
       {/* Hero Section with Image */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={machinesCollage} alt="Mining and civil machinery collage" />

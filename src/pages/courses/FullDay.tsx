@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, ArrowRight, RefreshCw, Phone } from "lucide-react";
@@ -47,6 +48,11 @@ const features = [
 const FullDay = () => {
   return (
     <Layout>
+      <SEO
+        title="Full Day Machine Training | Cailin Mining & Civil"
+        description="Master a single machine with unlimited return training sessions. 1:1 live mine site instruction in Perth — starts at $1,200."
+        path="/courses/full-day"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={fullDayHero} alt="CAT roller on Cailin Mining site" />

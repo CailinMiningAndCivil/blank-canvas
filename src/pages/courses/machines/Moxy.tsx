@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, Banknote, HelpCircle } from "lucide-react";
@@ -74,6 +75,11 @@ const faqs = [
 const Moxy = () => {
   return (
     <Layout>
+      <SEO
+        title="Moxy Articulated Dump Truck Training | RIIMPO337E | Cailin"
+        description="Get your moxy (articulated dump truck) ticket in Perth. RIIMPO337E training on a live mine site with 1:1 instruction. Career-ready qualification."
+        path="/courses/moxy"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={articulatedDumptruck} alt="Articulated dump truck (Moxy)" />

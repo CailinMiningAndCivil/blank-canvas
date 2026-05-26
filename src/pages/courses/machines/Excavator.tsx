@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, ArrowRight, Banknote, HelpCircle } from "lucide-react";
@@ -74,6 +75,12 @@ const faqs = [
 const Excavator = () => {
   return (
     <Layout>
+      <SEO
+        title="Excavator Training Perth | RIIMPO320F | Cailin Mining & Civil"
+        description="Get certified to operate excavators in mining and civil construction. RIIMPO320F & RIIMPO301E nationally recognised qualifications in Perth."
+        path="/courses/excavator"
+        jsonLd={{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({ "@type": "Question", name: f.question, acceptedAnswer: { "@type": "Answer", text: f.answer } })) }}
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={excavatorOperation} alt="Excavator in operation" />
@@ -105,7 +112,7 @@ const Excavator = () => {
               <p className="text-muted-foreground text-sm">CTF funding may cover your training costs – ask us how</p>
             </div>
             <Button asChild variant="outline" size="sm" className="ml-0 md:ml-4">
-              <Link to="/ctf-funding">Learn More</Link>
+              <Link to="/ctf-funding">Learn more about CTF funding</Link>
             </Button>
           </div>
         </div>

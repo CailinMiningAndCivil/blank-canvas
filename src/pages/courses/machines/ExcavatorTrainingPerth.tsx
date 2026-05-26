@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, Banknote, HelpCircle, Phone, MapPin, Star, Briefcase } from "lucide-react";
@@ -204,6 +205,12 @@ const ExcavatorTrainingPerth = () => {
 
   return (
     <Layout>
+      <SEO
+        title="Excavator Operator Training Perth | Cailin Mining & Civil"
+        description="1:1 live mine site excavator operator training in Perth. RIIMPO320F & RIIMPO301E with unlimited training hours and job placement support."
+        path="/courses/excavator-training-perth"
+        jsonLd={{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({ "@type": "Question", name: f.question, acceptedAnswer: { "@type": "Answer", text: f.answer } })) }}
+      />
       {/* Hero */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={excavatorOperation} alt="Excavator training Perth — excavator operator on live mine site" />

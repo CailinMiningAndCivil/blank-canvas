@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { HeroImage } from "@/components/ui/hero-image";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -34,6 +35,11 @@ const Blog = () => {
 
   return (
     <Layout>
+      <SEO
+        title="Mining & Civil Training Blog | Cailin Mining & Civil"
+        description="Tips, industry news, and success stories from Australia's mining and civil construction sectors. Stay informed with Cailin Mining & Civil."
+        path="/blog"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={fleetLineupWide} alt="Mining equipment fleet" />
@@ -104,7 +110,7 @@ const Blog = () => {
                       {post.excerpt}
                     </p>
                     <span className="inline-flex items-center gap-2 text-primary font-medium text-sm">
-                      Read More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      Read the full article <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </span>
                   </div>
                 </Link>

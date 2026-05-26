@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { CTFFundingBanner } from "@/components/CTFFundingBanner";
 import { BookeoWidget } from "@/components/BookeoWidget";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
@@ -31,6 +32,11 @@ const Book = () => {
 
   return (
     <Layout>
+      <SEO
+        title="Book Machine Operator Training | Cailin Mining & Civil"
+        description="Book your machine operator training in Perth. Choose from excavator, loader, moxy, roller and watercart courses with 1:1 live mine site instruction."
+        path="/book"
+      />
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         <HeroImage

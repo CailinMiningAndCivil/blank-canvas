@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, Banknote, HelpCircle, Phone, MapPin, Star, Briefcase } from "lucide-react";
@@ -221,6 +222,11 @@ const MoxyTrainingPerth = () => {
 
   return (
     <Layout>
+      <SEO
+        title="Moxy Training Perth | Articulated Dump Truck | Cailin"
+        description="Live mine site moxy training in Perth. Articulated dump truck (RIIMPO337E) with 1:1 instruction and job placement support across WA mining."
+        path="/courses/moxy-training-perth"
+      />
       {/* Hero */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={articulatedDumptruck} alt="Moxy training Perth — articulated dump truck on live mine site" />

@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, ArrowRight, Banknote, TrendingUp } from "lucide-react";
@@ -97,6 +98,11 @@ const TicketsTraining = () => {
   return (
     <Layout>
       
+      <SEO
+        title="Training Bundles | Cailin Mining & Civil Perth"
+        description="Multi-ticket training bundles for mining and civil operators. Double or triple your employability with 1:1 instruction on a live mine site."
+        path="/courses/bundles"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={bundlesHero} alt="Fleet of mining machines on site" />

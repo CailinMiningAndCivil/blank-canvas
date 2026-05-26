@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Users, Briefcase, Award, ArrowRight } from "lucide-react";
 
@@ -26,6 +27,11 @@ const benefits = [
 const Recruitment = () => {
   return (
     <Layout>
+      <SEO
+        title="Recruitment Portal | Cailin Mining & Civil"
+        description="Looking for work in mining or civil construction? Submit your details to our recruitment portal and connect with industry opportunities."
+        path="/recruitment"
+      />
       <section className="relative overflow-hidden py-20 md:py-32">
         <div className="absolute inset-0 bg-[var(--gradient-hero)]" />
         <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent" />
