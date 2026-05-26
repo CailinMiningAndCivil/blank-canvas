@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -137,6 +138,11 @@ const ReturningStudent = () => {
 
   return (
     <Layout>
+      <SEO
+        title="Returning Student Booking | Cailin Mining & Civil"
+        description="Returning Cailin students can book additional training sessions here. Verify your details and select your machine."
+        path="/returning-student"
+      />
       {/* Hero */}
       <section className="relative min-h-[55vh] flex items-center overflow-hidden">
         <HeroImage

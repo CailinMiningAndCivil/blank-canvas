@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, ArrowRight, FileCheck, Zap, Briefcase, RefreshCw } from "lucide-react";
@@ -157,6 +158,11 @@ const Courses = () => {
   return (
     <Layout>
       
+      <SEO
+        title="Machine Operator Courses Perth | Cailin Mining & Civil"
+        description="Nationally recognised machine operator courses in Perth. Excavator, loader, moxy, roller and watercart training with 1:1 live mine site instruction."
+        path="/courses"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={loaderDumptruckAction} alt="Loader and dumptruck in action on site" />

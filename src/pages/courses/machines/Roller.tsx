@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, Banknote, HelpCircle } from "lucide-react";
@@ -74,6 +75,11 @@ const faqs = [
 const Roller = () => {
   return (
     <Layout>
+      <SEO
+        title="Roller Operator Training Perth | RIIMPO317F | Cailin"
+        description="Get your roller ticket in Perth. RIIMPO317F roller operator certification for compaction work in construction and road building."
+        path="/courses/roller"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={rollerArtistic} alt="Roller machine" />

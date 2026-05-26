@@ -1,8 +1,14 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 
 const PrivacyPolicy = () => {
   return (
     <Layout>
+      <SEO
+        title="Privacy Policy | Cailin Mining & Civil"
+        description="Read how Cailin Mining & Civil collects, uses and protects your personal information across our website and training services."
+        path="/privacypolicy"
+      />
       <section className="py-24">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="text-center mb-12">

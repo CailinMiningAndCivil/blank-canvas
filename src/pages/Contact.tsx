@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import {
@@ -61,6 +62,11 @@ const Contact = () => {
   const { open, setOpen } = useLocationNoticeDialog();
   return (
     <Layout>
+      <SEO
+        title="Contact Cailin Mining & Civil | Perth WA"
+        description="Contact Cailin Mining & Civil in Perth. Phone 0483 951 501 or email us for course bookings and enquiries. Visits by appointment only."
+        path="/contact"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={workersSiteOffice} alt="Workers at site office" />

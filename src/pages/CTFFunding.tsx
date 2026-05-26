@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { 
@@ -113,6 +114,11 @@ const faqs = [
 const CTFFunding = () => {
   return (
     <Layout>
+      <SEO
+        title="CTF Funding for Construction Training | Cailin Mining & Civil"
+        description="Construction Training Fund (CTF) rebates can offset your machine operator training costs in WA. Check eligibility and how to claim your rebate."
+        path="/ctf-funding"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={trainerSiteSafety} alt="Construction training on site" />

@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, FileCheck, Award, ArrowRight, HelpCircle, Users, Banknote } from "lucide-react";
@@ -114,6 +115,11 @@ const benefits = [
 const VOC = () => {
   return (
     <Layout>
+      <SEO
+        title="Verification of Competency (VOC) | Cailin Mining & Civil"
+        description="Quick 30-minute Verification of Competency assessments for qualified machine operators. Boost employability with a fresh professional reference."
+        path="/courses/voc"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={vocPageHero} alt="Workers inspecting mining equipment on site" />

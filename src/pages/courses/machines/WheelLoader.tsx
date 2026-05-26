@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, Banknote, HelpCircle } from "lucide-react";
@@ -74,6 +75,11 @@ const faqs = [
 const WheelLoader = () => {
   return (
     <Layout>
+      <SEO
+        title="Front End Loader Training Perth | RIIMPO304E | Cailin"
+        description="Get your front end loader ticket in Perth. RIIMPO304E nationally recognised wheel loader training on a live mine site with 1:1 instruction."
+        path="/courses/wheel-loader"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={wheelloaderHero} alt="Wheel loader in operation" />

@@ -1,8 +1,14 @@
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 
 const TermsAndConditions = () => {
   return (
     <Layout>
+      <SEO
+        title="Terms & Conditions | Cailin Mining & Civil"
+        description="Terms and conditions for using Cailin Mining & Civil's website, services, and training programs in Perth, Western Australia."
+        path="/termsandconditions"
+      />
       <section className="py-24">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="text-center mb-12">

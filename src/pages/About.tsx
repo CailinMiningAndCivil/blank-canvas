@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { Award, Target, Users, Heart, CheckCircle } from "lucide-react";
@@ -46,6 +47,11 @@ const milestones = [
 const About = () => {
   return (
     <Layout>
+      <SEO
+        title="About Cailin Mining & Civil | Perth Machine Training"
+        description="Australia's only award-winning 1:1 live mine site training provider. RTO 46489. Learn our story, values, and how we launch mining and civil careers in Perth."
+        path="/about"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage src={fleetLineupWide} alt="Fleet of mining equipment lined up" />
