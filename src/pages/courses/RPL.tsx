@@ -65,7 +65,7 @@ const RPL = () => {
               <p className="text-muted-foreground text-sm">CTF funding may cover your assessment costs – ask us how</p>
             </div>
             <Button asChild variant="outline" size="sm" className="ml-0 md:ml-4">
-              <Link to="/ctf-funding">Learn More</Link>
+              <Link to="/ctf-funding">Learn more about CTF funding</Link>
             </Button>
           </div>
         </div>

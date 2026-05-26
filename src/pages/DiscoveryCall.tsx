@@ -170,7 +170,7 @@ const DiscoveryCall = () => {
                 <p className="text-xs text-muted-foreground text-center mt-4">
                   *This is not an employment service. For employment opportunities{" "}
                   <Link to="/recruitment" className="text-primary hover:underline font-semibold">
-                    click here
+                    view recruitment opportunities
                   </Link>
                 </p>
               </div>

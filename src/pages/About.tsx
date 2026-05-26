@@ -53,7 +53,7 @@ const About = () => {
         <div className="relative z-10 container mx-auto px-4 text-center">
           <p className="text-primary font-medium tracking-widest uppercase mb-4">About Us</p>
           <h1 className="font-display text-5xl md:text-6xl text-foreground mb-6">
-            Cailin Mining & Civil
+            About Cailin Mining & Civil — Expert Machine Training in Perth
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Australia's only award-winning live mine site machine operator training provider, 

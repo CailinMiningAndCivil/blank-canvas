@@ -141,7 +141,7 @@ const CTFFunding = () => {
             {benefits.map((benefit) => (
               <div key={benefit.title} className="bg-card border border-border rounded-2xl p-6">
                 <benefit.icon className="w-10 h-10 text-primary mb-4" />
-                <h3 className="font-display text-lg text-foreground mb-2">{benefit.title}</h3>
+                <h2 className="font-display text-lg text-foreground mb-2">{benefit.title}</h2>
                 <p className="text-muted-foreground text-sm">{benefit.description}</p>
               </div>
             ))}

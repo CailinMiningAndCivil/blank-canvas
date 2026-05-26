@@ -104,7 +104,7 @@ const Blog = () => {
                       {post.excerpt}
                     </p>
                     <span className="inline-flex items-center gap-2 text-primary font-medium text-sm">
-                      Read More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      Read the full article <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </span>
                   </div>
                 </Link>
