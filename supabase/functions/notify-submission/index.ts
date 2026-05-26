@@ -37,18 +37,23 @@ serve(async (req) => {
   }
 
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "unknown";
+    if (isRateLimited(ip)) {
+      return new Response(JSON.stringify({ success: false, error: "Rate limit exceeded" }), {
+        status: 429,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const payload = await req.json();
     const record = payload.record || payload;
 
-    const { name, email, phone, message, created_at } = record;
-
-    const subject = message?.startsWith("[RPL")
-      ? `New RPL Enquiry from ${name}`
-      : message?.startsWith("[Consultation")
-        ? `New Consultation Booking from ${name}`
-        : message?.startsWith("[CTF")
-          ? `New CTF Enquiry from ${name}`
-          : `New Contact Form Submission from ${name}`;
+    // Cap user-controlled field lengths server-side
+    const name = cap(record.name, 120);
+    const email = cap(record.email, 255);
+    const phone = cap(record.phone, 40);
+    const message = cap(record.message, 5000);
+    const created_at = record.created_at;
 
     // Send to GoHighLevel webhook (always attempt)
     const GHL_WEBHOOK_URL = Deno.env.get("GHL_WEBHOOK_URL");
