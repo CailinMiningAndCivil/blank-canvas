@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Facebook, Instagram, Youtube } from "lucide-react";
+import {
+  LocationNoticeDialog,
+  useLocationNoticeDialog,
+} from "@/components/LocationNoticeDialog";
 import cailinLogo from "@/assets/cailin-logo.svg";
 
 export const Footer = () => {
+  const { open, setOpen } = useLocationNoticeDialog();
   return (
     <footer className="bg-secondary border-t border-border">
       <div className="container mx-auto px-4 py-16">
@@ -118,7 +123,12 @@ export const Footer = () => {
                 <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                 <div>
                   <p className="text-muted-foreground text-sm">Location</p>
-                  <p className="text-foreground">Perth, Western Australia</p>
+                  <button
+                    onClick={() => setOpen(true)}
+                    className="text-foreground hover:text-primary transition-colors cursor-pointer"
+                  >
+                    Perth, Western Australia
+                  </button>
                 </div>
               </li>
             </ul>
@@ -139,6 +149,7 @@ export const Footer = () => {
           </div>
         </div>
       </div>
+      <LocationNoticeDialog open={open} onOpenChange={setOpen} />
     </footer>
   );
 };
