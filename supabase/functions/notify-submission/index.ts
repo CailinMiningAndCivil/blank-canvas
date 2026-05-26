@@ -98,16 +98,16 @@ serve(async (req) => {
     if (RESEND_API_KEY) {
       const htmlBody = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #d4a017; border-bottom: 2px solid #d4a017; padding-bottom: 10px;">${subject}</h2>
+          <h2 style="color: #d4a017; border-bottom: 2px solid #d4a017; padding-bottom: 10px;">${esc(subject)}</h2>
           <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
-            <tr><td style="padding: 8px; font-weight: bold; color: #555;">Name</td><td style="padding: 8px;">${name}</td></tr>
-            <tr style="background: #f9f9f9;"><td style="padding: 8px; font-weight: bold; color: #555;">Email</td><td style="padding: 8px;"><a href="mailto:${email}">${email}</a></td></tr>
-            <tr><td style="padding: 8px; font-weight: bold; color: #555;">Phone</td><td style="padding: 8px;"><a href="tel:${phone}">${phone}</a></td></tr>
-            <tr style="background: #f9f9f9;"><td style="padding: 8px; font-weight: bold; color: #555;">Submitted</td><td style="padding: 8px;">${new Date(created_at).toLocaleString("en-AU", { timeZone: "Australia/Perth" })}</td></tr>
+            <tr><td style="padding: 8px; font-weight: bold; color: #555;">Name</td><td style="padding: 8px;">${esc(name)}</td></tr>
+            <tr style="background: #f9f9f9;"><td style="padding: 8px; font-weight: bold; color: #555;">Email</td><td style="padding: 8px;"><a href="mailto:${encodeURIComponent(email)}">${esc(email)}</a></td></tr>
+            <tr><td style="padding: 8px; font-weight: bold; color: #555;">Phone</td><td style="padding: 8px;"><a href="tel:${encodeURIComponent(phone)}">${esc(phone)}</a></td></tr>
+            <tr style="background: #f9f9f9;"><td style="padding: 8px; font-weight: bold; color: #555;">Submitted</td><td style="padding: 8px;">${esc(new Date(created_at).toLocaleString("en-AU", { timeZone: "Australia/Perth" }))}</td></tr>
           </table>
           <div style="margin-top: 16px; padding: 16px; background: #f5f5f5; border-radius: 8px;">
             <p style="font-weight: bold; color: #555; margin-bottom: 8px;">Message</p>
-            <p style="white-space: pre-wrap;">${message}</p>
+            <p style="white-space: pre-wrap;">${esc(message)}</p>
           </div>
         </div>
       `;
