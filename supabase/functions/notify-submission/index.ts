@@ -7,16 +7,53 @@ const corsHeaders = {
 
 const RECIPIENTS = ["info@cailinminingcivil.com"];
 
+// HTML-escape to prevent injection into admin notification emails
+const esc = (s: unknown): string =>
+  String(s ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+// Cap field lengths server-side (defence-in-depth against spam/abuse)
+const cap = (s: unknown, n: number): string => String(s ?? "").slice(0, n);
+
+// Simple in-memory per-IP rate limiter (best-effort within a single instance)
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const ipHits = new Map<string, number[]>();
+const isRateLimited = (ip: string): boolean => {
+  const now = Date.now();
+  const hits = (ipHits.get(ip) ?? []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+  hits.push(now);
+  ipHits.set(ip, hits);
+  return hits.length > RATE_LIMIT_MAX;
+};
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "unknown";
+    if (isRateLimited(ip)) {
+      return new Response(JSON.stringify({ success: false, error: "Rate limit exceeded" }), {
+        status: 429,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const payload = await req.json();
     const record = payload.record || payload;
 
-    const { name, email, phone, message, created_at } = record;
+    // Cap user-controlled field lengths server-side
+    const name = cap(record.name, 120);
+    const email = cap(record.email, 255);
+    const phone = cap(record.phone, 40);
+    const message = cap(record.message, 5000);
+    const created_at = record.created_at;
 
     const subject = message?.startsWith("[RPL")
       ? `New RPL Enquiry from ${name}`
@@ -61,16 +98,16 @@ serve(async (req) => {
     if (RESEND_API_KEY) {
       const htmlBody = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #d4a017; border-bottom: 2px solid #d4a017; padding-bottom: 10px;">${subject}</h2>
+          <h2 style="color: #d4a017; border-bottom: 2px solid #d4a017; padding-bottom: 10px;">${esc(subject)}</h2>
           <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
-            <tr><td style="padding: 8px; font-weight: bold; color: #555;">Name</td><td style="padding: 8px;">${name}</td></tr>
-            <tr style="background: #f9f9f9;"><td style="padding: 8px; font-weight: bold; color: #555;">Email</td><td style="padding: 8px;"><a href="mailto:${email}">${email}</a></td></tr>
-            <tr><td style="padding: 8px; font-weight: bold; color: #555;">Phone</td><td style="padding: 8px;"><a href="tel:${phone}">${phone}</a></td></tr>
-            <tr style="background: #f9f9f9;"><td style="padding: 8px; font-weight: bold; color: #555;">Submitted</td><td style="padding: 8px;">${new Date(created_at).toLocaleString("en-AU", { timeZone: "Australia/Perth" })}</td></tr>
+            <tr><td style="padding: 8px; font-weight: bold; color: #555;">Name</td><td style="padding: 8px;">${esc(name)}</td></tr>
+            <tr style="background: #f9f9f9;"><td style="padding: 8px; font-weight: bold; color: #555;">Email</td><td style="padding: 8px;"><a href="mailto:${encodeURIComponent(email)}">${esc(email)}</a></td></tr>
+            <tr><td style="padding: 8px; font-weight: bold; color: #555;">Phone</td><td style="padding: 8px;"><a href="tel:${encodeURIComponent(phone)}">${esc(phone)}</a></td></tr>
+            <tr style="background: #f9f9f9;"><td style="padding: 8px; font-weight: bold; color: #555;">Submitted</td><td style="padding: 8px;">${esc(new Date(created_at).toLocaleString("en-AU", { timeZone: "Australia/Perth" }))}</td></tr>
           </table>
           <div style="margin-top: 16px; padding: 16px; background: #f5f5f5; border-radius: 8px;">
             <p style="font-weight: bold; color: #555; margin-bottom: 8px;">Message</p>
-            <p style="white-space: pre-wrap;">${message}</p>
+            <p style="white-space: pre-wrap;">${esc(message)}</p>
           </div>
         </div>
       `;
@@ -104,8 +141,7 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error("Error sending notification:", error);
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
-    return new Response(JSON.stringify({ success: false, error: errorMessage }), {
+    return new Response(JSON.stringify({ success: false, error: "Failed to process submission" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
