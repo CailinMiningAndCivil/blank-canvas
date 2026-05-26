@@ -1,5 +1,6 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -132,6 +133,31 @@ const BlogPost = () => {
 
   return (
     <Layout>
+      <SEO
+        title={`${post.title} | Cailin Mining & Civil Blog`}
+        description={(post.excerpt || post.title).slice(0, 160)}
+        path={`/blog/${post.slug}`}
+        type="article"
+        image={post.featured_image || undefined}
+        publishedAt={post.published_at || undefined}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: post.title,
+          description: post.excerpt,
+          image: post.featured_image
+            ? [post.featured_image.startsWith("http") ? post.featured_image : `https://www.cailinminingcivil.com${post.featured_image}`]
+            : undefined,
+          datePublished: post.published_at,
+          author: { "@type": "Organization", name: "Cailin Mining & Civil" },
+          publisher: {
+            "@type": "Organization",
+            name: "Cailin Mining & Civil",
+            logo: { "@type": "ImageObject", url: "https://www.cailinminingcivil.com/favicon.png" },
+          },
+          mainEntityOfPage: `https://www.cailinminingcivil.com/blog/${post.slug}`,
+        }}
+      />
       <article className="min-h-screen pt-32 pb-20">
         <div className="container mx-auto px-4 max-w-4xl">
           {/* Back Button */}
