@@ -86,9 +86,8 @@ Deno.serve(async (req) => {
     });
   } catch (error: unknown) {
     console.error("verify-returning-student error:", error);
-    const message = error instanceof Error ? error.message : "Unknown error";
     return new Response(
-      JSON.stringify({ matched: false, error: "Verification failed. Please try again." , detail: message }),
+      JSON.stringify({ matched: false, error: "Verification failed. Please try again." }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   }
