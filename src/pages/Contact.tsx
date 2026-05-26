@@ -59,6 +59,7 @@ const faqs = [
 
 const Contact = () => {
   const { open, setOpen } = useLocationNoticeDialog();
+  return (
     <Layout>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
