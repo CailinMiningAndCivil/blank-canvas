@@ -55,6 +55,14 @@ serve(async (req) => {
     const message = cap(record.message, 5000);
     const created_at = record.created_at;
 
+    const subject = message?.startsWith("[RPL")
+      ? `New RPL Enquiry from ${name}`
+      : message?.startsWith("[Consultation")
+        ? `New Consultation Booking from ${name}`
+        : message?.startsWith("[CTF")
+          ? `New CTF Enquiry from ${name}`
+          : `New Contact Form Submission from ${name}`;
+
     // Send to GoHighLevel webhook (always attempt)
     const GHL_WEBHOOK_URL = Deno.env.get("GHL_WEBHOOK_URL");
     if (GHL_WEBHOOK_URL) {
