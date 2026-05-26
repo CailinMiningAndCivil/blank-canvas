@@ -1,7 +1,12 @@
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
+import {
+  LocationNoticeDialog,
+  useLocationNoticeDialog,
+} from "@/components/LocationNoticeDialog";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { useState } from "react";
 
 // Real Cailin photos
 import workersSiteOffice from "@/assets/photos/workers-site-office.jpg";
@@ -53,8 +58,7 @@ const faqs = [
 ];
 
 const Contact = () => {
-
-  return (
+  const { open, setOpen } = useLocationNoticeDialog();
     <Layout>
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
@@ -89,6 +93,13 @@ const Contact = () => {
                   >
                     {info.value}
                   </a>
+                ) : info.title === "Location" ? (
+                  <button
+                    onClick={() => setOpen(true)}
+                    className="text-foreground font-medium hover:text-primary transition-colors cursor-pointer"
+                  >
+                    {info.value}
+                  </button>
                 ) : (
                   <p className="text-foreground font-medium">{info.value}</p>
                 )}
@@ -152,6 +163,7 @@ const Contact = () => {
           </div>
         </div>
       </section>
+      <LocationNoticeDialog open={open} onOpenChange={setOpen} />
     </Layout>
   );
 };

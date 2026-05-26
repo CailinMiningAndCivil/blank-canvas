@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Facebook, Instagram, Youtube } from "lucide-react";
+import {
+  LocationNoticeDialog,
+  useLocationNoticeDialog,
+} from "@/components/LocationNoticeDialog";
 import cailinLogo from "@/assets/cailin-logo.svg";
 
 export const Footer = () => {
-  return (
+  const { open, setOpen } = useLocationNoticeDialog();
     <footer className="bg-secondary border-t border-border">
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
