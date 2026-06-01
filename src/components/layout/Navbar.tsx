@@ -273,6 +273,19 @@ export const Navbar = () => {
               Careers
             </Link>
 
+            <Link
+              to="/rigid-haul-truck-traineeship"
+              onClick={() => setIsOpen(false)}
+              className={cn(
+                "font-medium text-lg uppercase tracking-wider transition-colors duration-300",
+                location.pathname === "/rigid-haul-truck-traineeship"
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Traineeships
+            </Link>
+
             {navLinks.slice(1).map((link) => (
               <Link
                 key={link.path}
