@@ -33,6 +33,7 @@ import RtoDataSuccess from "./pages/RtoDataSuccess";
 import Recruitment from "./pages/Recruitment";
 import Affiliate from "./pages/Affiliate";
 import ReturningStudent from "./pages/ReturningStudent";
+import RigidHaulTruckTraineeship from "./pages/RigidHaulTruckTraineeship";
 
 const CareersRedirect = () => {
   window.location.href = "https://live.cailintraining.com.au/join_cailin_portal";
