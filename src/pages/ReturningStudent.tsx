@@ -79,6 +79,7 @@ const ReturningStudent = () => {
   const [notFound, setNotFound] = useState(false);
   const [verified, setVerified] = useState(false);
   const [allowedMachines, setAllowedMachines] = useState<MachineKey[]>([]);
+  const [ineligible, setIneligible] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,6 +96,7 @@ const ReturningStudent = () => {
 
     setIsSubmitting(true);
     setNotFound(false);
+    setIneligible(false);
 
     try {
       const data = await verifyReturningStudent(trimmedEmail);
@@ -108,7 +110,12 @@ const ReturningStudent = () => {
       });
 
       if (matched) {
-        setAllowedMachines(data.machines && data.machines.length > 0 ? data.machines : MACHINES.map((m) => m.key));
+        const machines = data.machines ?? [];
+        if (data.eligible === false || machines.length === 0) {
+          setIneligible(true);
+          return;
+        }
+        setAllowedMachines(machines);
         setVerified(true);
         return;
       }
