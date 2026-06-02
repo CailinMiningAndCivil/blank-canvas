@@ -93,6 +93,20 @@ const selectionSteps = [
 ];
 
 const RigidHaulTruckTraineeship = () => {
+  useEffect(() => {
+    const existing = document.getElementById("ghl-form-embed-script");
+    if (!existing) {
+      const script = document.createElement("script");
+      script.id = "ghl-form-embed-script";
+      script.src = "https://link.cailinminingcivil.com/js/form_embed.js";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    return () => {
+      const script = document.getElementById("ghl-form-embed-script");
+      if (script) document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <Layout>
