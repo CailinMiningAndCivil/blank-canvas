@@ -115,6 +115,16 @@ const individualMachines = [
     alt: "Moxy training Perth — articulated dump truck on live mine site",
   },
   {
+    id: "rigid-haul-truck",
+    title: "Rigid Haul Truck Training",
+    code: "Live Mine Site Traineeship",
+    description: "Australia's only rigid haul truck traineeship you can pay to attend. Train on a live mine site in a real production environment.",
+    image: rigidHaulTruck,
+    link: "/rigid-haul-truck-traineeship",
+    alt: "Rigid haul truck training on a live mine site",
+    badge: "New",
+  },
+  {
     id: "roller",
     title: "Roller Ticket",
     code: "RIIMPO317F",
