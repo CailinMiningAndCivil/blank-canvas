@@ -9,12 +9,14 @@ import { ArrowRight, XCircle, Loader2, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import trainerSiteSafety from "@/assets/photos/trainer-site-safety.jpg";
 
-const MACHINES: { label: string; url: string }[] = [
-  { label: "ADT Moxy", url: "https://live.cailintraining.com.au/moxy_returnsession" },
-  { label: "Wheel Loader", url: "https://live.cailintraining.com.au/wheel_loader_returnsession" },
-  { label: "Watercart", url: "https://live.cailintraining.com.au/watercart_returnsession" },
-  { label: "Roller", url: "https://live.cailintraining.com.au/roller_returnsession" },
-  { label: "Excavator", url: "https://live.cailintraining.com.au/excavator_returnsession" },
+type MachineKey = "moxy" | "loader" | "watercart" | "roller" | "excavator";
+
+const MACHINES: { key: MachineKey; label: string; url: string }[] = [
+  { key: "moxy", label: "ADT Moxy", url: "https://live.cailintraining.com.au/moxy_returnsession" },
+  { key: "loader", label: "Wheel Loader", url: "https://live.cailintraining.com.au/wheel_loader_returnsession" },
+  { key: "watercart", label: "Watercart", url: "https://live.cailintraining.com.au/watercart_returnsession" },
+  { key: "roller", label: "Roller", url: "https://live.cailintraining.com.au/roller_returnsession" },
+  { key: "excavator", label: "Excavator", url: "https://live.cailintraining.com.au/excavator_returnsession" },
 ];
 
 const CLOUD_BASE_URL = "https://opdxvpqimcfhawcznxyc.supabase.co";
@@ -30,6 +32,7 @@ const cloudHeaders = {
 
 type VerificationResponse = {
   matched?: boolean;
+  machines?: MachineKey[];
   error?: string;
 };
 

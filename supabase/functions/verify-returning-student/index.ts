@@ -5,14 +5,28 @@ const corsHeaders = {
 };
 
 const SPREADSHEET_ID = "1w8o5ZQ-HhYTpro3qo6Vdn_RYqlfK6ttLc73_VDU0PlY";
-const RANGE = "'**RTO DOCS**'!B2:B";
+// B = Email, F = Course Purchased
+const RANGE = "'**RTO DOCS**'!B2:F";
 const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_sheets/v4";
+
+const MACHINE_KEYS = ["moxy", "watercart", "roller", "loader", "excavator"] as const;
+type MachineKey = typeof MACHINE_KEYS[number];
+
+function detectMachines(courseText: string): MachineKey[] {
+  const t = courseText.toLowerCase();
+  const found: MachineKey[] = [];
+  if (t.includes("moxy")) found.push("moxy");
+  if (t.includes("watercart") || t.includes("water cart")) found.push("watercart");
+  if (t.includes("roller")) found.push("roller");
+  if (t.includes("loader")) found.push("loader");
+  if (t.includes("excavator")) found.push("excavator");
+  return found;
+}
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 255;
 }
 
-// In-memory per-IP rate limiter to deter email enumeration (best-effort per instance)
 const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const ipHits = new Map<string, number[]>();
@@ -32,7 +46,6 @@ Deno.serve(async (req) => {
   try {
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "unknown";
     if (isRateLimited(ip)) {
-      // Vague response to deter enumeration
       return new Response(
         JSON.stringify({ matched: false, error: "Too many attempts. Please try again later." }),
         { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } },
@@ -41,7 +54,6 @@ Deno.serve(async (req) => {
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     const GOOGLE_SHEETS_API_KEY = Deno.env.get("GOOGLE_SHEETS_API_KEY");
-
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
     if (!GOOGLE_SHEETS_API_KEY) throw new Error("GOOGLE_SHEETS_API_KEY is not configured");
 
@@ -55,9 +67,8 @@ Deno.serve(async (req) => {
       );
     }
 
-    const url = new URL(`${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}/values:batchGet`);
-    url.searchParams.append("ranges", RANGE);
-    url.searchParams.set("majorDimension", "COLUMNS");
+    const url = new URL(`${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}`);
+    url.searchParams.set("majorDimension", "ROWS");
 
     const resp = await fetch(url.toString(), {
       headers: {
@@ -71,16 +82,24 @@ Deno.serve(async (req) => {
       throw new Error(`Sheets API failed [${resp.status}]: ${JSON.stringify(data)}`);
     }
 
-    const column: string[] = data?.valueRanges?.[0]?.values?.[0] ?? [];
-    const emails = new Set(
-      column
-        .map((v) => (typeof v === "string" ? v.trim().toLowerCase() : ""))
-        .filter((v) => v.length > 0),
-    );
+    const rows: string[][] = data?.values ?? [];
+    const matchedMachines = new Set<MachineKey>();
+    let matched = false;
 
-    const matched = emails.has(rawEmail);
+    for (const row of rows) {
+      const email = (row?.[0] ?? "").toString().trim().toLowerCase();
+      if (!email || email !== rawEmail) continue;
+      matched = true;
+      const course = (row?.[4] ?? "").toString();
+      for (const m of detectMachines(course)) matchedMachines.add(m);
+    }
 
-    return new Response(JSON.stringify({ matched }), {
+    // If email matched but no recognizable course found, allow all machines as fallback
+    const machines = matched && matchedMachines.size === 0
+      ? [...MACHINE_KEYS]
+      : [...matchedMachines];
+
+    return new Response(JSON.stringify({ matched, machines }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
