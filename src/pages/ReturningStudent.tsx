@@ -9,12 +9,14 @@ import { ArrowRight, XCircle, Loader2, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import trainerSiteSafety from "@/assets/photos/trainer-site-safety.jpg";
 
-const MACHINES: { label: string; url: string }[] = [
-  { label: "ADT Moxy", url: "https://live.cailintraining.com.au/moxy_returnsession" },
-  { label: "Wheel Loader", url: "https://live.cailintraining.com.au/wheel_loader_returnsession" },
-  { label: "Watercart", url: "https://live.cailintraining.com.au/watercart_returnsession" },
-  { label: "Roller", url: "https://live.cailintraining.com.au/roller_returnsession" },
-  { label: "Excavator", url: "https://live.cailintraining.com.au/excavator_returnsession" },
+type MachineKey = "moxy" | "loader" | "watercart" | "roller" | "excavator";
+
+const MACHINES: { key: MachineKey; label: string; url: string }[] = [
+  { key: "moxy", label: "ADT Moxy", url: "https://live.cailintraining.com.au/moxy_returnsession" },
+  { key: "loader", label: "Wheel Loader", url: "https://live.cailintraining.com.au/wheel_loader_returnsession" },
+  { key: "watercart", label: "Watercart", url: "https://live.cailintraining.com.au/watercart_returnsession" },
+  { key: "roller", label: "Roller", url: "https://live.cailintraining.com.au/roller_returnsession" },
+  { key: "excavator", label: "Excavator", url: "https://live.cailintraining.com.au/excavator_returnsession" },
 ];
 
 const CLOUD_BASE_URL = "https://opdxvpqimcfhawcznxyc.supabase.co";
@@ -30,6 +32,7 @@ const cloudHeaders = {
 
 type VerificationResponse = {
   matched?: boolean;
+  machines?: MachineKey[];
   error?: string;
 };
 
@@ -74,6 +77,7 @@ const ReturningStudent = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [verified, setVerified] = useState(false);
+  const [allowedMachines, setAllowedMachines] = useState<MachineKey[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,6 +107,7 @@ const ReturningStudent = () => {
       });
 
       if (matched) {
+        setAllowedMachines(data.machines && data.machines.length > 0 ? data.machines : MACHINES.map((m) => m.key));
         setVerified(true);
         return;
       }
@@ -182,7 +187,7 @@ const ReturningStudent = () => {
                   </p>
                 </div>
                 <div className="grid gap-3">
-                  {MACHINES.map((m) => (
+                  {MACHINES.filter((m) => allowedMachines.includes(m.key)).map((m) => (
                     <Button
                       key={m.label}
                       variant="outline"
@@ -195,6 +200,9 @@ const ReturningStudent = () => {
                     </Button>
                   ))}
                 </div>
+                <p className="text-xs text-muted-foreground text-center mt-4">
+                  Only machines from courses you've previously booked are shown. If something is missing, please contact us.
+                </p>
               </div>
             ) : !notFound ? (
               <form
