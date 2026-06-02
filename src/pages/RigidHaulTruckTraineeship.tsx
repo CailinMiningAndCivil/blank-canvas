@@ -25,7 +25,7 @@ const keyInfo = [
   {
     icon: Mountain,
     title: "Live Mine Site Training",
-    description: "Gain real-world experience on an active mine site, not a simulated environment.",
+    description: "Not a simulated environment — this is live production with a mining company.",
   },
   {
     icon: Users,
