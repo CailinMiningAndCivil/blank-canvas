@@ -201,34 +201,38 @@ const RigidHaulTruckTraineeship = () => {
         </div>
       </section>
 
-      {/* Selection Process */}
-      <section className="py-20 bg-secondary">
+
+      {/* Application Form */}
+      <section id="application-form" className="py-20 bg-secondary">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <div className="max-w-3xl mx-auto text-center mb-10">
             <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">
-              Selection Process
+              Apply Now
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Our selection process is designed to identify the most suitable candidates for this program.
+            <p className="text-muted-foreground">
+              Complete the form below to submit your application for the Rigid Haul Truck Traineeship.
             </p>
           </div>
-          <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-6">
-              {selectionSteps.map((step, index) => (
-                <div
-                  key={step.step}
-                  className="bg-card border border-border rounded-2xl p-6 relative"
-                >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-display text-lg font-bold">
-                      {step.step}
-                    </div>
-                    <ArrowRight className="hidden md:block w-5 h-5 text-primary/50" />
-                  </div>
-                  <h3 className="font-display text-xl text-foreground mb-2">{step.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
-                </div>
-              ))}
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-card border border-border rounded-2xl overflow-hidden">
+              <iframe
+                src="https://link.cailinminingcivil.com/widget/form/UT7WP0nsC6r4oALUoFND"
+                style={{ width: "100%", border: "none" }}
+                id="inline-UT7WP0nsC6r4oALUoFND"
+                data-layout="{'id':'INLINE'}"
+                data-trigger-type="alwaysShow"
+                data-trigger-value=""
+                data-activation-type="alwaysActivated"
+                data-activation-value=""
+                data-deactivation-type="neverDeactivate"
+                data-deactivation-value=""
+                data-form-name="Rigid Traineeship Form"
+                data-height="921"
+                data-layout-iframe-id="inline-UT7WP0nsC6r4oALUoFND"
+                data-form-id="UT7WP0nsC6r4oALUoFND"
+                title="Rigid Traineeship Form"
+                className="min-h-[921px] w-full"
+              />
             </div>
           </div>
         </div>
@@ -266,48 +270,18 @@ const RigidHaulTruckTraineeship = () => {
                     <li className="flex items-start gap-3 text-muted-foreground">
                       <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
                       <span>
+                        Flights, travel and accommodation are not included.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3 text-muted-foreground">
+                      <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
+                      <span>
                         This is a pilot program and not all applicants will be accepted.
                       </span>
                     </li>
                   </ul>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Application Form */}
-      <section id="application-form" className="py-20 bg-secondary">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-10">
-            <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">
-              Apply Now
-            </h2>
-            <p className="text-muted-foreground">
-              Complete the form below to submit your application for the Rigid Haul Truck Traineeship.
-            </p>
-          </div>
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-card border border-border rounded-2xl overflow-hidden">
-              <iframe
-                src="https://link.cailinminingcivil.com/widget/form/UT7WP0nsC6r4oALUoFND"
-                style={{ width: "100%", border: "none" }}
-                id="inline-UT7WP0nsC6r4oALUoFND"
-                data-layout="{'id':'INLINE'}"
-                data-trigger-type="alwaysShow"
-                data-trigger-value=""
-                data-activation-type="alwaysActivated"
-                data-activation-value=""
-                data-deactivation-type="neverDeactivate"
-                data-deactivation-value=""
-                data-form-name="Rigid Traineeship Form"
-                data-height="921"
-                data-layout-iframe-id="inline-UT7WP0nsC6r4oALUoFND"
-                data-form-id="UT7WP0nsC6r4oALUoFND"
-                title="Rigid Traineeship Form"
-                className="min-h-[921px] w-full"
-              />
             </div>
           </div>
         </div>
