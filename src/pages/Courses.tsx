@@ -294,21 +294,21 @@ const Courses = () => {
               </thead>
               <tbody>
                 <tr className="border-b border-border">
+                  <td className="p-4 text-foreground font-medium">Full Day Course</td>
+                  <td className="p-4 text-muted-foreground">Single machine mastery with Return for Free eligibility</td>
+                  <td className="p-4 text-muted-foreground">Unlimited returns*</td>
+                  <td className="p-4 text-primary font-semibold">Starts at $1,200</td>
+                </tr>
+                <tr className="border-b border-border">
                   <td className="p-4 text-foreground font-medium">$600 Courses</td>
                   <td className="p-4 text-muted-foreground">Career exploration or quick certification</td>
                   <td className="p-4 text-muted-foreground">1.5 hours initial</td>
                   <td className="p-4 text-primary font-semibold">$600</td>
                 </tr>
                 <tr className="border-b border-border">
-                  <td className="p-4 text-foreground font-medium">Bundles</td>
-                  <td className="p-4 text-muted-foreground">2-3x more employable with multiple tickets</td>
-                  <td className="p-4 text-muted-foreground">Unlimited hours</td>
-                  <td className="p-4 text-primary font-semibold">$2,500</td>
-                </tr>
-                <tr className="border-b border-border">
-                  <td className="p-4 text-foreground font-medium">Full Day Course</td>
-                  <td className="p-4 text-muted-foreground">Single machine mastery with return training</td>
-                  <td className="p-4 text-muted-foreground">Unlimited returns*</td>
+                  <td className="p-4 text-foreground font-medium">Starter Bundles</td>
+                  <td className="p-4 text-muted-foreground">2-3x more employable — no Return for Free</td>
+                  <td className="p-4 text-muted-foreground">Set hours per machine</td>
                   <td className="p-4 text-primary font-semibold">$2,500</td>
                 </tr>
                 <tr className="border-b border-border">
