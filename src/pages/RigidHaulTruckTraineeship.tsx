@@ -217,7 +217,7 @@ const RigidHaulTruckTraineeship = () => {
                     <li className="flex items-start gap-3 text-muted-foreground">
                       <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
                       <span>
-                        Flights, travel, accommodation or food are not included.
+                        Flights, travel, accommodation and food are not included.
                       </span>
                     </li>
                     <li className="flex items-start gap-3 text-muted-foreground">
