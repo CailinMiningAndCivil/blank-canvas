@@ -95,6 +95,16 @@ const individualMachines = [
     image: watercartNew,
     link: "/courses/watercart",
   },
+  {
+    id: "rigid-haul-truck",
+    title: "Rigid Haul Truck Training",
+    code: "Live Mine Site Traineeship",
+    description: "Australia's only rigid haul truck traineeship you can pay to attend. Train on a live mine site and learn to operate rigid haul trucks in a real production mining environment.",
+    image: rigidHaulTruck,
+    link: "/rigid-haul-truck-traineeship",
+    alt: "Rigid haul truck training on a live mine site",
+    badge: "New",
+  },
 ];
 
 const Index = () => {
