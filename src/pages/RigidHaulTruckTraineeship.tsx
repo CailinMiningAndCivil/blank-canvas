@@ -129,7 +129,7 @@ const RigidHaulTruckTraineeship = () => {
               Pilot Program
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-foreground mb-6 leading-tight">
-              Australia's Only Rigid Haul Truck <span className="text-primary">Traineeship</span> You Can Pay to Attend
+              Rigid Haul Truck Training on a Live Mine Site
             </h1>
             <p className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto mb-6">
               Train on a live mine site approximately 5 hours north of Perth and learn to operate rigid haul trucks in a real production mining environment.
