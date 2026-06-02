@@ -360,6 +360,7 @@ const Courses = () => {
                 image={machine.image}
                 link={machine.link}
                 alt={machine.alt}
+                badge={machine.badge}
               />
             ))}
           </div>
