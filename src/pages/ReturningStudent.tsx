@@ -33,6 +33,7 @@ const cloudHeaders = {
 type VerificationResponse = {
   matched?: boolean;
   machines?: MachineKey[];
+  eligible?: boolean;
   error?: string;
 };
 
