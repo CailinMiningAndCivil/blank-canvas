@@ -8,9 +8,10 @@ interface MachineCardProps {
   image: string;
   link: string;
   alt?: string;
+  badge?: string;
 }
 
-export const MachineCard = ({ title, code, description, image, link, alt }: MachineCardProps) => {
+export const MachineCard = ({ title, code, description, image, link, alt, badge }: MachineCardProps) => {
   return (
     <Link
       to={link}
@@ -22,7 +23,13 @@ export const MachineCard = ({ title, code, description, image, link, alt }: Mach
           alt={alt || title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
+        {badge && (
+          <span className="absolute top-3 right-3 bg-primary text-primary-foreground text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-lg">
+            ✨ {badge}
+          </span>
+        )}
       </div>
+
       <div className="p-6">
         <p className="text-primary text-sm font-medium mb-2">{code}</p>
         <h3 className="font-display text-xl text-foreground mb-3 group-hover:text-primary transition-colors">
