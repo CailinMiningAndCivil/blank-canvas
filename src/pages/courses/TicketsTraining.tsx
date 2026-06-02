@@ -32,6 +32,11 @@ const bundles = [
     bookingUrl: "https://live.cailintraining.com.au/starter_bundle_moxy_roller_watercart",
     highlight: true,
     badge: "MOST POPULAR",
+    hours: [
+      { machine: "Moxy", time: "4 hours" },
+      { machine: "Roller", time: "1.5–2 hours" },
+      { machine: "Watercart", time: "1.5–2 hours" },
+    ],
   },
   {
     id: "excavator-loader-bundle",
@@ -44,6 +49,10 @@ const bundles = [
     image: excavatorOperation,
     bookingUrl: "https://live.cailintraining.com.au/excavator-loader-bundle",
     highlight: false,
+    hours: [
+      { machine: "Excavator", time: "4 hours" },
+      { machine: "Wheel Loader", time: "4 hours" },
+    ],
   },
   {
     id: "loader-moxy-bundle",
@@ -56,6 +65,10 @@ const bundles = [
     image: loaderMoxyBundle,
     bookingUrl: "https://live.cailintraining.com.au/loader_moxy_bundle",
     highlight: false,
+    hours: [
+      { machine: "Wheel Loader", time: "4 hours" },
+      { machine: "Moxy", time: "4 hours" },
+    ],
   },
   {
     id: "interstate-bundle",
@@ -68,6 +81,11 @@ const bundles = [
     image: interstateBundleImg,
     bookingUrl: "https://live.cailintraining.com.au/interstate_bundle_moxy_roller_watercart",
     highlight: false,
+    hours: [
+      { machine: "Moxy", time: "4 hours" },
+      { machine: "Roller", time: "1.5–2 hours" },
+      { machine: "Watercart", time: "1.5–2 hours" },
+    ],
   },
 ];
 
