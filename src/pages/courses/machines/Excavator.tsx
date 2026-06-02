@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { AlertCircle } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
