@@ -18,6 +18,7 @@ import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import rollerArtistic from "@/assets/photos/roller-artistic.jpg";
 import watercartNew from "@/assets/photos/watercart-new.jpg";
+import rigidHaulTruck from "@/assets/photos/rigid-haul-truck.jpg";
 import safetyEquipmentCheck from "@/assets/photos/safety-equipment-check.jpg";
 import rplHero from "@/assets/photos/rpl-page-hero.png";
 import vocHero from "@/assets/photos/voc-page-hero.png";
@@ -112,6 +113,16 @@ const individualMachines = [
     image: articulatedDumptruck,
     link: "/courses/moxy",
     alt: "Moxy training Perth — articulated dump truck on live mine site",
+  },
+  {
+    id: "rigid-haul-truck",
+    title: "Rigid Haul Truck Training",
+    code: "Live Mine Site Traineeship",
+    description: "Australia's only rigid haul truck traineeship you can pay to attend. Train on a live mine site in a real production environment.",
+    image: rigidHaulTruck,
+    link: "/rigid-haul-truck-traineeship",
+    alt: "Rigid haul truck training on a live mine site",
+    badge: "New",
   },
   {
     id: "roller",
@@ -349,6 +360,7 @@ const Courses = () => {
                 image={machine.image}
                 link={machine.link}
                 alt={machine.alt}
+                badge={machine.badge}
               />
             ))}
           </div>
