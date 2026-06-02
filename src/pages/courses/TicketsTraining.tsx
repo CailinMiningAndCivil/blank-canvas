@@ -201,6 +201,30 @@ const TicketsTraining = () => {
                   <h3 className="font-display text-2xl text-foreground mb-2">{bundle.title}</h3>
                   <p className="text-muted-foreground text-sm mb-2">{bundle.subtitle}</p>
                   <p className="text-foreground text-sm mb-4">{bundle.description}</p>
+
+                  {bundle.hours && (
+                    <div className="bg-secondary border border-border rounded-xl p-4 mb-4">
+                      <p className="text-foreground font-semibold text-sm mb-2 flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-primary" /> Bundle Includes:
+                      </p>
+                      <ul className="space-y-1">
+                        {bundle.hours.map((h) => (
+                          <li key={h.machine} className="flex items-center justify-between text-sm">
+                            <span className="text-foreground">{h.machine}</span>
+                            <span className="text-muted-foreground">{h.time}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <div className="flex items-start gap-2 bg-destructive/10 border border-destructive/30 rounded-lg p-3 mb-4">
+                    <AlertCircle className="w-4 h-4 text-destructive shrink-0 mt-0.5" />
+                    <p className="text-foreground text-xs">
+                      This course does not include Return for Free eligibility.
+                    </p>
+                  </div>
+
                   <div className="flex items-center justify-between mb-6">
                     <span className="font-display text-2xl text-primary">{bundle.price}</span>
                   </div>
@@ -215,6 +239,33 @@ const TicketsTraining = () => {
                   </Button>
                 </div>
               </div>
+            ))}
+          </div>
+
+          {/* Important Notice */}
+          <div className="max-w-5xl mx-auto mt-12">
+            <div className="bg-gradient-to-br from-destructive/10 to-primary/5 border-2 border-destructive/30 rounded-2xl p-6 md:p-8">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-destructive/20 rounded-xl flex items-center justify-center shrink-0">
+                  <Info className="w-6 h-6 text-destructive" />
+                </div>
+                <div>
+                  <h3 className="font-display text-xl text-foreground mb-2">Important</h3>
+                  <p className="text-foreground mb-3">
+                    These bundles <strong>do not include Return for Free eligibility</strong>. Additional training
+                    hours may be required before becoming eligible.
+                  </p>
+                  <p className="text-muted-foreground text-sm">
+                    If you'd like unlimited return sessions until you're fully confident, consider booking our{" "}
+                    <Link to="/courses/full-day" className="text-primary underline font-medium">
+                      Full Day Training
+                    </Link>{" "}
+                    instead.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
             ))}
           </div>
         </div>
