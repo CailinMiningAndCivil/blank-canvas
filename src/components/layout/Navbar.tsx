@@ -194,8 +194,8 @@ export const Navbar = () => {
         {/* Mobile Navigation */}
         <div
           className={cn(
-            "lg:hidden overflow-hidden transition-all duration-300",
-            isOpen ? "max-h-[500px] pb-6" : "max-h-0"
+            "lg:hidden overflow-y-auto transition-all duration-300",
+            isOpen ? "max-h-[calc(100vh-5rem)] pb-6" : "max-h-0 overflow-hidden"
           )}
         >
           <div className="flex flex-col gap-4 pt-4">
