@@ -3,7 +3,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
-import { CheckCircle, Clock, Award, Users, Banknote, HelpCircle, Phone, MapPin, Star, Briefcase } from "lucide-react";
+import { CheckCircle, Clock, Award, Users, Banknote, HelpCircle, Phone, MapPin, Star, Briefcase, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BookLink } from "@/components/BookLink";
 import {
