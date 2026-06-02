@@ -38,6 +38,18 @@ const courseCategories = [
     icon: RefreshCw,
   },
   {
+    id: "traineeship",
+    title: "Traineeship Style Training",
+    subtitle: "By Application Only",
+    description: "Longer-duration courses delivered in a live production environment with a mining company. 1 hour flight or 5–6 hour drive from Perth. By application only.",
+    price: "Apply",
+    priceNote: "Live mine site placement",
+    image: rigidHaulTruck,
+    link: "/rigid-haul-truck-traineeship",
+    features: ["Live production environment", "Extended duration training", "Application required"],
+    icon: Briefcase,
+  },
+  {
     id: "short-courses",
     title: "$600 Courses",
     subtitle: "Quick Certification",
@@ -84,18 +96,6 @@ const courseCategories = [
     link: "/courses/voc",
     features: ["30-minute assessment", "Professional reference", "Boost your CV"],
     icon: Award,
-  },
-  {
-    id: "traineeship",
-    title: "Traineeship Style Training",
-    subtitle: "By Application Only",
-    description: "Longer-duration courses delivered in a live production environment with a mining company. 1 hour flight or 5–6 hour drive from Perth. By application only.",
-    price: "Apply",
-    priceNote: "Live mine site placement",
-    image: rigidHaulTruck,
-    link: "/rigid-haul-truck-traineeship",
-    features: ["Live production environment", "Extended duration training", "Application required"],
-    icon: Briefcase,
   },
 ];
 
