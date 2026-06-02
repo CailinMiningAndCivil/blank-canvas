@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { HeroImage } from "@/components/ui/hero-image";
@@ -11,7 +10,6 @@ import {
   Star,
   ArrowRight,
   AlertTriangle,
-  HardHat,
   Truck,
   Construction,
   Globe,
@@ -71,7 +69,7 @@ const selectionSteps = [
     step: "01",
     title: "Submit Your Application",
     description:
-      "Complete the application form below with your details, experience, and why you believe you are a suitable candidate.",
+      "Submit your application with your details, experience, and why you believe you are a suitable candidate.",
   },
   {
     step: "02",
@@ -94,20 +92,6 @@ const selectionSteps = [
 ];
 
 const RigidHaulTruckTraineeship = () => {
-  useEffect(() => {
-    const existing = document.getElementById("ghl-form-embed-script");
-    if (!existing) {
-      const script = document.createElement("script");
-      script.id = "ghl-form-embed-script";
-      script.src = "https://link.cailinminingcivil.com/js/form_embed.js";
-      script.async = true;
-      document.body.appendChild(script);
-    }
-    return () => {
-      const script = document.getElementById("ghl-form-embed-script");
-      if (script) document.body.removeChild(script);
-    };
-  }, []);
 
   return (
     <Layout>
