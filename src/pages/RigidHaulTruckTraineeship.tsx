@@ -222,7 +222,7 @@ const RigidHaulTruckTraineeship = () => {
                     </li>
                     <li className="flex items-start gap-3 text-muted-foreground">
                       <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
-                      <span>Submitting an application does not guarantee acceptance into the program.</span>
+                      <span>Submitting an application does not guarantee acceptance into the program and not everyone will be contacted.</span>
                     </li>
                     <li className="flex items-start gap-3 text-muted-foreground">
                       <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
