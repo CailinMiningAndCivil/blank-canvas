@@ -202,8 +202,57 @@ const RigidHaulTruckTraineeship = () => {
       </section>
 
 
+      {/* Important Notice */}
+      <section className="py-16 bg-secondary">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-primary/5 border-2 border-primary/30 rounded-2xl p-8 md:p-10">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
+                  <AlertTriangle className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-display text-xl text-foreground mb-3">Important Notice</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3 text-muted-foreground">
+                      <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
+                      <span>
+                        Flights, travel, accommodation or food are not included.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3 text-muted-foreground">
+                      <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
+                      <span>Submitting an application does not guarantee acceptance into the program.</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-muted-foreground">
+                      <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
+                      <span>
+                        Due to the limited number of places available, applicants will be assessed based on their
+                        qualifications, experience, transferable skills and overall suitability.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3 text-muted-foreground">
+                      <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
+                      <span>
+                        Training will take place on a live mine site located approximately 5.5 hours from Perth.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3 text-muted-foreground">
+                      <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
+                      <span>
+                        This is a pilot program and not all applicants will be accepted.
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Application Form */}
-      <section id="application-form" className="py-20 bg-secondary">
+      <section id="application-form" className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-10">
             <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">
@@ -233,55 +282,6 @@ const RigidHaulTruckTraineeship = () => {
                 title="Rigid Traineeship Form"
                 className="min-h-[921px] w-full"
               />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Important Notice */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-primary/5 border-2 border-primary/30 rounded-2xl p-8 md:p-10">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                  <AlertTriangle className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-display text-xl text-foreground mb-3">Important Notice</h3>
-                  <ul className="space-y-3">
-                    <li className="flex items-start gap-3 text-muted-foreground">
-                      <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
-                      <span>Submitting an application does not guarantee acceptance into the program.</span>
-                    </li>
-                    <li className="flex items-start gap-3 text-muted-foreground">
-                      <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
-                      <span>
-                        Due to the limited number of places available, applicants will be assessed based on their
-                        qualifications, experience, transferable skills and overall suitability.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3 text-muted-foreground">
-                      <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
-                      <span>
-                        Training will take place on a live mine site located approximately 5.5 hours from Perth.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3 text-muted-foreground">
-                      <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
-                      <span>
-                        Flights, travel and accommodation are not included.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3 text-muted-foreground">
-                      <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
-                      <span>
-                        This is a pilot program and not all applicants will be accepted.
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
             </div>
           </div>
         </div>
