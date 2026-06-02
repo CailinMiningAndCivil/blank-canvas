@@ -266,10 +266,9 @@ const TicketsTraining = () => {
               </div>
             </div>
           </div>
-            ))}
-          </div>
         </div>
       </section>
+
 
       {/* CTA Section */}
       <section className="py-20">
