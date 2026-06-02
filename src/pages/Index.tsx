@@ -19,6 +19,7 @@ import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import rollerNew from "@/assets/photos/roller-new.jpg";
 import watercartNew from "@/assets/photos/watercart-new.jpg";
+import rigidHaulTruck from "@/assets/photos/rigid-haul-truck.jpg";
 import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 
@@ -93,6 +94,16 @@ const individualMachines = [
     description: "Bulk water truck operations training for dust suppression and site maintenance.",
     image: watercartNew,
     link: "/courses/watercart",
+  },
+  {
+    id: "rigid-haul-truck",
+    title: "Rigid Haul Truck Training",
+    code: "Live Mine Site Traineeship",
+    description: "Australia's only rigid haul truck traineeship you can pay to attend. Train on a live mine site and learn to operate rigid haul trucks in a real production mining environment.",
+    image: rigidHaulTruck,
+    link: "/rigid-haul-truck-traineeship",
+    alt: "Rigid haul truck training on a live mine site",
+    badge: "New",
   },
 ];
 
