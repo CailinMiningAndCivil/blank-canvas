@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { AlertCircle } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
@@ -116,6 +117,18 @@ const ShortCourses = () => {
               <span className="text-primary font-display text-4xl">$600</span>
               <span className="text-foreground ml-2">per machine</span>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Return for Free Eligibility Notice */}
+      <section className="py-6 bg-destructive/5 border-b border-destructive/20">
+        <div className="container mx-auto px-4">
+          <div className="flex items-start gap-3 max-w-3xl mx-auto">
+            <AlertCircle className="w-5 h-5 text-destructive shrink-0 mt-0.5" />
+            <p className="text-foreground text-sm">
+              Please note: These courses do not include Return for Free eligibility. Additional training hours may be required before becoming eligible.
+            </p>
           </div>
         </div>
       </section>
