@@ -126,7 +126,7 @@ const RigidHaulTruckTraineeship = () => {
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <span className="inline-block rounded-full bg-primary/10 border border-primary/20 px-4 py-1.5 text-sm font-semibold uppercase tracking-wider text-primary mb-6">
-              Pilot Program
+              NEW COURSE
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-foreground mb-6 leading-tight">
               Rigid Haul Truck Training on a Live Mine Site
@@ -235,12 +235,6 @@ const RigidHaulTruckTraineeship = () => {
                       <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
                       <span>
                         Training will take place on a live mine site located approximately 5-6 hours drive or 1 hour flight from Perth.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3 text-muted-foreground">
-                      <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
-                      <span>
-                        This is a pilot program and not all applicants will be accepted.
                       </span>
                     </li>
                   </ul>
