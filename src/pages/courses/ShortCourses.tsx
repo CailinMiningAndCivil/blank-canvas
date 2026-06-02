@@ -121,6 +121,18 @@ const ShortCourses = () => {
         </div>
       </section>
 
+      {/* Return for Free Eligibility Notice */}
+      <section className="py-6 bg-destructive/5 border-b border-destructive/20">
+        <div className="container mx-auto px-4">
+          <div className="flex items-start gap-3 max-w-3xl mx-auto">
+            <AlertCircle className="w-5 h-5 text-destructive shrink-0 mt-0.5" />
+            <p className="text-foreground text-sm">
+              Please note: These courses do not include Return for Free eligibility. Additional training hours may be required before becoming eligible.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* CTF Funding Notice */}
       <CTFFundingBanner />
 
