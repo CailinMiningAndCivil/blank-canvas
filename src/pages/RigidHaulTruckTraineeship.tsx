@@ -58,7 +58,6 @@ const keyInfo = [
 const lookingFor = [
   { icon: Award, label: "HR Licence" },
   { icon: Truck, label: "Previous machine operating experience" },
-  { icon: HardHat, label: "Mining experience" },
   { icon: Construction, label: "Construction experience" },
   { icon: Mountain, label: "Civil experience" },
   { icon: Briefcase, label: "Heavy vehicle experience" },
