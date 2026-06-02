@@ -19,6 +19,7 @@ import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import rollerNew from "@/assets/photos/roller-new.jpg";
 import watercartNew from "@/assets/photos/watercart-new.jpg";
+import rigidHaulTruck from "@/assets/photos/rigid-haul-truck.jpg";
 import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 
