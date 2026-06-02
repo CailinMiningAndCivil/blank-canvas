@@ -24,6 +24,7 @@ const courseLinks = [
   { name: "$600 Courses", path: "/courses/short-courses" },
   { name: "Bundles", path: "/courses/bundles" },
   { name: "Full Day", path: "/courses/full-day" },
+  { name: "Rigid Haul Truck 🆕", path: "/rigid-haul-truck-traineeship" },
   { name: "RPL (Assessments Only)", path: "/rpl" },
   { name: "VOC (Verification)", path: "/courses/voc" },
   { name: "Returning Student", path: "/returning-student" },
@@ -35,6 +36,7 @@ const machineLinks = [
   { name: "Articulated Truck (Moxy)", path: "/courses/moxy" },
   { name: "Roller", path: "/courses/roller" },
   { name: "Watercart", path: "/courses/watercart" },
+  { name: "Rigid Haul Truck 🆕", path: "/rigid-haul-truck-traineeship" },
 ];
 
 export const Navbar = () => {
