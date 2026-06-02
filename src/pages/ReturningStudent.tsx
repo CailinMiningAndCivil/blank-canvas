@@ -183,7 +183,24 @@ const ReturningStudent = () => {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-xl">
-            {verified ? (
+            {ineligible ? (
+              <div className="text-center bg-card rounded-xl p-8 md:p-12 border border-border shadow-card">
+                <XCircle className="w-16 h-16 text-destructive mx-auto mb-6" />
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+                  Not Eligible for Return Booking
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-lg mx-auto mb-6">
+                  Our records show your previous booking was a VOC or Assessment Only course, which doesn't qualify for a return session. Please book one of our onsite courses, or email us at{" "}
+                  <a href="mailto:info@cailinminingcivil.com" className="text-primary underline">
+                    info@cailinminingcivil.com
+                  </a>{" "}
+                  for assistance.
+                </p>
+                <Button variant="outline" asChild>
+                  <a href="/courses">View Onsite Courses</a>
+                </Button>
+              </div>
+            ) : verified ? (
               <div className="bg-card rounded-xl p-6 md:p-8 border border-border shadow-card">
                 <div className="text-center mb-8">
                   <CheckCircle className="w-14 h-14 text-primary mx-auto mb-4" />
