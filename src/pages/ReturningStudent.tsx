@@ -77,6 +77,7 @@ const ReturningStudent = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [verified, setVerified] = useState(false);
+  const [allowedMachines, setAllowedMachines] = useState<MachineKey[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,6 +107,7 @@ const ReturningStudent = () => {
       });
 
       if (matched) {
+        setAllowedMachines(data.machines && data.machines.length > 0 ? data.machines : MACHINES.map((m) => m.key));
         setVerified(true);
         return;
       }
@@ -185,7 +187,7 @@ const ReturningStudent = () => {
                   </p>
                 </div>
                 <div className="grid gap-3">
-                  {MACHINES.map((m) => (
+                  {MACHINES.filter((m) => allowedMachines.includes(m.key)).map((m) => (
                     <Button
                       key={m.label}
                       variant="outline"
@@ -198,6 +200,9 @@ const ReturningStudent = () => {
                     </Button>
                   ))}
                 </div>
+                <p className="text-xs text-muted-foreground text-center mt-4">
+                  Only machines from courses you've previously booked are shown. If something is missing, please contact us.
+                </p>
               </div>
             ) : !notFound ? (
               <form
