@@ -114,16 +114,15 @@ const RigidHaulTruckTraineeship = () => {
               Pilot Program
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-foreground mb-6 leading-tight">
-              Rigid Haul Truck <span className="text-primary">Traineeship</span> Opportunity
+              Australia's Only Rigid Haul Truck <span className="text-primary">Traineeship</span> You Can Pay to Attend
             </h1>
             <p className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto mb-6">
-              A rare opportunity to gain hands-on rigid haul truck training on a live mine site.
-              Places are extremely limited and applicants will be assessed before being accepted.
+              Train on a live mine site approximately 5 hours north of Perth and learn to operate rigid haul trucks in a real production mining environment.
+              Places are extremely limited and applicants will be assessed before acceptance into the program.
             </p>
             <p className="text-muted-foreground text-base max-w-3xl mx-auto">
-              This program is designed for motivated individuals who believe they have the skills, attitude and
-              commitment required to succeed in a mining environment. Applicants do not need previous rigid haul truck
-              experience, however they must demonstrate why they would be a suitable candidate.
+              No previous rigid haul truck experience is required, however applicants must demonstrate why they are a suitable candidate and capable of succeeding in a mining environment.
+              Only successful applicants will be contacted and offered a place.
             </p>
           </div>
         </div>
