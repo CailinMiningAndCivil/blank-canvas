@@ -25,6 +25,18 @@ import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseCategories = [
   {
+    id: "full-day",
+    title: "Full Day Course",
+    subtitle: "Unlimited Return Training",
+    description: "Master any single machine with unlimited return sessions. Train until you're fully confident — no rushing, no time limits.",
+    price: "Starts at $1,200",
+    priceNote: "Includes Return for Free eligibility",
+    image: fullDayHero,
+    link: "/courses/full-day",
+    features: ["Return for Free eligibility*", "1:1 instruction", "Live mine site training"],
+    icon: RefreshCw,
+  },
+  {
     id: "short-courses",
     title: "$600 Courses",
     subtitle: "Quick Certification",
@@ -38,27 +50,15 @@ const courseCategories = [
   },
   {
     id: "bundles",
-    title: "Bundles",
-    subtitle: "Full Training Programs",
-    description: "Double or triple your employment opportunities. Get 1:1 training on a live mine site.",
+    title: "Starter Bundles",
+    subtitle: "Multi-Ticket Programs",
+    description: "Double or triple your employment opportunities. Get 1:1 training on a live mine site. Does not include Return for Free eligibility.",
     price: "$2,500",
     priceNote: "CTF Funding Available",
     image: bundlesHero,
     link: "/courses/bundles",
     features: ["2-3x more employable", "1:1 instruction", "Multiple certifications"],
     icon: Users,
-  },
-  {
-    id: "full-day",
-    title: "Full Day Course",
-    subtitle: "Unlimited Return Training",
-    description: "Master any single machine with unlimited return sessions. Train until you're fully confident — no rushing, no time limits.",
-    price: "Starts at $1,200",
-    priceNote: "Request Only",
-    image: fullDayHero,
-    link: "/courses/full-day",
-    features: ["Unlimited return training*", "1:1 instruction", "Live mine site training"],
-    icon: RefreshCw,
   },
   {
     id: "rpl",
@@ -294,21 +294,21 @@ const Courses = () => {
               </thead>
               <tbody>
                 <tr className="border-b border-border">
+                  <td className="p-4 text-foreground font-medium">Full Day Course</td>
+                  <td className="p-4 text-muted-foreground">Single machine mastery with Return for Free eligibility</td>
+                  <td className="p-4 text-muted-foreground">Unlimited returns*</td>
+                  <td className="p-4 text-primary font-semibold">Starts at $1,200</td>
+                </tr>
+                <tr className="border-b border-border">
                   <td className="p-4 text-foreground font-medium">$600 Courses</td>
                   <td className="p-4 text-muted-foreground">Career exploration or quick certification</td>
                   <td className="p-4 text-muted-foreground">1.5 hours initial</td>
                   <td className="p-4 text-primary font-semibold">$600</td>
                 </tr>
                 <tr className="border-b border-border">
-                  <td className="p-4 text-foreground font-medium">Bundles</td>
-                  <td className="p-4 text-muted-foreground">2-3x more employable with multiple tickets</td>
-                  <td className="p-4 text-muted-foreground">Unlimited hours</td>
-                  <td className="p-4 text-primary font-semibold">$2,500</td>
-                </tr>
-                <tr className="border-b border-border">
-                  <td className="p-4 text-foreground font-medium">Full Day Course</td>
-                  <td className="p-4 text-muted-foreground">Single machine mastery with return training</td>
-                  <td className="p-4 text-muted-foreground">Unlimited returns*</td>
+                  <td className="p-4 text-foreground font-medium">Starter Bundles</td>
+                  <td className="p-4 text-muted-foreground">2-3x more employable — no Return for Free</td>
+                  <td className="p-4 text-muted-foreground">Set hours per machine</td>
                   <td className="p-4 text-primary font-semibold">$2,500</td>
                 </tr>
                 <tr className="border-b border-border">
