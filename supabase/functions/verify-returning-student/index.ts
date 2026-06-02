@@ -85,21 +85,31 @@ Deno.serve(async (req) => {
     const rows: string[][] = data?.values ?? [];
     const matchedMachines = new Set<MachineKey>();
     let matched = false;
+    let hasEligibleCourse = false;
 
     for (const row of rows) {
       const email = (row?.[0] ?? "").toString().trim().toLowerCase();
       if (!email || email !== rawEmail) continue;
       matched = true;
       const course = (row?.[4] ?? "").toString();
-      for (const m of detectMachines(course)) matchedMachines.add(m);
+      const lc = course.toLowerCase();
+      const isVocOrAssessmentOnly =
+        (lc.includes("voc") || lc.includes("assessment only")) &&
+        !lc.includes("bundle") &&
+        !lc.includes("short course") &&
+        !lc.includes("full day");
+      if (isVocOrAssessmentOnly) continue;
+      hasEligibleCourse = true;
+      const found = detectMachines(course);
+      for (const m of found) matchedMachines.add(m);
     }
 
-    // If email matched but no recognizable course found, allow all machines as fallback
-    const machines = matched && matchedMachines.size === 0
+    // If email matched with eligible course but no recognizable machine, allow all as fallback
+    const machines = matched && hasEligibleCourse && matchedMachines.size === 0
       ? [...MACHINE_KEYS]
       : [...matchedMachines];
 
-    return new Response(JSON.stringify({ matched, machines }), {
+    return new Response(JSON.stringify({ matched, machines, eligible: hasEligibleCourse }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
