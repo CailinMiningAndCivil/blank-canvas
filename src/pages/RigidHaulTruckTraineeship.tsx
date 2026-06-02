@@ -70,7 +70,7 @@ const selectionSteps = [
     step: "01",
     title: "Submit Your Application",
     description:
-      "Submit your application with your details, experience, and why you believe you are a suitable candidate.",
+      "Complete the application form below with your details, experience, and why you believe you are a suitable candidate.",
   },
   {
     step: "02",
@@ -277,22 +277,38 @@ const RigidHaulTruckTraineeship = () => {
         </div>
       </section>
 
-      {/* Application Coming Soon */}
+      {/* Application Form */}
       <section id="application-form" className="py-20 bg-secondary">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="max-w-3xl mx-auto text-center mb-10">
             <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">
               Apply Now
             </h2>
-            <p className="text-muted-foreground mb-6">
-              Applications for the Rigid Haul Truck Traineeship will open soon. Please check back later or contact us for more information.
+            <p className="text-muted-foreground">
+              Complete the form below to submit your application for the Rigid Haul Truck Traineeship.
             </p>
-            <a
-              href="mailto:info@cailinminingcivil.com"
-              className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
-            >
-              Contact Us
-            </a>
+          </div>
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-card border border-border rounded-2xl overflow-hidden">
+              <iframe
+                src="https://link.cailinminingcivil.com/widget/form/UT7WP0nsC6r4oALUoFND"
+                style={{ width: "100%", border: "none" }}
+                id="inline-UT7WP0nsC6r4oALUoFND"
+                data-layout="{'id':'INLINE'}"
+                data-trigger-type="alwaysShow"
+                data-trigger-value=""
+                data-activation-type="alwaysActivated"
+                data-activation-value=""
+                data-deactivation-type="neverDeactivate"
+                data-deactivation-value=""
+                data-form-name="Rigid Traineeship Form"
+                data-height="921"
+                data-layout-iframe-id="inline-UT7WP0nsC6r4oALUoFND"
+                data-form-id="UT7WP0nsC6r4oALUoFND"
+                title="Rigid Traineeship Form"
+                className="min-h-[921px] w-full"
+              />
+            </div>
           </div>
         </div>
       </section>
