@@ -132,7 +132,7 @@ const RigidHaulTruckTraineeship = () => {
               Rigid Haul Truck Training on a Live Mine Site
             </h1>
             <p className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto mb-6">
-              Train on a live mine site approximately 5 hours north of Perth and learn to operate rigid haul trucks in a real production mining environment.
+              Train on a live mine site approximately 5-6 hours drive or 1 hour flight from Perth and learn to operate rigid haul trucks in a real production mining environment.
               Places are extremely limited and applicants will be assessed before acceptance into the program.
             </p>
             <p className="text-muted-foreground text-base max-w-3xl mx-auto">
@@ -234,7 +234,7 @@ const RigidHaulTruckTraineeship = () => {
                     <li className="flex items-start gap-3 text-muted-foreground">
                       <CircleCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
                       <span>
-                        Training will take place on a live mine site located approximately 5.5 hours from Perth.
+                        Training will take place on a live mine site located approximately 5-6 hours drive or 1 hour flight from Perth.
                       </span>
                     </li>
                     <li className="flex items-start gap-3 text-muted-foreground">
