@@ -34,6 +34,8 @@ import Recruitment from "./pages/Recruitment";
 import Affiliate from "./pages/Affiliate";
 import ReturningStudent from "./pages/ReturningStudent";
 import RigidHaulTruckTraineeship from "./pages/RigidHaulTruckTraineeship";
+import RigidHaulTruckApplication from "./pages/RigidHaulTruckApplication";
+import RigidHaulTruckBooking from "./pages/RigidHaulTruckBooking";
 
 const CareersRedirect = () => {
   window.location.href = "https://live.cailintraining.com.au/join_cailin_portal";
@@ -79,6 +81,8 @@ const App = () => (
           <Route path="/affiliate" element={<Affiliate />} />
           <Route path="/returning-student" element={<ReturningStudent />} />
           <Route path="/rigid-haul-truck-traineeship" element={<RigidHaulTruckTraineeship />} />
+          <Route path="/rigid-haul-truck-application" element={<RigidHaulTruckApplication />} />
+          <Route path="/rigid-haul-truck-booking" element={<RigidHaulTruckBooking />} />
           <Route path="/practical-assessments" element={<Navigate to="/courses" replace />} />
           <Route path="/cailin-courses" element={<Navigate to="/courses" replace />} />
           <Route path="/e-book" element={<Navigate to="/courses" replace />} />
