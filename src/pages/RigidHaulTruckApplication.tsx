@@ -54,6 +54,31 @@ const RigidHaulTruckApplication = () => {
       return;
     }
     setSubmitting(true);
+
+    // Always fire the webhook first so leads reach GHL even if storage/DB fails
+    const fireWebhook = (extra: Record<string, unknown> = {}) =>
+      fetch(
+        "https://services.leadconnectorhq.com/hooks/rHdckncf62VIX9k55LFy/webhook-trigger/140f57a4-abd6-4127-8e7b-f9f56dbdd021",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            form: "Rigid Haul Truck Application",
+            full_name: parsed.data.fullName,
+            email: parsed.data.email,
+            phone: parsed.data.phone,
+            previous_experience: parsed.data.previousExperience === "yes" ? "Yes" : "No",
+            experience_details: parsed.data.experienceDetails || "",
+            submitted_at: new Date().toISOString(),
+            source_url: window.location.href,
+            ...extra,
+          }),
+        }
+      ).catch((whErr) => console.error("Webhook failed", whErr));
+
+    // Send immediately (without file URL) so GHL always gets the lead
+    fireWebhook();
+
     try {
       let evidencePath: string | null = null;
       if (file) {
@@ -75,36 +100,14 @@ const RigidHaulTruckApplication = () => {
       });
       if (error) throw error;
 
-      // Fire-and-forget webhook to GHL
-      let evidenceUrl: string | null = null;
+      // Follow-up webhook with the evidence file link, if any
       if (evidencePath) {
+        let evidenceUrl: string | null = null;
         const { data: signed } = await supabase.storage
           .from("haul-truck-applications")
           .createSignedUrl(evidencePath, 60 * 60 * 24 * 7);
         evidenceUrl = signed?.signedUrl ?? null;
-      }
-      try {
-        await fetch(
-          "https://services.leadconnectorhq.com/hooks/rHdckncf62VIX9k55LFy/webhook-trigger/140f57a4-abd6-4127-8e7b-f9f56dbdd021",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              form: "Rigid Haul Truck Application",
-              full_name: parsed.data.fullName,
-              email: parsed.data.email,
-              phone: parsed.data.phone,
-              previous_experience: parsed.data.previousExperience === "yes" ? "Yes" : "No",
-              experience_details: parsed.data.experienceDetails || "",
-              evidence_file_path: evidencePath,
-              evidence_file_url: evidenceUrl,
-              submitted_at: new Date().toISOString(),
-              source_url: window.location.href,
-            }),
-          }
-        );
-      } catch (whErr) {
-        console.error("Webhook failed", whErr);
+        fireWebhook({ evidence_file_path: evidencePath, evidence_file_url: evidenceUrl, follow_up: true });
       }
 
       setSubmitted(true);
