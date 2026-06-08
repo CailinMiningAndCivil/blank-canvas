@@ -119,6 +119,39 @@ export type Database = {
         }
         Relationships: []
       }
+      haul_truck_applications: {
+        Row: {
+          created_at: string
+          email: string
+          evidence_file_path: string | null
+          experience_details: string | null
+          full_name: string
+          id: string
+          phone: string
+          previous_experience: boolean
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          evidence_file_path?: string | null
+          experience_details?: string | null
+          full_name: string
+          id?: string
+          phone: string
+          previous_experience: boolean
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          evidence_file_path?: string | null
+          experience_details?: string | null
+          full_name?: string
+          id?: string
+          phone?: string
+          previous_experience?: boolean
+        }
+        Relationships: []
+      }
       returning_student_submissions: {
         Row: {
           created_at: string
