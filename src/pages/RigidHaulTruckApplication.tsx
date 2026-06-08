@@ -74,6 +74,39 @@ const RigidHaulTruckApplication = () => {
         evidence_file_path: evidencePath,
       });
       if (error) throw error;
+
+      // Fire-and-forget webhook to GHL
+      let evidenceUrl: string | null = null;
+      if (evidencePath) {
+        const { data: signed } = await supabase.storage
+          .from("haul-truck-applications")
+          .createSignedUrl(evidencePath, 60 * 60 * 24 * 7);
+        evidenceUrl = signed?.signedUrl ?? null;
+      }
+      try {
+        await fetch(
+          "https://services.leadconnectorhq.com/hooks/rHdckncf62VIX9k55LFy/webhook-trigger/140f57a4-abd6-4127-8e7b-f9f56dbdd021",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              form: "Rigid Haul Truck Application",
+              full_name: parsed.data.fullName,
+              email: parsed.data.email,
+              phone: parsed.data.phone,
+              previous_experience: parsed.data.previousExperience === "yes" ? "Yes" : "No",
+              experience_details: parsed.data.experienceDetails || "",
+              evidence_file_path: evidencePath,
+              evidence_file_url: evidenceUrl,
+              submitted_at: new Date().toISOString(),
+              source_url: window.location.href,
+            }),
+          }
+        );
+      } catch (whErr) {
+        console.error("Webhook failed", whErr);
+      }
+
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
