@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { HeroImage } from "@/components/ui/hero-image";
-import { BookeoWidget } from "@/components/BookeoWidget";
+
 import { AlertTriangle, Phone, Mail, CalendarCheck } from "lucide-react";
 import heroImage from "@/assets/photos/rigid-haul-truck.jpg";
 
