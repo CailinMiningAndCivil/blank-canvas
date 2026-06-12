@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { HeroImage } from "@/components/ui/hero-image";
-import { BookeoWidget } from "@/components/BookeoWidget";
+
 import { AlertTriangle, Phone, Mail, CalendarCheck } from "lucide-react";
 import heroImage from "@/assets/photos/rigid-haul-truck.jpg";
 
@@ -84,18 +84,6 @@ const RigidHaulTruckBooking = () => {
                 <span>Travel, accommodation and food are not included.</span>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 bg-secondary/30">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-8">
-              <h2 className="font-display text-3xl text-foreground mb-2">Book & Pay</h2>
-              <p className="text-muted-foreground">Complete your booking and payment below to secure your place.</p>
-            </div>
-            <BookeoWidget course="3351MPEJXE18EE1709583" />
           </div>
         </div>
       </section>
