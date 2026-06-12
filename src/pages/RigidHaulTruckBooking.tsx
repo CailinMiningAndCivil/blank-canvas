@@ -302,8 +302,8 @@ const RigidHaulTruckBooking = () => {
               <div className="bg-card border border-border rounded-xl p-6">
                 <Mail className="w-8 h-8 text-primary mx-auto mb-3" />
                 <p className="font-semibold text-foreground mb-1">Email Us</p>
-                <a href="mailto:admin@cailintraining.com.au" className="text-primary hover:underline text-sm break-all">
-                  admin@cailintraining.com.au
+                <a href="mailto:info@cailinminingcivil.com" className="text-primary hover:underline text-sm break-all">
+                  info@cailinminingcivil.com
                 </a>
               </div>
             </div>
