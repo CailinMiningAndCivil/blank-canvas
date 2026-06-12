@@ -105,7 +105,7 @@ const RigidHaulTruckBooking = () => {
               Rigid Haul Truck <span className="text-primary">2-Day Initial</span>
             </h1>
             <p className="text-muted-foreground text-lg mb-8">
-              Walk away with your RIIMPO338E — Conduct Rigid Haul Truck. Only you can impress the client to gain more seat time — maybe even a job.
+              Walk away with your RIIMPO338E – Conduct Rigid Haul Truck Operations and real-world experience in a production mining environment.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-8">
@@ -160,7 +160,7 @@ const RigidHaulTruckBooking = () => {
               ))}
             </div>
             <p className="mt-8 text-muted-foreground text-center max-w-2xl mx-auto">
-              This is a 2-day initial course. Securing more time with the client — or a job offer — is on you. We get you in the cab and qualified; all you have to do is impress.
+              This is a 2-day initial course. Upon completion, participants will receive nationally recognised training and practical experience in a live production environment.
             </p>
           </div>
         </div>
