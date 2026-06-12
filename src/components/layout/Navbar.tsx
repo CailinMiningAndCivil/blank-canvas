@@ -145,10 +145,10 @@ export const Navbar = () => {
             </Link>
 
             <Link
-              to="/rigid-haul-truck-application"
+              to="/rigid-haul-truck-traineeship"
               className={cn(
                 "font-medium text-sm uppercase tracking-wider transition-colors duration-300",
-                location.pathname === "/rigid-haul-truck-application"
+                location.pathname === "/rigid-haul-truck-traineeship"
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
               )}
@@ -276,11 +276,11 @@ export const Navbar = () => {
             </Link>
 
             <Link
-              to="/rigid-haul-truck-application"
+              to="/rigid-haul-truck-traineeship"
               onClick={() => setIsOpen(false)}
               className={cn(
                 "font-medium text-lg uppercase tracking-wider transition-colors duration-300",
-                location.pathname === "/rigid-haul-truck-application"
+                location.pathname === "/rigid-haul-truck-traineeship"
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
               )}
