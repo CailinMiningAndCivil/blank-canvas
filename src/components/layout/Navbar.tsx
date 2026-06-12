@@ -24,7 +24,7 @@ const courseLinks = [
   { name: "$600 Courses", path: "/courses/short-courses" },
   { name: "Bundles", path: "/courses/bundles" },
   { name: "Full Day", path: "/courses/full-day" },
-  { name: "Rigid Haul Truck 🆕", path: "/rigid-haul-truck-traineeship" },
+  { name: "Rigid Haul Truck 🆕", path: "/rigid-haul-truck-application" },
   { name: "RPL (Assessments Only)", path: "/rpl" },
   { name: "VOC (Verification)", path: "/courses/voc" },
   { name: "Returning Student", path: "/returning-student" },
@@ -36,7 +36,7 @@ const machineLinks = [
   { name: "Articulated Truck (Moxy)", path: "/courses/moxy" },
   { name: "Roller", path: "/courses/roller" },
   { name: "Watercart", path: "/courses/watercart" },
-  { name: "Rigid Haul Truck 🆕", path: "/rigid-haul-truck-traineeship" },
+  { name: "Rigid Haul Truck 🆕", path: "/rigid-haul-truck-application" },
 ];
 
 export const Navbar = () => {
@@ -145,10 +145,10 @@ export const Navbar = () => {
             </Link>
 
             <Link
-              to="/rigid-haul-truck-traineeship"
+              to="/rigid-haul-truck-application"
               className={cn(
                 "font-medium text-sm uppercase tracking-wider transition-colors duration-300",
-                location.pathname === "/rigid-haul-truck-traineeship"
+                location.pathname === "/rigid-haul-truck-application"
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
               )}
@@ -276,11 +276,11 @@ export const Navbar = () => {
             </Link>
 
             <Link
-              to="/rigid-haul-truck-traineeship"
+              to="/rigid-haul-truck-application"
               onClick={() => setIsOpen(false)}
               className={cn(
                 "font-medium text-lg uppercase tracking-wider transition-colors duration-300",
-                location.pathname === "/rigid-haul-truck-traineeship"
+                location.pathname === "/rigid-haul-truck-application"
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
               )}
