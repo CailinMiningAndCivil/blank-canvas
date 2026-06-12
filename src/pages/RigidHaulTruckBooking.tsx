@@ -88,18 +88,6 @@ const RigidHaulTruckBooking = () => {
         </div>
       </section>
 
-      <section className="py-12 bg-secondary/30">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-8">
-              <h2 className="font-display text-3xl text-foreground mb-2">Book & Pay</h2>
-              <p className="text-muted-foreground">Complete your booking and payment below to secure your place.</p>
-            </div>
-            <BookeoWidget course="3351MPEJXE18EE1709583" />
-          </div>
-        </div>
-      </section>
-
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
