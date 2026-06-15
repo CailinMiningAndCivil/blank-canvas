@@ -149,10 +149,12 @@ const Index = () => {
           muted
           loop
           playsInline
+          preload="auto"
+          aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover"
           src="https://storage.googleapis.com/msgsndr/rHdckncf62VIX9k55LFy/media/698d915dcfbcd7fc23808e29.mp4"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/70 to-background" />
         
         <div className="relative z-10 container mx-auto px-4 text-center">
           <div className="animate-fade-up">
@@ -166,10 +168,11 @@ const Index = () => {
               <br />
               Real Results.
             </h1>
-            <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10">
+            <p className="text-foreground/90 text-lg md:text-xl max-w-2xl mx-auto mb-10">
               Join 2,000+ graduates who've launched their mining & civil careers. 
               60% employment rate.
             </p>
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild variant="hero" size="xl">
                 <Link to="/courses">View Courses</Link>
