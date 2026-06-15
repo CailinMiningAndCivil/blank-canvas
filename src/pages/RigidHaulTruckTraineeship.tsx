@@ -1,7 +1,7 @@
-import { useEffect } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { HeroImage } from "@/components/ui/hero-image";
+import { RigidScreeningForm } from "@/components/RigidScreeningForm";
 import {
   Mountain,
   Users,
@@ -9,7 +9,6 @@ import {
   ShieldCheck,
   Briefcase,
   Star,
-  ArrowRight,
   AlertTriangle,
   Truck,
   Construction,
@@ -93,21 +92,6 @@ const selectionSteps = [
 ];
 
 const RigidHaulTruckTraineeship = () => {
-  useEffect(() => {
-    const existing = document.getElementById("ghl-form-embed-script");
-    if (!existing) {
-      const script = document.createElement("script");
-      script.id = "ghl-form-embed-script";
-      script.src = "https://link.cailinminingcivil.com/js/form_embed.js";
-      script.async = true;
-      document.body.appendChild(script);
-    }
-    return () => {
-      const script = document.getElementById("ghl-form-embed-script");
-      if (script) document.body.removeChild(script);
-    };
-  }, []);
-
   return (
     <Layout>
       <SEO
@@ -250,33 +234,21 @@ const RigidHaulTruckTraineeship = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-10">
             <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">
-              Apply Now
+              Screening Form
             </h2>
             <p className="text-muted-foreground">
-              Complete the form below to submit your application for the Rigid Haul Truck Traineeship.
+              Answer a few quick questions. Qualified applicants will be shown the booking link immediately.
             </p>
           </div>
           <div className="max-w-3xl mx-auto">
-            <div className="bg-card border border-border rounded-2xl overflow-hidden">
-              <iframe
-                src="https://link.cailinminingcivil.com/widget/form/UT7WP0nsC6r4oALUoFND"
-                style={{ width: "100%", border: "none" }}
-                id="inline-UT7WP0nsC6r4oALUoFND"
-                data-layout="{'id':'INLINE'}"
-                data-trigger-type="alwaysShow"
-                data-trigger-value=""
-                data-activation-type="alwaysActivated"
-                data-activation-value=""
-                data-deactivation-type="neverDeactivate"
-                data-deactivation-value=""
-                data-form-name="Rigid Traineeship Form"
-                data-height="921"
-                data-layout-iframe-id="inline-UT7WP0nsC6r4oALUoFND"
-                data-form-id="UT7WP0nsC6r4oALUoFND"
-                title="Rigid Traineeship Form"
-                className="min-h-[921px] w-full"
-              />
-            </div>
+            <RigidScreeningForm
+              source="traineeship"
+              qualifiedCta={{
+                label: "Continue to booking",
+                href: "/rigid-haul-truck-booking",
+                note: "Continue to the private booking page to secure your place.",
+              }}
+            />
           </div>
         </div>
       </section>

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { HeroImage } from "@/components/ui/hero-image";
+import { RigidScreeningForm } from "@/components/RigidScreeningForm";
 import {
   Accordion,
   AccordionContent,
@@ -20,7 +21,6 @@ import {
   Plane,
   BedDouble,
   Clock,
-  CreditCard,
 } from "lucide-react";
 import heroImage from "@/assets/photos/rigid-haul-truck.jpg";
 
@@ -120,18 +120,15 @@ const RigidHaulTruckBooking = () => {
             </div>
 
             <a
-              href={STRIPE_DEPOSIT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#screening-form"
               className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-xl hover:opacity-90 transition"
             >
-              <CreditCard className="w-5 h-5" />
-              Pay $1,500 Deposit →
+              Start screening form →
             </a>
 
             <p className="mt-6 text-sm text-muted-foreground flex items-center justify-center gap-2">
               <AlertTriangle className="w-4 h-4 text-primary" />
-              Everyone receives this email at the same time. First in, best dressed.
+              Complete the quick screening below to unlock the deposit link.
             </p>
           </div>
         </div>
@@ -233,14 +230,14 @@ const RigidHaulTruckBooking = () => {
         </div>
       </section>
 
-      {/* LOCK IT IN */}
-      <section className="py-16">
+      {/* SCREENING + LOCK IT IN */}
+      <section id="screening-form" className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-sm uppercase tracking-wider text-primary font-semibold mb-2">05 — Lock it in</p>
-            <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">Pay the deposit. Get the seat.</h2>
+            <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">Quick screening, then pay the deposit</h2>
             <p className="text-muted-foreground mb-10">
-              $1,500 deposit confirms your slot. The remaining $2,499 is due on commencement, day one.
+              $1,500 deposit confirms your slot. The remaining $2,499 is due on commencement, day one. Complete the screening below — qualified applicants are shown the secure Stripe deposit link straight away.
             </p>
             <div className="grid sm:grid-cols-3 gap-4 mb-10">
               <div className="bg-card border border-border rounded-xl p-5">
@@ -256,16 +253,16 @@ const RigidHaulTruckBooking = () => {
                 <p className="font-display text-2xl text-foreground">$3,999</p>
               </div>
             </div>
-            <a
-              href={STRIPE_DEPOSIT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-xl hover:opacity-90 transition"
-            >
-              <CreditCard className="w-5 h-5" />
-              Pay $1,500 Deposit via Stripe →
-            </a>
-            <p className="mt-4 text-sm text-muted-foreground">Secure checkout · Card payment · Instant confirmation</p>
+          </div>
+          <div className="max-w-3xl mx-auto text-left">
+            <RigidScreeningForm
+              source="booking"
+              qualifiedCta={{
+                label: "Pay $1,500 Deposit via Stripe →",
+                href: STRIPE_DEPOSIT_URL,
+                note: "Secure checkout · Card payment · Instant confirmation.",
+              }}
+            />
           </div>
         </div>
       </section>
