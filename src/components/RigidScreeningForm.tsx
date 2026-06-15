@@ -174,6 +174,27 @@ export const RigidScreeningForm = ({ source, qualifiedCta }: Props) => {
         console.warn("notify-submission failed", err);
       }
 
+      // Append to Google Sheet (best effort)
+      try {
+        await supabase.functions.invoke("sync-rigid-application", {
+          body: {
+            full_name: fullName.trim(),
+            email: email.trim(),
+            phone: phone.trim(),
+            postcode: postcode.trim(),
+            previous_experience: hasExperience === "yes",
+            machines_operated: hasExperience === "yes" ? machines.trim() : null,
+            has_hr_licence: hasExperience === "no" ? hasHrLicence === "yes" : null,
+            evidence_file_path: evidencePath,
+            hr_licence_file_path: hrPath,
+            qualified,
+            source,
+          },
+        });
+      } catch (err) {
+        console.warn("sync-rigid-application failed", err);
+      }
+
       setResult({ qualified, reason: qualified ? undefined : reason });
     } catch (err) {
       toast({
