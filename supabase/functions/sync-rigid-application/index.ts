@@ -64,6 +64,21 @@ Deno.serve(async (req) => {
       .filter(Boolean)
       .join('\n');
 
+    // Build "Machine Operated" cell with embedded qualification & HR info
+    let machineCell = '';
+    if (body.previous_experience) {
+      machineCell = body.machines_operated || '';
+    } else if (body.has_hr_licence === true) {
+      machineCell = 'No machinery experience — HR Licence: YES';
+    } else if (body.has_hr_licence === false) {
+      machineCell = 'No machinery experience — HR Licence: NO';
+    }
+
+    const qualifiedTag = body.qualified
+      ? '✅ QUALIFIED'
+      : '⛔ NOT QUALIFIED';
+    machineCell = `[${qualifiedTag}] [${body.source}] ${machineCell}`.trim();
+
     const row = [
       body.full_name,
       body.phone,
@@ -71,18 +86,10 @@ Deno.serve(async (req) => {
       body.previous_experience ? 'Yes' : 'No',
       supportingDocs,
       body.postcode ?? '',
-      body.machines_operated ?? '',
-      body.has_hr_licence === null || body.has_hr_licence === undefined
-        ? ''
-        : body.has_hr_licence
-        ? 'Yes'
-        : 'No',
-      body.qualified ? 'QUALIFIED' : 'NOT QUALIFIED',
-      body.source,
-      new Date().toISOString(),
+      machineCell,
     ];
 
-    const range = `${SHEET_NAME}!A:K`;
+    const range = `${SHEET_NAME}!A:G`;
     const url = `${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
 
     const sheetsRes = await fetch(url, {
