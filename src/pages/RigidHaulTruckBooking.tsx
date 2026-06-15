@@ -108,17 +108,6 @@ const RigidHaulTruckBooking = () => {
               Walk away with your RIIMPO338E – Conduct Rigid Haul Truck Operations and real-world experience in a production mining environment.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-4 max-w-xl mx-auto mb-8">
-              <div className="bg-card border border-border rounded-xl p-4">
-                <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Total Course</p>
-                <p className="font-display text-2xl text-foreground">$3,999</p>
-              </div>
-              <div className="bg-primary/10 border-2 border-primary/30 rounded-xl p-4">
-                <p className="text-xs uppercase tracking-wider text-primary mb-1">Deposit to lock it in</p>
-                <p className="font-display text-2xl text-primary">$1,500</p>
-              </div>
-            </div>
-
             <a
               href="#screening-form"
               className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-xl hover:opacity-90 transition"
@@ -186,7 +175,7 @@ const RigidHaulTruckBooking = () => {
                 <BedDouble className="w-8 h-8 text-primary mb-3" />
                 <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Stay</p>
                 <h3 className="font-display text-lg text-foreground mb-2">Accommodation</h3>
-                <p className="text-muted-foreground text-sm">You must book your own accommodation in Geraldton, close to Chapman Valley.</p>
+                <p className="text-muted-foreground text-sm">You must arrange your own accommodation in Geraldton (Gero).</p>
               </div>
               <div className="bg-card border border-border rounded-2xl p-6">
                 <Clock className="w-8 h-8 text-primary mb-3" />
