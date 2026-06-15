@@ -24,7 +24,7 @@ const courseLinks = [
   { name: "$600 Courses", path: "/courses/short-courses" },
   { name: "Bundles", path: "/courses/bundles" },
   { name: "Full Day", path: "/courses/full-day" },
-  { name: "Rigid Haul Truck 🆕", path: "/rigid-haul-truck-application" },
+  { name: "Rigid Haul Truck 🆕", path: "/rigid-haul-truck-traineeship" },
   { name: "RPL (Assessments Only)", path: "/rpl" },
   { name: "VOC (Verification)", path: "/courses/voc" },
   { name: "Returning Student", path: "/returning-student" },
@@ -36,7 +36,7 @@ const machineLinks = [
   { name: "Articulated Truck (Moxy)", path: "/courses/moxy" },
   { name: "Roller", path: "/courses/roller" },
   { name: "Watercart", path: "/courses/watercart" },
-  { name: "Rigid Haul Truck 🆕", path: "/rigid-haul-truck-application" },
+  { name: "Rigid Haul Truck 🆕", path: "/rigid-haul-truck-traineeship" },
 ];
 
 export const Navbar = () => {
@@ -49,6 +49,12 @@ export const Navbar = () => {
       <div className="hidden lg:block border-b border-border/50 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-end h-8 gap-4 text-xs">
+            <Link
+              to="/rigid-haul-truck-traineeship"
+              className="text-primary hover:text-primary/80 transition-colors font-semibold uppercase tracking-wider"
+            >
+              Traineeships →
+            </Link>
             <Link
               to="/returning-student"
               className="text-muted-foreground hover:text-primary transition-colors font-medium"
