@@ -50,12 +50,6 @@ export const Navbar = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-end h-8 gap-4 text-xs">
             <Link
-              to="/rigid-haul-truck-traineeship"
-              className="text-primary hover:text-primary/80 transition-colors font-semibold uppercase tracking-wider"
-            >
-              Traineeships →
-            </Link>
-            <Link
               to="/returning-student"
               className="text-muted-foreground hover:text-primary transition-colors font-medium"
             >
