@@ -126,9 +126,15 @@ export type Database = {
           evidence_file_path: string | null
           experience_details: string | null
           full_name: string
+          has_hr_licence: boolean | null
+          hr_licence_file_path: string | null
           id: string
+          machines_operated: string | null
           phone: string
+          postcode: string | null
           previous_experience: boolean
+          qualified: boolean
+          source: string | null
         }
         Insert: {
           created_at?: string
@@ -136,9 +142,15 @@ export type Database = {
           evidence_file_path?: string | null
           experience_details?: string | null
           full_name: string
+          has_hr_licence?: boolean | null
+          hr_licence_file_path?: string | null
           id?: string
+          machines_operated?: string | null
           phone: string
+          postcode?: string | null
           previous_experience: boolean
+          qualified?: boolean
+          source?: string | null
         }
         Update: {
           created_at?: string
@@ -146,9 +158,15 @@ export type Database = {
           evidence_file_path?: string | null
           experience_details?: string | null
           full_name?: string
+          has_hr_licence?: boolean | null
+          hr_licence_file_path?: string | null
           id?: string
+          machines_operated?: string | null
           phone?: string
+          postcode?: string | null
           previous_experience?: boolean
+          qualified?: boolean
+          source?: string | null
         }
         Relationships: []
       }
