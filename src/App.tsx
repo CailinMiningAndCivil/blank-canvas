@@ -81,7 +81,7 @@ const App = () => (
           <Route path="/recruitment" element={<Recruitment />} />
           <Route path="/affiliate" element={<Affiliate />} />
           <Route path="/returning-student" element={<ReturningStudent />} />
-          <Route path="/rigid-haul-truck-traineeship" element={<RigidHaulTruckTraineeship />} />
+          <Route path="/rigid-haul-truck-traineeship" element={<Navigate to="/rigid-haul-truck-booking" replace />} />
           <Route path="/rigid-haul-truck-application" element={<RigidHaulTruckApplication />} />
           <Route path="/rigid-haul-truck-booking" element={<RigidHaulTruckBooking />} />
           <Route path="/rigid-haul-truck-schedule" element={<RigidHaulTruckSchedule />} />
