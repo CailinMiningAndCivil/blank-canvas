@@ -248,10 +248,16 @@ const RigidHaulTruckBooking = () => {
             <RigidScreeningForm
               source="booking"
               qualifiedCta={{
-                label: "Pay $1,500 Deposit via Stripe →",
-                href: STRIPE_DEPOSIT_URL,
-                note: "Secure checkout · Card payment · Instant confirmation.",
+                label: "Pick your date below",
+                href: "#",
+                note: "Choose your preferred course date using the live calendar below. The $1,500 deposit is collected during the Bookeo checkout.",
               }}
+              qualifiedSlot={
+                <div>
+                  <h4 className="font-display text-xl text-foreground mb-4 text-center">Select your preferred date</h4>
+                  <BookeoWidget course="3351MPEJXE18EE1709583" />
+                </div>
+              }
             />
           </div>
         </div>
