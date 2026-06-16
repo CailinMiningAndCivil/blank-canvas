@@ -19,6 +19,8 @@ interface Props {
     href: string;
     note?: string;
   };
+  /** Optional content rendered in place of the CTA button when qualified */
+  qualifiedSlot?: React.ReactNode;
 }
 
 // AU phone: optional +61 or 0 prefix, total 9-10 digits after normalising
