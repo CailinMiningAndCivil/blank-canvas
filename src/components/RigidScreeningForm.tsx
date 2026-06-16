@@ -19,6 +19,8 @@ interface Props {
     href: string;
     note?: string;
   };
+  /** Optional content rendered in place of the CTA button when qualified */
+  qualifiedSlot?: React.ReactNode;
 }
 
 // AU phone: optional +61 or 0 prefix, total 9-10 digits after normalising
@@ -39,7 +41,7 @@ const baseSchema = z.object({
     .regex(auPostcodeRegex, "Enter a valid Australian postcode (4 digits)"),
 });
 
-export const RigidScreeningForm = ({ source, qualifiedCta }: Props) => {
+export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Props) => {
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<null | { qualified: boolean; reason?: string }>(null);
@@ -210,24 +212,32 @@ export const RigidScreeningForm = ({ source, qualifiedCta }: Props) => {
   if (result) {
     if (result.qualified) {
       return (
-        <div className="bg-card border-2 border-primary/40 rounded-2xl p-8 text-center">
-          <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <CheckCircle2 className="w-7 h-7 text-primary" />
+        <div className="bg-card border-2 border-primary/40 rounded-2xl p-8">
+          <div className="text-center">
+            <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 className="w-7 h-7 text-primary" />
+            </div>
+            <h3 className="font-display text-2xl text-foreground mb-2">You're pre-qualified</h3>
+            <p className="text-muted-foreground mb-6">
+              Thanks {fullName.split(" ")[0]} — based on your answers you meet our screening criteria.
+              {qualifiedCta.note ? ` ${qualifiedCta.note}` : ""}
+            </p>
           </div>
-          <h3 className="font-display text-2xl text-foreground mb-2">You're pre-qualified</h3>
-          <p className="text-muted-foreground mb-6">
-            Thanks {fullName.split(" ")[0]} — based on your answers you meet our screening criteria.
-            {qualifiedCta.note ? ` ${qualifiedCta.note}` : ""}
-          </p>
-          <a
-            href={qualifiedCta.href}
-            target={qualifiedCta.href.startsWith("http") ? "_blank" : undefined}
-            rel={qualifiedCta.href.startsWith("http") ? "noopener noreferrer" : undefined}
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-xl hover:opacity-90 transition"
-          >
-            {source === "booking" ? <CreditCard className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
-            {qualifiedCta.label}
-          </a>
+          {qualifiedSlot ? (
+            <div className="mt-4">{qualifiedSlot}</div>
+          ) : (
+            <div className="text-center">
+              <a
+                href={qualifiedCta.href}
+                target={qualifiedCta.href.startsWith("http") ? "_blank" : undefined}
+                rel={qualifiedCta.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-xl hover:opacity-90 transition"
+              >
+                {source === "booking" ? <CreditCard className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
+                {qualifiedCta.label}
+              </a>
+            </div>
+          )}
         </div>
       );
     }
