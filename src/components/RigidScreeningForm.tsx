@@ -41,7 +41,7 @@ const baseSchema = z.object({
     .regex(auPostcodeRegex, "Enter a valid Australian postcode (4 digits)"),
 });
 
-export const RigidScreeningForm = ({ source, qualifiedCta }: Props) => {
+export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Props) => {
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<null | { qualified: boolean; reason?: string }>(null);
