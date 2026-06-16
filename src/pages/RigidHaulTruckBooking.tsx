@@ -3,6 +3,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { HeroImage } from "@/components/ui/hero-image";
 import { RigidScreeningForm } from "@/components/RigidScreeningForm";
+import { BookeoWidget } from "@/components/BookeoWidget";
 import {
   Accordion,
   AccordionContent,
