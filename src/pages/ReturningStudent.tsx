@@ -267,7 +267,7 @@ const ReturningStudent = () => {
                       variant="outline"
                       size="lg"
                       className="w-full justify-between text-base py-6"
-                      onClick={() => handleMachineSelect(m.label, m.url)}
+                      onClick={() => handleMachineSelect(m.label, m.bookeoType)}
                     >
                       <span>{m.label}</span>
                       <ArrowRight className="w-5 h-5" />
