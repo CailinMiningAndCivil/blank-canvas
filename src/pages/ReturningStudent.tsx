@@ -104,6 +104,8 @@ const ReturningStudent = () => {
     setIsSubmitting(true);
     setNotFound(false);
     setIneligible(false);
+    setWindowExpired(false);
+    setWeeklyBlocked(false);
 
     try {
       const data = await verifyReturningStudent(trimmedEmail);
@@ -121,6 +123,17 @@ const ReturningStudent = () => {
         if (data.eligible === false || machines.length === 0) {
           setIneligible(true);
           return;
+        }
+        // Promo-tagged students: gate by 6-month window and weekly booking limit
+        if (data.hasPromoTag) {
+          if (data.windowExpired) {
+            setWindowExpired(true);
+            return;
+          }
+          if (data.weeklyBlocked || data.consecutiveBlocked) {
+            setWeeklyBlocked(true);
+            return;
+          }
         }
         setAllowedMachines(machines);
         setVerified(true);
