@@ -34,6 +34,11 @@ type VerificationResponse = {
   matched?: boolean;
   machines?: MachineKey[];
   eligible?: boolean;
+  hasPromoTag?: boolean;
+  windowExpired?: boolean;
+  weeklyBlocked?: boolean;
+  consecutiveBlocked?: boolean;
+  courseDate?: string | null;
   error?: string;
 };
 
