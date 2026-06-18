@@ -34,6 +34,11 @@ type VerificationResponse = {
   matched?: boolean;
   machines?: MachineKey[];
   eligible?: boolean;
+  hasPromoTag?: boolean;
+  windowExpired?: boolean;
+  weeklyBlocked?: boolean;
+  consecutiveBlocked?: boolean;
+  courseDate?: string | null;
   error?: string;
 };
 
@@ -80,6 +85,8 @@ const ReturningStudent = () => {
   const [verified, setVerified] = useState(false);
   const [allowedMachines, setAllowedMachines] = useState<MachineKey[]>([]);
   const [ineligible, setIneligible] = useState(false);
+  const [windowExpired, setWindowExpired] = useState(false);
+  const [weeklyBlocked, setWeeklyBlocked] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,6 +104,8 @@ const ReturningStudent = () => {
     setIsSubmitting(true);
     setNotFound(false);
     setIneligible(false);
+    setWindowExpired(false);
+    setWeeklyBlocked(false);
 
     try {
       const data = await verifyReturningStudent(trimmedEmail);
@@ -114,6 +123,17 @@ const ReturningStudent = () => {
         if (data.eligible === false || machines.length === 0) {
           setIneligible(true);
           return;
+        }
+        // Promo-tagged students: gate by 6-month window and weekly booking limit
+        if (data.hasPromoTag) {
+          if (data.windowExpired) {
+            setWindowExpired(true);
+            return;
+          }
+          if (data.weeklyBlocked || data.consecutiveBlocked) {
+            setWeeklyBlocked(true);
+            return;
+          }
         }
         setAllowedMachines(machines);
         setVerified(true);
@@ -198,6 +218,39 @@ const ReturningStudent = () => {
                 </p>
                 <Button variant="outline" asChild>
                   <a href="/courses">View Onsite Courses</a>
+                </Button>
+              </div>
+            ) : windowExpired ? (
+              <div className="text-center bg-card rounded-xl p-8 md:p-12 border border-border shadow-card">
+                <XCircle className="w-16 h-16 text-destructive mx-auto mb-6" />
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+                  Return for Free Period Has Ended
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-lg mx-auto mb-6">
+                  Your 6-month Return for Free window has now passed. To get back on the machines, please email{" "}
+                  <a href="mailto:info@cailinminingcivil.com" className="text-primary underline">
+                    info@cailinminingcivil.com
+                  </a>{" "}
+                  and we'll help you arrange a refresher.
+                </p>
+                <Button variant="outline" asChild>
+                  <a href="/courses">View Onsite Courses</a>
+                </Button>
+              </div>
+            ) : weeklyBlocked ? (
+              <div className="text-center bg-card rounded-xl p-8 md:p-12 border border-border shadow-card">
+                <XCircle className="w-16 h-16 text-destructive mx-auto mb-6" />
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+                  One Return for Free Booking Per Week
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-lg mx-auto mb-6">
+                  You already have a Return for Free session booked this week. To ensure spaces are shared fairly between students, Return for Free is limited to one booking per student per week.
+                </p>
+                <p className="text-sm text-muted-foreground max-w-lg mx-auto mb-6">
+                  Return for Free students can only use machine time that becomes available through gaps in our training schedule. Confirmation may not be provided until up to 24 hours prior to attendance, and requested attendance is not guaranteed until confirmed by Cailin Mining &amp; Civil.
+                </p>
+                <Button variant="outline" asChild>
+                  <a href="mailto:info@cailinminingcivil.com">Contact Us</a>
                 </Button>
               </div>
             ) : verified ? (
