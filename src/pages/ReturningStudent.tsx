@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HeroImage } from "@/components/ui/hero-image";
-import { ArrowRight, XCircle, Loader2, CheckCircle } from "lucide-react";
+import { BookeoWidget } from "@/components/BookeoWidget";
+import { ArrowRight, XCircle, Loader2, CheckCircle, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import trainerSiteSafety from "@/assets/photos/trainer-site-safety.jpg";
 
