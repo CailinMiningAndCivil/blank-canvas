@@ -88,6 +88,7 @@ const ReturningStudent = () => {
   const [ineligible, setIneligible] = useState(false);
   const [windowExpired, setWindowExpired] = useState(false);
   const [weeklyBlocked, setWeeklyBlocked] = useState(false);
+  const [selectedMachine, setSelectedMachine] = useState<{ label: string; bookeoType: string } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
