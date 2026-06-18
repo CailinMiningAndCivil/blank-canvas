@@ -11,12 +11,12 @@ import trainerSiteSafety from "@/assets/photos/trainer-site-safety.jpg";
 
 type MachineKey = "moxy" | "loader" | "watercart" | "roller" | "excavator";
 
-const MACHINES: { key: MachineKey; label: string; url: string }[] = [
-  { key: "moxy", label: "ADT Moxy", url: "https://live.cailintraining.com.au/moxy_returnsession" },
-  { key: "loader", label: "Wheel Loader", url: "https://live.cailintraining.com.au/wheel_loader_returnsession" },
-  { key: "watercart", label: "Watercart", url: "https://live.cailintraining.com.au/watercart_returnsession" },
-  { key: "roller", label: "Roller", url: "https://live.cailintraining.com.au/roller_returnsession" },
-  { key: "excavator", label: "Excavator", url: "https://live.cailintraining.com.au/excavator_returnsession" },
+const MACHINES: { key: MachineKey; label: string; bookeoType: string }[] = [
+  { key: "moxy", label: "ADT Moxy", bookeoType: "3351RT4KM419DB8B8E5C5" },
+  { key: "loader", label: "Wheel Loader", bookeoType: "3351CXRKYN19DB8EDB768" },
+  { key: "watercart", label: "Watercart", bookeoType: "3351TY49AP19DB8F33801" },
+  { key: "roller", label: "Roller", bookeoType: "3351LUU3UW19DB8F7B9C5" },
+  { key: "excavator", label: "Excavator", bookeoType: "3351LWH36P19DB8EF9BE4" },
 ];
 
 const CLOUD_BASE_URL = "https://opdxvpqimcfhawcznxyc.supabase.co";
