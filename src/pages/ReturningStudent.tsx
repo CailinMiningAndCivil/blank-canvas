@@ -5,18 +5,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HeroImage } from "@/components/ui/hero-image";
-import { ArrowRight, XCircle, Loader2, CheckCircle } from "lucide-react";
+import { BookeoWidget } from "@/components/BookeoWidget";
+import { ArrowRight, XCircle, Loader2, CheckCircle, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import trainerSiteSafety from "@/assets/photos/trainer-site-safety.jpg";
 
 type MachineKey = "moxy" | "loader" | "watercart" | "roller" | "excavator";
 
-const MACHINES: { key: MachineKey; label: string; url: string }[] = [
-  { key: "moxy", label: "ADT Moxy", url: "https://live.cailintraining.com.au/moxy_returnsession" },
-  { key: "loader", label: "Wheel Loader", url: "https://live.cailintraining.com.au/wheel_loader_returnsession" },
-  { key: "watercart", label: "Watercart", url: "https://live.cailintraining.com.au/watercart_returnsession" },
-  { key: "roller", label: "Roller", url: "https://live.cailintraining.com.au/roller_returnsession" },
-  { key: "excavator", label: "Excavator", url: "https://live.cailintraining.com.au/excavator_returnsession" },
+const MACHINES: { key: MachineKey; label: string; bookeoType: string }[] = [
+  { key: "moxy", label: "ADT Moxy", bookeoType: "3351RT4KM419DB8B8E5C5" },
+  { key: "loader", label: "Wheel Loader", bookeoType: "3351CXRKYN19DB8EDB768" },
+  { key: "watercart", label: "Watercart", bookeoType: "3351TY49AP19DB8F33801" },
+  { key: "roller", label: "Roller", bookeoType: "3351LUU3UW19DB8F7B9C5" },
+  { key: "excavator", label: "Excavator", bookeoType: "3351LWH36P19DB8EF9BE4" },
 ];
 
 const CLOUD_BASE_URL = "https://opdxvpqimcfhawcznxyc.supabase.co";
@@ -87,6 +88,7 @@ const ReturningStudent = () => {
   const [ineligible, setIneligible] = useState(false);
   const [windowExpired, setWindowExpired] = useState(false);
   const [weeklyBlocked, setWeeklyBlocked] = useState(false);
+  const [selectedMachine, setSelectedMachine] = useState<{ label: string; bookeoType: string } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -149,9 +151,8 @@ const ReturningStudent = () => {
     }
   };
 
-  const handleMachineSelect = (label: string, url: string) => {
-    // Open synchronously so mobile browsers don't block the popup
-    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+  const handleMachineSelect = (label: string, bookeoType: string) => {
+    setSelectedMachine({ label, bookeoType });
 
     // Record selection in the background (best effort)
     saveReturningStudentSubmission({
@@ -162,11 +163,6 @@ const ReturningStudent = () => {
     }).catch(() => {
       // ignore
     });
-
-    // Fallback: if popup was blocked, navigate the current tab
-    if (!newWindow) {
-      window.location.href = url;
-    }
   };
 
   return (
@@ -255,32 +251,54 @@ const ReturningStudent = () => {
               </div>
             ) : verified ? (
               <div className="bg-card rounded-xl p-6 md:p-8 border border-border shadow-card">
-                <div className="text-center mb-8">
-                  <CheckCircle className="w-14 h-14 text-primary mx-auto mb-4" />
-                  <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-2">
-                    You're verified, {fullName.trim().split(" ")[0]}!
-                  </h2>
-                  <p className="text-muted-foreground">
-                    Select the machine you'd like to book your return session for.
-                  </p>
-                </div>
-                <div className="grid gap-3">
-                  {MACHINES.filter((m) => allowedMachines.includes(m.key)).map((m) => (
-                    <Button
-                      key={m.label}
-                      variant="outline"
-                      size="lg"
-                      className="w-full justify-between text-base py-6"
-                      onClick={() => handleMachineSelect(m.label, m.url)}
-                    >
-                      <span>{m.label}</span>
-                      <ArrowRight className="w-5 h-5" />
-                    </Button>
-                  ))}
-                </div>
-                <p className="text-xs text-muted-foreground text-center mt-4">
-                  Only machines from courses you've previously booked are shown. If something is missing, please contact us.
-                </p>
+                {selectedMachine ? (
+                  <>
+                    <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setSelectedMachine(null)}
+                        className="-ml-2"
+                      >
+                        <ArrowLeft className="w-4 h-4 mr-1" />
+                        Change machine
+                      </Button>
+                      <h2 className="font-display text-lg md:text-xl font-bold text-foreground">
+                        {selectedMachine.label} – Return Session
+                      </h2>
+                    </div>
+                    <BookeoWidget course={selectedMachine.bookeoType} />
+                  </>
+                ) : (
+                  <>
+                    <div className="text-center mb-8">
+                      <CheckCircle className="w-14 h-14 text-primary mx-auto mb-4" />
+                      <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-2">
+                        You're verified, {fullName.trim().split(" ")[0]}!
+                      </h2>
+                      <p className="text-muted-foreground">
+                        Select the machine you'd like to book your return session for.
+                      </p>
+                    </div>
+                    <div className="grid gap-3">
+                      {MACHINES.filter((m) => allowedMachines.includes(m.key)).map((m) => (
+                        <Button
+                          key={m.label}
+                          variant="outline"
+                          size="lg"
+                          className="w-full justify-between text-base py-6"
+                          onClick={() => handleMachineSelect(m.label, m.bookeoType)}
+                        >
+                          <span>{m.label}</span>
+                          <ArrowRight className="w-5 h-5" />
+                        </Button>
+                      ))}
+                    </div>
+                    <p className="text-xs text-muted-foreground text-center mt-4">
+                      Only machines from courses you've previously booked are shown. If something is missing, please contact us.
+                    </p>
+                  </>
+                )}
               </div>
             ) : !notFound ? (
               <form
