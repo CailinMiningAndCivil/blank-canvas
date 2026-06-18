@@ -151,9 +151,8 @@ const ReturningStudent = () => {
     }
   };
 
-  const handleMachineSelect = (label: string, url: string) => {
-    // Open synchronously so mobile browsers don't block the popup
-    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+  const handleMachineSelect = (label: string, bookeoType: string) => {
+    setSelectedMachine({ label, bookeoType });
 
     // Record selection in the background (best effort)
     saveReturningStudentSubmission({
@@ -164,11 +163,6 @@ const ReturningStudent = () => {
     }).catch(() => {
       // ignore
     });
-
-    // Fallback: if popup was blocked, navigate the current tab
-    if (!newWindow) {
-      window.location.href = url;
-    }
   };
 
   return (
