@@ -251,32 +251,54 @@ const ReturningStudent = () => {
               </div>
             ) : verified ? (
               <div className="bg-card rounded-xl p-6 md:p-8 border border-border shadow-card">
-                <div className="text-center mb-8">
-                  <CheckCircle className="w-14 h-14 text-primary mx-auto mb-4" />
-                  <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-2">
-                    You're verified, {fullName.trim().split(" ")[0]}!
-                  </h2>
-                  <p className="text-muted-foreground">
-                    Select the machine you'd like to book your return session for.
-                  </p>
-                </div>
-                <div className="grid gap-3">
-                  {MACHINES.filter((m) => allowedMachines.includes(m.key)).map((m) => (
-                    <Button
-                      key={m.label}
-                      variant="outline"
-                      size="lg"
-                      className="w-full justify-between text-base py-6"
-                      onClick={() => handleMachineSelect(m.label, m.bookeoType)}
-                    >
-                      <span>{m.label}</span>
-                      <ArrowRight className="w-5 h-5" />
-                    </Button>
-                  ))}
-                </div>
-                <p className="text-xs text-muted-foreground text-center mt-4">
-                  Only machines from courses you've previously booked are shown. If something is missing, please contact us.
-                </p>
+                {selectedMachine ? (
+                  <>
+                    <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setSelectedMachine(null)}
+                        className="-ml-2"
+                      >
+                        <ArrowLeft className="w-4 h-4 mr-1" />
+                        Change machine
+                      </Button>
+                      <h2 className="font-display text-lg md:text-xl font-bold text-foreground">
+                        {selectedMachine.label} – Return Session
+                      </h2>
+                    </div>
+                    <BookeoWidget course={selectedMachine.bookeoType} />
+                  </>
+                ) : (
+                  <>
+                    <div className="text-center mb-8">
+                      <CheckCircle className="w-14 h-14 text-primary mx-auto mb-4" />
+                      <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-2">
+                        You're verified, {fullName.trim().split(" ")[0]}!
+                      </h2>
+                      <p className="text-muted-foreground">
+                        Select the machine you'd like to book your return session for.
+                      </p>
+                    </div>
+                    <div className="grid gap-3">
+                      {MACHINES.filter((m) => allowedMachines.includes(m.key)).map((m) => (
+                        <Button
+                          key={m.label}
+                          variant="outline"
+                          size="lg"
+                          className="w-full justify-between text-base py-6"
+                          onClick={() => handleMachineSelect(m.label, m.bookeoType)}
+                        >
+                          <span>{m.label}</span>
+                          <ArrowRight className="w-5 h-5" />
+                        </Button>
+                      ))}
+                    </div>
+                    <p className="text-xs text-muted-foreground text-center mt-4">
+                      Only machines from courses you've previously booked are shown. If something is missing, please contact us.
+                    </p>
+                  </>
+                )}
               </div>
             ) : !notFound ? (
               <form
