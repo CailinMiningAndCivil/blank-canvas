@@ -198,7 +198,7 @@ const ReturningStudent = () => {
       {/* Content */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-xl">
+          <div className={`mx-auto ${verified && selectedMachine ? "max-w-5xl" : "max-w-xl"}`}>
             {ineligible ? (
               <div className="text-center bg-card rounded-xl p-8 md:p-12 border border-border shadow-card">
                 <XCircle className="w-16 h-16 text-destructive mx-auto mb-6" />
