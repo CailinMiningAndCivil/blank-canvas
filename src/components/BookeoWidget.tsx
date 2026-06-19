@@ -32,8 +32,8 @@ const BookeoWidgetInner = ({ course }: { course?: string }) => {
   }, [course]);
 
   return (
-    <div ref={containerRef} className="w-full min-h-[600px]">
-      <div id="bookeo_widget" style={{ position: 'relative', zIndex: 9999, backgroundColor: 'transparent' }} />
+    <div ref={containerRef} className="w-full min-h-[900px] overflow-visible">
+      <div id="bookeo_widget" className="w-full" style={{ position: 'relative', zIndex: 1, backgroundColor: 'transparent', minHeight: 900 }} />
     </div>
   );
 };
