@@ -53,14 +53,14 @@ const BookeoWidgetInner = ({ course }: { course?: string }) => {
   }, [course]);
 
   return (
-    <div className="relative w-full overflow-visible rounded-lg border border-border bg-card p-0">
+    <div className="relative min-h-[900px] w-full overflow-visible rounded-lg border border-border bg-card p-0">
       {isLoading && (
-        <div className="flex min-h-[600px] items-center justify-center px-4 text-center text-muted-foreground">
+        <div className="absolute inset-0 z-10 flex items-center justify-center px-4 text-center text-muted-foreground">
           Loading booking calendar...
         </div>
       )}
       {loadFailed && (
-        <div className="flex min-h-[320px] items-center justify-center px-4 text-center text-muted-foreground">
+        <div className="absolute inset-0 z-10 flex items-center justify-center px-4 text-center text-muted-foreground">
           The booking calendar couldn't load. Please refresh the page and try again.
         </div>
       )}
