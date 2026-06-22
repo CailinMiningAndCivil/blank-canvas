@@ -21,6 +21,7 @@ const BookeoWidgetInner = ({ course }: { course?: string }) => {
     if (!widgetNode) return;
 
     widgetNode.innerHTML = "";
+    let active = true;
 
     const observer = new MutationObserver(() => {
       const iframe = widgetNode.querySelector("iframe");
@@ -37,9 +38,11 @@ const BookeoWidgetInner = ({ course }: { course?: string }) => {
     script.src = `https://bookeo.com/widget.js?${params.toString()}`;
     script.async = true;
     script.onload = () => {
+      if (!active) return;
       window.bookeo_start?.();
     };
     script.onerror = () => {
+      if (!active) return;
       setIsLoading(false);
       setLoadFailed(true);
     };
@@ -47,6 +50,7 @@ const BookeoWidgetInner = ({ course }: { course?: string }) => {
     widgetNode.appendChild(script);
 
     return () => {
+      active = false;
       observer.disconnect();
       widgetNode.innerHTML = "";
     };
