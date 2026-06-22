@@ -38,7 +38,6 @@ const BookeoWidgetInner = ({ course }: { course?: string }) => {
     script.async = true;
     script.onload = () => {
       window.bookeo_start?.();
-      window.setTimeout(() => window.bookeo_start?.(), 150);
     };
     script.onerror = () => {
       setIsLoading(false);
