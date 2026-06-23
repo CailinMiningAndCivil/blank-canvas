@@ -214,21 +214,22 @@ const RefresherTraining = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="machine">Machine Required</Label>
-                  <Select
+                  <select
+                    id="machine"
                     value={machineKey}
-                    onValueChange={(v) => setMachineKey(v as MachineKey)}
+                    onChange={(e) => setMachineKey(e.target.value as MachineKey)}
+                    required
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    <SelectTrigger id="machine">
-                      <SelectValue placeholder="Select a machine" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {MACHINES.map((m) => (
-                        <SelectItem key={m.key} value={m.key}>
-                          {m.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    <option value="" disabled>
+                      Select a machine
+                    </option>
+                    {MACHINES.map((m) => (
+                      <option key={m.key} value={m.key}>
+                        {m.label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className="space-y-2">
