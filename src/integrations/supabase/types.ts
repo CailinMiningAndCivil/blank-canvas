@@ -170,6 +170,39 @@ export type Database = {
         }
         Relationships: []
       }
+      refresher_training_requests: {
+        Row: {
+          acknowledged: boolean
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          machine: string
+          notes: string | null
+          phone: string
+        }
+        Insert: {
+          acknowledged?: boolean
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          machine: string
+          notes?: string | null
+          phone: string
+        }
+        Update: {
+          acknowledged?: boolean
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          machine?: string
+          notes?: string | null
+          phone?: string
+        }
+        Relationships: []
+      }
       returning_student_submissions: {
         Row: {
           created_at: string
