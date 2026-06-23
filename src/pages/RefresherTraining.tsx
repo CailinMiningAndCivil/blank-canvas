@@ -27,7 +27,7 @@ const ACK_TEXT =
 
 const CLOUD_BASE_URL = "https://opdxvpqimcfhawcznxyc.supabase.co";
 const PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZHh2cHFpbWNmaGF3Y3pueHljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMTY3NzksImV4cCI6MjA4OTg5Mjc3OX0.fQ32jaRclUNFt-8KsNf0VYLyRZCly4xLYX-f-AxUIzA";
-const NOTIFY_ENDPOINT = `${CLOUD_BASE_URL}/functions/v1/notify-submission`;
+const REFRESHER_REQUESTS_ENDPOINT = `${CLOUD_BASE_URL}/rest/v1/refresher_training_requests`;
 
 const RefresherTraining = () => {
   const { toast } = useToast();
@@ -66,29 +66,28 @@ const RefresherTraining = () => {
 
     setIsSubmitting(true);
     try {
-      const message =
-        `[Refresher / Hourly Machine Training]\n` +
-        `Machine: ${machine.label}\n\n` +
-        `Notes:\n${notes.trim() || "(none)"}\n\n` +
-        `Acknowledgement accepted: ${ACK_TEXT}`;
-
-      await fetch(NOTIFY_ENDPOINT, {
+      const response = await fetch(REFRESHER_REQUESTS_ENDPOINT, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           apikey: PUBLISHABLE_KEY,
           Authorization: `Bearer ${PUBLISHABLE_KEY}`,
+          Prefer: "return=minimal",
         },
         body: JSON.stringify({
-          record: {
-            name: trimmedName,
-            email: trimmedEmail,
-            phone: trimmedPhone,
-            message,
-            created_at: new Date().toISOString(),
-          },
+          full_name: trimmedName,
+          email: trimmedEmail,
+          phone: trimmedPhone,
+          machine: machine.label,
+          notes: notes.trim() || null,
+          acknowledged: true,
         }),
-      }).catch((err) => console.error("notify-submission error (non-blocking):", err));
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "Failed to save request");
+      }
 
       setConfirmedMachine({ label: machine.label, bookeoType: machine.bookeoType });
     } catch (err) {
