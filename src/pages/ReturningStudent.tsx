@@ -5,25 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HeroImage } from "@/components/ui/hero-image";
-import { BookeoWidget } from "@/components/BookeoWidget";
-import { ArrowRight, XCircle, Loader2, CheckCircle, ArrowLeft } from "lucide-react";
+import { ArrowRight, XCircle, Loader2, CheckCircle, ExternalLink } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 import trainerSiteSafety from "@/assets/photos/trainer-site-safety.jpg";
-
-type MachineKey = "moxy" | "loader" | "watercart" | "roller" | "excavator";
-
-const MACHINES: { key: MachineKey; label: string; bookeoType: string }[] = [
-  { key: "moxy", label: "ADT Moxy", bookeoType: "3351RT4KM419DB8B8E5C5" },
-  { key: "loader", label: "Wheel Loader", bookeoType: "3351CXRKYN19DB8EDB768" },
-  { key: "watercart", label: "Watercart", bookeoType: "3351TY49AP19DB8F33801" },
-  { key: "roller", label: "Roller", bookeoType: "3351LUU3UW19DB8F7B9C5" },
-  { key: "excavator", label: "Excavator", bookeoType: "3351LWH36P19DB8EF9BE4" },
-];
 
 const CLOUD_BASE_URL = "https://opdxvpqimcfhawcznxyc.supabase.co";
 const PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZHh2cHFpbWNmaGF3Y3pueHljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMTY3NzksImV4cCI6MjA4OTg5Mjc3OX0.fQ32jaRclUNFt-8KsNf0VYLyRZCly4xLYX-f-AxUIzA";
 const VERIFY_RETURNING_STUDENT_ENDPOINT = `${CLOUD_BASE_URL}/functions/v1/verify-returning-student`;
 const RETURNING_STUDENT_SUBMISSIONS_ENDPOINT = `${CLOUD_BASE_URL}/rest/v1/returning_student_submissions`;
+const FREE_RETURN_REDIRECT_URL = "https://live.cailintraining.com.au/free_return_practice";
 
 const cloudHeaders = {
   "Content-Type": "application/json",
@@ -33,13 +24,8 @@ const cloudHeaders = {
 
 type VerificationResponse = {
   matched?: boolean;
-  machines?: MachineKey[];
-  eligible?: boolean;
   hasPromoTag?: boolean;
-  windowExpired?: boolean;
-  weeklyBlocked?: boolean;
-  consecutiveBlocked?: boolean;
-  courseDate?: string | null;
+  eligible?: boolean;
   error?: string;
 };
 
@@ -49,31 +35,24 @@ const verifyReturningStudent = async (email: string): Promise<VerificationRespon
     headers: cloudHeaders,
     body: JSON.stringify({ email }),
   });
-
   const data = (await response.json().catch(() => ({}))) as VerificationResponse;
-
-  if (!response.ok) {
-    throw new Error(data.error || "Verification failed. Please try again.");
-  }
-
+  if (!response.ok) throw new Error(data.error || "Verification failed. Please try again.");
   return data;
 };
 
-const saveReturningStudentSubmission = async (submission: {
+const saveSubmission = async (submission: {
   full_name: string;
   email: string;
   matched: boolean;
-  selected_machine?: string;
 }) => {
-  const response = await fetch(RETURNING_STUDENT_SUBMISSIONS_ENDPOINT, {
-    method: "POST",
-    headers: { ...cloudHeaders, Prefer: "return=minimal" },
-    body: JSON.stringify(submission),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || "Failed to save returning student submission");
+  try {
+    await fetch(RETURNING_STUDENT_SUBMISSIONS_ENDPOINT, {
+      method: "POST",
+      headers: { ...cloudHeaders, Prefer: "return=minimal" },
+      body: JSON.stringify(submission),
+    });
+  } catch {
+    /* best effort */
   }
 };
 
@@ -82,13 +61,8 @@ const ReturningStudent = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [notFound, setNotFound] = useState(false);
-  const [verified, setVerified] = useState(false);
-  const [allowedMachines, setAllowedMachines] = useState<MachineKey[]>([]);
-  const [ineligible, setIneligible] = useState(false);
-  const [windowExpired, setWindowExpired] = useState(false);
-  const [weeklyBlocked, setWeeklyBlocked] = useState(false);
-  const [selectedMachine, setSelectedMachine] = useState<{ label: string; bookeoType: string } | null>(null);
+  const [notEligible, setNotEligible] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,73 +78,35 @@ const ReturningStudent = () => {
     }
 
     setIsSubmitting(true);
-    setNotFound(false);
-    setIneligible(false);
-    setWindowExpired(false);
-    setWeeklyBlocked(false);
+    setNotEligible(false);
 
     try {
       const data = await verifyReturningStudent(trimmedEmail);
       const matched = data.matched ?? false;
+      void saveSubmission({ full_name: trimmedName, email: trimmedEmail, matched });
 
-      // Store submission for record-keeping (best effort)
-      await saveReturningStudentSubmission({
-        full_name: trimmedName,
-        email: trimmedEmail,
-        matched,
-      });
-
-      if (matched) {
-        const machines = data.machines ?? [];
-        if (data.eligible === false || machines.length === 0) {
-          setIneligible(true);
-          return;
-        }
-        // Promo-tagged students: gate by 6-month window and weekly booking limit
-        if (data.hasPromoTag) {
-          if (data.windowExpired) {
-            setWindowExpired(true);
-            return;
-          }
-          if (data.weeklyBlocked || data.consecutiveBlocked) {
-            setWeeklyBlocked(true);
-            return;
-          }
-        }
-        setAllowedMachines(machines);
-        setVerified(true);
+      if (matched && data.hasPromoTag) {
+        setRedirecting(true);
+        // Open in new tab per project rule for external links
+        window.open(FREE_RETURN_REDIRECT_URL, "_blank", "noopener,noreferrer");
         return;
       }
 
-      setNotFound(true);
+      setNotEligible(true);
     } catch (err) {
-      console.error("Returning student submit error:", err);
+      console.error("Free returns verification error:", err);
       toast({ title: "Something went wrong. Please try again.", variant: "destructive" });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleMachineSelect = (label: string, bookeoType: string) => {
-    setSelectedMachine({ label, bookeoType });
-
-    // Record selection in the background (best effort)
-    saveReturningStudentSubmission({
-      full_name: fullName.trim(),
-      email: email.trim(),
-      matched: true,
-      selected_machine: label,
-    }).catch(() => {
-      // ignore
-    });
-  };
-
   return (
     <Layout>
       <SEO
-        title="Returning Student Booking | Cailin Mining & Civil"
-        description="Returning Cailin students can book additional training sessions here. Verify your details and select your machine."
-        path="/returning-student"
+        title="Free Returns | Cailin Mining & Civil"
+        description="Eligible Cailin students can claim a free return session on the machines. Verify your details to continue."
+        path="/free-returns"
       />
       {/* Hero */}
       <section className="relative min-h-[55vh] flex items-center overflow-hidden">
@@ -186,10 +122,10 @@ const ReturningStudent = () => {
               Already trained with us?
             </p>
             <h1 className="text-3xl md:text-5xl font-bold font-display mb-6 animate-fade-up">
-              Returning <span className="text-gradient">Student</span> Verification
+              Free <span className="text-gradient">Returns</span>
             </h1>
             <p className="text-xl md:text-2xl font-semibold text-foreground animate-fade-up">
-              Confirm your details to choose the machine you'd like to book your return session for.
+              Verify your details to claim your free return practice session.
             </p>
           </div>
         </div>
@@ -198,109 +134,52 @@ const ReturningStudent = () => {
       {/* Content */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className={`mx-auto ${verified && selectedMachine ? "max-w-5xl" : "max-w-xl"}`}>
-            {ineligible ? (
+          <div className="mx-auto max-w-xl">
+            {redirecting ? (
+              <div className="text-center bg-card rounded-xl p-8 md:p-12 border border-border shadow-card">
+                <CheckCircle className="w-16 h-16 text-primary mx-auto mb-6" />
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+                  You're eligible for a Free Return!
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-lg mx-auto mb-6">
+                  We've opened your Free Return booking page in a new tab. If it didn't open, click below to continue.
+                </p>
+                <Button asChild size="lg" variant="hero">
+                  <a href={FREE_RETURN_REDIRECT_URL} target="_blank" rel="noopener noreferrer">
+                    Continue to Free Return Booking
+                    <ExternalLink className="w-4 h-4 ml-2" />
+                  </a>
+                </Button>
+              </div>
+            ) : notEligible ? (
               <div className="text-center bg-card rounded-xl p-8 md:p-12 border border-border shadow-card">
                 <XCircle className="w-16 h-16 text-destructive mx-auto mb-6" />
                 <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
-                  Not Eligible for Return Booking
+                  Not Eligible for Free Returns
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-lg mx-auto mb-6">
-                  Our records show your previous booking was a VOC or Assessment Only course, which doesn't qualify for a return session. Please book one of our onsite courses, or email us at{" "}
-                  <a href="mailto:info@cailinminingcivil.com" className="text-primary underline">
-                    info@cailinminingcivil.com
-                  </a>{" "}
-                  for assistance.
+                  Our records don't show an active Free Return Promo on your account. If you'd like additional machine time or a refresher, you can book Refresher / Hourly Machine Training instead.
                 </p>
-                <Button variant="outline" asChild>
-                  <a href="/courses">View Onsite Courses</a>
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Button asChild size="lg" variant="hero">
+                    <Link to="/refresher-training">
+                      Book Refresher / Hourly Training
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Link>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={() => {
+                      setNotEligible(false);
+                      setEmail("");
+                    }}
+                  >
+                    Try a different email
+                  </Button>
+                </div>
               </div>
-            ) : windowExpired ? (
-              <div className="text-center bg-card rounded-xl p-8 md:p-12 border border-border shadow-card">
-                <XCircle className="w-16 h-16 text-destructive mx-auto mb-6" />
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
-                  Return for Free Period Has Ended
-                </h2>
-                <p className="text-lg text-muted-foreground max-w-lg mx-auto mb-6">
-                  Your 6-month Return for Free window has now passed. To get back on the machines, please email{" "}
-                  <a href="mailto:info@cailinminingcivil.com" className="text-primary underline">
-                    info@cailinminingcivil.com
-                  </a>{" "}
-                  and we'll help you arrange a refresher.
-                </p>
-                <Button variant="outline" asChild>
-                  <a href="/courses">View Onsite Courses</a>
-                </Button>
-              </div>
-            ) : weeklyBlocked ? (
-              <div className="text-center bg-card rounded-xl p-8 md:p-12 border border-border shadow-card">
-                <XCircle className="w-16 h-16 text-destructive mx-auto mb-6" />
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
-                  One Return for Free Booking Per Week
-                </h2>
-                <p className="text-lg text-muted-foreground max-w-lg mx-auto mb-6">
-                  You already have a Return for Free session booked this week. To ensure spaces are shared fairly between students, Return for Free is limited to one booking per student per week.
-                </p>
-                <p className="text-sm text-muted-foreground max-w-lg mx-auto mb-6">
-                  Return for Free students can only use machine time that becomes available through gaps in our training schedule. Confirmation may not be provided until up to 24 hours prior to attendance, and requested attendance is not guaranteed until confirmed by Cailin Mining &amp; Civil.
-                </p>
-                <Button variant="outline" asChild>
-                  <a href="mailto:info@cailinminingcivil.com">Contact Us</a>
-                </Button>
-              </div>
-            ) : verified ? (
-              <div className="bg-card rounded-xl p-6 md:p-8 border border-border shadow-card">
-                {selectedMachine ? (
-                  <>
-                    <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setSelectedMachine(null)}
-                        className="-ml-2"
-                      >
-                        <ArrowLeft className="w-4 h-4 mr-1" />
-                        Change machine
-                      </Button>
-                      <h2 className="font-display text-lg md:text-xl font-bold text-foreground">
-                        {selectedMachine.label} – Return Session
-                      </h2>
-                    </div>
-                    <BookeoWidget course={selectedMachine.bookeoType} />
-                  </>
-                ) : (
-                  <>
-                    <div className="text-center mb-8">
-                      <CheckCircle className="w-14 h-14 text-primary mx-auto mb-4" />
-                      <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-2">
-                        You're verified, {fullName.trim().split(" ")[0]}!
-                      </h2>
-                      <p className="text-muted-foreground">
-                        Select the machine you'd like to book your return session for.
-                      </p>
-                    </div>
-                    <div className="grid gap-3">
-                      {MACHINES.filter((m) => allowedMachines.includes(m.key)).map((m) => (
-                        <Button
-                          key={m.label}
-                          variant="outline"
-                          size="lg"
-                          className="w-full justify-between text-base py-6"
-                          onClick={() => handleMachineSelect(m.label, m.bookeoType)}
-                        >
-                          <span>{m.label}</span>
-                          <ArrowRight className="w-5 h-5" />
-                        </Button>
-                      ))}
-                    </div>
-                    <p className="text-xs text-muted-foreground text-center mt-4">
-                      Only machines from courses you've previously booked are shown. If something is missing, please contact us.
-                    </p>
-                  </>
-                )}
-              </div>
-            ) : !notFound ? (
+            ) : (
               <form
                 onSubmit={handleSubmit}
                 className="space-y-6 bg-card rounded-xl p-6 md:p-8 border border-border shadow-card"
@@ -332,7 +211,7 @@ const ReturningStudent = () => {
                     autoComplete="email"
                   />
                   <p className="text-xs text-muted-foreground">
-                    We'll check our records to verify you're a previous student.
+                    We'll check our records for an active Free Return Promo.
                   </p>
                 </div>
 
@@ -355,27 +234,14 @@ const ReturningStudent = () => {
                     </>
                   )}
                 </Button>
-              </form>
-            ) : (
-              <div className="text-center bg-card rounded-xl p-8 md:p-12 border border-border shadow-card">
-                <XCircle className="w-16 h-16 text-destructive mx-auto mb-6" />
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
-                  Email Not Found
-                </h2>
-                <p className="text-lg text-muted-foreground max-w-lg mx-auto mb-6">
-                  We couldn't find that email in our previous student records. Please double-check
-                  the email address you used when you originally booked your course.
+
+                <p className="text-xs text-muted-foreground text-center">
+                  Not eligible for Free Returns?{" "}
+                  <Link to="/refresher-training" className="text-primary underline">
+                    Book Refresher / Hourly Training
+                  </Link>
                 </p>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setNotFound(false);
-                    setEmail("");
-                  }}
-                >
-                  Try a different email
-                </Button>
-              </div>
+              </form>
             )}
           </div>
         </div>

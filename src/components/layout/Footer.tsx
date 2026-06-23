@@ -56,10 +56,18 @@ export const Footer = () => {
               ))}
               <li>
                 <Link
-                  to="/returning-student"
+                  to="/free-returns"
                   className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
-                  Returning Student
+                  Free Returns
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/refresher-training"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  Refresher / Hourly Training
                 </Link>
               </li>
             </ul>

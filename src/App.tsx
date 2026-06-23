@@ -33,6 +33,7 @@ import RtoDataSuccess from "./pages/RtoDataSuccess";
 import Recruitment from "./pages/Recruitment";
 import Affiliate from "./pages/Affiliate";
 import ReturningStudent from "./pages/ReturningStudent";
+import RefresherTraining from "./pages/RefresherTraining";
 import RigidHaulTruckTraineeship from "./pages/RigidHaulTruckTraineeship";
 import RigidHaulTruckApplication from "./pages/RigidHaulTruckApplication";
 import RigidHaulTruckBooking from "./pages/RigidHaulTruckBooking";
@@ -81,6 +82,8 @@ const App = () => (
           <Route path="/recruitment" element={<Recruitment />} />
           <Route path="/affiliate" element={<Affiliate />} />
           <Route path="/returning-student" element={<ReturningStudent />} />
+          <Route path="/free-returns" element={<ReturningStudent />} />
+          <Route path="/refresher-training" element={<RefresherTraining />} />
           <Route path="/rigid-haul-truck-traineeship" element={<Navigate to="/rigid-haul-truck-booking" replace />} />
           <Route path="/rigid-haul-truck-application" element={<RigidHaulTruckApplication />} />
           <Route path="/rigid-haul-truck-booking" element={<RigidHaulTruckBooking />} />

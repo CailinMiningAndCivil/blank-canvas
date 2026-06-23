@@ -27,7 +27,8 @@ const courseLinks = [
   { name: "Rigid Haul Truck 🆕", path: "/rigid-haul-truck-booking" },
   { name: "RPL (Assessments Only)", path: "/rpl" },
   { name: "VOC (Verification)", path: "/courses/voc" },
-  { name: "Returning Student", path: "/returning-student" },
+  { name: "Free Returns", path: "/free-returns" },
+  { name: "Refresher / Hourly Training", path: "/refresher-training" },
 ];
 
 const machineLinks = [
@@ -50,10 +51,16 @@ export const Navbar = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-end h-8 gap-4 text-xs">
             <Link
-              to="/returning-student"
+              to="/free-returns"
               className="text-muted-foreground hover:text-primary transition-colors font-medium"
             >
-              Returning Student? →
+              Free Returns →
+            </Link>
+            <Link
+              to="/refresher-training"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium"
+            >
+              Refresher / Hourly →
             </Link>
           </div>
         </div>
