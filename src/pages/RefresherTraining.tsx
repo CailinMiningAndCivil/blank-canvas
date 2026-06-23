@@ -8,13 +8,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { HeroImage } from "@/components/ui/hero-image";
 import { BookeoWidget } from "@/components/BookeoWidget";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { ArrowRight, Loader2, CheckCircle, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import trainerSiteSafety from "@/assets/photos/trainer-site-safety.jpg";
