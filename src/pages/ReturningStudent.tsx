@@ -238,7 +238,7 @@ const ReturningStudent = () => {
 
                 <p className="text-xs text-muted-foreground text-center">
                   Not eligible for Free Returns?{" "}
-                  <Link to="/refresher-training" className="text-primary underline">
+                  <Link to="/courses/full-day" className="text-primary underline">
                     Book Now
                   </Link>
                 </p>
