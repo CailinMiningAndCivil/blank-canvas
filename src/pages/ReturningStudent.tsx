@@ -158,12 +158,12 @@ const ReturningStudent = () => {
                   Not Eligible for Free Returns
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-lg mx-auto mb-6">
-                  Our records don't show an active Free Return Promo on your account. If you'd like additional machine time or a refresher, you can book Refresher / Hourly Machine Training instead.
+                  Our records don't show an active Free Return Promo on your account. You can book a Full Day Course now to get qualified.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Button asChild size="lg" variant="hero">
-                    <Link to="/refresher-training">
-                      Book Refresher / Hourly Training
+                    <Link to="/courses/full-day">
+                      Book a Full Day Course Now
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Link>
                   </Button>
@@ -178,6 +178,7 @@ const ReturningStudent = () => {
                     Try a different email
                   </Button>
                 </div>
+
               </div>
             ) : (
               <form
