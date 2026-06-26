@@ -9,6 +9,7 @@ const PAGE_BY_TYPE: Record<string, string> = {
   "3351TY49AP19DB8F33801": "/bookeo/watercart.html",
   "3351LUU3UW19DB8F7B9C5": "/bookeo/roller.html",
   "3351LWH36P19DB8EF9BE4": "/bookeo/excavator.html",
+  "3351MPEJXE18EE1709583": "/bookeo/rigid-haul-truck.html",
 };
 
 export const BookeoWidget = ({ course }: { course?: string }) => {
