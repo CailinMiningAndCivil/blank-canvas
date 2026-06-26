@@ -245,6 +245,22 @@ const RigidHaulTruckBooking = () => {
             </div>
           </div>
           <div className="max-w-3xl mx-auto text-left">
+            {/* TEMP PREVIEW BUTTON — remove when done testing */}
+            <div className="mb-8 p-4 border-2 border-dashed border-primary/50 rounded-lg bg-primary/5">
+              <p className="text-sm text-muted-foreground mb-3">Preview the Bookeo widget without filling out the form:</p>
+              <button
+                type="button"
+                onClick={() => setShowWidgetPreview((v) => !v)}
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium"
+              >
+                {showWidgetPreview ? "Hide" : "Show"} Bookeo widget preview
+              </button>
+              {showWidgetPreview && (
+                <div className="mt-6">
+                  <BookeoWidget course="3351MPEJXE18EE1709583" />
+                </div>
+              )}
+            </div>
             <RigidScreeningForm
               source="booking"
               qualifiedCta={{
@@ -260,6 +276,7 @@ const RigidHaulTruckBooking = () => {
               }
             />
           </div>
+
         </div>
       </section>
 
