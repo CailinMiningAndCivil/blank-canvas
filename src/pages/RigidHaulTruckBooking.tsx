@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { HeroImage } from "@/components/ui/hero-image";
