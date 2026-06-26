@@ -28,7 +28,6 @@ import heroImage from "@/assets/photos/rigid-haul-truck.jpg";
 const STRIPE_DEPOSIT_URL = "https://buy.stripe.com/cNi9ATeXf0lI9Vh2w00000s";
 
 const RigidHaulTruckBooking = () => {
-  const [showWidgetPreview, setShowWidgetPreview] = useState(false);
   useEffect(() => {
     const metas = [
       { httpEquiv: "Cache-Control", content: "no-cache, no-store, must-revalidate" },
