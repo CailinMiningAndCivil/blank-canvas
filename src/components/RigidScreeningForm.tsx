@@ -402,7 +402,7 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
         )}
       </Button>
       <p className="text-xs text-muted-foreground text-center">
-        Submitting does not guarantee acceptance. Qualified applicants will be shown the next step immediately.
+        Can't prove your competency? No problem. You may still qualify by completing training on alternative equipment or obtaining an HR Licence.
       </p>
     </form>
   );
