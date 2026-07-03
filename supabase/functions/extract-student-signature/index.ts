@@ -255,16 +255,16 @@ async function findBackfillContacts(fields: Record<string, string>, limit: numbe
         pageLimit,
         filters: [
           {
-            field: `customField.${fields[ONSITE_FIELD_NAME]}`,
-            operator: "exists",
+            field: `customFields.${fields[ONSITE_FIELD_NAME]}`,
+            operator: "not_empty",
           },
           {
-            field: `customField.${fields[DOC_URL_FIELD_NAME]}`,
-            operator: "exists",
+            field: `customFields.${fields[DOC_URL_FIELD_NAME]}`,
+            operator: "not_empty",
           },
           {
-            field: `customField.${fields[SIGNATURE_FIELD_NAME]}`,
-            operator: "not_exists",
+            field: `customFields.${fields[SIGNATURE_FIELD_NAME]}`,
+            operator: "empty",
           },
         ],
       }),
