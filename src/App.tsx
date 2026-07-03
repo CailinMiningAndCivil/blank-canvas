@@ -38,6 +38,7 @@ import RigidHaulTruckTraineeship from "./pages/RigidHaulTruckTraineeship";
 import RigidHaulTruckApplication from "./pages/RigidHaulTruckApplication";
 import RigidHaulTruckBooking from "./pages/RigidHaulTruckBooking";
 import RigidHaulTruckSchedule from "./pages/RigidHaulTruckSchedule";
+import SignatureBackfill from "./pages/admin/SignatureBackfill";
 
 const CareersRedirect = () => {
   window.location.href = "https://live.cailintraining.com.au/join_cailin_portal";
