@@ -230,6 +230,33 @@ export type Database = {
         }
         Relationships: []
       }
+      signature_extraction_errors: {
+        Row: {
+          contact_id: string
+          created_at: string
+          email: string | null
+          error: string
+          id: string
+          name: string | null
+        }
+        Insert: {
+          contact_id: string
+          created_at?: string
+          email?: string | null
+          error: string
+          id?: string
+          name?: string | null
+        }
+        Update: {
+          contact_id?: string
+          created_at?: string
+          email?: string | null
+          error?: string
+          id?: string
+          name?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
