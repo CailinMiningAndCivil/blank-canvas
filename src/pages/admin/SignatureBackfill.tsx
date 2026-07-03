@@ -37,12 +37,6 @@ export default function SignatureBackfill() {
     };
   }, []);
 
-  async function clearErrors() {
-    const ids = errors.map((e) => e.id);
-    if (ids.length === 0) return;
-    await supabase.from("signature_extraction_errors").delete().in("id", ids);
-    loadErrors();
-  }
 
 
   async function run(payload: Record<string, unknown>) {
