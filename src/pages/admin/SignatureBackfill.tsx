@@ -185,7 +185,47 @@ export default function SignatureBackfill() {
             </pre>
           </section>
         )}
+
+        <section className="border rounded-lg p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold">
+              Extraction errors {errors.length > 0 && <span className="text-muted-foreground text-sm">({errors.length})</span>}
+            </h2>
+            <Button variant="outline" size="sm" onClick={loadErrors}>Refresh</Button>
+          </div>
+          {errors.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No errors logged.</p>
+          ) : (
+            <div className="overflow-auto max-h-[500px]">
+              <table className="w-full text-sm">
+                <thead className="text-left text-xs uppercase text-muted-foreground border-b">
+                  <tr>
+                    <th className="py-2 pr-4">When</th>
+                    <th className="py-2 pr-4">Contact ID</th>
+                    <th className="py-2 pr-4">Name</th>
+                    <th className="py-2 pr-4">Email</th>
+                    <th className="py-2">Error</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {errors.map((e) => (
+                    <tr key={e.id} className="border-b align-top">
+                      <td className="py-2 pr-4 whitespace-nowrap text-xs text-muted-foreground">
+                        {new Date(e.created_at).toLocaleString()}
+                      </td>
+                      <td className="py-2 pr-4 font-mono text-xs">{e.contact_id}</td>
+                      <td className="py-2 pr-4">{e.name || "—"}</td>
+                      <td className="py-2 pr-4">{e.email || "—"}</td>
+                      <td className="py-2 text-xs text-destructive">{e.error}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
       </div>
+
     </div>
   );
 }
