@@ -40,6 +40,15 @@ function ghlHeaders() {
   };
 }
 
+function ghlPublicDocumentHeaders() {
+  return {
+    channel: "APP",
+    source: "WEB_USER",
+    version: GHL_VERSION,
+    Accept: "application/json",
+  };
+}
+
 let fieldCache: Record<string, string> | null = null;
 async function getFieldIds(): Promise<Record<string, string>> {
   if (fieldCache) return fieldCache;
@@ -82,6 +91,42 @@ function extractDocumentId(url: string): string | null {
   // https://link.cailinminingcivil.com/documents/v1/<uuid>?...  OR direct PDF url
   const m = url.match(/documents\/v1\/([a-f0-9-]{36})/i);
   return m ? m[1] : null;
+}
+
+function dataUrlToBytes(dataUrl: string): { bytes: Uint8Array; ext: "png" | "jpg" } {
+  const m = dataUrl.match(/^data:(image\/(png|jpeg|jpg));base64,(.+)$/i);
+  if (!m) throw new Error("Signature image is not a supported data URL");
+  const binary = atob(m[3]);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return { bytes, ext: m[2].toLowerCase() === "png" ? "png" : "jpg" };
+}
+
+async function extractSignatureFromPublicDocument(docFieldValue: string): Promise<{ bytes: Uint8Array; ext: "png" | "jpg" } | null> {
+  const referenceId = extractDocumentId(docFieldValue);
+  if (!referenceId) return null;
+
+  const url = new URL(`${GHL_BASE}/proposals/document/public`);
+  url.searchParams.set("referenceId", referenceId);
+
+  const r = await fetch(url.toString(), { headers: ghlPublicDocumentHeaders() });
+  if (!r.ok) throw new Error(`public document ${r.status}: ${await r.text()}`);
+  const data = await r.json();
+  const recipients = data?.document?.recipients ?? [];
+  const signer = recipients.find((recipient: any) => recipient?.hasCompleted && typeof recipient?.imgUrl === "string")
+    ?? recipients.find((recipient: any) => typeof recipient?.imgUrl === "string");
+  const imgUrl = signer?.imgUrl;
+  if (!imgUrl) throw new Error("No completed recipient signature image found in public document");
+
+  if (imgUrl.startsWith("data:")) return dataUrlToBytes(imgUrl);
+
+  const img = await fetch(imgUrl);
+  if (!img.ok) throw new Error(`signature image ${img.status}`);
+  const ct = img.headers.get("content-type") ?? "";
+  return {
+    bytes: new Uint8Array(await img.arrayBuffer()),
+    ext: ct.includes("jpeg") || ct.includes("jpg") ? "jpg" : "png",
+  };
 }
 
 async function downloadPdf(docFieldValue: string): Promise<Uint8Array> {
@@ -230,22 +275,42 @@ async function processOne(contactId: string, fields: Record<string, string>) {
   if (!docUrl) return { contactId, skipped: "no doc url" };
   if (existingSig) return { contactId, skipped: "already has signature url" };
 
-  const pdf = await downloadPdf(docUrl);
-  const isJpeg = false; // extractSignaturePng returns PNG (or JPEG bytes if DCTDecode)
-  const img = await extractSignaturePng(pdf);
-  // Heuristic: PNG starts with 89 50 4E 47; JPEG starts with FF D8 FF
-  const ext = img[0] === 0xff && img[1] === 0xd8 ? "jpg" : "png";
+  const publicSignature = await extractSignatureFromPublicDocument(docUrl);
+  let img: Uint8Array;
+  let ext: "png" | "jpg";
+  if (publicSignature) {
+    img = publicSignature.bytes;
+    ext = publicSignature.ext;
+  } else {
+    const pdf = await downloadPdf(docUrl);
+    img = await extractSignaturePng(pdf);
+    // Heuristic: PNG starts with 89 50 4E 47; JPEG starts with FF D8 FF
+    ext = img[0] === 0xff && img[1] === 0xd8 ? "jpg" : "png";
+  }
   const url = await uploadSignature(contactId, img, ext);
   await updateContactField(contactId, fields[SIGNATURE_FIELD_NAME], url);
   return { contactId, ok: true, url };
 }
 
+function hasValue(value: unknown): boolean {
+  if (value == null) return false;
+  if (Array.isArray(value)) return value.length > 0;
+  return String(value).trim().length > 0;
+}
+
+function shouldBackfillContact(contact: any, fields: Record<string, string>): boolean {
+  return hasValue(getCustomFieldValue(contact, fields[ONSITE_FIELD_NAME]))
+    && hasValue(getCustomFieldValue(contact, fields[DOC_URL_FIELD_NAME]))
+    && !hasValue(getCustomFieldValue(contact, fields[SIGNATURE_FIELD_NAME]));
+}
+
 async function findBackfillContacts(fields: Record<string, string>, limit: number) {
-  // GHL contacts search API v2
+  // GHL rejects empty/not_empty operators for some custom-field types, so fetch pages and filter locally.
   const results: string[] = [];
   let page = 1;
   const pageLimit = 100;
-  while (results.length < limit) {
+  const maxPages = 50;
+  while (results.length < limit && page <= maxPages) {
     const r = await fetch(`${GHL_BASE}/contacts/search`, {
       method: "POST",
       headers: { ...ghlHeaders(), "Content-Type": "application/json" },
@@ -253,20 +318,6 @@ async function findBackfillContacts(fields: Record<string, string>, limit: numbe
         locationId: LOCATION_ID,
         page,
         pageLimit,
-        filters: [
-          {
-            field: `customFields.${fields[ONSITE_FIELD_NAME]}`,
-            operator: "not_empty",
-          },
-          {
-            field: `customFields.${fields[DOC_URL_FIELD_NAME]}`,
-            operator: "not_empty",
-          },
-          {
-            field: `customFields.${fields[SIGNATURE_FIELD_NAME]}`,
-            operator: "empty",
-          },
-        ],
       }),
     });
     if (!r.ok) throw new Error(`search ${r.status}: ${await r.text()}`);
@@ -274,6 +325,7 @@ async function findBackfillContacts(fields: Record<string, string>, limit: numbe
     const contacts = j.contacts ?? [];
     if (contacts.length === 0) break;
     for (const c of contacts) {
+      if (!shouldBackfillContact(c, fields)) continue;
       results.push(c.id);
       if (results.length >= limit) break;
     }
