@@ -456,19 +456,48 @@ async function auditContacts(fields: Record<string, string>, opts: { searchAfter
   };
 }
 
+function isAuthorized(req: Request, body: any): boolean {
+  const expected = Deno.env.get("SIGNATURE_WEBHOOK_TOKEN");
+  if (!expected) return false;
+  const provided =
+    req.headers.get("x-admin-key") ??
+    new URL(req.url).searchParams.get("token") ??
+    body?.token;
+  return provided === expected;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
   try {
-    const url = new URL(req.url);
     const body = await req.json().catch(() => ({} as any));
-    const fields = await getFieldIds();
 
+    if (!isAuthorized(req, body)) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // List recent extraction errors (admin panel).
+    if (body.listErrors) {
+      const { data, error } = await supabase
+        .from("signature_extraction_errors")
+        .select("id, contact_id, name, email, error, created_at")
+        .order("created_at", { ascending: false })
+        .limit(Math.min(Number(body.limit ?? 100), 500));
+      if (error) throw error;
+      return new Response(JSON.stringify({ errors: data ?? [] }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const fields = await getFieldIds();
     for (const name of [DOC_URL_FIELD_NAME, SIGNATURE_FIELD_NAME, ONSITE_FIELD_NAME]) {
       if (!fields[name]) throw new Error(`Custom field not found in GHL: "${name}"`);
     }
 
-    // GHL webhook mode: any POST that carries a contact id is treated as a webhook.
+    // Webhook / single-contact mode: any POST that carries a contact id.
     const cid =
       body.contactId ??
       body.contact_id ??
@@ -479,13 +508,18 @@ Deno.serve(async (req) => {
     if (cid && !body.backfill && !body.audit) {
       const result = await processOne(String(cid), fields).catch((e) => ({
         contactId: String(cid),
-        error: (e as Error).message,
+        error: "Processing failed. See server logs.",
+        _internal: (e as Error).message,
       }));
+      // Strip internal detail before returning.
+      if (result && "_internal" in result) {
+        console.error("processOne error", result._internal);
+        delete (result as any)._internal;
+      }
       return new Response(JSON.stringify({ ok: true, result }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-
 
     if (body.audit) {
       const result = await auditContacts(fields, {
@@ -497,14 +531,6 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-
-    if (body.contactId) {
-      const result = await processOne(body.contactId, fields);
-      return new Response(JSON.stringify(result), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
 
     if (body.backfill) {
       const limit = Math.max(1, Math.min(Number(body.limit ?? 5), 10));
@@ -518,7 +544,8 @@ Deno.serve(async (req) => {
         try {
           results.push(await processOne(id, fields));
         } catch (e) {
-          results.push({ contactId: id, error: (e as Error).message });
+          console.error("backfill processOne error", (e as Error).message);
+          results.push({ contactId: id, error: "Processing failed. See server logs." });
         }
       }
       return new Response(
@@ -539,14 +566,15 @@ Deno.serve(async (req) => {
     }
 
     return new Response(
-      JSON.stringify({ error: "Provide { contactId } or { backfill: true }" }),
+      JSON.stringify({ error: "Invalid request" }),
       { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   } catch (e) {
     console.error(e);
-    return new Response(JSON.stringify({ error: (e as Error).message }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ error: "Processing failed. Please contact support." }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+    );
   }
 });
+
