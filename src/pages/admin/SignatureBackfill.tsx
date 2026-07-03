@@ -83,15 +83,14 @@ export default function SignatureBackfill() {
     setLog("Running full scan…");
     try {
       while (!totals.done && totals.chunks < 100) {
-        const { data, error } = await supabase.functions.invoke("extract-student-signature", {
-          body: {
-            backfill: true,
-            limit: Number(limit),
-            maxPages: 10,
-            ...(cursor ? { searchAfter: cursor } : {}),
-          },
+        const { data, error } = await invoke({
+          backfill: true,
+          limit: Number(limit),
+          maxPages: 10,
+          ...(cursor ? { searchAfter: cursor } : {}),
         });
         if (error) throw error;
+
 
         totals.chunks += 1;
         totals.scanned += Number(data?.scanned ?? 0);
