@@ -413,6 +413,42 @@ async function auditContacts(fields: Record<string, string>, opts: { searchAfter
   };
 }
 
+async function debugContactSearchShape(fields: Record<string, string>) {
+  const r = await fetch(`${GHL_BASE}/contacts/search`, {
+    method: "POST",
+    headers: { ...ghlHeaders(), "Content-Type": "application/json" },
+    body: JSON.stringify({
+      locationId: LOCATION_ID,
+      pageLimit: 3,
+      sort: [{ field: "dateAdded", direction: "desc" }],
+    }),
+  });
+  if (!r.ok) throw new Error(`search ${r.status}: ${await r.text()}`);
+  const j = await r.json();
+  return {
+    fieldIds: {
+      onSite: fields[ONSITE_FIELD_NAME],
+      docUrl: fields[DOC_URL_FIELD_NAME],
+      signatureUrl: fields[SIGNATURE_FIELD_NAME],
+    },
+    topLevelKeys: Object.keys(j),
+    contacts: (j.contacts ?? []).map((contact: any) => ({
+      id: contact.id,
+      topLevelKeys: Object.keys(contact),
+      customFieldsType: Array.isArray(contact.customFields) ? "array" : typeof contact.customFields,
+      customFieldType: Array.isArray(contact.customField) ? "array" : typeof contact.customField,
+      customFieldsCount: Array.isArray(contact.customFields) ? contact.customFields.length : undefined,
+      customFieldCount: Array.isArray(contact.customField) ? contact.customField.length : undefined,
+      onSiteDetected: hasValue(getCustomFieldValue(contact, fields[ONSITE_FIELD_NAME])),
+      docDetected: hasValue(getCustomFieldValue(contact, fields[DOC_URL_FIELD_NAME])),
+      signatureDetected: hasValue(getCustomFieldValue(contact, fields[SIGNATURE_FIELD_NAME])),
+      sampleCustomFieldKeys: (Array.isArray(contact.customFields) ? contact.customFields : contact.customField ?? [])
+        .slice(0, 5)
+        .map((field: any) => Object.keys(field)),
+    })),
+  };
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
@@ -422,6 +458,13 @@ Deno.serve(async (req) => {
 
     for (const name of [DOC_URL_FIELD_NAME, SIGNATURE_FIELD_NAME, ONSITE_FIELD_NAME]) {
       if (!fields[name]) throw new Error(`Custom field not found in GHL: "${name}"`);
+    }
+
+    if (body.debugShape) {
+      const result = await debugContactSearchShape(fields);
+      return new Response(JSON.stringify(result), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     if (body.audit) {
