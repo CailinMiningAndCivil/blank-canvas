@@ -89,6 +89,7 @@ const App = () => (
           <Route path="/rigid-haul-truck-application" element={<RigidHaulTruckApplication />} />
           <Route path="/rigid-haul-truck-booking" element={<RigidHaulTruckBooking />} />
           <Route path="/rigid-haul-truck-schedule" element={<RigidHaulTruckSchedule />} />
+          <Route path="/admin/signature-backfill" element={<SignatureBackfill />} />
           <Route path="/practical-assessments" element={<Navigate to="/courses" replace />} />
           <Route path="/cailin-courses" element={<Navigate to="/courses" replace />} />
           <Route path="/e-book" element={<Navigate to="/courses" replace />} />
