@@ -5,7 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+const ADMIN_KEY_STORAGE = "signature_admin_key";
+
 export default function SignatureBackfill() {
+  const [adminKey, setAdminKey] = useState<string>(() => localStorage.getItem(ADMIN_KEY_STORAGE) ?? "");
   const [contactId, setContactId] = useState("");
   const [limit, setLimit] = useState("10");
   const [busy, setBusy] = useState(false);
@@ -13,50 +16,54 @@ export default function SignatureBackfill() {
   const [nextSearchAfter, setNextSearchAfter] = useState<unknown[] | null>(null);
   const [errors, setErrors] = useState<Array<{ id: string; contact_id: string; name: string | null; email: string | null; error: string; created_at: string }>>([]);
 
+  function saveKey(v: string) {
+    setAdminKey(v);
+    if (v) localStorage.setItem(ADMIN_KEY_STORAGE, v);
+    else localStorage.removeItem(ADMIN_KEY_STORAGE);
+  }
+
+  async function invoke(body: Record<string, unknown>) {
+    return supabase.functions.invoke("extract-student-signature", {
+      body,
+      headers: adminKey ? { "x-admin-key": adminKey } : {},
+    });
+  }
+
   async function loadErrors() {
-    const { data } = await supabase
-      .from("signature_extraction_errors")
-      .select("id, contact_id, name, email, error, created_at")
-      .order("created_at", { ascending: false })
-      .limit(100);
-    setErrors((data ?? []) as any);
+    if (!adminKey) {
+      setErrors([]);
+      return;
+    }
+    const { data, error } = await invoke({ listErrors: true, limit: 100 });
+    if (error) return;
+    setErrors(((data as any)?.errors ?? []) as any);
   }
 
   useEffect(() => {
     loadErrors();
-    const channel = supabase
-      .channel("signature-errors")
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "signature_extraction_errors" },
-        () => loadErrors(),
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
-
-
+    const t = setInterval(loadErrors, 30000);
+    return () => clearInterval(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [adminKey]);
 
   async function run(payload: Record<string, unknown>) {
     setBusy(true);
     setLog("Running…");
     try {
-      const { data, error } = await supabase.functions.invoke("extract-student-signature", {
-        body: payload,
-      });
+      const { data, error } = await invoke(payload);
       if (error) throw error;
       if (data && typeof data === "object" && "nextSearchAfter" in data) {
         setNextSearchAfter((data.nextSearchAfter as unknown[] | null) ?? null);
       }
       setLog(JSON.stringify(data, null, 2));
+      loadErrors();
     } catch (e: any) {
       setLog(`ERROR: ${e?.message ?? String(e)}`);
     } finally {
       setBusy(false);
     }
   }
+
 
   async function runFullBackfill() {
     setBusy(true);
