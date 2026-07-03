@@ -70,10 +70,26 @@ async function getContact(contactId: string) {
 }
 
 function getCustomFieldValue(contact: any, fieldId: string): string | null {
-  const cf = contact.customFields ?? contact.customField ?? [];
-  for (const f of cf) {
-    if (f.id === fieldId) return (f.value ?? f.fieldValue ?? "").toString();
+  const sources = [contact.customFields, contact.customField, contact.custom_field].filter(Boolean);
+
+  for (const source of sources) {
+    if (Array.isArray(source)) {
+      for (const f of source) {
+        const id = f.id ?? f.fieldId ?? f.field_id ?? f.customFieldId ?? f.custom_field_id;
+        if (id === fieldId) {
+          const value = f.value ?? f.fieldValue ?? f.field_value ?? f.values ?? "";
+          return Array.isArray(value) ? value.join(", ") : value.toString();
+        }
+      }
+      continue;
+    }
+
+    if (typeof source === "object" && source !== null && Object.prototype.hasOwnProperty.call(source, fieldId)) {
+      const value = source[fieldId];
+      return Array.isArray(value) ? value.join(", ") : (value ?? "").toString();
+    }
   }
+
   return null;
 }
 
@@ -304,35 +320,60 @@ function shouldBackfillContact(contact: any, fields: Record<string, string>): bo
     && !hasValue(getCustomFieldValue(contact, fields[SIGNATURE_FIELD_NAME]));
 }
 
-async function findBackfillContacts(fields: Record<string, string>, limit: number) {
+async function findBackfillContacts(
+  fields: Record<string, string>,
+  opts: { limit: number; searchAfter?: any; maxPages?: number },
+) {
   // GHL rejects empty/not_empty operators for some custom-field types, so fetch pages and filter locally.
   const results: string[] = [];
-  let page = 1;
+  let searchAfter: any = opts.searchAfter;
   const pageLimit = 100;
-  const maxPages = 50;
-  while (results.length < limit && page <= maxPages) {
+  const maxPages = Math.max(1, Math.min(20, Number(opts.maxPages ?? 10)));
+  let pagesFetched = 0;
+  let scanned = 0;
+  let done = false;
+
+  while (results.length < opts.limit && pagesFetched < maxPages) {
+    const body: any = {
+      locationId: LOCATION_ID,
+      pageLimit,
+      sort: [{ field: "dateAdded", direction: "desc" }],
+    };
+    if (searchAfter) body.searchAfter = searchAfter;
+
     const r = await fetch(`${GHL_BASE}/contacts/search`, {
       method: "POST",
       headers: { ...ghlHeaders(), "Content-Type": "application/json" },
-      body: JSON.stringify({
-        locationId: LOCATION_ID,
-        page,
-        pageLimit,
-      }),
+      body: JSON.stringify(body),
     });
     if (!r.ok) throw new Error(`search ${r.status}: ${await r.text()}`);
     const j = await r.json();
     const contacts = j.contacts ?? [];
-    if (contacts.length === 0) break;
+    if (contacts.length === 0) {
+      done = true;
+      break;
+    }
+    scanned += contacts.length;
     for (const c of contacts) {
       if (!shouldBackfillContact(c, fields)) continue;
       results.push(c.id);
-      if (results.length >= limit) break;
+      if (results.length >= opts.limit) {
+        searchAfter = c.searchAfter ?? c.search_after;
+        pagesFetched++;
+        return { ids: results, scanned, pagesFetched, done: false, nextSearchAfter: searchAfter };
+      }
     }
-    if (contacts.length < pageLimit) break;
-    page++;
+    const last = contacts[contacts.length - 1];
+    const nextCursor = last?.searchAfter ?? last?.search_after;
+    pagesFetched++;
+    if (!nextCursor || contacts.length < pageLimit) {
+      done = true;
+      break;
+    }
+    searchAfter = nextCursor;
   }
-  return results;
+
+  return { ids: results, scanned, pagesFetched, done, nextSearchAfter: done ? null : searchAfter };
 }
 
 async function auditContacts(fields: Record<string, string>, opts: { searchAfter?: any; maxPages?: number; state?: any } = {}) {
@@ -420,10 +461,14 @@ Deno.serve(async (req) => {
     }
 
     if (body.backfill) {
-      const limit = Math.min(Number(body.limit ?? 50), 200);
-      const ids = await findBackfillContacts(fields, limit);
+      const limit = Math.max(1, Math.min(Number(body.limit ?? 5), 10));
+      const batch = await findBackfillContacts(fields, {
+        limit,
+        searchAfter: body.searchAfter,
+        maxPages: body.maxPages ?? 10,
+      });
       const results: any[] = [];
-      for (const id of ids) {
+      for (const id of batch.ids) {
         try {
           results.push(await processOne(id, fields));
         } catch (e) {
@@ -432,7 +477,11 @@ Deno.serve(async (req) => {
       }
       return new Response(
         JSON.stringify({
-          totalFound: ids.length,
+          totalFound: batch.ids.length,
+          scanned: batch.scanned,
+          pagesFetched: batch.pagesFetched,
+          done: batch.done,
+          nextSearchAfter: batch.nextSearchAfter,
           processed: results.length,
           succeeded: results.filter((r) => r.ok).length,
           skipped: results.filter((r) => r.skipped).length,

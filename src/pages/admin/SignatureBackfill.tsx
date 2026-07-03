@@ -9,6 +9,7 @@ export default function SignatureBackfill() {
   const [limit, setLimit] = useState("10");
   const [busy, setBusy] = useState(false);
   const [log, setLog] = useState<string>("");
+  const [nextSearchAfter, setNextSearchAfter] = useState<unknown[] | null>(null);
 
   async function run(payload: Record<string, unknown>) {
     setBusy(true);
@@ -18,9 +19,62 @@ export default function SignatureBackfill() {
         body: payload,
       });
       if (error) throw error;
+      if (data && typeof data === "object" && "nextSearchAfter" in data) {
+        setNextSearchAfter((data.nextSearchAfter as unknown[] | null) ?? null);
+      }
       setLog(JSON.stringify(data, null, 2));
     } catch (e: any) {
       setLog(`ERROR: ${e?.message ?? String(e)}`);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function runFullBackfill() {
+    setBusy(true);
+    let cursor: unknown[] | null = nextSearchAfter;
+    const totals = {
+      scanned: 0,
+      processed: 0,
+      succeeded: 0,
+      skipped: 0,
+      failed: 0,
+      chunks: 0,
+      done: false,
+      nextSearchAfter: cursor,
+      results: [] as unknown[],
+    };
+
+    setLog("Running full scan…");
+    try {
+      while (!totals.done && totals.chunks < 100) {
+        const { data, error } = await supabase.functions.invoke("extract-student-signature", {
+          body: {
+            backfill: true,
+            limit: Number(limit),
+            maxPages: 10,
+            ...(cursor ? { searchAfter: cursor } : {}),
+          },
+        });
+        if (error) throw error;
+
+        totals.chunks += 1;
+        totals.scanned += Number(data?.scanned ?? 0);
+        totals.processed += Number(data?.processed ?? 0);
+        totals.succeeded += Number(data?.succeeded ?? 0);
+        totals.skipped += Number(data?.skipped ?? 0);
+        totals.failed += Number(data?.failed ?? 0);
+        totals.results.push(...(Array.isArray(data?.results) ? data.results : []));
+        totals.done = Boolean(data?.done);
+        cursor = (data?.nextSearchAfter as unknown[] | null) ?? null;
+        totals.nextSearchAfter = cursor;
+        setNextSearchAfter(cursor);
+        setLog(JSON.stringify(totals, null, 2));
+
+        if (!cursor) break;
+      }
+    } catch (e: any) {
+      setLog(`${JSON.stringify(totals, null, 2)}\n\nERROR: ${e?.message ?? String(e)}`);
     } finally {
       setBusy(false);
     }
@@ -59,7 +113,7 @@ export default function SignatureBackfill() {
           <p className="text-sm text-muted-foreground">
             Filters GHL contacts where <code>On-Site Course Purchased</code> is not empty,
             has a signed document URL, and <code>Signature Student Declaration URL TXT</code>{" "}
-            is empty.
+            is empty. Each chunk scans up to 1,000 contacts to avoid timeouts.
           </p>
           <div>
             <Label htmlFor="lim">Batch limit</Label>
@@ -73,10 +127,26 @@ export default function SignatureBackfill() {
           </div>
           <Button
             disabled={busy}
-            onClick={() => run({ backfill: true, limit: Number(limit) })}
+            onClick={() => run({ backfill: true, limit: Number(limit), maxPages: 10, ...(nextSearchAfter ? { searchAfter: nextSearchAfter } : {}) })}
           >
-            Run backfill batch
+            Run next scan chunk
           </Button>
+          <Button
+            disabled={busy}
+            variant="secondary"
+            onClick={runFullBackfill}
+          >
+            Run full scan
+          </Button>
+          {nextSearchAfter && (
+            <Button
+              disabled={busy}
+              variant="outline"
+              onClick={() => setNextSearchAfter(null)}
+            >
+              Restart scan from newest
+            </Button>
+          )}
         </section>
 
         {log && (
