@@ -284,29 +284,53 @@ async function uploadSignature(contactId: string, png: Uint8Array, ext: string):
   return data.signedUrl;
 }
 
-async function processOne(contactId: string, fields: Record<string, string>) {
-  const contact = await getContact(contactId);
-  const docUrl = getCustomFieldValue(contact, fields[DOC_URL_FIELD_NAME]);
-  const existingSig = getCustomFieldValue(contact, fields[SIGNATURE_FIELD_NAME]);
-  if (!docUrl) return { contactId, skipped: "no doc url" };
-  if (existingSig) return { contactId, skipped: "already has signature url" };
-
-  const publicSignature = await extractSignatureFromPublicDocument(docUrl);
-  let img: Uint8Array;
-  let ext: "png" | "jpg";
-  if (publicSignature) {
-    img = publicSignature.bytes;
-    ext = publicSignature.ext;
-  } else {
-    const pdf = await downloadPdf(docUrl);
-    img = await extractSignaturePng(pdf);
-    // Heuristic: PNG starts with 89 50 4E 47; JPEG starts with FF D8 FF
-    ext = img[0] === 0xff && img[1] === 0xd8 ? "jpg" : "png";
+async function logError(contactId: string, err: string, contact?: any) {
+  try {
+    const name = contact
+      ? `${contact.firstName ?? ""} ${contact.lastName ?? ""}`.trim() || null
+      : null;
+    const email = contact?.email ?? null;
+    await supabase.from("signature_extraction_errors").insert({
+      contact_id: contactId,
+      name,
+      email,
+      error: err.slice(0, 2000),
+    });
+  } catch (e) {
+    console.error("logError failed", e);
   }
-  const url = await uploadSignature(contactId, img, ext);
-  await updateContactField(contactId, fields[SIGNATURE_FIELD_NAME], url);
-  return { contactId, ok: true, url };
 }
+
+async function processOne(contactId: string, fields: Record<string, string>) {
+  let contact: any = null;
+  try {
+    contact = await getContact(contactId);
+    const docUrl = getCustomFieldValue(contact, fields[DOC_URL_FIELD_NAME]);
+    const existingSig = getCustomFieldValue(contact, fields[SIGNATURE_FIELD_NAME]);
+    if (!docUrl) return { contactId, skipped: "no doc url" };
+    if (existingSig) return { contactId, skipped: "already has signature url" };
+
+    const publicSignature = await extractSignatureFromPublicDocument(docUrl);
+    let img: Uint8Array;
+    let ext: "png" | "jpg";
+    if (publicSignature) {
+      img = publicSignature.bytes;
+      ext = publicSignature.ext;
+    } else {
+      const pdf = await downloadPdf(docUrl);
+      img = await extractSignaturePng(pdf);
+      ext = img[0] === 0xff && img[1] === 0xd8 ? "jpg" : "png";
+    }
+    const url = await uploadSignature(contactId, img, ext);
+    await updateContactField(contactId, fields[SIGNATURE_FIELD_NAME], url);
+    return { contactId, ok: true, url };
+  } catch (e) {
+    const msg = (e as Error).message ?? String(e);
+    await logError(contactId, msg, contact);
+    throw e;
+  }
+}
+
 
 function hasValue(value: unknown): boolean {
   if (value == null) return false;
