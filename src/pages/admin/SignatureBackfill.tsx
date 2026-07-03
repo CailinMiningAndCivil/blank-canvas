@@ -11,6 +11,39 @@ export default function SignatureBackfill() {
   const [busy, setBusy] = useState(false);
   const [log, setLog] = useState<string>("");
   const [nextSearchAfter, setNextSearchAfter] = useState<unknown[] | null>(null);
+  const [errors, setErrors] = useState<Array<{ id: string; contact_id: string; name: string | null; email: string | null; error: string; created_at: string }>>([]);
+
+  async function loadErrors() {
+    const { data } = await supabase
+      .from("signature_extraction_errors")
+      .select("id, contact_id, name, email, error, created_at")
+      .order("created_at", { ascending: false })
+      .limit(100);
+    setErrors((data ?? []) as any);
+  }
+
+  useEffect(() => {
+    loadErrors();
+    const channel = supabase
+      .channel("signature-errors")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "signature_extraction_errors" },
+        () => loadErrors(),
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  async function clearErrors() {
+    const ids = errors.map((e) => e.id);
+    if (ids.length === 0) return;
+    await supabase.from("signature_extraction_errors").delete().in("id", ids);
+    loadErrors();
+  }
+
 
   async function run(payload: Record<string, unknown>) {
     setBusy(true);
