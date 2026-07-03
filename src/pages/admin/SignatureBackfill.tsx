@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +11,33 @@ export default function SignatureBackfill() {
   const [busy, setBusy] = useState(false);
   const [log, setLog] = useState<string>("");
   const [nextSearchAfter, setNextSearchAfter] = useState<unknown[] | null>(null);
+  const [errors, setErrors] = useState<Array<{ id: string; contact_id: string; name: string | null; email: string | null; error: string; created_at: string }>>([]);
+
+  async function loadErrors() {
+    const { data } = await supabase
+      .from("signature_extraction_errors")
+      .select("id, contact_id, name, email, error, created_at")
+      .order("created_at", { ascending: false })
+      .limit(100);
+    setErrors((data ?? []) as any);
+  }
+
+  useEffect(() => {
+    loadErrors();
+    const channel = supabase
+      .channel("signature-errors")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "signature_extraction_errors" },
+        () => loadErrors(),
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+
 
   async function run(payload: Record<string, unknown>) {
     setBusy(true);
@@ -157,7 +185,47 @@ export default function SignatureBackfill() {
             </pre>
           </section>
         )}
+
+        <section className="border rounded-lg p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold">
+              Extraction errors {errors.length > 0 && <span className="text-muted-foreground text-sm">({errors.length})</span>}
+            </h2>
+            <Button variant="outline" size="sm" onClick={loadErrors}>Refresh</Button>
+          </div>
+          {errors.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No errors logged.</p>
+          ) : (
+            <div className="overflow-auto max-h-[500px]">
+              <table className="w-full text-sm">
+                <thead className="text-left text-xs uppercase text-muted-foreground border-b">
+                  <tr>
+                    <th className="py-2 pr-4">When</th>
+                    <th className="py-2 pr-4">Contact ID</th>
+                    <th className="py-2 pr-4">Name</th>
+                    <th className="py-2 pr-4">Email</th>
+                    <th className="py-2">Error</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {errors.map((e) => (
+                    <tr key={e.id} className="border-b align-top">
+                      <td className="py-2 pr-4 whitespace-nowrap text-xs text-muted-foreground">
+                        {new Date(e.created_at).toLocaleString()}
+                      </td>
+                      <td className="py-2 pr-4 font-mono text-xs">{e.contact_id}</td>
+                      <td className="py-2 pr-4">{e.name || "—"}</td>
+                      <td className="py-2 pr-4">{e.email || "—"}</td>
+                      <td className="py-2 text-xs text-destructive">{e.error}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
       </div>
+
     </div>
   );
 }
