@@ -58,7 +58,13 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
   const [hrLicenceFile, setHrLicenceFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+
   const uploadFile = async (file: File, prefix: string): Promise<string | null> => {
+    if (file.size > MAX_FILE_SIZE) {
+      console.error("upload rejected: file exceeds 10MB", file.name, file.size);
+      return null;
+    }
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
     const path = `${prefix}/${Date.now()}-${safeName}`;
     const { error } = await supabase.storage
@@ -70,6 +76,7 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
     }
     return path;
   };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
