@@ -38,6 +38,7 @@ import RigidHaulTruckTraineeship from "./pages/RigidHaulTruckTraineeship";
 import RigidHaulTruckApplication from "./pages/RigidHaulTruckApplication";
 import RigidHaulTruckBooking from "./pages/RigidHaulTruckBooking";
 import RigidHaulTruckSchedule from "./pages/RigidHaulTruckSchedule";
+import SignatureBackfill from "./pages/admin/SignatureBackfill";
 
 const CareersRedirect = () => {
   window.location.href = "https://live.cailintraining.com.au/join_cailin_portal";
@@ -88,6 +89,7 @@ const App = () => (
           <Route path="/rigid-haul-truck-application" element={<RigidHaulTruckApplication />} />
           <Route path="/rigid-haul-truck-booking" element={<RigidHaulTruckBooking />} />
           <Route path="/rigid-haul-truck-schedule" element={<RigidHaulTruckSchedule />} />
+          <Route path="/admin/signature-backfill" element={<SignatureBackfill />} />
           <Route path="/practical-assessments" element={<Navigate to="/courses" replace />} />
           <Route path="/cailin-courses" element={<Navigate to="/courses" replace />} />
           <Route path="/e-book" element={<Navigate to="/courses" replace />} />
