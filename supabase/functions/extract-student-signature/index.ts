@@ -443,30 +443,15 @@ Deno.serve(async (req) => {
       if (!fields[name]) throw new Error(`Custom field not found in GHL: "${name}"`);
     }
 
-    // GHL webhook mode: accepts POST from a GHL workflow "Webhook" action.
-    // Requires ?token=<SIGNATURE_WEBHOOK_TOKEN> to match the configured secret.
-    const isWebhook = url.searchParams.has("token") || body.webhook === true;
-    if (isWebhook) {
-      const expected = Deno.env.get("SIGNATURE_WEBHOOK_TOKEN");
-      const provided = url.searchParams.get("token") ?? body.token;
-      if (!expected || provided !== expected) {
-        return new Response(JSON.stringify({ error: "invalid token" }), {
-          status: 401,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
-      const cid =
-        body.contactId ??
-        body.contact_id ??
-        body.id ??
-        body.contact?.id ??
-        body.contact?.contact_id;
-      if (!cid) {
-        return new Response(
-          JSON.stringify({ error: "missing contact id in webhook payload" }),
-          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
-        );
-      }
+    // GHL webhook mode: any POST that carries a contact id is treated as a webhook.
+    const cid =
+      body.contactId ??
+      body.contact_id ??
+      body.contact?.id ??
+      body.contact?.contact_id ??
+      (body.id && !body.backfill && !body.audit ? body.id : undefined);
+
+    if (cid && !body.backfill && !body.audit) {
       const result = await processOne(String(cid), fields).catch((e) => ({
         contactId: String(cid),
         error: (e as Error).message,
@@ -475,6 +460,7 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+
 
     if (body.audit) {
       const result = await auditContacts(fields, {
