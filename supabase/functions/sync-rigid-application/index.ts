@@ -106,7 +106,7 @@ Deno.serve(async (req) => {
       const txt = await sheetsRes.text();
       console.error('Sheets append failed', sheetsRes.status, txt);
       return new Response(
-        JSON.stringify({ success: false, error: `Sheets ${sheetsRes.status}: ${txt}` }),
+        JSON.stringify({ success: false, error: 'An internal error occurred. Please try again.' }),
         { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -119,8 +119,9 @@ Deno.serve(async (req) => {
   } catch (err) {
     console.error('sync-rigid-application error', err);
     return new Response(
-      JSON.stringify({ success: false, error: (err as Error).message }),
+      JSON.stringify({ success: false, error: 'An internal error occurred. Please try again.' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 });
+
