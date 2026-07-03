@@ -335,6 +335,61 @@ async function findBackfillContacts(fields: Record<string, string>, limit: numbe
   return results;
 }
 
+async function auditContacts(fields: Record<string, string>, opts: { searchAfter?: any; maxPages?: number; state?: any } = {}) {
+  const pageLimit = 100;
+  let searchAfter: any = opts.searchAfter;
+  const maxPages = opts.maxPages ?? 10;
+  const state = opts.state ?? {
+    totalContactsScanned: 0,
+    onSiteCoursePurchased: 0,
+    onSiteWithDocLink: 0,
+    onSiteWithSignature: 0,
+    missingSignatureContacts: [] as any[],
+  };
+  let pagesFetched = 0;
+  let done = false;
+  while (pagesFetched < maxPages) {
+    const body: any = { locationId: LOCATION_ID, pageLimit, sort: [{ field: "dateAdded", direction: "desc" }] };
+    if (searchAfter) body.searchAfter = searchAfter;
+    const r = await fetch(`${GHL_BASE}/contacts/search`, {
+      method: "POST",
+      headers: { ...ghlHeaders(), "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!r.ok) throw new Error(`search ${r.status}: ${await r.text()}`);
+    const j = await r.json();
+    const contacts = j.contacts ?? [];
+    if (contacts.length === 0) { done = true; break; }
+    state.totalContactsScanned += contacts.length;
+    for (const c of contacts) {
+      if (!hasValue(getCustomFieldValue(c, fields[ONSITE_FIELD_NAME]))) continue;
+      state.onSiteCoursePurchased++;
+      const hasDoc = hasValue(getCustomFieldValue(c, fields[DOC_URL_FIELD_NAME]));
+      const hasSig = hasValue(getCustomFieldValue(c, fields[SIGNATURE_FIELD_NAME]));
+      if (hasDoc) state.onSiteWithDocLink++;
+      if (hasSig) state.onSiteWithSignature++;
+      if (hasDoc && !hasSig) {
+        state.missingSignatureContacts.push({
+          id: c.id,
+          name: `${c.firstName ?? ""} ${c.lastName ?? ""}`.trim(),
+          email: c.email,
+        });
+      }
+    }
+    const last = contacts[contacts.length - 1];
+    const nextCursor = last?.searchAfter ?? last?.search_after;
+    pagesFetched++;
+    if (!nextCursor || contacts.length < pageLimit) { done = true; break; }
+    searchAfter = nextCursor;
+  }
+  return {
+    ...state,
+    missingSignature: state.missingSignatureContacts.length,
+    done,
+    nextSearchAfter: done ? null : searchAfter,
+  };
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
@@ -344,6 +399,17 @@ Deno.serve(async (req) => {
 
     for (const name of [DOC_URL_FIELD_NAME, SIGNATURE_FIELD_NAME, ONSITE_FIELD_NAME]) {
       if (!fields[name]) throw new Error(`Custom field not found in GHL: "${name}"`);
+    }
+
+    if (body.audit) {
+      const result = await auditContacts(fields, {
+        searchAfter: body.searchAfter,
+        maxPages: body.maxPages ?? 10,
+        state: body.state,
+      });
+      return new Response(JSON.stringify(result), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     if (body.contactId) {
