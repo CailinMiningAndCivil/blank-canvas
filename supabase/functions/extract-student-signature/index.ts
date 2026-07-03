@@ -435,11 +435,45 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
   try {
-    const body = await req.json().catch(() => ({}));
+    const url = new URL(req.url);
+    const body = await req.json().catch(() => ({} as any));
     const fields = await getFieldIds();
 
     for (const name of [DOC_URL_FIELD_NAME, SIGNATURE_FIELD_NAME, ONSITE_FIELD_NAME]) {
       if (!fields[name]) throw new Error(`Custom field not found in GHL: "${name}"`);
+    }
+
+    // GHL webhook mode: accepts POST from a GHL workflow "Webhook" action.
+    // Requires ?token=<SIGNATURE_WEBHOOK_TOKEN> to match the configured secret.
+    const isWebhook = url.searchParams.has("token") || body.webhook === true;
+    if (isWebhook) {
+      const expected = Deno.env.get("SIGNATURE_WEBHOOK_TOKEN");
+      const provided = url.searchParams.get("token") ?? body.token;
+      if (!expected || provided !== expected) {
+        return new Response(JSON.stringify({ error: "invalid token" }), {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const cid =
+        body.contactId ??
+        body.contact_id ??
+        body.id ??
+        body.contact?.id ??
+        body.contact?.contact_id;
+      if (!cid) {
+        return new Response(
+          JSON.stringify({ error: "missing contact id in webhook payload" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        );
+      }
+      const result = await processOne(String(cid), fields).catch((e) => ({
+        contactId: String(cid),
+        error: (e as Error).message,
+      }));
+      return new Response(JSON.stringify({ ok: true, result }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     if (body.audit) {
@@ -459,6 +493,7 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+
 
     if (body.backfill) {
       const limit = Math.max(1, Math.min(Number(body.limit ?? 5), 10));
