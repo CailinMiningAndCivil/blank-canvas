@@ -357,7 +357,11 @@ async function findBackfillContacts(
     for (const c of contacts) {
       if (!shouldBackfillContact(c, fields)) continue;
       results.push(c.id);
-      if (results.length >= opts.limit) break;
+      if (results.length >= opts.limit) {
+        searchAfter = c.searchAfter ?? c.search_after;
+        pagesFetched++;
+        return { ids: results, scanned, pagesFetched, done: false, nextSearchAfter: searchAfter };
+      }
     }
     const last = contacts[contacts.length - 1];
     const nextCursor = last?.searchAfter ?? last?.search_after;
