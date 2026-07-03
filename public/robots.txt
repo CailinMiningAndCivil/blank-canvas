@@ -2,5 +2,6 @@ User-agent: *
 Disallow: /tmp/
 Disallow: */builder-preview/
 Disallow: */workspaces/
+Disallow: /admin/
 
 Sitemap: https://www.cailinminingcivil.com/sitemap.xml
