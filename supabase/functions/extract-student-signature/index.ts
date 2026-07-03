@@ -320,14 +320,20 @@ function shouldBackfillContact(contact: any, fields: Record<string, string>): bo
     && !hasValue(getCustomFieldValue(contact, fields[SIGNATURE_FIELD_NAME]));
 }
 
-async function findBackfillContacts(fields: Record<string, string>, limit: number) {
+async function findBackfillContacts(
+  fields: Record<string, string>,
+  opts: { limit: number; searchAfter?: any; maxPages?: number },
+) {
   // GHL rejects empty/not_empty operators for some custom-field types, so fetch pages and filter locally.
   const results: string[] = [];
-  let searchAfter: any = null;
+  let searchAfter: any = opts.searchAfter;
   const pageLimit = 100;
-  const maxPages = Math.max(10, Math.min(500, Math.ceil(limit / pageLimit) + 100));
+  const maxPages = Math.max(1, Math.min(20, Number(opts.maxPages ?? 10)));
   let pagesFetched = 0;
-  while (results.length < limit && pagesFetched < maxPages) {
+  let scanned = 0;
+  let done = false;
+
+  while (results.length < opts.limit && pagesFetched < maxPages) {
     const body: any = {
       locationId: LOCATION_ID,
       pageLimit,
@@ -343,19 +349,27 @@ async function findBackfillContacts(fields: Record<string, string>, limit: numbe
     if (!r.ok) throw new Error(`search ${r.status}: ${await r.text()}`);
     const j = await r.json();
     const contacts = j.contacts ?? [];
-    if (contacts.length === 0) break;
+    if (contacts.length === 0) {
+      done = true;
+      break;
+    }
+    scanned += contacts.length;
     for (const c of contacts) {
       if (!shouldBackfillContact(c, fields)) continue;
       results.push(c.id);
-      if (results.length >= limit) break;
+      if (results.length >= opts.limit) break;
     }
     const last = contacts[contacts.length - 1];
     const nextCursor = last?.searchAfter ?? last?.search_after;
     pagesFetched++;
-    if (!nextCursor || contacts.length < pageLimit) break;
+    if (!nextCursor || contacts.length < pageLimit) {
+      done = true;
+      break;
+    }
     searchAfter = nextCursor;
   }
-  return results;
+
+  return { ids: results, scanned, pagesFetched, done, nextSearchAfter: done ? null : searchAfter };
 }
 
 async function auditContacts(fields: Record<string, string>, opts: { searchAfter?: any; maxPages?: number; state?: any } = {}) {
@@ -413,42 +427,6 @@ async function auditContacts(fields: Record<string, string>, opts: { searchAfter
   };
 }
 
-async function debugContactSearchShape(fields: Record<string, string>) {
-  const r = await fetch(`${GHL_BASE}/contacts/search`, {
-    method: "POST",
-    headers: { ...ghlHeaders(), "Content-Type": "application/json" },
-    body: JSON.stringify({
-      locationId: LOCATION_ID,
-      pageLimit: 3,
-      sort: [{ field: "dateAdded", direction: "desc" }],
-    }),
-  });
-  if (!r.ok) throw new Error(`search ${r.status}: ${await r.text()}`);
-  const j = await r.json();
-  return {
-    fieldIds: {
-      onSite: fields[ONSITE_FIELD_NAME],
-      docUrl: fields[DOC_URL_FIELD_NAME],
-      signatureUrl: fields[SIGNATURE_FIELD_NAME],
-    },
-    topLevelKeys: Object.keys(j),
-    contacts: (j.contacts ?? []).map((contact: any) => ({
-      id: contact.id,
-      topLevelKeys: Object.keys(contact),
-      customFieldsType: Array.isArray(contact.customFields) ? "array" : typeof contact.customFields,
-      customFieldType: Array.isArray(contact.customField) ? "array" : typeof contact.customField,
-      customFieldsCount: Array.isArray(contact.customFields) ? contact.customFields.length : undefined,
-      customFieldCount: Array.isArray(contact.customField) ? contact.customField.length : undefined,
-      onSiteDetected: hasValue(getCustomFieldValue(contact, fields[ONSITE_FIELD_NAME])),
-      docDetected: hasValue(getCustomFieldValue(contact, fields[DOC_URL_FIELD_NAME])),
-      signatureDetected: hasValue(getCustomFieldValue(contact, fields[SIGNATURE_FIELD_NAME])),
-      sampleCustomFieldKeys: (Array.isArray(contact.customFields) ? contact.customFields : contact.customField ?? [])
-        .slice(0, 5)
-        .map((field: any) => Object.keys(field)),
-    })),
-  };
-}
-
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
@@ -458,13 +436,6 @@ Deno.serve(async (req) => {
 
     for (const name of [DOC_URL_FIELD_NAME, SIGNATURE_FIELD_NAME, ONSITE_FIELD_NAME]) {
       if (!fields[name]) throw new Error(`Custom field not found in GHL: "${name}"`);
-    }
-
-    if (body.debugShape) {
-      const result = await debugContactSearchShape(fields);
-      return new Response(JSON.stringify(result), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
     }
 
     if (body.audit) {
@@ -486,10 +457,14 @@ Deno.serve(async (req) => {
     }
 
     if (body.backfill) {
-      const limit = Math.min(Number(body.limit ?? 50), 200);
-      const ids = await findBackfillContacts(fields, limit);
+      const limit = Math.max(1, Math.min(Number(body.limit ?? 5), 10));
+      const batch = await findBackfillContacts(fields, {
+        limit,
+        searchAfter: body.searchAfter,
+        maxPages: body.maxPages ?? 10,
+      });
       const results: any[] = [];
-      for (const id of ids) {
+      for (const id of batch.ids) {
         try {
           results.push(await processOne(id, fields));
         } catch (e) {
@@ -498,7 +473,11 @@ Deno.serve(async (req) => {
       }
       return new Response(
         JSON.stringify({
-          totalFound: ids.length,
+          totalFound: batch.ids.length,
+          scanned: batch.scanned,
+          pagesFetched: batch.pagesFetched,
+          done: batch.done,
+          nextSearchAfter: batch.nextSearchAfter,
           processed: results.length,
           succeeded: results.filter((r) => r.ok).length,
           skipped: results.filter((r) => r.skipped).length,
