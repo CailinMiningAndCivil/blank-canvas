@@ -124,6 +124,19 @@ export default function SignatureBackfill() {
 
       <div className="space-y-8">
         <section className="border rounded-lg p-6 space-y-4">
+          <h2 className="text-xl font-semibold">Admin key</h2>
+          <p className="text-sm text-muted-foreground">
+            Required to run any action or view errors. Stored locally in your browser.
+          </p>
+          <Input
+            type="password"
+            value={adminKey}
+            onChange={(e) => saveKey(e.target.value)}
+            placeholder="Paste admin key"
+          />
+        </section>
+
+        <section className="border rounded-lg p-6 space-y-4">
           <h2 className="text-xl font-semibold">Run for one contact</h2>
           <div>
             <Label htmlFor="cid">GHL Contact ID</Label>
