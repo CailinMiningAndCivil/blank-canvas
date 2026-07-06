@@ -8,6 +8,8 @@ import { MachineCard } from "@/components/MachineCard";
 import { PartnersSection } from "@/components/PartnersSection";
 import { AwardsSection } from "@/components/AwardsSection";
 import { VideoSection } from "@/components/VideoSection";
+import { SaturdayPopup } from "@/components/SaturdayPopup";
+import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 
 // Real Cailin photos
@@ -20,7 +22,6 @@ import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import rollerNew from "@/assets/photos/roller-new.jpg";
 import watercartNew from "@/assets/photos/watercart-new.jpg";
 import rigidHaulTruck from "@/assets/photos/rigid-haul-truck.jpg";
-import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 
 const features = [
@@ -110,6 +111,7 @@ const individualMachines = [
 const Index = () => {
   return (
     <Layout>
+      <SaturdayPopup />
       <SEO
         title="Cailin Mining & Civil | Machine Operator Training Perth"
         description="Australia's only award-winning 1:1 live mine site machine operator training. Get nationally recognised qualifications with unlimited training hours in Perth."
