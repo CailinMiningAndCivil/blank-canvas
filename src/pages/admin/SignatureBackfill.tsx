@@ -75,37 +75,67 @@ export default function SignatureBackfill() {
       skipped: 0,
       failed: 0,
       chunks: 0,
+      chunkErrors: 0,
       done: false,
       nextSearchAfter: cursor,
       results: [] as unknown[],
+      lastError: null as string | null,
     };
 
+    // Keep chunks small so each edge invocation stays well under the
+    // function CPU / wall-clock budget. Processing PDFs is expensive.
+    const CHUNK_LIMIT = Math.max(1, Math.min(Number(limit) || 3, 3));
+    const CHUNK_MAX_PAGES = 2;
+    const MAX_CHUNKS = 500;
+    const MAX_CONSECUTIVE_ERRORS = 5;
+
     setLog("Running full scan…");
+    let consecutiveErrors = 0;
     try {
-      while (!totals.done && totals.chunks < 100) {
-        const { data, error } = await invoke({
-          backfill: true,
-          limit: Number(limit),
-          maxPages: 10,
-          ...(cursor ? { searchAfter: cursor } : {}),
-        });
-        if (error) throw error;
+      while (!totals.done && totals.chunks < MAX_CHUNKS) {
+        try {
+          const { data, error } = await invoke({
+            backfill: true,
+            limit: CHUNK_LIMIT,
+            maxPages: CHUNK_MAX_PAGES,
+            ...(cursor ? { searchAfter: cursor } : {}),
+          });
+          if (error) throw error;
 
+          totals.chunks += 1;
+          totals.scanned += Number(data?.scanned ?? 0);
+          totals.processed += Number(data?.processed ?? 0);
+          totals.succeeded += Number(data?.succeeded ?? 0);
+          totals.skipped += Number(data?.skipped ?? 0);
+          totals.failed += Number(data?.failed ?? 0);
+          totals.results.push(...(Array.isArray(data?.results) ? data.results : []));
+          totals.done = Boolean(data?.done);
+          cursor = (data?.nextSearchAfter as unknown[] | null) ?? null;
+          totals.nextSearchAfter = cursor;
+          setNextSearchAfter(cursor);
+          setLog(JSON.stringify(totals, null, 2));
+          consecutiveErrors = 0;
 
-        totals.chunks += 1;
-        totals.scanned += Number(data?.scanned ?? 0);
-        totals.processed += Number(data?.processed ?? 0);
-        totals.succeeded += Number(data?.succeeded ?? 0);
-        totals.skipped += Number(data?.skipped ?? 0);
-        totals.failed += Number(data?.failed ?? 0);
-        totals.results.push(...(Array.isArray(data?.results) ? data.results : []));
-        totals.done = Boolean(data?.done);
-        cursor = (data?.nextSearchAfter as unknown[] | null) ?? null;
-        totals.nextSearchAfter = cursor;
-        setNextSearchAfter(cursor);
-        setLog(JSON.stringify(totals, null, 2));
-
-        if (!cursor) break;
+          if (!cursor && !totals.done) {
+            // No cursor returned and not marked done — nothing more to fetch.
+            break;
+          }
+        } catch (chunkErr: any) {
+          // A single chunk failing (usually an edge-function timeout on a
+          // slow PDF) should not abort the whole scan. Log it and continue
+          // from the last known cursor.
+          totals.chunkErrors += 1;
+          consecutiveErrors += 1;
+          totals.lastError = chunkErr?.message ?? String(chunkErr);
+          setLog(JSON.stringify(totals, null, 2));
+          if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
+            throw new Error(
+              `Stopped after ${consecutiveErrors} consecutive chunk errors. Last: ${totals.lastError}`,
+            );
+          }
+          // Small back-off before retrying with the same cursor.
+          await new Promise((r) => setTimeout(r, 1500));
+        }
       }
     } catch (e: any) {
       setLog(`${JSON.stringify(totals, null, 2)}\n\nERROR: ${e?.message ?? String(e)}`);
