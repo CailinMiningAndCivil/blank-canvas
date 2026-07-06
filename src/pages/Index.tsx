@@ -111,6 +111,7 @@ const individualMachines = [
 const Index = () => {
   return (
     <Layout>
+      <SaturdayPopup />
       <SEO
         title="Cailin Mining & Civil | Machine Operator Training Perth"
         description="Australia's only award-winning 1:1 live mine site machine operator training. Get nationally recognised qualifications with unlimited training hours in Perth."
