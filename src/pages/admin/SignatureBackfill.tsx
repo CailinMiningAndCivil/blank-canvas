@@ -23,10 +23,37 @@ export default function SignatureBackfill() {
   }
 
   async function invoke(body: Record<string, unknown>) {
-    return supabase.functions.invoke("extract-student-signature", {
+    const { data, error } = await supabase.functions.invoke("extract-student-signature", {
       body,
       headers: adminKey ? { "x-admin-key": adminKey } : {},
     });
+
+    if (error) {
+      const response = (error as any)?.context;
+      let detail = (error as any)?.message ?? "Edge Function returned an error";
+
+      if (response instanceof Response) {
+        const status = response.status;
+        const bodyText = await response.clone().text().catch(() => "");
+        let bodyMessage = bodyText;
+        try {
+          const parsed = JSON.parse(bodyText);
+          bodyMessage = parsed?.error ?? parsed?.message ?? bodyText;
+        } catch {
+          // Keep the raw body text when it is not JSON.
+        }
+
+        if (status === 401) {
+          detail = "Unauthorized: paste the current signature webhook token into the Admin key field, then try again.";
+        } else {
+          detail = `Edge Function returned ${status}${bodyMessage ? `: ${bodyMessage}` : ""}`;
+        }
+      }
+
+      throw new Error(detail);
+    }
+
+    return data;
   }
 
   async function loadErrors() {
@@ -34,8 +61,8 @@ export default function SignatureBackfill() {
       setErrors([]);
       return;
     }
-    const { data, error } = await invoke({ listErrors: true, limit: 100 });
-    if (error) return;
+    const data = await invoke({ listErrors: true, limit: 100 }).catch(() => null);
+    if (!data) return;
     setErrors(((data as any)?.errors ?? []) as any);
   }
 
@@ -50,8 +77,7 @@ export default function SignatureBackfill() {
     setBusy(true);
     setLog("Running…");
     try {
-      const { data, error } = await invoke(payload);
-      if (error) throw error;
+      const data = await invoke(payload);
       if (data && typeof data === "object" && "nextSearchAfter" in data) {
         setNextSearchAfter((data.nextSearchAfter as unknown[] | null) ?? null);
       }
@@ -89,18 +115,23 @@ export default function SignatureBackfill() {
     const MAX_CHUNKS = 500;
     const MAX_CONSECUTIVE_ERRORS = 5;
 
+    if (!adminKey.trim()) {
+      setLog("ERROR: Paste the current signature webhook token into the Admin key field before running the scan.");
+      setBusy(false);
+      return;
+    }
+
     setLog("Running full scan…");
     let consecutiveErrors = 0;
     try {
       while (!totals.done && totals.chunks < MAX_CHUNKS) {
         try {
-          const { data, error } = await invoke({
+          const data = await invoke({
             backfill: true,
             limit: CHUNK_LIMIT,
             maxPages: CHUNK_MAX_PAGES,
             ...(cursor ? { searchAfter: cursor } : {}),
           });
-          if (error) throw error;
 
           totals.chunks += 1;
           totals.scanned += Number(data?.scanned ?? 0);
@@ -128,6 +159,9 @@ export default function SignatureBackfill() {
           consecutiveErrors += 1;
           totals.lastError = chunkErr?.message ?? String(chunkErr);
           setLog(JSON.stringify(totals, null, 2));
+          if (totals.lastError.toLowerCase().includes("unauthorized")) {
+            throw new Error(totals.lastError);
+          }
           if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
             throw new Error(
               `Stopped after ${consecutiveErrors} consecutive chunk errors. Last: ${totals.lastError}`,
@@ -203,13 +237,13 @@ export default function SignatureBackfill() {
             />
           </div>
           <Button
-            disabled={busy}
+            disabled={busy || !adminKey.trim()}
             onClick={() => run({ backfill: true, limit: Number(limit), maxPages: 10, ...(nextSearchAfter ? { searchAfter: nextSearchAfter } : {}) })}
           >
             Run next scan chunk
           </Button>
           <Button
-            disabled={busy}
+            disabled={busy || !adminKey.trim()}
             variant="secondary"
             onClick={runFullBackfill}
           >
