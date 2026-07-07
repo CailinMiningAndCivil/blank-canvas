@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
@@ -9,7 +10,7 @@ import { PartnersSection } from "@/components/PartnersSection";
 import { AwardsSection } from "@/components/AwardsSection";
 import { VideoSection } from "@/components/VideoSection";
 import { SaturdayPopup } from "@/components/SaturdayPopup";
-import { DisclaimerPopup } from "@/components/DisclaimerPopup";
+import { DisclaimerPopup, DISCLAIMER_KEY } from "@/components/DisclaimerPopup";
 import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 
