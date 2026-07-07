@@ -9,6 +9,7 @@ import { PartnersSection } from "@/components/PartnersSection";
 import { AwardsSection } from "@/components/AwardsSection";
 import { VideoSection } from "@/components/VideoSection";
 import { SaturdayPopup } from "@/components/SaturdayPopup";
+import { DisclaimerPopup } from "@/components/DisclaimerPopup";
 import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 
