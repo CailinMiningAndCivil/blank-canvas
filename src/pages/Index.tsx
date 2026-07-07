@@ -112,6 +112,7 @@ const individualMachines = [
 const Index = () => {
   return (
     <Layout>
+      <DisclaimerPopup />
       <SaturdayPopup />
       <SEO
         title="Cailin Mining & Civil | Machine Operator Training Perth"
