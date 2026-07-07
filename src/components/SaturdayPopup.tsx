@@ -3,19 +3,29 @@ import { Link } from "react-router-dom";
 import { X, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export const SaturdayPopup = () => {
-  const [open, setOpen] = useState(false);
+interface SaturdayPopupProps {
+  open?: boolean;
+  onClose?: () => void;
+}
+
+export const SaturdayPopup = ({ open: controlledOpen, onClose }: SaturdayPopupProps) => {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const controlled = controlledOpen !== undefined;
 
   useEffect(() => {
-    const timer = setTimeout(() => setOpen(true), 1500);
+    if (controlled) return;
+    const timer = setTimeout(() => setInternalOpen(true), 1500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [controlled]);
 
   const handleClose = () => {
-    setOpen(false);
+    if (!controlled) setInternalOpen(false);
+    onClose?.();
   };
 
-  if (!open) return null;
+  const isOpen = controlled ? controlledOpen : internalOpen;
+
+  if (!isOpen) return null;
 
   return (
     <div
