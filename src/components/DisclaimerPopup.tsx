@@ -3,25 +3,35 @@ import { Link } from "react-router-dom";
 import { X, GraduationCap, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const DISCLAIMER_KEY = "cailin-disclaimer-accepted";
+export const DISCLAIMER_KEY = "cailin-disclaimer-accepted";
 
-export const DisclaimerPopup = () => {
-  const [open, setOpen] = useState(false);
+interface DisclaimerPopupProps {
+  open?: boolean;
+  onClose?: () => void;
+}
+
+export const DisclaimerPopup = ({ open: controlledOpen, onClose }: DisclaimerPopupProps) => {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const controlled = controlledOpen !== undefined;
 
   useEffect(() => {
+    if (controlled) return;
     const accepted = localStorage.getItem(DISCLAIMER_KEY);
     if (!accepted) {
-      const timer = setTimeout(() => setOpen(true), 800);
+      const timer = setTimeout(() => setInternalOpen(true), 800);
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [controlled]);
 
   const handleClose = () => {
     localStorage.setItem(DISCLAIMER_KEY, "true");
-    setOpen(false);
+    if (!controlled) setInternalOpen(false);
+    onClose?.();
   };
 
-  if (!open) return null;
+  const isOpen = controlled ? controlledOpen : internalOpen;
+
+  if (!isOpen) return null;
 
   return (
     <div

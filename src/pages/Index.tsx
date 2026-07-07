@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
@@ -9,7 +10,7 @@ import { PartnersSection } from "@/components/PartnersSection";
 import { AwardsSection } from "@/components/AwardsSection";
 import { VideoSection } from "@/components/VideoSection";
 import { SaturdayPopup } from "@/components/SaturdayPopup";
-import { DisclaimerPopup } from "@/components/DisclaimerPopup";
+import { DisclaimerPopup, DISCLAIMER_KEY } from "@/components/DisclaimerPopup";
 import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 
@@ -110,10 +111,31 @@ const individualMachines = [
 ];
 
 const Index = () => {
+  const [disclaimerOpen, setDisclaimerOpen] = useState(false);
+  const [saturdayOpen, setSaturdayOpen] = useState(false);
+
+  useEffect(() => {
+    const accepted = localStorage.getItem(DISCLAIMER_KEY);
+    if (accepted) {
+      const timer = setTimeout(() => setSaturdayOpen(true), 500);
+      return () => clearTimeout(timer);
+    } else {
+      const timer = setTimeout(() => setDisclaimerOpen(true), 800);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  const handleDisclaimerClose = () => {
+    setDisclaimerOpen(false);
+    setTimeout(() => setSaturdayOpen(true), 400);
+  };
+
+  const handleSaturdayClose = () => setSaturdayOpen(false);
+
   return (
     <Layout>
-      <DisclaimerPopup />
-      <SaturdayPopup />
+      <DisclaimerPopup open={disclaimerOpen} onClose={handleDisclaimerClose} />
+      <SaturdayPopup open={saturdayOpen} onClose={handleSaturdayClose} />
       <SEO
         title="Cailin Mining & Civil | Machine Operator Training Perth"
         description="Australia's only award-winning 1:1 live mine site machine operator training. Get nationally recognised qualifications with unlimited training hours in Perth."
