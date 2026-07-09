@@ -50,14 +50,14 @@ export const SaturdayPopup = ({ open: controlledOpen, onClose }: SaturdayPopupPr
             <span className="text-xs font-semibold uppercase tracking-wider">Now Available</span>
           </div>
           <h2 className="font-display text-2xl leading-tight">
-            Courses Now Available on Saturdays
+            Courses Available All Saturdays
           </h2>
         </div>
 
         <div className="p-6 space-y-4">
           <p className="text-foreground text-base leading-relaxed">
-            Training on your schedule — book a Saturday session and get the same
-            1:1 live mine site experience.
+            Training on your schedule — every Saturday, book a 1:1 live mine site
+            session with the same trainer and same machines.
           </p>
 
           <ul className="space-y-2 text-sm text-muted-foreground">
