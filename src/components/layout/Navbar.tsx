@@ -151,6 +151,17 @@ export const Navbar = () => {
               Careers
             </Link>
 
+            <Link
+              to="/privatecall"
+              className={cn(
+                "font-medium text-sm uppercase tracking-wider transition-colors duration-300",
+                location.pathname === "/privatecall"
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Private Call
+            </Link>
 
             {navLinks.slice(1).map((link) => (
               <Link
@@ -271,6 +282,18 @@ export const Navbar = () => {
               Careers
             </Link>
 
+            <Link
+              to="/privatecall"
+              onClick={() => setIsOpen(false)}
+              className={cn(
+                "font-medium text-lg uppercase tracking-wider transition-colors duration-300",
+                location.pathname === "/privatecall"
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Private Call
+            </Link>
 
             {navLinks.slice(1).map((link) => (
               <Link
