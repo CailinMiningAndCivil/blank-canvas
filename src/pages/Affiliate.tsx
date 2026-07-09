@@ -48,11 +48,9 @@ const Affiliate = () => {
 
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <span className="mb-6 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold uppercase tracking-wider text-primary">
-              Affiliate Program
-            </span>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-              Earn Money Referring <span className="text-primary">Future Operators</span>
+            <p className="text-primary font-medium tracking-widest uppercase mb-4">Affiliate Program</p>
+            <h1 className="font-display text-5xl md:text-6xl text-foreground mb-6">
+              Earn Money Referring Future Operators
             </h1>
             <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-8">
               Join our affiliate program and earn 5% commission on every course sale made through your referral link.
