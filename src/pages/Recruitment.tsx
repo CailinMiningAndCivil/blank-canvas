@@ -37,11 +37,9 @@ const Recruitment = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent" />
         <div className="container relative z-10 mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="mb-6 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-sm font-semibold uppercase tracking-wider text-primary">
-              Recruitment Portal
-            </span>
-            <h1 className="mb-6 font-display text-4xl font-bold leading-tight text-foreground md:text-5xl lg:text-6xl">
-              Your Career In <span className="text-primary">Mining & Civil</span> Starts Here
+            <p className="text-primary font-medium tracking-widest uppercase mb-4">Recruitment Portal</p>
+            <h1 className="font-display text-5xl md:text-6xl text-foreground mb-6">
+              Your Career In Mining & Civil Starts Here
             </h1>
             <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
               Submit your details and our recruitment partners will connect you with employers looking for skilled operators across Western Australia.
