@@ -84,30 +84,26 @@ const DiscoveryCall = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center overflow-hidden">
+      <section className="relative py-32 overflow-hidden">
         <HeroImage
           src={trainerSiteSafety}
           alt="Trainer on mining site"
-          overlayClassName="bg-gradient-to-r from-background via-background/90 to-background/60"
           priority
         />
-        
-        <div className="container relative z-10 mx-auto px-4 py-16 md:py-24">
-          <div className="max-w-2xl">
-            <p className="text-lg md:text-xl text-muted-foreground mb-4 animate-fade-up" style={{ animationDelay: "0.1s" }}>
-              Don't need a course? Just want a job?
+
+        <div className="relative z-10 container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-primary font-medium tracking-widest uppercase mb-4 animate-fade-up" style={{ animationDelay: "0.1s" }}>
+              Private Coaching Call
             </p>
-            
-            <h1 className="text-3xl md:text-5xl font-bold font-display mb-6 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-              Book Your <span className="text-gradient">1:1 Coaching Call</span> With Niamh
+            <h1 className="font-display text-5xl md:text-6xl text-foreground mb-6 animate-fade-up" style={{ animationDelay: "0.2s" }}>
+              Book Your 1:1 Coaching Call With Niamh
             </h1>
-            
-            <p className="text-xl md:text-2xl font-semibold text-foreground mb-8 animate-fade-up" style={{ animationDelay: "0.3s" }}>
+            <p className="text-muted-foreground text-lg mb-8 animate-fade-up" style={{ animationDelay: "0.3s" }}>
               Get a personalised plan to break into the Mining & Civil industry — no matter where you are in the world.
             </p>
-            
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               variant="hero"
               className="text-lg py-6 px-8 shadow-glow animate-fade-up"
               style={{ animationDelay: "0.4s" }}
