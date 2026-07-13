@@ -93,7 +93,10 @@ const IntegratedToolCarrier = () => {
               Fork attachment operation on an Integrated Tool Carrier (ITC). Learn safe
               load handling, pre-start inspections and site-ready operating procedures.
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-sm text-primary font-medium">
+              RIIHAN311F
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">
               Fork attachment operation only
             </p>
           </div>
