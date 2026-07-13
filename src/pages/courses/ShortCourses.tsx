@@ -23,6 +23,7 @@ import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import rollerArtistic from "@/assets/photos/roller-artistic.jpg";
 import watercartNew from "@/assets/photos/watercart-new.jpg";
 import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
+import itcAsset from "@/assets/integrated-tool-carrier.jpg.asset.json";
 
 const machines = [
   {
