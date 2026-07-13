@@ -37,6 +37,7 @@ const machineLinks = [
   { name: "Articulated Truck (Moxy)", path: "/courses/moxy" },
   { name: "Roller", path: "/courses/roller" },
   { name: "Watercart", path: "/courses/watercart" },
+  { name: "Integrated Tool Carrier", path: "/courses/integrated-tool-carrier" },
   { name: "Rigid Haul Truck 🆕", path: "/rigid-haul-truck-booking" },
 ];
 
