@@ -61,6 +61,13 @@ const machines = [
     image: rollerArtistic,
     link: "/courses/roller",
   },
+  {
+    title: "Integrated Tool Carrier Fork Ticket",
+    code: "Short Course",
+    description: "Fork attachment operation on an Integrated Tool Carrier. Prerequisite: Loader qualification required.",
+    image: itcAsset.url,
+    link: "/courses/integrated-tool-carrier",
+  },
 ];
 
 const faqs = [
