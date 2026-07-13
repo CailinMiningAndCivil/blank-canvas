@@ -156,7 +156,7 @@ const individualMachines = [
   {
     id: "integrated-tool-carrier",
     title: "Integrated Tool Carrier",
-    code: "Fork Attachment — Short Course",
+    code: "RIIHAN311F",
     description: "$600 short course covering safe fork attachment operation on an Integrated Tool Carrier. Loader qualification required.",
     image: itcAsset.url,
     link: "/courses/integrated-tool-carrier",
