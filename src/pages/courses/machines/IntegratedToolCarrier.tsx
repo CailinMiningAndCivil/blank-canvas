@@ -23,7 +23,7 @@ const courseOptions = [
     duration: "Short course",
     price: "$600",
     description: "Fork attachment operation on an Integrated Tool Carrier",
-    bookingUrl: "https://live.cailintraining.com.au/",
+    bookingUrl: "https://live.cailintraining.com.au/short_course_integrated_tool_carrier",
     highlight: true,
     badge: "SHORT COURSE",
   },
