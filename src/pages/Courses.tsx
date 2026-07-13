@@ -18,6 +18,7 @@ import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import wheelloaderFullBucket from "@/assets/photos/wheelloader-full-bucket.jpg";
 import rollerArtistic from "@/assets/photos/roller-artistic.jpg";
 import watercartNew from "@/assets/photos/watercart-new.jpg";
+import itcAsset from "@/assets/integrated-tool-carrier.jpg.asset.json";
 import rigidHaulTruck from "@/assets/photos/rigid-haul-truck.jpg";
 import safetyEquipmentCheck from "@/assets/photos/safety-equipment-check.jpg";
 import rplHero from "@/assets/photos/rpl-page-hero.png";
@@ -151,6 +152,15 @@ const individualMachines = [
     description: "Bulk water truck operations training for dust suppression and site maintenance.",
     image: watercartNew,
     link: "/courses/watercart",
+  },
+  {
+    id: "integrated-tool-carrier",
+    title: "Integrated Tool Carrier",
+    code: "Fork Attachment — Short Course",
+    description: "$600 short course covering safe fork attachment operation on an Integrated Tool Carrier. Loader qualification required.",
+    image: itcAsset.url,
+    link: "/courses/integrated-tool-carrier",
+    alt: "Integrated Tool Carrier with fork attachment",
   },
 ];
 
