@@ -136,18 +136,6 @@ const IntegratedToolCarrier = () => {
         </div>
       </section>
 
-      {/* Return for Free Eligibility Notice */}
-      <section className="py-6 bg-destructive/5 border-b border-destructive/20">
-        <div className="container mx-auto px-4">
-          <div className="flex items-start gap-3 max-w-3xl mx-auto">
-            <AlertCircle className="w-5 h-5 text-destructive shrink-0 mt-0.5" />
-            <p className="text-foreground text-sm">
-              Please note: This course does not include Return for Free eligibility. Additional training hours may be required before becoming eligible.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Course Options */}
       <section className="pb-20">
         <div className="container mx-auto px-4">
@@ -178,6 +166,14 @@ const IntegratedToolCarrier = () => {
                   {option.price}
                 </p>
                 <p className="text-foreground text-sm text-center mb-4">{option.description}</p>
+                {option.title === "$600 Course" && (
+                  <div className="flex items-start gap-2 bg-destructive/10 border border-destructive/30 rounded-lg p-3 mb-4">
+                    <AlertCircle className="w-4 h-4 text-destructive shrink-0 mt-0.5" />
+                    <p className="text-foreground text-xs">
+                      Please note: This course does not include Return for Free eligibility. Additional training hours may be required before becoming eligible.
+                    </p>
+                  </div>
+                )}
                 <Button
                   variant={option.highlight ? "hero" : "outline"}
                   className="w-full"
