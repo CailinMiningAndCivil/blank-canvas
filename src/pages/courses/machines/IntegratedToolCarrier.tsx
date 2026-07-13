@@ -166,6 +166,14 @@ const IntegratedToolCarrier = () => {
                   {option.price}
                 </p>
                 <p className="text-foreground text-sm text-center mb-4">{option.description}</p>
+                {option.title === "$600 Course" && (
+                  <div className="flex items-start gap-2 bg-destructive/10 border border-destructive/30 rounded-lg p-3 mb-4">
+                    <AlertCircle className="w-4 h-4 text-destructive shrink-0 mt-0.5" />
+                    <p className="text-foreground text-xs">
+                      Please note: This course does not include Return for Free eligibility. Additional training hours may be required before becoming eligible.
+                    </p>
+                  </div>
+                )}
                 <Button
                   variant={option.highlight ? "hero" : "outline"}
                   className="w-full"
