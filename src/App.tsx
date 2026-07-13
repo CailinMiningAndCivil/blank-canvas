@@ -19,6 +19,7 @@ import Moxy from "./pages/courses/machines/Moxy";
 import MoxyTrainingPerth from "./pages/courses/machines/MoxyTrainingPerth";
 import Roller from "./pages/courses/machines/Roller";
 import Watercart from "./pages/courses/machines/Watercart";
+import IntegratedToolCarrier from "./pages/courses/machines/IntegratedToolCarrier";
 import Book from "./pages/Book";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -70,6 +71,7 @@ const App = () => (
           <Route path="/courses/moxy-training-perth" element={<MoxyTrainingPerth />} />
           <Route path="/courses/roller" element={<Roller />} />
           <Route path="/courses/watercart" element={<Watercart />} />
+          <Route path="/courses/integrated-tool-carrier" element={<IntegratedToolCarrier />} />
           <Route path="/book" element={<Book />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
