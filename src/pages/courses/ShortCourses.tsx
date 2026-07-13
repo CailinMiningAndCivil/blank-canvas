@@ -23,6 +23,7 @@ import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import rollerArtistic from "@/assets/photos/roller-artistic.jpg";
 import watercartNew from "@/assets/photos/watercart-new.jpg";
 import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
+import itcAsset from "@/assets/integrated-tool-carrier.jpg.asset.json";
 
 const machines = [
   {
@@ -59,6 +60,13 @@ const machines = [
     description: "Roller operator certification for compaction work in construction and road building.",
     image: rollerArtistic,
     link: "/courses/roller",
+  },
+  {
+    title: "Integrated Tool Carrier Fork Ticket",
+    code: "Short Course",
+    description: "Fork attachment operation on an Integrated Tool Carrier. Prerequisite: Loader qualification required.",
+    image: itcAsset.url,
+    link: "/courses/integrated-tool-carrier",
   },
 ];
 
