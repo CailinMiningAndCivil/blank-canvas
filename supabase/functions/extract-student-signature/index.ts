@@ -302,14 +302,14 @@ async function logError(contactId: string, err: string, contact?: any) {
   }
 }
 
-async function processOne(contactId: string, fields: Record<string, string>) {
+async function processOne(contactId: string, fields: Record<string, string>, opts: { force?: boolean } = {}) {
   let contact: any = null;
   try {
     contact = await getContact(contactId);
     const docUrl = getCustomFieldValue(contact, fields[DOC_URL_FIELD_NAME]);
     const existingSig = getCustomFieldValue(contact, fields[SIGNATURE_FIELD_NAME]);
     if (!docUrl) return { contactId, skipped: "no doc url" };
-    if (existingSig) return { contactId, skipped: "already has signature url" };
+    if (existingSig && !opts.force) return { contactId, skipped: "already has signature url" };
 
     const publicSignature = await extractSignatureFromPublicDocument(docUrl);
     let img: Uint8Array;
@@ -324,7 +324,7 @@ async function processOne(contactId: string, fields: Record<string, string>) {
     }
     const url = await uploadSignature(contactId, img, ext);
     await updateContactField(contactId, fields[SIGNATURE_FIELD_NAME], url);
-    return { contactId, ok: true, url };
+    return { contactId, ok: true, url, forced: opts.force ?? false };
   } catch (e) {
     const msg = (e as Error).message ?? String(e);
     await logError(contactId, msg, contact);
@@ -506,7 +506,7 @@ Deno.serve(async (req) => {
       (body.id && !body.backfill && !body.audit ? body.id : undefined);
 
     if (cid && !body.backfill && !body.audit) {
-      const result = await processOne(String(cid), fields).catch((e) => ({
+      const result = await processOne(String(cid), fields, { force: Boolean(body.force) }).catch((e) => ({
         contactId: String(cid),
         error: "Processing failed. See server logs.",
         _internal: (e as Error).message,
