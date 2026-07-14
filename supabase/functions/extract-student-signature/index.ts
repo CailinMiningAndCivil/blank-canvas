@@ -27,6 +27,10 @@ const SIG_MIN_W = 400;
 const SIG_MAX_W = 1200;
 const SIG_MIN_H = 80;
 const SIG_MAX_H = 400;
+const MIN_SIGNATURE_INK_W = 60;
+const MIN_SIGNATURE_INK_H = 20;
+const MIN_SIGNATURE_INK_PIXELS = 500;
+const SIGNATURE_CROP_PADDING = 24;
 
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
@@ -117,6 +121,74 @@ function dataUrlToBytes(dataUrl: string): { bytes: Uint8Array; ext: "png" | "jpg
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
   return { bytes, ext: m[2].toLowerCase() === "png" ? "png" : "jpg" };
+}
+
+function decodePngRgba(bytes: Uint8Array): { rgba: Uint8Array; width: number; height: number } {
+  const buffer = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
+  const decoded = (UPNG as any).decode(buffer);
+  const frames = (UPNG as any).toRGBA8(decoded);
+  if (!frames?.[0]) throw new Error("Could not decode PNG signature image");
+  return {
+    rgba: new Uint8Array(frames[0]),
+    width: decoded.width,
+    height: decoded.height,
+  };
+}
+
+function cropAndValidatePngSignature(bytes: Uint8Array): Uint8Array {
+  const { rgba, width, height } = decodePngRgba(bytes);
+  let minX = width;
+  let minY = height;
+  let maxX = -1;
+  let maxY = -1;
+  let inkPixels = 0;
+
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const i = (y * width + x) * 4;
+      const r = rgba[i];
+      const g = rgba[i + 1];
+      const b = rgba[i + 2];
+      const a = rgba[i + 3];
+      // GHL signature canvases are mostly transparent. Count only visible,
+      // non-white pixels so a single tap/dot cannot be treated as a signature.
+      if (a > 8 && (r < 245 || g < 245 || b < 245)) {
+        inkPixels++;
+        if (x < minX) minX = x;
+        if (y < minY) minY = y;
+        if (x > maxX) maxX = x;
+        if (y > maxY) maxY = y;
+      }
+    }
+  }
+
+  const inkW = maxX >= minX ? maxX - minX + 1 : 0;
+  const inkH = maxY >= minY ? maxY - minY + 1 : 0;
+  if (inkW < MIN_SIGNATURE_INK_W || inkH < MIN_SIGNATURE_INK_H || inkPixels < MIN_SIGNATURE_INK_PIXELS) {
+    throw new Error(`Signature image looks invalid/tiny (${inkW}x${inkH}, ${inkPixels} ink pixels)`);
+  }
+
+  const left = Math.max(0, minX - SIGNATURE_CROP_PADDING);
+  const top = Math.max(0, minY - SIGNATURE_CROP_PADDING);
+  const right = Math.min(width - 1, maxX + SIGNATURE_CROP_PADDING);
+  const bottom = Math.min(height - 1, maxY + SIGNATURE_CROP_PADDING);
+  const cropW = right - left + 1;
+  const cropH = bottom - top + 1;
+  const cropped = new Uint8Array(cropW * cropH * 4);
+
+  for (let y = 0; y < cropH; y++) {
+    const srcStart = ((top + y) * width + left) * 4;
+    const srcEnd = srcStart + cropW * 4;
+    cropped.set(rgba.subarray(srcStart, srcEnd), y * cropW * 4);
+  }
+
+  const png = UPNG.encode([cropped.buffer], cropW, cropH, 0);
+  return new Uint8Array(png);
+}
+
+function prepareSignatureImage(image: { bytes: Uint8Array; ext: "png" | "jpg" }): { bytes: Uint8Array; ext: "png" | "jpg" } {
+  if (image.ext !== "png") return image;
+  return { bytes: cropAndValidatePngSignature(image.bytes), ext: "png" };
 }
 
 async function extractSignatureFromPublicDocument(docFieldValue: string): Promise<{ bytes: Uint8Array; ext: "png" | "jpg" } | null> {
@@ -302,11 +374,11 @@ async function logError(contactId: string, err: string, contact?: any) {
   }
 }
 
-async function processOne(contactId: string, fields: Record<string, string>, opts: { force?: boolean } = {}) {
+async function processOne(contactId: string, fields: Record<string, string>, opts: { force?: boolean; docUrl?: string } = {}) {
   let contact: any = null;
   try {
     contact = await getContact(contactId);
-    const docUrl = getCustomFieldValue(contact, fields[DOC_URL_FIELD_NAME]);
+    const docUrl = opts.docUrl?.trim() || getCustomFieldValue(contact, fields[DOC_URL_FIELD_NAME]);
     const existingSig = getCustomFieldValue(contact, fields[SIGNATURE_FIELD_NAME]);
     if (!docUrl) return { contactId, skipped: "no doc url" };
     if (existingSig && !opts.force) return { contactId, skipped: "already has signature url" };
@@ -315,21 +387,50 @@ async function processOne(contactId: string, fields: Record<string, string>, opt
     let img: Uint8Array;
     let ext: "png" | "jpg";
     if (publicSignature) {
-      img = publicSignature.bytes;
-      ext = publicSignature.ext;
+      const prepared = prepareSignatureImage(publicSignature);
+      img = prepared.bytes;
+      ext = prepared.ext;
     } else {
       const pdf = await downloadPdf(docUrl);
       img = await extractSignaturePng(pdf);
       ext = img[0] === 0xff && img[1] === 0xd8 ? "jpg" : "png";
+      if (ext === "png") img = cropAndValidatePngSignature(img);
     }
     const url = await uploadSignature(contactId, img, ext);
     await updateContactField(contactId, fields[SIGNATURE_FIELD_NAME], url);
-    return { contactId, ok: true, url, forced: opts.force ?? false };
+    return { contactId, ok: true, url, forced: opts.force ?? false, documentUrl: docUrl };
   } catch (e) {
     const msg = (e as Error).message ?? String(e);
     await logError(contactId, msg, contact);
     throw e;
   }
+}
+
+function findDocumentUrl(value: any): string | null {
+  if (!value) return null;
+  if (typeof value === "string") {
+    if (value.includes("/documents/v1/") || value.toLowerCase().endsWith(".pdf") || value.includes("/pdf")) return value;
+    if (/^[a-f0-9-]{36}$/i.test(value)) return `https://link.cailinminingcivil.com/documents/v1/${value}`;
+    return null;
+  }
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const found = findDocumentUrl(item);
+      if (found) return found;
+    }
+    return null;
+  }
+  if (typeof value === "object") {
+    for (const key of ["docUrl", "documentUrl", "document_url", "url", "link", "pdfUrl", "downloadUrl", "referenceId", "reference_id", "documentId", "document_id", "id", "_id"]) {
+      const found = findDocumentUrl(value[key]);
+      if (found) return found;
+    }
+    for (const nested of ["document", "proposal", "submission", "data", "customData"]) {
+      const found = findDocumentUrl(value[nested]);
+      if (found) return found;
+    }
+  }
+  return null;
 }
 
 
@@ -506,7 +607,10 @@ Deno.serve(async (req) => {
       (body.id && !body.backfill && !body.audit ? body.id : undefined);
 
     if (cid && !body.backfill && !body.audit) {
-      const result = await processOne(String(cid), fields, { force: Boolean(body.force) }).catch((e) => ({
+      const result = await processOne(String(cid), fields, {
+        force: Boolean(body.force),
+        docUrl: findDocumentUrl(body) ?? undefined,
+      }).catch((e) => ({
         contactId: String(cid),
         error: "Processing failed. See server logs.",
         _internal: (e as Error).message,
