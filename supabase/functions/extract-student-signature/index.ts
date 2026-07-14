@@ -374,11 +374,11 @@ async function logError(contactId: string, err: string, contact?: any) {
   }
 }
 
-async function processOne(contactId: string, fields: Record<string, string>, opts: { force?: boolean } = {}) {
+async function processOne(contactId: string, fields: Record<string, string>, opts: { force?: boolean; docUrl?: string } = {}) {
   let contact: any = null;
   try {
     contact = await getContact(contactId);
-    const docUrl = getCustomFieldValue(contact, fields[DOC_URL_FIELD_NAME]);
+    const docUrl = opts.docUrl?.trim() || getCustomFieldValue(contact, fields[DOC_URL_FIELD_NAME]);
     const existingSig = getCustomFieldValue(contact, fields[SIGNATURE_FIELD_NAME]);
     if (!docUrl) return { contactId, skipped: "no doc url" };
     if (existingSig && !opts.force) return { contactId, skipped: "already has signature url" };
@@ -398,12 +398,39 @@ async function processOne(contactId: string, fields: Record<string, string>, opt
     }
     const url = await uploadSignature(contactId, img, ext);
     await updateContactField(contactId, fields[SIGNATURE_FIELD_NAME], url);
-    return { contactId, ok: true, url, forced: opts.force ?? false };
+    return { contactId, ok: true, url, forced: opts.force ?? false, documentUrl: docUrl };
   } catch (e) {
     const msg = (e as Error).message ?? String(e);
     await logError(contactId, msg, contact);
     throw e;
   }
+}
+
+function findDocumentUrl(value: any): string | null {
+  if (!value) return null;
+  if (typeof value === "string") {
+    if (value.includes("/documents/v1/") || value.toLowerCase().endsWith(".pdf") || value.includes("/pdf")) return value;
+    if (/^[a-f0-9-]{36}$/i.test(value)) return `https://link.cailinminingcivil.com/documents/v1/${value}`;
+    return null;
+  }
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const found = findDocumentUrl(item);
+      if (found) return found;
+    }
+    return null;
+  }
+  if (typeof value === "object") {
+    for (const key of ["docUrl", "documentUrl", "document_url", "url", "link", "pdfUrl", "downloadUrl", "referenceId", "reference_id", "documentId", "document_id", "id", "_id"]) {
+      const found = findDocumentUrl(value[key]);
+      if (found) return found;
+    }
+    for (const nested of ["document", "proposal", "submission", "data", "customData"]) {
+      const found = findDocumentUrl(value[nested]);
+      if (found) return found;
+    }
+  }
+  return null;
 }
 
 
@@ -580,7 +607,10 @@ Deno.serve(async (req) => {
       (body.id && !body.backfill && !body.audit ? body.id : undefined);
 
     if (cid && !body.backfill && !body.audit) {
-      const result = await processOne(String(cid), fields, { force: Boolean(body.force) }).catch((e) => ({
+      const result = await processOne(String(cid), fields, {
+        force: Boolean(body.force),
+        docUrl: findDocumentUrl(body) ?? undefined,
+      }).catch((e) => ({
         contactId: String(cid),
         error: "Processing failed. See server logs.",
         _internal: (e as Error).message,
