@@ -10,6 +10,7 @@ const ADMIN_KEY_STORAGE = "signature_admin_key";
 export default function SignatureBackfill() {
   const [adminKey, setAdminKey] = useState<string>(() => localStorage.getItem(ADMIN_KEY_STORAGE) ?? "");
   const [contactId, setContactId] = useState("");
+  const [force, setForce] = useState(false);
   const [limit, setLimit] = useState("10");
   const [busy, setBusy] = useState(false);
   const [log, setLog] = useState<string>("");
