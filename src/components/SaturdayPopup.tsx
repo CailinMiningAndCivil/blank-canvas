@@ -60,6 +60,16 @@ export const SaturdayPopup = ({ open: controlledOpen, onClose }: SaturdayPopupPr
             session with the same trainer and same machines.
           </p>
 
+          <div className="flex items-start gap-3 p-3 bg-primary/10 border border-primary/20 rounded-xl">
+            <Clock className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-semibold text-foreground">Limited Time Only</p>
+              <p className="text-sm text-muted-foreground">
+                Unlimited free returns on the Starter Bundle.
+              </p>
+            </div>
+          </div>
+
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li className="flex items-start gap-2">
               <span className="text-primary mt-0.5">✓</span>
