@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { X, Calendar } from "lucide-react";
+import { X, Calendar, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface SaturdayPopupProps {
@@ -59,6 +59,16 @@ export const SaturdayPopup = ({ open: controlledOpen, onClose }: SaturdayPopupPr
             Training on your schedule — every Saturday, book a 1:1 live mine site
             session with the same trainer and same machines.
           </p>
+
+          <div className="flex items-start gap-3 p-3 bg-primary/10 border border-primary/20 rounded-xl">
+            <Clock className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-semibold text-foreground">Limited Time Only</p>
+              <p className="text-sm text-muted-foreground">
+                Unlimited free returns on the Starter Bundle.
+              </p>
+            </div>
+          </div>
 
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li className="flex items-start gap-2">
