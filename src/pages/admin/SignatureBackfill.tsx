@@ -212,9 +212,17 @@ export default function SignatureBackfill() {
               placeholder="e.g. abc123XYZ..."
             />
           </div>
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={force}
+              onChange={(e) => setForce(e.target.checked)}
+            />
+            Force re-extract (overwrite existing signature URL)
+          </label>
           <Button
             disabled={busy || !contactId}
-            onClick={() => run({ contactId })}
+            onClick={() => run({ contactId, force })}
           >
             Extract signature
           </Button>
