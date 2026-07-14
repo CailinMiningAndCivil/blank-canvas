@@ -506,7 +506,7 @@ Deno.serve(async (req) => {
       (body.id && !body.backfill && !body.audit ? body.id : undefined);
 
     if (cid && !body.backfill && !body.audit) {
-      const result = await processOne(String(cid), fields).catch((e) => ({
+      const result = await processOne(String(cid), fields, { force: Boolean(body.force) }).catch((e) => ({
         contactId: String(cid),
         error: "Processing failed. See server logs.",
         _internal: (e as Error).message,
