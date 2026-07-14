@@ -17,10 +17,21 @@ export const DisclaimerPopup = ({ open: controlledOpen, onClose }: DisclaimerPop
   useEffect(() => {
     if (controlled) return;
     const accepted = localStorage.getItem(DISCLAIMER_KEY);
-    if (!accepted) {
-      const timer = setTimeout(() => setInternalOpen(true), 800);
-      return () => clearTimeout(timer);
-    }
+    if (accepted) return;
+
+    let hasTriggered = false;
+    const handleMouseOut = (e: MouseEvent) => {
+      if (hasTriggered) return;
+      // Exit intent: cursor moving out of the viewport toward the top
+      // (browser chrome/tab bar/close button area)
+      if (e.clientY < 10 && !e.relatedTarget) {
+        hasTriggered = true;
+        setInternalOpen(true);
+      }
+    };
+
+    document.addEventListener("mouseout", handleMouseOut);
+    return () => document.removeEventListener("mouseout", handleMouseOut);
   }, [controlled]);
 
   const handleClose = () => {
