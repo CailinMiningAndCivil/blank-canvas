@@ -111,30 +111,22 @@ const individualMachines = [
 ];
 
 const Index = () => {
-  const [disclaimerOpen, setDisclaimerOpen] = useState(false);
   const [saturdayOpen, setSaturdayOpen] = useState(false);
 
   useEffect(() => {
-    const accepted = localStorage.getItem(DISCLAIMER_KEY);
-    if (accepted) {
-      const timer = setTimeout(() => setSaturdayOpen(true), 500);
-      return () => clearTimeout(timer);
-    } else {
-      const timer = setTimeout(() => setDisclaimerOpen(true), 800);
-      return () => clearTimeout(timer);
-    }
+    const timer = setTimeout(() => setSaturdayOpen(true), 3000);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleDisclaimerClose = () => {
-    setDisclaimerOpen(false);
-    setTimeout(() => setSaturdayOpen(true), 400);
+    setSaturdayOpen(true);
   };
 
   const handleSaturdayClose = () => setSaturdayOpen(false);
 
   return (
     <Layout>
-      <DisclaimerPopup open={disclaimerOpen} onClose={handleDisclaimerClose} />
+      <DisclaimerPopup onClose={handleDisclaimerClose} />
       <SaturdayPopup open={saturdayOpen} onClose={handleSaturdayClose} />
       <SEO
         title="Cailin Mining & Civil | Machine Operator Training Perth"
