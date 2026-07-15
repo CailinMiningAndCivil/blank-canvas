@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
-import { CheckCircle, Clock, Award, Users, ArrowRight, Banknote, TrendingUp, AlertCircle, Info } from "lucide-react";
+import { CheckCircle, Clock, Award, Users, ArrowRight, Banknote, TrendingUp, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BookLink } from "@/components/BookLink";
 
@@ -251,30 +251,6 @@ const TicketsTraining = () => {
             ))}
           </div>
 
-          {/* Important Notice */}
-          <div className="max-w-5xl mx-auto mt-12">
-            <div className="bg-gradient-to-br from-destructive/10 to-primary/5 border-2 border-destructive/30 rounded-2xl p-6 md:p-8">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-destructive/20 rounded-xl flex items-center justify-center shrink-0">
-                  <Info className="w-6 h-6 text-destructive" />
-                </div>
-                <div>
-                  <h3 className="font-display text-xl text-foreground mb-2">Important</h3>
-                  <p className="text-foreground mb-3">
-                    These bundles <strong>do not include Return for Free eligibility</strong>. Additional training
-                    hours may be required before becoming eligible.
-                  </p>
-                  <p className="text-muted-foreground text-sm">
-                    If you'd like unlimited return sessions until you're fully confident, consider booking our{" "}
-                    <Link to="/courses/full-day" className="text-primary underline font-medium">
-                      Full Day Training
-                    </Link>{" "}
-                    instead.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
