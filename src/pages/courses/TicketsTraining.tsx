@@ -218,7 +218,14 @@ const TicketsTraining = () => {
                     </div>
                   )}
 
-                  {bundle.id !== "starter-bundle" && (
+                  {bundle.id === "starter-bundle" ? (
+                    <div className="flex items-start gap-2 bg-primary/10 border border-primary/30 rounded-lg p-3 mb-4">
+                      <Clock className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                      <p className="text-foreground text-xs">
+                        <strong>Limited Time Offer:</strong> This bundle includes Free Returns.
+                      </p>
+                    </div>
+                  ) : (
                     <div className="flex items-start gap-2 bg-destructive/10 border border-destructive/30 rounded-lg p-3 mb-4">
                       <AlertCircle className="w-4 h-4 text-destructive shrink-0 mt-0.5" />
                       <p className="text-foreground text-xs">
