@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
-import { CheckCircle, Clock, Award, Users, ArrowRight, Banknote, TrendingUp, AlertCircle, Info } from "lucide-react";
+import { CheckCircle, Clock, Award, Users, ArrowRight, Banknote, TrendingUp, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BookLink } from "@/components/BookLink";
 
