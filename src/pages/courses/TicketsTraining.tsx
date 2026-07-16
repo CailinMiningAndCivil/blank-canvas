@@ -87,6 +87,23 @@ const bundles = [
       { machine: "Watercart", time: "1.5–2 hours" },
     ],
   },
+  {
+    id: "moxy-loader-watercart-bundle",
+    title: "Moxy, Loader & Watercart Bundle",
+    subtitle: "Articulated Truck + Wheel Loader + Watercart",
+    codes: ["RIIMPO337E", "RIIMPO304E", "RIIMPO206D"],
+    description:
+      "Master hauling, loading, and site water operations in one program. A versatile combination for civil construction and mining support roles.",
+    price: "$2,500",
+    image: loaderDumptruckPair,
+    bookingUrl: "https://live.cailintraining.com.au/moxy_loader_watercart_bundle",
+    highlight: false,
+    hours: [
+      { machine: "Moxy", time: "4 hours" },
+      { machine: "Wheel Loader", time: "4 hours" },
+      { machine: "Watercart", time: "1.5–2 hours" },
+    ],
+  },
 ];
 
 const benefits = [
