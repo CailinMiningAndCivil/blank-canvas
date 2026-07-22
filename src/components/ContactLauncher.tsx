@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { MessageCircle, Phone, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -13,9 +14,14 @@ const CALL_WIDGET_ID = "6a5f050afd9ec29d7c9eb092";
  * open the correct one on demand.
  */
 export const ContactLauncher = () => {
+  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
 
@@ -156,11 +162,10 @@ export const ContactLauncher = () => {
     setOpen(true);
   };
 
-  return (
-
+  const launcher = (
     <div
       className={cn(
-        "fixed z-[9999] flex flex-col items-end gap-3",
+        "fixed z-[2147483647] flex flex-col items-end gap-3",
         activeWidget ? "bottom-6 left-4 sm:left-6 items-start" : "bottom-6 right-6"
       )}
     >
@@ -263,4 +268,8 @@ export const ContactLauncher = () => {
       </button>
     </div>
   );
+
+  if (!mounted || typeof document === "undefined") return null;
+
+  return createPortal(launcher, document.body);
 };
