@@ -26,7 +26,7 @@ export function render(url: string) {
     </HelmetProvider>
   );
 
-  const helmet = (helmetContext as FilledContext).helmet;
+  const helmet = helmetContext.helmet;
   const head = helmet
     ? [
         helmet.title.toString(),
