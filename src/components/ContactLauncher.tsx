@@ -166,7 +166,7 @@ export const ContactLauncher = () => {
     <div
       className={cn(
         "fixed z-[2147483647] flex flex-col items-end gap-3",
-        activeWidget ? "bottom-6 left-4 sm:left-6 items-start" : "bottom-6 right-6"
+        activeWidget ? "bottom-6 right-[92px] sm:right-[96px]" : "bottom-6 right-6"
       )}
     >
       {open && (
