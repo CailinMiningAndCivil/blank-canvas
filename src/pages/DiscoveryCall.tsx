@@ -83,6 +83,11 @@ const DiscoveryCall = () => {
 
   return (
     <Layout>
+      <SEO
+        title="Private Discovery Call Perth Mining Careers | Cailin Mining & Civil"
+        description="Book a private 1:1 discovery call with Niamh for a personalised Perth mining and civil career strategy. Perfect for overseas applicants or job-seekers."
+        path="/privatecall"
+      />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <HeroImage
