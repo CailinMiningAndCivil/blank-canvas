@@ -1,45 +1,28 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { X, Calendar, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface SaturdayPopupProps {
-  open?: boolean;
-  onClose?: () => void;
+  open: boolean;
+  onClose: () => void;
 }
 
-export const SaturdayPopup = ({ open: controlledOpen, onClose }: SaturdayPopupProps) => {
-  const [internalOpen, setInternalOpen] = useState(false);
-  const controlled = controlledOpen !== undefined;
-
-  useEffect(() => {
-    if (controlled) return;
-    const timer = setTimeout(() => setInternalOpen(true), 1500);
-    return () => clearTimeout(timer);
-  }, [controlled]);
-
-  const handleClose = () => {
-    if (!controlled) setInternalOpen(false);
-    onClose?.();
-  };
-
-  const isOpen = controlled ? controlledOpen : internalOpen;
-
-  if (!isOpen) return null;
+export const SaturdayPopup = ({ open, onClose }: SaturdayPopupProps) => {
+  if (!open) return null;
 
   return (
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-sm p-4 animate-in fade-in duration-300"
-      onClick={handleClose}
+      onClick={onClose}
     >
       <div
         className="relative w-full max-w-md bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          onClick={handleClose}
+          onClick={onClose}
           className="absolute top-3 right-3 z-10 p-1.5 rounded-full bg-background/60 hover:bg-background text-foreground transition-colors"
-          aria-label="Close Saturday availability notice"
+          aria-label="Close current offers notice"
         >
           <X className="h-4 w-4" />
         </button>
@@ -47,45 +30,30 @@ export const SaturdayPopup = ({ open: controlledOpen, onClose }: SaturdayPopupPr
         <div className="bg-gradient-to-br from-primary to-primary/80 px-6 py-5 text-primary-foreground">
           <div className="flex items-center gap-2 mb-1">
             <Calendar className="h-5 w-5" />
-            <span className="text-xs font-semibold uppercase tracking-wider">Now Available</span>
+            <span className="text-xs font-semibold uppercase tracking-wider">Current Offers</span>
           </div>
           <h2 className="font-display text-2xl leading-tight">
-            Courses Available All Saturdays
+            Current Offers
           </h2>
         </div>
 
         <div className="p-6 space-y-4">
-          <p className="text-foreground text-base leading-relaxed">
-            Training on your schedule — every Saturday, book a 1:1 live mine site
-            session with the same trainer and same machines.
-          </p>
-
-          <div className="flex items-start gap-3 p-3 bg-primary/10 border border-primary/20 rounded-xl">
-            <Clock className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-            <div>
-              <p className="text-sm font-semibold text-foreground">Limited Time Only</p>
-              <p className="text-sm text-muted-foreground">
-                Unlimited free returns on the Starter Bundle.
-              </p>
-            </div>
-          </div>
-
-          <ul className="space-y-2 text-sm text-muted-foreground">
+          <ul className="space-y-3 text-sm text-muted-foreground">
             <li className="flex items-start gap-2">
               <span className="text-primary mt-0.5">✓</span>
-              <span>Same trainer, same machines</span>
+              <span>We are open Saturdays</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary mt-0.5">✓</span>
-              <span>Limited weekend spots available</span>
+              <span>All starter bundles get return for free</span>
             </li>
           </ul>
 
           <div className="flex flex-col sm:flex-row gap-2 pt-2">
-            <Button asChild className="flex-1" onClick={handleClose}>
+            <Button asChild className="flex-1" onClick={onClose}>
               <Link to="/courses">Book Now</Link>
             </Button>
-            <Button variant="outline" onClick={handleClose} className="flex-1">
+            <Button variant="outline" onClick={onClose} className="flex-1">
               Maybe Later
             </Button>
           </div>

@@ -110,19 +110,21 @@ const individualMachines = [
   },
 ];
 
+const SATURDAY_POPUP_KEY = "cailin-saturday-popup-shown";
+
 const Index = () => {
   const [saturdayOpen, setSaturdayOpen] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setSaturdayOpen(true), 3000);
-    return () => clearTimeout(timer);
-  }, []);
-
   const handleDisclaimerClose = () => {
-    setSaturdayOpen(true);
+    if (!localStorage.getItem(SATURDAY_POPUP_KEY)) {
+      setSaturdayOpen(true);
+    }
   };
 
-  const handleSaturdayClose = () => setSaturdayOpen(false);
+  const handleSaturdayClose = () => {
+    setSaturdayOpen(false);
+    localStorage.setItem(SATURDAY_POPUP_KEY, "true");
+  };
 
   return (
     <Layout>
