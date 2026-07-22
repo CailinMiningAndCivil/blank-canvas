@@ -39,6 +39,7 @@ const PRERENDER_ROUTES = [
   "/rigid-haul-truck-application",
   "/rigid-haul-truck-booking",
   "/rigid-haul-truck-schedule",
+  "/faq",
 ];
 
 function prerenderPlugin(): Plugin {
