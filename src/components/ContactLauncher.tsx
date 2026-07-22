@@ -158,7 +158,12 @@ export const ContactLauncher = () => {
 
   return (
 
-    <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-3">
+    <div
+      className={cn(
+        "fixed z-[70] flex flex-col items-end gap-3",
+        activeWidget ? "top-4 right-4 sm:top-6 sm:right-6" : "bottom-6 right-6"
+      )}
+    >
       {open && (
         <div className="flex flex-col gap-2 rounded-2xl bg-background/95 p-2 shadow-2xl border border-border backdrop-blur-md animate-in fade-in slide-in-from-bottom-2">
           {activeWidget && (
@@ -240,11 +245,21 @@ export const ContactLauncher = () => {
         }
         onClick={handleToggle}
         className={cn(
-          "flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-2xl transition-transform hover:scale-105",
+          "flex items-center gap-2 rounded-full bg-primary text-primary-foreground shadow-2xl transition-transform hover:scale-105",
+          activeWidget && !open ? "h-11 px-4" : "h-14 w-14 justify-center",
           open && "rotate-90"
         )}
       >
-        {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
+        {open ? (
+          <X className="h-6 w-6" />
+        ) : activeWidget ? (
+          <>
+            <X className="h-4 w-4" />
+            <span className="text-sm font-semibold">Back</span>
+          </>
+        ) : (
+          <MessageCircle className="h-6 w-6" />
+        )}
       </button>
     </div>
   );
