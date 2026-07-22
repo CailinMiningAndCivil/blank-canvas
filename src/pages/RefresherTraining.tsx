@@ -101,8 +101,8 @@ const RefresherTraining = () => {
   return (
     <Layout>
       <SEO
-        title="Refresher / Hourly Machine Training | Cailin Mining & Civil"
-        description="Book additional machine operating time or refresher training with a Cailin trainer. No qualifications or assessments — operating time only."
+        title="Refresher & Hourly Machine Training Perth | Cailin Mining & Civil"
+        description="Book extra machine operating time or a refresher session with a Cailin trainer in Perth. Live mine site seat time — no assessments, just hours."
         path="/refresher-training"
       />
       {/* Hero */}
