@@ -178,7 +178,7 @@ const features = [
   {
     icon: Clock,
     title: "Maximum Seat Time",
-    description: "Full course seat time — not 15-45 minutes like typical providers",
+    description: "Full time purchased (no classroom) — not 30-60 minutes like typical providers",
   },
   {
     icon: Briefcase,
