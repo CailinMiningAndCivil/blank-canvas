@@ -40,7 +40,7 @@ const features = [
   {
     icon: Clock,
     title: "Maximum Seat Time",
-    description: "Full course seat time — not 15-45 minutes like typical providers",
+    description: "Full time purchased (no classroom) — not 30-60 minutes like typical providers",
   },
   {
     icon: Briefcase,
@@ -323,8 +323,8 @@ const Index = () => {
                   <td className="p-5 text-foreground font-medium">✓ 1:1 dedicated training</td>
                 </tr>
                 <tr className="border-b border-border">
-                  <td className="p-5 text-muted-foreground">15-45 minutes seat time</td>
-                  <td className="p-5 text-foreground font-medium">✓ Full course seat time</td>
+                  <td className="p-5 text-muted-foreground">30-60 minutes seat time</td>
+                  <td className="p-5 text-foreground font-medium">✓ Full time purchased (no classroom)</td>
                 </tr>
                 <tr className="border-b border-border">
                   <td className="p-5 text-muted-foreground">Training in a concrete yard</td>
