@@ -96,6 +96,35 @@ export const ContactLauncher = () => {
     ) as HTMLElement[];
     all.forEach((w) => w.classList.remove("cml-open"));
   };
+  // Watch the active widget — if the user minimizes/closes it from within the
+  // LC panel, drop back to the choice menu so the Back pill disappears.
+  useEffect(() => {
+    if (!activeWidget) return;
+    const target = findWidget(activeWidget);
+    if (!target) return;
+
+    const check = () => {
+      const active = target.getAttribute("data-active");
+      const opened = target.classList.contains("cml-open");
+      // LC toggles data-active="false" (or removes it) when minimized.
+      if (opened && active !== null && active !== "true") {
+        target.classList.remove("cml-open");
+        setActiveWidget(null);
+      }
+    };
+
+    const observer = new MutationObserver(check);
+    observer.observe(target, {
+      attributes: true,
+      attributeFilter: ["data-active", "class", "style"],
+    });
+    // Give LC a moment to set data-active=true before we start polling
+    const poll = window.setInterval(check, 800);
+    return () => {
+      observer.disconnect();
+      clearInterval(poll);
+    };
+  }, [activeWidget]);
 
 
   const openWidget = (widgetId: string) => {
