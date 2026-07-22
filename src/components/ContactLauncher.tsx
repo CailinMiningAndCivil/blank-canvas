@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { MessageCircle, Phone, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+const PROMPT_DISMISSED_KEY = "cml-help-prompt-dismissed";
+
 const CHAT_WIDGET_ID = "678ec21d13097fe2db1b8d7f";
 const CALL_WIDGET_ID = "6a5f050afd9ec29d7c9eb092";
 
@@ -12,6 +14,7 @@ const CALL_WIDGET_ID = "6a5f050afd9ec29d7c9eb092";
  */
 export const ContactLauncher = () => {
   const [open, setOpen] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -34,6 +37,27 @@ export const ContactLauncher = () => {
       style.remove();
     };
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (localStorage.getItem(PROMPT_DISMISSED_KEY)) return;
+    const timer = setTimeout(() => setShowPrompt(true), 2500);
+    const autoHide = setTimeout(() => {
+      setShowPrompt(false);
+      localStorage.setItem(PROMPT_DISMISSED_KEY, "1");
+    }, 12500);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(autoHide);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (open && showPrompt) {
+      setShowPrompt(false);
+      localStorage.setItem(PROMPT_DISMISSED_KEY, "1");
+    }
+  }, [open, showPrompt]);
 
   const openWidget = (widgetId: string) => {
     setOpen(false);
@@ -82,6 +106,29 @@ export const ContactLauncher = () => {
             </span>
           </button>
         </div>
+      )}
+
+      {showPrompt && (
+        <button
+          type="button"
+          onClick={() => {
+            setOpen(true);
+            setShowPrompt(false);
+            localStorage.setItem(PROMPT_DISMISSED_KEY, "1");
+          }}
+          className="group relative mb-1 mr-1 animate-in fade-in slide-in-from-bottom-2"
+          aria-label="Need help? Open contact options"
+        >
+          <div className="relative flex items-center gap-3 rounded-2xl bg-primary px-4 py-2.5 text-primary-foreground shadow-2xl">
+            <span className="text-sm font-medium">Need help?</span>
+            <span className="text-xs opacity-90">Chat or call us</span>
+            <X className="h-3.5 w-3.5 opacity-70 transition-opacity group-hover:opacity-100" />
+            <span
+              className="absolute -bottom-1.5 right-5 h-3 w-3 rotate-45 bg-primary"
+              aria-hidden="true"
+            />
+          </div>
+        </button>
       )}
 
       <button
