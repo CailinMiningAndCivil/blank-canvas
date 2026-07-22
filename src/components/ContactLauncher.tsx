@@ -17,8 +17,8 @@ export const ContactLauncher = () => {
   const [showPrompt, setShowPrompt] = useState(false);
   const [activeWidget, setActiveWidget] = useState<string | null>(null);
 
-
   useEffect(() => {
+
     if (typeof document === "undefined") return;
     const style = document.createElement("style");
     style.setAttribute("data-contact-launcher", "true");
