@@ -222,8 +222,14 @@ export const ContactLauncher = () => {
 
       <button
         type="button"
-        aria-label={open ? "Close contact options" : "Open contact options"}
-        onClick={() => setOpen((v) => !v)}
+        aria-label={
+          open
+            ? "Close contact options"
+            : activeWidget
+            ? "Back to contact options"
+            : "Open contact options"
+        }
+        onClick={handleToggle}
         className={cn(
           "flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-2xl transition-transform hover:scale-105",
           open && "rotate-90"
@@ -231,6 +237,7 @@ export const ContactLauncher = () => {
       >
         {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
       </button>
+
     </div>
   );
 };
