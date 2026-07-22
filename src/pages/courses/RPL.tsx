@@ -31,8 +31,8 @@ const RPL = () => {
   return (
     <Layout>
       <SEO
-        title="Recognition of Prior Learning (RPL) | Cailin Mining & Civil"
-        description="Turn prior experience, expired tickets or international qualifications into recognised Australian machine operator certifications. From $350 per assessment."
+        title="RPL Machine Operator Assessments Perth | Cailin Mining & Civil"
+        description="Recognition of Prior Learning (RPL) assessments in Perth. Convert experience, expired tickets or overseas qualifications into recognised Australian machine operator certifications from $350."
         path="/rpl"
         jsonLd={serviceSchema({
           name: "Recognition of Prior Learning (RPL) Assessments",
