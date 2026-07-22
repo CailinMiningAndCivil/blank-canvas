@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { MessageCircle, Phone, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+const PROMPT_DISMISSED_KEY = "cml-help-prompt-dismissed";
+
 const CHAT_WIDGET_ID = "678ec21d13097fe2db1b8d7f";
 const CALL_WIDGET_ID = "6a5f050afd9ec29d7c9eb092";
 
