@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { X, Calendar, Clock } from "lucide-react";
+import { X, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface SaturdayPopupProps {
