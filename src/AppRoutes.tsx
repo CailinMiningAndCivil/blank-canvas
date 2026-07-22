@@ -35,6 +35,7 @@ import RigidHaulTruckApplication from "./pages/RigidHaulTruckApplication";
 import RigidHaulTruckBooking from "./pages/RigidHaulTruckBooking";
 import RigidHaulTruckSchedule from "./pages/RigidHaulTruckSchedule";
 import SignatureBackfill from "./pages/admin/SignatureBackfill";
+import FAQ from "./pages/FAQ";
 
 const CareersRedirect = () => {
   if (typeof window !== "undefined") {
@@ -83,6 +84,7 @@ export const AppRoutes = () => (
       <Route path="/rigid-haul-truck-booking" element={<RigidHaulTruckBooking />} />
       <Route path="/rigid-haul-truck-schedule" element={<RigidHaulTruckSchedule />} />
       <Route path="/admin/signature-backfill" element={<SignatureBackfill />} />
+      <Route path="/faq" element={<FAQ />} />
       <Route path="/practical-assessments" element={<Navigate to="/courses" replace />} />
       <Route path="/cailin-courses" element={<Navigate to="/courses" replace />} />
       <Route path="/e-book" element={<Navigate to="/courses" replace />} />
