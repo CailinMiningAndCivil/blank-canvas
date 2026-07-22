@@ -110,18 +110,35 @@ export const ContactLauncher = () => {
     }
     target.classList.add("cml-open");
 
-    const tryClick = (attempt = 0) => {
+    const fireOpen = (attempt = 0) => {
       const root = target.shadowRoot;
       const btn = root?.querySelector(
-        "button, [role='button'], .chat-bubble, [class*='bubble'], [class*='launcher']"
+        "button.lc_text-widget--bubble, button, [role='button'], [class*='bubble'], [class*='launcher']"
       ) as HTMLElement | null;
+
       if (btn) {
-        btn.click();
+        // Some LC versions listen for pointer/mouse events, not synthetic click().
+        const opts = { bubbles: true, cancelable: true, composed: true } as const;
+        try {
+          btn.dispatchEvent(new PointerEvent("pointerdown", opts));
+          btn.dispatchEvent(new MouseEvent("mousedown", opts));
+          btn.dispatchEvent(new PointerEvent("pointerup", opts));
+          btn.dispatchEvent(new MouseEvent("mouseup", opts));
+          btn.dispatchEvent(new MouseEvent("click", opts));
+        } catch {
+          btn.click();
+        }
+
+        // Verify it actually opened; if not, retry.
+        setTimeout(() => {
+          const active = target.getAttribute("data-active") === "true";
+          if (!active && attempt < 10) fireOpen(attempt + 1);
+        }, 250);
         return;
       }
-      if (attempt < 20) setTimeout(() => tryClick(attempt + 1), 150);
+      if (attempt < 25) setTimeout(() => fireOpen(attempt + 1), 150);
     };
-    tryClick();
+    fireOpen();
   };
 
   const handleToggle = () => {
