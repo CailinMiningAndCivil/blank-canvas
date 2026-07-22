@@ -188,8 +188,8 @@ export const ContactLauncher = () => {
         </div>
       )}
 
-
       {showPrompt && (
+
         <button
           type="button"
           onClick={() => {
