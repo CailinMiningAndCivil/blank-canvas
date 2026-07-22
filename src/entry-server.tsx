@@ -1,6 +1,10 @@
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
-import { HelmetProvider, type FilledContext } from "react-helmet-async";
+import { HelmetProvider } from "react-helmet-async";
+
+type HelmetTag = { toString(): string };
+type FilledHelmet = { title: HelmetTag; meta: HelmetTag; link: HelmetTag; script: HelmetTag };
+type FilledContext = { helmet: FilledHelmet };
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppRoutes } from "./AppRoutes";
