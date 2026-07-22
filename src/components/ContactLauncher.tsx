@@ -152,34 +152,50 @@ export const ContactLauncher = () => {
     <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-3">
       {open && (
         <div className="flex flex-col gap-2 rounded-2xl bg-background/95 p-2 shadow-2xl border border-border backdrop-blur-md animate-in fade-in slide-in-from-bottom-2">
+          {activeWidget && (
+            <div className="px-3 pt-1 text-xs font-medium text-muted-foreground">
+              Choose another option
+            </div>
+          )}
           <button
             type="button"
             onClick={() => openWidget(CALL_WIDGET_ID)}
-            className="flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-muted transition-colors text-left"
+            className={cn(
+              "flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-muted transition-colors text-left",
+              activeWidget === CALL_WIDGET_ID && "bg-muted ring-1 ring-primary/30"
+            )}
           >
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
               <Phone className="h-5 w-5" />
             </span>
             <span className="flex flex-col">
-              <span className="text-sm font-semibold text-foreground">Call us</span>
+              <span className="text-sm font-semibold text-foreground">
+                Call us {activeWidget === CALL_WIDGET_ID && "(active)"}
+              </span>
               <span className="text-xs text-muted-foreground">Request a live call</span>
             </span>
           </button>
           <button
             type="button"
             onClick={() => openWidget(CHAT_WIDGET_ID)}
-            className="flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-muted transition-colors text-left"
+            className={cn(
+              "flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-muted transition-colors text-left",
+              activeWidget === CHAT_WIDGET_ID && "bg-muted ring-1 ring-primary/30"
+            )}
           >
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
               <MessageCircle className="h-5 w-5" />
             </span>
             <span className="flex flex-col">
-              <span className="text-sm font-semibold text-foreground">Live chat</span>
+              <span className="text-sm font-semibold text-foreground">
+                Live chat {activeWidget === CHAT_WIDGET_ID && "(active)"}
+              </span>
               <span className="text-xs text-muted-foreground">Reply in minutes</span>
             </span>
           </button>
         </div>
       )}
+
 
       {showPrompt && (
         <button
