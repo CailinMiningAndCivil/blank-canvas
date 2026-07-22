@@ -11,11 +11,11 @@ import { AppRoutes } from "./AppRoutes";
 import "./index.css";
 
 export function render(url: string) {
-  const helmetContext = {} as Partial<FilledContext>;
+  const helmetContext: { helmet?: FilledHelmet } = {};
   const queryClient = new QueryClient();
 
   const html = renderToString(
-    <HelmetProvider context={helmetContext}>
+    <HelmetProvider context={helmetContext as Record<string, unknown>}>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <StaticRouter location={url}>
