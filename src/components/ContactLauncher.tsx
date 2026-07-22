@@ -139,8 +139,8 @@ export const ContactLauncher = () => {
     setOpen(true);
   };
 
-
   return (
+
     <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-3">
       {open && (
         <div className="flex flex-col gap-2 rounded-2xl bg-background/95 p-2 shadow-2xl border border-border backdrop-blur-md animate-in fade-in slide-in-from-bottom-2">
