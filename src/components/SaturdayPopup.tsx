@@ -14,6 +14,9 @@ export const SaturdayPopup = ({ open, onClose }: SaturdayPopupProps) => {
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-sm p-4 animate-in fade-in duration-300"
       onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="saturday-title"
     >
       <div
         className="relative w-full max-w-md bg-card border border-border rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300"
@@ -32,7 +35,7 @@ export const SaturdayPopup = ({ open, onClose }: SaturdayPopupProps) => {
             <Calendar className="h-5 w-5" />
             <span className="text-xs font-semibold uppercase tracking-wider">Current Offers</span>
           </div>
-          <h2 className="font-display text-2xl leading-tight">
+          <h2 id="saturday-title" className="font-display text-2xl leading-tight">
             Current Offers
           </h2>
         </div>
