@@ -78,6 +78,26 @@ function prerenderPlugin(): Plugin {
 
         const entryPath = path.join(ssrOutDir, "entry-server.mjs");
         const entryUrl = pathToFileURL(entryPath).href;
+
+        // SSR shims for browser globals referenced at module init time
+        // (e.g. supabase client reads `localStorage` on construction).
+        const memStore = () => {
+          const map = new Map<string, string>();
+          return {
+            getItem: (k: string) => (map.has(k) ? map.get(k)! : null),
+            setItem: (k: string, v: string) => void map.set(k, String(v)),
+            removeItem: (k: string) => void map.delete(k),
+            clear: () => map.clear(),
+            key: (i: number) => Array.from(map.keys())[i] ?? null,
+            get length() { return map.size; },
+          };
+        };
+        const g = globalThis as Record<string, unknown>;
+        if (!g.localStorage) g.localStorage = memStore();
+        if (!g.sessionStorage) g.sessionStorage = memStore();
+        if (!g.window) g.window = g;
+        if (!g.document) g.document = { addEventListener() {}, removeEventListener() {}, cookie: "" };
+
         const mod: { render: (url: string) => { html: string; head: string } } =
           await import(entryUrl);
 
