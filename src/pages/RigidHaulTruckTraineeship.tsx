@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
+import { serviceSchema } from "@/lib/schemas";
 import { HeroImage } from "@/components/ui/hero-image";
 import { RigidScreeningForm } from "@/components/RigidScreeningForm";
 import {
@@ -98,6 +99,12 @@ const RigidHaulTruckTraineeship = () => {
         title="Rigid Haul Truck Traineeship | Cailin Mining & Civil"
         description="Apply for a rare rigid haul truck traineeship on a live mine site. Limited places. No prior experience required. Applications now open."
         path="/rigid-haul-truck-traineeship"
+        jsonLd={serviceSchema({
+          name: "Rigid Haul Truck Traineeship",
+          description: "Live mine site rigid haul truck traineeship in Perth. No prior experience required — nationally recognised qualification.",
+          path: "/rigid-haul-truck-traineeship",
+          category: "Mining Traineeship",
+        })}
       />
 
       {/* Hero Section */}

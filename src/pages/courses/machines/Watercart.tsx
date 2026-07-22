@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
+import { serviceSchema } from "@/lib/schemas";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, Banknote, HelpCircle, AlertCircle } from "lucide-react";
@@ -79,6 +80,11 @@ const Watercart = () => {
         title="Watercart Training Perth | RIIMPO206D | Cailin Mining & Civil"
         description="Bulk water truck operations training in Perth. RIIMPO206D watercart ticket for dust suppression and site maintenance on mining and civil sites."
         path="/courses/watercart"
+        jsonLd={serviceSchema({
+          name: "Watercart Training (RIIMPO206D)",
+          description: "Nationally recognised RIIMPO206D bulk water truck operations training in Perth.",
+          path: "/courses/watercart",
+        })}
       />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
