@@ -96,8 +96,8 @@ const RigidHaulTruckTraineeship = () => {
   return (
     <Layout>
       <SEO
-        title="Rigid Haul Truck Traineeship | Cailin Mining & Civil"
-        description="Apply for a rare rigid haul truck traineeship on a live mine site. Limited places. No prior experience required. Applications now open."
+        title="Rigid Haul Truck Traineeship Perth | Cailin Mining & Civil"
+        description="Apply for a rare rigid haul truck traineeship on a live Perth mine site. Limited places, no prior experience required. Applications now open."
         path="/rigid-haul-truck-traineeship"
         jsonLd={serviceSchema({
           name: "Rigid Haul Truck Traineeship",
