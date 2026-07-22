@@ -2,30 +2,28 @@ import { useEffect, useState } from "react";
 import { MessageCircle, Phone, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const PHONE_NUMBER = "0483951501";
-const PHONE_DISPLAY = "0483 951 501";
+const CHAT_WIDGET_ID = "678ec21d13097fe2db1b8d7f";
+const CALL_WIDGET_ID = "6a5f050afd9ec29d7c9eb092";
 
 /**
- * Floating launcher that lets visitors choose between live chat
- * (LeadConnector widget already loaded in index.html) or a phone call.
- * Hides the default LC chat bubble so this menu is the single entry point.
+ * Floating launcher: choose between LeadConnector live chat or LC call widget.
+ * Both LC widgets are loaded in index.html; we hide their default bubbles and
+ * open the correct one on demand.
  */
 export const ContactLauncher = () => {
   const [open, setOpen] = useState(false);
 
-  // Hide default LC chat bubble; keep the widget mounted so we can open it on demand.
   useEffect(() => {
     if (typeof document === "undefined") return;
     const style = document.createElement("style");
     style.setAttribute("data-contact-launcher", "true");
     style.innerHTML = `
-      lc-chat-widget, chat-widget, #chat-widget, .lc-chat-widget,
-      [id^="lc_chat_widget"], [class*="lc-chat"] {
+      chat-widget, lc-chat-widget {
         visibility: hidden !important;
         opacity: 0 !important;
         pointer-events: none !important;
       }
-      lc-chat-widget.cml-open, chat-widget.cml-open {
+      chat-widget.cml-open, lc-chat-widget.cml-open {
         visibility: visible !important;
         opacity: 1 !important;
         pointer-events: auto !important;
@@ -37,42 +35,42 @@ export const ContactLauncher = () => {
     };
   }, []);
 
-  const openChat = () => {
+  const openWidget = (widgetId: string) => {
     setOpen(false);
-    // Try to programmatically open the LeadConnector chat widget.
-    const widget =
-      document.querySelector("lc-chat-widget") ||
-      document.querySelector("chat-widget");
-    if (widget) {
-      widget.classList.add("cml-open");
-      // LC widget listens for a click on its internal launcher; simulate it.
-      const btn = (widget as HTMLElement).shadowRoot?.querySelector(
-        "button, [role='button']"
-      ) as HTMLElement | null;
-      btn?.click();
-    }
+    const widgets = Array.from(
+      document.querySelectorAll("chat-widget, lc-chat-widget")
+    ) as HTMLElement[];
+    const target = widgets.find(
+      (w) => w.getAttribute("widget-id") === widgetId || w.id?.includes(widgetId)
+    );
+    if (!target) return;
+    target.classList.add("cml-open");
+    const btn = target.shadowRoot?.querySelector(
+      "button, [role='button']"
+    ) as HTMLElement | null;
+    btn?.click();
   };
 
   return (
     <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-3">
       {open && (
         <div className="flex flex-col gap-2 rounded-2xl bg-background/95 p-2 shadow-2xl border border-border backdrop-blur-md animate-in fade-in slide-in-from-bottom-2">
-          <a
-            href={`tel:${PHONE_NUMBER}`}
-            className="flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-muted transition-colors"
-            onClick={() => setOpen(false)}
+          <button
+            type="button"
+            onClick={() => openWidget(CALL_WIDGET_ID)}
+            className="flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-muted transition-colors text-left"
           >
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
               <Phone className="h-5 w-5" />
             </span>
-            <span className="flex flex-col text-left">
+            <span className="flex flex-col">
               <span className="text-sm font-semibold text-foreground">Call us</span>
-              <span className="text-xs text-muted-foreground">{PHONE_DISPLAY}</span>
+              <span className="text-xs text-muted-foreground">Request a live call</span>
             </span>
-          </a>
+          </button>
           <button
             type="button"
-            onClick={openChat}
+            onClick={() => openWidget(CHAT_WIDGET_ID)}
             className="flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-muted transition-colors text-left"
           >
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
