@@ -1,6 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { AlertCircle } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import { serviceSchema, faqSchema } from "@/lib/schemas";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, ArrowRight, Banknote, HelpCircle } from "lucide-react";

@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
+import { faqSchema } from "@/lib/schemas";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import {

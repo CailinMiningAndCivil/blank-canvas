@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
+import { serviceSchema } from "@/lib/schemas";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Clock, Award, FileCheck, ArrowRight, Banknote, Users } from "lucide-react";
 import { Link } from "react-router-dom";

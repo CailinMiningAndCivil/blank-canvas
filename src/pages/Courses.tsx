@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
+import { servicesItemList } from "@/lib/schemas";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
 import { CheckCircle, Clock, Award, Users, ArrowRight, FileCheck, Zap, Briefcase, RefreshCw } from "lucide-react";

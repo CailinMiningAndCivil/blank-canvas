@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
+import { serviceSchema } from "@/lib/schemas";
 import { HeroImage } from "@/components/ui/hero-image";
 import { RigidScreeningForm } from "@/components/RigidScreeningForm";
 import {
