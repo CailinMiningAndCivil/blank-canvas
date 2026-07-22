@@ -116,8 +116,8 @@ const VOC = () => {
   return (
     <Layout>
       <SEO
-        title="Verification of Competency (VOC) | Cailin Mining & Civil"
-        description="Quick 30-minute Verification of Competency assessments for qualified machine operators. Boost employability with a fresh professional reference."
+        title="Verification of Competency (VOC) Perth | Cailin Mining & Civil"
+        description="Fast 30-minute Verification of Competency (VOC) assessments in Perth for qualified machine operators. Fresh professional reference to boost employability."
         path="/courses/voc"
       />
       {/* Hero Section */}
