@@ -38,6 +38,27 @@ export const ContactLauncher = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (localStorage.getItem(PROMPT_DISMISSED_KEY)) return;
+    const timer = setTimeout(() => setShowPrompt(true), 2500);
+    const autoHide = setTimeout(() => {
+      setShowPrompt(false);
+      localStorage.setItem(PROMPT_DISMISSED_KEY, "1");
+    }, 12500);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(autoHide);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (open && showPrompt) {
+      setShowPrompt(false);
+      localStorage.setItem(PROMPT_DISMISSED_KEY, "1");
+    }
+  }, [open, showPrompt]);
+
   const openWidget = (widgetId: string) => {
     setOpen(false);
     const widgets = Array.from(
