@@ -88,17 +88,9 @@ export const ContactLauncher = () => {
     const all = Array.from(
       document.querySelectorAll("chat-widget, lc-chat-widget")
     ) as HTMLElement[];
-    all.forEach((w) => {
-      w.classList.remove("cml-open");
-      const root = w.shadowRoot;
-      if (root) {
-        const closeBtn = root.querySelector(
-          "[class*='close'], [class*='exit'], [aria-label*='close'], button[class*='button']"
-        ) as HTMLElement | null;
-        if (closeBtn) closeBtn.click();
-      }
-    });
+    all.forEach((w) => w.classList.remove("cml-open"));
   };
+
 
   const openWidget = (widgetId: string) => {
     if (activeWidget === widgetId) {
