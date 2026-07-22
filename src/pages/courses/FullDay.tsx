@@ -49,8 +49,8 @@ const FullDay = () => {
   return (
     <Layout>
       <SEO
-        title="Full Day Machine Training | Cailin Mining & Civil"
-        description="Master a single machine with unlimited return training sessions. 1:1 live mine site instruction in Perth — starts at $1,200."
+        title="Full Day Machine Operator Training Perth | Cailin Mining & Civil"
+        description="Full day 1:1 machine operator training in Perth on a live mine site. Master one machine with unlimited free returns. Starts at $1,200."
         path="/courses/full-day"
       />
       {/* Hero Section */}
