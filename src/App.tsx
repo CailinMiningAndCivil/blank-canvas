@@ -2,49 +2,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { ScrollToTop } from "./components/ScrollToTop";
-import Index from "./pages/Index";
-import Courses from "./pages/Courses";
-import RPL from "./pages/courses/RPL";
-import RPLAd from "./pages/courses/RPLAd";
-import TicketsTraining from "./pages/courses/TicketsTraining";
-import ShortCourses from "./pages/courses/ShortCourses";
-import VOC from "./pages/courses/VOC";
-import FullDay from "./pages/courses/FullDay";
-import Excavator from "./pages/courses/machines/Excavator";
-import ExcavatorTrainingPerth from "./pages/courses/machines/ExcavatorTrainingPerth";
-import WheelLoader from "./pages/courses/machines/WheelLoader";
-import Moxy from "./pages/courses/machines/Moxy";
-import MoxyTrainingPerth from "./pages/courses/machines/MoxyTrainingPerth";
-import Roller from "./pages/courses/machines/Roller";
-import Watercart from "./pages/courses/machines/Watercart";
-import IntegratedToolCarrier from "./pages/courses/machines/IntegratedToolCarrier";
-import Book from "./pages/Book";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import DiscoveryCall from "./pages/DiscoveryCall";
-import CTFFunding from "./pages/CTFFunding";
-import NotFound from "./pages/NotFound";
-import TermsAndConditions from "./pages/TermsAndConditions";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import RtoDataSuccess from "./pages/RtoDataSuccess";
-import Recruitment from "./pages/Recruitment";
-import Affiliate from "./pages/Affiliate";
-import ReturningStudent from "./pages/ReturningStudent";
-import RefresherTraining from "./pages/RefresherTraining";
-import RigidHaulTruckTraineeship from "./pages/RigidHaulTruckTraineeship";
-import RigidHaulTruckApplication from "./pages/RigidHaulTruckApplication";
-import RigidHaulTruckBooking from "./pages/RigidHaulTruckBooking";
-import RigidHaulTruckSchedule from "./pages/RigidHaulTruckSchedule";
-import SignatureBackfill from "./pages/admin/SignatureBackfill";
-
-const CareersRedirect = () => {
-  window.location.href = "https://live.cailintraining.com.au/join_cailin_portal";
-  return null;
-};
+import { BrowserRouter } from "react-router-dom";
+import { AppRoutes } from "./AppRoutes";
 
 const queryClient = new QueryClient();
 
@@ -54,51 +13,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/rpl" element={<RPL />} />
-          <Route path="/rplad" element={<RPLAd />} />
-          <Route path="/courses/bundles" element={<TicketsTraining />} />
-          <Route path="/courses/short-courses" element={<ShortCourses />} />
-          <Route path="/courses/voc" element={<VOC />} />
-          <Route path="/courses/full-day" element={<FullDay />} />
-          <Route path="/courses/excavator" element={<Excavator />} />
-          <Route path="/courses/excavator-training-perth" element={<ExcavatorTrainingPerth />} />
-          <Route path="/courses/wheel-loader" element={<WheelLoader />} />
-          <Route path="/courses/moxy" element={<Moxy />} />
-          <Route path="/courses/moxy-training-perth" element={<MoxyTrainingPerth />} />
-          <Route path="/courses/roller" element={<Roller />} />
-          <Route path="/courses/watercart" element={<Watercart />} />
-          <Route path="/courses/integrated-tool-carrier" element={<IntegratedToolCarrier />} />
-          <Route path="/book" element={<Book />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/privatecall" element={<DiscoveryCall />} />
-          <Route path="/ctf-funding" element={<CTFFunding />} />
-          <Route path="/termsandconditions" element={<TermsAndConditions />} />
-          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-          <Route path="/rtodata-success" element={<RtoDataSuccess />} />
-          <Route path="/recruitment" element={<Recruitment />} />
-          <Route path="/affiliate" element={<Affiliate />} />
-          <Route path="/returning-student" element={<ReturningStudent />} />
-          <Route path="/free-returns" element={<ReturningStudent />} />
-          <Route path="/refresher-training" element={<RefresherTraining />} />
-          <Route path="/rigid-haul-truck-traineeship" element={<Navigate to="/rigid-haul-truck-booking" replace />} />
-          <Route path="/rigid-haul-truck-application" element={<RigidHaulTruckApplication />} />
-          <Route path="/rigid-haul-truck-booking" element={<RigidHaulTruckBooking />} />
-          <Route path="/rigid-haul-truck-schedule" element={<RigidHaulTruckSchedule />} />
-          <Route path="/admin/signature-backfill" element={<SignatureBackfill />} />
-          <Route path="/practical-assessments" element={<Navigate to="/courses" replace />} />
-          <Route path="/cailin-courses" element={<Navigate to="/courses" replace />} />
-          <Route path="/e-book" element={<Navigate to="/courses" replace />} />
-          <Route path="/groups" element={<Navigate to="/" replace />} />
-          <Route path="/careers" element={<CareersRedirect />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AppRoutes />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
