@@ -332,7 +332,7 @@ const Index = () => {
                 </tr>
                 <tr>
                   <td className="p-5 text-muted-foreground">Certificate only</td>
-                  <td className="p-5 text-foreground font-medium">✓ Employers actively recruit our graduates</td>
+                  <td className="p-5 text-foreground font-medium">✓ 1:1 free coaching calls with Niamh, free resume update, references, list of employers, return for free to build experience</td>
                 </tr>
               </tbody>
             </table>
