@@ -108,6 +108,29 @@ export const ContactLauncher = () => {
         </div>
       )}
 
+      {showPrompt && (
+        <button
+          type="button"
+          onClick={() => {
+            setOpen(true);
+            setShowPrompt(false);
+            localStorage.setItem(PROMPT_DISMISSED_KEY, "1");
+          }}
+          className="group relative mb-1 mr-1 animate-in fade-in slide-in-from-bottom-2"
+          aria-label="Need help? Open contact options"
+        >
+          <div className="relative flex items-center gap-3 rounded-2xl bg-primary px-4 py-2.5 text-primary-foreground shadow-2xl">
+            <span className="text-sm font-medium">Need help?</span>
+            <span className="text-xs opacity-90">Chat or call us</span>
+            <X className="h-3.5 w-3.5 opacity-70 transition-opacity group-hover:opacity-100" />
+            <span
+              className="absolute -bottom-1.5 right-5 h-3 w-3 rotate-45 bg-primary"
+              aria-hidden="true"
+            />
+          </div>
+        </button>
+      )}
+
       <button
         type="button"
         aria-label={open ? "Close contact options" : "Open contact options"}
