@@ -15,6 +15,8 @@ const CALL_WIDGET_ID = "6a5f050afd9ec29d7c9eb092";
 export const ContactLauncher = () => {
   const [open, setOpen] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
+  const [activeWidget, setActiveWidget] = useState<string | null>(null);
+
 
   useEffect(() => {
     if (typeof document === "undefined") return;
