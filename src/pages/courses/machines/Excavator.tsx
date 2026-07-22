@@ -80,7 +80,14 @@ const Excavator = () => {
         title="Excavator Training Perth | RIIMPO320F | Cailin Mining & Civil"
         description="Get certified to operate excavators in mining and civil construction. RIIMPO320F & RIIMPO301E nationally recognised qualifications in Perth."
         path="/courses/excavator"
-        jsonLd={{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({ "@type": "Question", name: f.question, acceptedAnswer: { "@type": "Answer", text: f.answer } })) }}
+        jsonLd={[
+          serviceSchema({
+            name: "Excavator Training (RIIMPO320F / RIIMPO301E)",
+            description: "Nationally recognised excavator operator training in Perth with 1:1 live mine site instruction.",
+            path: "/courses/excavator",
+          }),
+          faqSchema(faqs),
+        ]}
       />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">

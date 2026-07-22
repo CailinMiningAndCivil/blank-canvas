@@ -66,6 +66,7 @@ const Contact = () => {
         title="Contact Cailin Mining & Civil | Perth WA"
         description="Contact Cailin Mining & Civil in Perth. Phone 0483 951 501 or email us for course bookings and enquiries. Visits by appointment only."
         path="/contact"
+        jsonLd={faqSchema(faqs)}
       />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">

@@ -76,6 +76,12 @@ const IntegratedToolCarrier = () => {
         title="Integrated Tool Carrier (ITC) Fork Training Perth | Cailin"
         description="ITC fork attachment training in Perth. $600 short course covering pre-start checks, load handling, operating procedures and safe work practices. RPL available."
         path="/courses/integrated-tool-carrier"
+        jsonLd={serviceSchema({
+          name: "Integrated Tool Carrier (ITC) Fork Training (RIIHAN311F)",
+          description: "RIIHAN311F ITC fork attachment training in Perth. Short course covering pre-start checks, load handling and safe operations.",
+          path: "/courses/integrated-tool-carrier",
+          price: "600",
+        })}
       />
 
       {/* Hero */}

@@ -195,6 +195,16 @@ const Courses = () => {
         title="Machine Operator Courses Perth | Cailin Mining & Civil"
         description="Nationally recognised machine operator courses in Perth. Excavator, loader, moxy, roller and watercart training with 1:1 live mine site instruction."
         path="/courses"
+        jsonLd={servicesItemList([
+          { name: "Excavator Training (RIIMPO320F)", path: "/courses/excavator", description: "Nationally recognised excavator operator training on a live mine site." },
+          { name: "Front End Loader Training (RIIMPO304E)", path: "/courses/wheel-loader", description: "Nationally recognised wheel loader training in Perth." },
+          { name: "Moxy Articulated Dump Truck (RIIMPO337E)", path: "/courses/moxy", description: "Articulated dump truck (moxy) ticket with live site instruction." },
+          { name: "Roller Operator Training (RIIMPO317F)", path: "/courses/roller", description: "Roller operator certification for compaction and civil works." },
+          { name: "Watercart Training (RIIMPO206D)", path: "/courses/watercart", description: "Bulk water truck operations training for mining and civil sites." },
+          { name: "Integrated Tool Carrier Fork Training (RIIHAN311F)", path: "/courses/integrated-tool-carrier", description: "ITC fork attachment short course." },
+          { name: "Rigid Haul Truck Traineeship", path: "/rigid-haul-truck-traineeship", description: "Live mine site rigid haul truck traineeship with no prior experience required." },
+          { name: "Recognition of Prior Learning (RPL)", path: "/rpl", description: "Convert prior experience or expired tickets into recognised Australian qualifications." },
+        ])}
       />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">

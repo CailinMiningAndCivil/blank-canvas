@@ -33,6 +33,13 @@ const RPL = () => {
         title="Recognition of Prior Learning (RPL) | Cailin Mining & Civil"
         description="Turn prior experience, expired tickets or international qualifications into recognised Australian machine operator certifications. From $350 per assessment."
         path="/rpl"
+        jsonLd={serviceSchema({
+          name: "Recognition of Prior Learning (RPL) Assessments",
+          description: "Convert prior experience, expired tickets or international qualifications into nationally recognised Australian machine operator tickets.",
+          path: "/rpl",
+          category: "Recognition of Prior Learning",
+          price: "350",
+        })}
       />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">

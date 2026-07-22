@@ -79,6 +79,11 @@ const Roller = () => {
         title="Roller Operator Training Perth | RIIMPO317F | Cailin"
         description="Get your roller ticket in Perth. RIIMPO317F roller operator certification for compaction work in construction and road building."
         path="/courses/roller"
+        jsonLd={serviceSchema({
+          name: "Roller Operator Training (RIIMPO317F)",
+          description: "Nationally recognised RIIMPO317F roller operator training in Perth for compaction, construction and road building work.",
+          path: "/courses/roller",
+        })}
       />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">

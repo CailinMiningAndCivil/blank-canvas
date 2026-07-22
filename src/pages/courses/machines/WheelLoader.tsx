@@ -79,6 +79,11 @@ const WheelLoader = () => {
         title="Front End Loader Training Perth | RIIMPO304E | Cailin"
         description="Get your front end loader ticket in Perth. RIIMPO304E nationally recognised wheel loader training on a live mine site with 1:1 instruction."
         path="/courses/wheel-loader"
+        jsonLd={serviceSchema({
+          name: "Front End Loader Training (RIIMPO304E)",
+          description: "Nationally recognised RIIMPO304E wheel loader training in Perth with 1:1 live mine site instruction.",
+          path: "/courses/wheel-loader",
+        })}
       />
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
