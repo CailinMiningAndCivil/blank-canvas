@@ -319,7 +319,7 @@ const Index = () => {
               </thead>
               <tbody>
                 <tr className="border-b border-border">
-                  <td className="p-5 text-muted-foreground">Up to 15 students per trainer</td>
+                  <td className="p-5 text-muted-foreground">Up to 9 students per trainer</td>
                   <td className="p-5 text-foreground font-medium">✓ 1:1 dedicated training</td>
                 </tr>
                 <tr className="border-b border-border">
