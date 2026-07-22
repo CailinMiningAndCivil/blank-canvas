@@ -141,6 +141,11 @@ function prerenderPlugin(): Plugin {
       } finally {
         delete process.env.SSR_BUILD;
       }
+
+      // Imported SSR modules (supabase client, etc.) can leave timers/handles
+      // open that prevent Node from exiting after the build completes.
+      // Force-exit so CI/deploy doesn't hang until the outer timeout kills it.
+      setImmediate(() => process.exit(0));
     },
   };
 }
