@@ -59,20 +59,56 @@ export const ContactLauncher = () => {
     }
   }, [open, showPrompt]);
 
-  const openWidget = (widgetId: string) => {
-    setOpen(false);
+  const findWidget = (widgetId: string): HTMLElement | null => {
+    // The LC loader script has data-widget-id + data-loader-instance.
+    // The rendered <chat-widget> has data-loader-instance-id matching that instance.
+    const script = document.querySelector(
+      `script[data-widget-id="${widgetId}"]`
+    ) as HTMLElement | null;
+    const instance = script?.getAttribute("data-loader-instance");
     const widgets = Array.from(
       document.querySelectorAll("chat-widget, lc-chat-widget")
     ) as HTMLElement[];
-    const target = widgets.find(
-      (w) => w.getAttribute("widget-id") === widgetId || w.id?.includes(widgetId)
+    if (instance) {
+      const match = widgets.find(
+        (w) => w.getAttribute("data-loader-instance-id") === instance
+      );
+      if (match) return match;
+    }
+    return (
+      widgets.find(
+        (w) => w.getAttribute("widget-id") === widgetId || w.id?.includes(widgetId)
+      ) || null
     );
-    if (!target) return;
+  };
+
+  const openWidget = (widgetId: string) => {
+    setOpen(false);
+    // Hide the other widget so only the chosen one is interactive/visible.
+    const all = Array.from(
+      document.querySelectorAll("chat-widget, lc-chat-widget")
+    ) as HTMLElement[];
+    all.forEach((w) => w.classList.remove("cml-open"));
+
+    const target = findWidget(widgetId);
+    if (!target) {
+      console.warn("[ContactLauncher] widget not found for", widgetId);
+      return;
+    }
     target.classList.add("cml-open");
-    const btn = target.shadowRoot?.querySelector(
-      "button, [role='button']"
-    ) as HTMLElement | null;
-    btn?.click();
+
+    const tryClick = (attempt = 0) => {
+      const root = target.shadowRoot;
+      const btn = root?.querySelector(
+        "button, [role='button'], .chat-bubble, [class*='bubble'], [class*='launcher']"
+      ) as HTMLElement | null;
+      if (btn) {
+        btn.click();
+        return;
+      }
+      if (attempt < 20) setTimeout(() => tryClick(attempt + 1), 150);
+    };
+    tryClick();
   };
 
   return (
