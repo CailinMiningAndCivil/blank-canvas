@@ -112,6 +112,14 @@ function prerenderPlugin(): Plugin {
               `<div id="root">${html}</div>`
             );
             if (head) {
+              // Strip template's default <title> and og/twitter/description metas
+              // so per-route Helmet tags win for crawlers that use the first match.
+              page = page
+                .replace(/\n?\s*<title>[^<]*<\/title>/i, "")
+                .replace(/\n?\s*<meta\s+name=["']description["'][^>]*>/gi, "")
+                .replace(/\n?\s*<meta\s+property=["']og:(title|description|url|type|image)["'][^>]*>/gi, "")
+                .replace(/\n?\s*<meta\s+name=["']twitter:(title|description|image|card)["'][^>]*>/gi, "")
+                .replace(/\n?\s*<link\s+rel=["']canonical["'][^>]*>/gi, "");
               page = page.replace("</head>", `${head}\n</head>`);
             }
             const relPath =
