@@ -84,17 +84,36 @@ export const ContactLauncher = () => {
     );
   };
 
-  const openWidget = (widgetId: string) => {
-    setOpen(false);
-    // Hide the other widget so only the chosen one is interactive/visible.
+  const closeAllWidgets = () => {
     const all = Array.from(
       document.querySelectorAll("chat-widget, lc-chat-widget")
     ) as HTMLElement[];
-    all.forEach((w) => w.classList.remove("cml-open"));
+    all.forEach((w) => {
+      w.classList.remove("cml-open");
+      const root = w.shadowRoot;
+      if (root) {
+        const closeBtn = root.querySelector(
+          "[class*='close'], [class*='exit'], [aria-label*='close'], button[class*='button']"
+        ) as HTMLElement | null;
+        if (closeBtn) closeBtn.click();
+      }
+    });
+  };
+
+  const openWidget = (widgetId: string) => {
+    if (activeWidget === widgetId) {
+      setOpen(false);
+      return;
+    }
+    setOpen(false);
+    setActiveWidget(widgetId);
+    // Hide the other widget so only the chosen one is interactive/visible.
+    closeAllWidgets();
 
     const target = findWidget(widgetId);
     if (!target) {
       console.warn("[ContactLauncher] widget not found for", widgetId);
+      setActiveWidget(null);
       return;
     }
     target.classList.add("cml-open");
@@ -112,6 +131,22 @@ export const ContactLauncher = () => {
     };
     tryClick();
   };
+
+  const handleToggle = () => {
+    if (open) {
+      setOpen(false);
+      return;
+    }
+    if (activeWidget) {
+      // Return to the menu so they can pick the other option.
+      closeAllWidgets();
+      setActiveWidget(null);
+      setOpen(true);
+      return;
+    }
+    setOpen(true);
+  };
+
 
   return (
     <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-3">
