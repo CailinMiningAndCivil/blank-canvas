@@ -38,7 +38,7 @@ const Affiliate = () => {
   return (
     <Layout>
       <SEO
-        title="Affiliate Program | Cailin Mining & Civil"
+        title="Affiliate Program Perth Machine Training | Cailin Mining & Civil"
         description="Earn commission by referring students to Cailin Mining & Civil. Join our affiliate program for Perth machine operator training courses."
         path="/affiliate"
       />

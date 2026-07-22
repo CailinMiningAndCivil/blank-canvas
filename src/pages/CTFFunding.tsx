@@ -115,8 +115,8 @@ const CTFFunding = () => {
   return (
     <Layout>
       <SEO
-        title="CTF Funding for Construction Training | Cailin Mining & Civil"
-        description="Construction Training Fund (CTF) rebates can offset your machine operator training costs in WA. Check eligibility and how to claim your rebate."
+        title="CTF Funding for Machine Operator Training Perth WA | Cailin"
+        description="Construction Training Fund (CTF) rebates for machine operator training in Perth and WA. Check eligibility and how to claim your rebate with Cailin Mining & Civil."
         path="/ctf-funding"
       />
       {/* Hero Section */}

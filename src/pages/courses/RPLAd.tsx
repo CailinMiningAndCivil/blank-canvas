@@ -28,8 +28,8 @@ const RPLAd = () => {
   return (
     <Layout>
       <SEO
-        title="Fast-Track RPL Assessment | Cailin Mining & Civil"
-        description="Already an experienced operator? Get fast-tracked Recognition of Prior Learning assessments for nationally recognised machine certifications."
+        title="Fast-Track RPL Machine Operator Assessment Perth | Cailin"
+        description="Experienced operator in Perth? Get fast-tracked Recognition of Prior Learning assessments for nationally recognised machine operator tickets."
         path="/rplad"
       />
       {/* Hero Section */}

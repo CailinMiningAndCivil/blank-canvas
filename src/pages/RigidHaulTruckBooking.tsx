@@ -89,8 +89,8 @@ const RigidHaulTruckBooking = () => {
   return (
     <Layout>
       <SEO
-        title="Rigid Haul Truck Private Booking | Cailin Mining & Civil"
-        description="Private booking and deposit page for approved Rigid Haul Truck 2-Day Initial applicants."
+        title="Rigid Haul Truck Private Booking Perth | Cailin Mining & Civil"
+        description="Private booking and deposit page for approved Rigid Haul Truck 2-Day Initial applicants training in Perth."
         path="/rigid-haul-truck-booking"
       />
 

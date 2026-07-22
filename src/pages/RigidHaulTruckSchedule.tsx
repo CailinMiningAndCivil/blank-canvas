@@ -86,8 +86,8 @@ const RigidHaulTruckSchedule = () => {
   return (
     <Layout>
       <SEO
-        title="Rigid Haul Truck Booking | Cailin Mining & Civil"
-        description="Book your Rigid Haul Truck 2-Day Initial directly online via our live scheduling calendar."
+        title="Rigid Haul Truck 2-Day Initial Booking Perth | Cailin Mining & Civil"
+        description="Book your Rigid Haul Truck 2-Day Initial course in Perth online via our live scheduling calendar."
         path="/rigid-haul-truck-schedule"
       />
 

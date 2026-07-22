@@ -28,8 +28,8 @@ const Recruitment = () => {
   return (
     <Layout>
       <SEO
-        title="Recruitment Portal | Cailin Mining & Civil"
-        description="Looking for work in mining or civil construction? Submit your details to our recruitment portal and connect with industry opportunities."
+        title="Mining & Civil Recruitment Portal Perth | Cailin Mining & Civil"
+        description="Looking for mining or civil construction work in Perth and WA? Submit your details to the Cailin recruitment portal to connect with industry opportunities."
         path="/recruitment"
       />
       <section className="relative overflow-hidden py-20 md:py-32">

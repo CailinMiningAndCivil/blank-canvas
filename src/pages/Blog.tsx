@@ -36,8 +36,8 @@ const Blog = () => {
   return (
     <Layout>
       <SEO
-        title="Mining & Civil Training Blog | Cailin Mining & Civil"
-        description="Tips, industry news, and success stories from Australia's mining and civil construction sectors. Stay informed with Cailin Mining & Civil."
+        title="Mining & Civil Training Blog Perth | Cailin Mining & Civil"
+        description="Perth mining and civil training tips, industry news and student success stories from Cailin Mining & Civil."
         path="/blog"
       />
       {/* Hero Section */}

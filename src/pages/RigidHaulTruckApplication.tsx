@@ -7,8 +7,8 @@ const RigidHaulTruckApplication = () => {
   return (
     <Layout>
       <SEO
-        title="Rigid Haul Truck Application | Cailin Mining & Civil"
-        description="Apply for the Rigid Haul Truck Traineeship. Submit your details and supporting evidence for review."
+        title="Rigid Haul Truck Traineeship Application Perth | Cailin Mining & Civil"
+        description="Apply for the Cailin Rigid Haul Truck Traineeship in Perth. Submit your details and supporting evidence for review."
         path="/rigid-haul-truck-application"
       />
 

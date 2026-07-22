@@ -104,8 +104,8 @@ const ReturningStudent = () => {
   return (
     <Layout>
       <SEO
-        title="Free Returns | Cailin Mining & Civil"
-        description="Eligible Cailin students can claim a free return session on the machines. Verify your details to continue."
+        title="Free Return Machine Training Sessions Perth | Cailin Mining & Civil"
+        description="Eligible Cailin students can claim a free return machine training session in Perth. Verify your details to continue."
         path="/free-returns"
       />
       {/* Hero */}
