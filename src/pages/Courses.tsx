@@ -292,6 +292,15 @@ const Courses = () => {
                   </h3>
                   <p className="text-muted-foreground text-sm mb-4">{category.description}</p>
                   
+                  {category.id === "bundles" && (
+                    <div className="flex items-start gap-2 bg-primary/10 border border-primary/30 rounded-lg p-3 mb-4">
+                      <Clock className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                      <p className="text-foreground text-xs">
+                        <strong>Limited Time Offer:</strong> This bundle includes Free Returns.
+                      </p>
+                    </div>
+                  )}
+                  
                   <div className="flex flex-wrap gap-3 mb-4">
                     <div className="bg-primary/10 px-3 py-1 rounded-lg">
                       <span className="text-primary font-semibold">{category.price}</span>
