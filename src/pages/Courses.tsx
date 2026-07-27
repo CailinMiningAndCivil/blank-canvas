@@ -67,12 +67,12 @@ const courseCategories = [
     id: "bundles",
     title: "Starter Bundles",
     subtitle: "Multi-Ticket Programs",
-    description: "Double or triple your employment opportunities. Get 1:1 training on a live mine site. Does not include Return for Free eligibility.",
+    description: "Double or triple your employment opportunities. Get 1:1 training on a live mine site. Includes Return for Free eligibility.",
     price: "$2,500",
-    priceNote: "CTF Funding Available",
+    priceNote: "Return for Free Included",
     image: bundlesHero,
     link: "/courses/bundles",
-    features: ["2-3x more employable", "1:1 instruction", "Multiple certifications"],
+    features: ["2-3x more employable", "1:1 instruction", "Multiple certifications", "Return for Free eligibility"],
     icon: Users,
   },
   {
@@ -351,7 +351,7 @@ const Courses = () => {
                 </tr>
                 <tr className="border-b border-border">
                   <td className="p-4 text-foreground font-medium">Starter Bundles</td>
-                  <td className="p-4 text-muted-foreground">2-3x more employable — no Return for Free</td>
+                  <td className="p-4 text-muted-foreground">2-3x more employable — includes Return for Free</td>
                   <td className="p-4 text-muted-foreground">Set hours per machine</td>
                   <td className="p-4 text-primary font-semibold">$2,500</td>
                 </tr>
