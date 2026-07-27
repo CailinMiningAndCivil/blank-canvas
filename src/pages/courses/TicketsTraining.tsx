@@ -158,6 +158,19 @@ const TicketsTraining = () => {
         </div>
       </section>
 
+      {/* Limited Time Offer Notice */}
+      <section className="py-6 bg-primary/10 border-b border-primary/20">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-center md:text-left">
+            <Clock className="w-8 h-8 text-primary shrink-0" />
+            <div>
+              <p className="text-foreground font-semibold">Limited Time Offer</p>
+              <p className="text-muted-foreground text-sm">Return for Free is included with the Starter Bundle</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTF Funding Notice */}
       <section className="py-8 bg-gradient-to-r from-primary/10 to-accent/10 border-b border-border">
         <div className="container mx-auto px-4">
