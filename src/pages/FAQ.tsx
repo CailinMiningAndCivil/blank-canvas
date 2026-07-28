@@ -28,6 +28,41 @@ const faqs = [
     answer:
       "Cailin focuses on practical training on real mine sites rather than classroom or simulated-yard courses. Every session is 1:1 with an industry-experienced trainer, so you get direct coaching and maximum seat time. We also support students with resumes, references, employer lists and coaching calls to help you move into the industry.",
   },
+  {
+    question: "Will I get a job after completing the training?",
+    answer:
+      "Completing our training does not guarantee employment. However, our courses are designed to provide practical skills and nationally recognised qualifications that can improve your chances of finding work in the mining industry. We also encourage graduates to register through our Recruitment Portal to access potential employment opportunities.",
+  },
+  {
+    question: "Are you offering jobs?",
+    answer:
+      "We are a registered training organisation, not a recruitment agency. While we don't directly employ students, we encourage graduates to register through our Recruitment Portal where eligible candidates may be connected with employers looking for operators.",
+  },
+  {
+    question: "Where are you located? Is your training site accessible by public transport?",
+    answer:
+      "Our training site is at 411-423 Caraban Road, Caraban, WA 6041. It's a live quarry site—no walk-ins, booking required. There's no direct public transport, so you'll need your own vehicle or arrange private transport.",
+  },
+  {
+    question: "Do you offer visa sponsorship or funding?",
+    answer:
+      "No. We do not offer visa sponsorship or government funding. If you require advice about visas or migration pathways, we recommend speaking with a registered migration agent or contacting the appropriate Australian Government department.",
+  },
+  {
+    question: "Can you help with my visa application?",
+    answer:
+      "We are unable to provide visa or immigration advice. For assistance with visa applications, please contact a registered migration agent or visit the Australian Government Department of Home Affairs.",
+  },
+  {
+    question: "How much can I earn working in the mining industry?",
+    answer:
+      "Mining salaries vary depending on the role, employer, experience, roster, location, and qualifications. While we cannot guarantee earnings, many mining positions offer competitive pay. We recommend checking current job advertisements for the most up-to-date salary information.",
+  },
+  {
+    question: "What are the requirements to take a course?",
+    answer:
+      "You'll need a valid driver's licence to attend training. No prior machine experience is required—beginners are welcome. Just book your session and show up with your licence.",
+  },
 ];
 
 const FAQ = () => {
