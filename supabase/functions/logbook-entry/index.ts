@@ -83,6 +83,29 @@ function pickString(v: unknown): string | null {
   return t.length ? t.slice(0, 2000) : null;
 }
 
+function pickDate(v: unknown): string | null {
+  if (typeof v !== "string") return null;
+  const t = v.trim();
+  if (!t) return null;
+  const iso = /^\d{4}-\d{2}-\d{2}/.test(t);
+  if (iso) return t.slice(0, 10);
+  const parts = t.split(/[-\/]/);
+  if (parts.length === 3) {
+    const [a, b, c] = parts;
+    if (a.length === 4) return `${a}-${b.padStart(2, "0")}-${c.padStart(2, "0")}`;
+    if (c.length === 4) return `${c}-${b.padStart(2, "0")}-${a.padStart(2, "0")}`;
+  }
+  return null;
+}
+
+function buildNotes(tasks: string | null, additional: string | null): string | null {
+  const parts: string[] = [];
+  if (tasks) parts.push(`Tasks completed: ${tasks}`);
+  if (additional) parts.push(`Additional notes: ${additional}`);
+  return parts.length ? parts.join("\n\n") : null;
+}
+
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
@@ -154,18 +177,25 @@ Deno.serve(async (req) => {
         ? Number(hoursRaw)
         : null;
 
+    const sessionDate = pickDate(body.training_date);
+    const notes = buildNotes(pickString(body.tasks_completed), pickString(body.additional_notes));
+
+    const insertPayload: Record<string, unknown> = {
+      student_id: studentId,
+      session_type: pickString(body.session_type) ?? "Training session",
+      machine: pickString(body.machine),
+      hours,
+      notes,
+    };
+    if (sessionDate) insertPayload.session_date = sessionDate;
+
     const { data: entry, error: entryErr } = await supabase
       .from("logbook_entries")
-      .insert({
-        student_id: studentId,
-        session_type: pickString(body.session_type) ?? "Training session",
-        machine: pickString(body.machine),
-        hours,
-        notes: pickString(body.notes),
-      })
+      .insert(insertPayload)
       .select("id, sign_token")
       .single();
     if (entryErr) throw new Error(`entry insert failed: ${entryErr.message}`);
+
 
     const signingUrl = `${SITE_URL}/sign-logbook/${entry.sign_token}`;
 
