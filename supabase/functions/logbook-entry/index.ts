@@ -123,6 +123,8 @@ Deno.serve(async (req) => {
     return json({ error: "Invalid JSON body" }, 400);
   }
 
+  console.log("logbook-entry payload", JSON.stringify(body).slice(0, 2000));
+
   const contactId =
     pickString(body.contactId) ?? pickString(body.contact_id) ?? pickString(body.id);
   if (!contactId) return json({ error: "contactId is required" }, 400);
