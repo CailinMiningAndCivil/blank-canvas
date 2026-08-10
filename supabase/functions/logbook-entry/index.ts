@@ -141,17 +141,27 @@ Deno.serve(async (req) => {
     return json({ error: "Invalid JSON body" }, 400);
   }
 
+  const TARGETS = [
+    "contactId",
+    "full_name",
+    "email",
+    "phone",
+    "session_type",
+    "machine",
+    "hours",
+    "training_date",
+    "tasks_completed",
+    "additional_notes",
+  ];
   console.log(
-    "logbook-entry short keys",
+    "logbook-entry custom data",
     JSON.stringify(
-      Object.entries(body)
-        .filter(
-          ([k, v]) =>
-            k.length < 45 && v !== null && v !== undefined && String(v).trim() !== "",
-        )
-        .map(([k, v]) => `${k}=${String(v).slice(0, 60)}`),
-    ).slice(0, 3000),
+      Object.fromEntries(
+        TARGETS.map((k) => [k, k in body ? String((body as any)[k] ?? "").slice(0, 80) : "<MISSING>"]),
+      ),
+    ),
   );
+
 
 
 
