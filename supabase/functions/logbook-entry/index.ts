@@ -221,19 +221,42 @@ Deno.serve(async (req) => {
     const hours = hoursStr && !isNaN(Number(hoursStr)) ? Number(hoursStr) : null;
 
     const sessionDate = pickDate(
-      findValue(body, ["training_date", "session_date", "date_of_training"]),
+      findValue(body, [
+        "training_date",
+        "session_date",
+        "date_of_training",
+        "Course Date Start",
+        "Course Enrolled Start Date",
+      ]),
     );
     const notes = buildNotes(
-      findValue(body, ["tasks_completed", "tasks", "task_completed", "activities"]),
-      findValue(body, ["additional_notes", "notes", "additional_comments", "comments"]),
+      findValue(body, [
+        "tasks_completed",
+        "tasks_completed__training_activities",
+        "tasks",
+        "activities",
+      ]),
+      findValue(body, [
+        "additional_notes",
+        "notes",
+        "additional_comments",
+        "Additional Information",
+      ]),
     );
     const sessionType = findValue(body, [
       "session_type",
       "course_booked",
-      "course",
       "training_type",
+      "select_course_for_document_upload",
+      "On-Site Course Purchased",
     ]);
-    const machine = findValue(body, ["machine", "machine_type", "machines", "equipment"]);
+    const machine = findValue(body, [
+      "machine",
+      "machine_type",
+      "equipment",
+      "On-Site Course Purchased",
+    ]);
+
 
     const insertPayload: Record<string, unknown> = {
       student_id: studentId,
