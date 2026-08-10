@@ -142,13 +142,17 @@ Deno.serve(async (req) => {
   }
 
   console.log(
-    "logbook-entry keys with values",
+    "logbook-entry short keys",
     JSON.stringify(
       Object.entries(body)
-        .filter(([, v]) => v !== null && v !== undefined && String(v).trim() !== "")
-        .map(([k]) => k),
-    ).slice(0, 2000),
+        .filter(
+          ([k, v]) =>
+            k.length < 45 && v !== null && v !== undefined && String(v).trim() !== "",
+        )
+        .map(([k, v]) => `${k}=${String(v).slice(0, 60)}`),
+    ).slice(0, 3000),
   );
+
 
 
   const contactId =
@@ -207,7 +211,7 @@ Deno.serve(async (req) => {
     const hours = hoursStr && !isNaN(Number(hoursStr)) ? Number(hoursStr) : null;
 
     const sessionDate = pickDate(
-      findValue(body, ["training_date", "session_date", "date_of_training", "date"]),
+      findValue(body, ["training_date", "session_date", "date_of_training"]),
     );
     const notes = buildNotes(
       findValue(body, ["tasks_completed", "tasks", "task_completed", "activities"]),
