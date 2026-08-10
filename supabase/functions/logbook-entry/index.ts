@@ -211,7 +211,7 @@ Deno.serve(async (req) => {
     const hours = hoursStr && !isNaN(Number(hoursStr)) ? Number(hoursStr) : null;
 
     const sessionDate = pickDate(
-      findValue(body, ["training_date", "session_date", "date_of_training", "date"]),
+      findValue(body, ["training_date", "session_date", "date_of_training"]),
     );
     const notes = buildNotes(
       findValue(body, ["tasks_completed", "tasks", "task_completed", "activities"]),
