@@ -83,6 +83,29 @@ function pickString(v: unknown): string | null {
   return t.length ? t.slice(0, 2000) : null;
 }
 
+function pickDate(v: unknown): string | null {
+  if (typeof v !== "string") return null;
+  const t = v.trim();
+  if (!t) return null;
+  const iso = /^\d{4}-\d{2}-\d{2}/.test(t);
+  if (iso) return t.slice(0, 10);
+  const parts = t.split(/[-\/]/);
+  if (parts.length === 3) {
+    const [a, b, c] = parts;
+    if (a.length === 4) return `${a}-${b.padStart(2, "0")}-${c.padStart(2, "0")}`;
+    if (c.length === 4) return `${c}-${b.padStart(2, "0")}-${a.padStart(2, "0")}`;
+  }
+  return null;
+}
+
+function buildNotes(tasks: string | null, additional: string | null): string | null {
+  const parts: string[] = [];
+  if (tasks) parts.push(`Tasks completed: ${tasks}`);
+  if (additional) parts.push(`Additional notes: ${additional}`);
+  return parts.length ? parts.join("\n\n") : null;
+}
+
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
