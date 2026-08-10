@@ -36,6 +36,7 @@ import RigidHaulTruckBooking from "./pages/RigidHaulTruckBooking";
 import RigidHaulTruckSchedule from "./pages/RigidHaulTruckSchedule";
 import SignatureBackfill from "./pages/admin/SignatureBackfill";
 import FAQ from "./pages/FAQ";
+import SignLogbook from "./pages/SignLogbook";
 
 const CareersRedirect = () => {
   if (typeof window !== "undefined") {
@@ -50,6 +51,7 @@ export const AppRoutes = () => (
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/courses" element={<Courses />} />
+      <Route path="/sign-logbook/:token" element={<SignLogbook />} />
       <Route path="/rpl" element={<RPL />} />
       <Route path="/rplad" element={<RPLAd />} />
       <Route path="/courses/bundles" element={<TicketsTraining />} />
