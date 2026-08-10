@@ -105,6 +105,24 @@ function buildNotes(tasks: string | null, additional: string | null): string | n
   return parts.length ? parts.join("\n\n") : null;
 }
 
+// GHL sends the whole contact payload with human-readable labels as keys.
+// Match by normalized key so long assessment questions never produce false hits.
+function normKey(k: string) {
+  return k.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function findValue(body: Record<string, unknown>, candidates: string[]): string | null {
+  const wanted = new Set(candidates.map(normKey));
+  for (const [k, v] of Object.entries(body)) {
+    if (!wanted.has(normKey(k))) continue;
+    const s = pickString(v) ?? (typeof v === "number" ? String(v) : null);
+    if (s) return s;
+  }
+  return null;
+}
+
+
+
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
@@ -123,7 +141,15 @@ Deno.serve(async (req) => {
     return json({ error: "Invalid JSON body" }, 400);
   }
 
-  console.log("logbook-entry payload", JSON.stringify(body).slice(0, 2000));
+  console.log(
+    "logbook-entry keys with values",
+    JSON.stringify(
+      Object.entries(body)
+        .filter(([, v]) => v !== null && v !== undefined && String(v).trim() !== "")
+        .map(([k]) => k),
+    ).slice(0, 2000),
+  );
+
 
   const contactId =
     pickString(body.contactId) ?? pickString(body.contact_id) ?? pickString(body.id);
@@ -171,25 +197,39 @@ Deno.serve(async (req) => {
       studentId = created.id;
     }
 
-    const hoursRaw = body.hours;
-    const hours =
-      typeof hoursRaw === "number"
-        ? hoursRaw
-        : typeof hoursRaw === "string" && hoursRaw.trim() !== "" && !isNaN(Number(hoursRaw))
-        ? Number(hoursRaw)
-        : null;
+    const hoursStr = findValue(body, [
+      "hours",
+      "training_hours",
+      "hours_operated",
+      "seat_time",
+      "machine_hours",
+    ]);
+    const hours = hoursStr && !isNaN(Number(hoursStr)) ? Number(hoursStr) : null;
 
-    const sessionDate = pickDate(body.training_date);
-    const notes = buildNotes(pickString(body.tasks_completed), pickString(body.additional_notes));
+    const sessionDate = pickDate(
+      findValue(body, ["training_date", "session_date", "date_of_training", "date"]),
+    );
+    const notes = buildNotes(
+      findValue(body, ["tasks_completed", "tasks", "task_completed", "activities"]),
+      findValue(body, ["additional_notes", "notes", "additional_comments", "comments"]),
+    );
+    const sessionType = findValue(body, [
+      "session_type",
+      "course_booked",
+      "course",
+      "training_type",
+    ]);
+    const machine = findValue(body, ["machine", "machine_type", "machines", "equipment"]);
 
     const insertPayload: Record<string, unknown> = {
       student_id: studentId,
-      session_type: pickString(body.session_type) ?? "Training session",
-      machine: pickString(body.machine),
+      session_type: sessionType ?? "Training session",
+      machine,
       hours,
       notes,
     };
     if (sessionDate) insertPayload.session_date = sessionDate;
+
 
     const { data: entry, error: entryErr } = await supabase
       .from("logbook_entries")
