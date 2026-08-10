@@ -177,18 +177,25 @@ Deno.serve(async (req) => {
         ? Number(hoursRaw)
         : null;
 
+    const sessionDate = pickDate(body.training_date);
+    const notes = buildNotes(pickString(body.tasks_completed), pickString(body.additional_notes));
+
+    const insertPayload: Record<string, unknown> = {
+      student_id: studentId,
+      session_type: pickString(body.session_type) ?? "Training session",
+      machine: pickString(body.machine),
+      hours,
+      notes,
+    };
+    if (sessionDate) insertPayload.session_date = sessionDate;
+
     const { data: entry, error: entryErr } = await supabase
       .from("logbook_entries")
-      .insert({
-        student_id: studentId,
-        session_type: pickString(body.session_type) ?? "Training session",
-        machine: pickString(body.machine),
-        hours,
-        notes: pickString(body.notes),
-      })
+      .insert(insertPayload)
       .select("id, sign_token")
       .single();
     if (entryErr) throw new Error(`entry insert failed: ${entryErr.message}`);
+
 
     const signingUrl = `${SITE_URL}/sign-logbook/${entry.sign_token}`;
 
