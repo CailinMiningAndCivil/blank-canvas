@@ -141,7 +141,15 @@ Deno.serve(async (req) => {
     return json({ error: "Invalid JSON body" }, 400);
   }
 
-  console.log("logbook-entry payload", JSON.stringify(body).slice(0, 2000));
+  console.log(
+    "logbook-entry keys with values",
+    JSON.stringify(
+      Object.entries(body)
+        .filter(([, v]) => v !== null && v !== undefined && String(v).trim() !== "")
+        .map(([k]) => k),
+    ).slice(0, 2000),
+  );
+
 
   const contactId =
     pickString(body.contactId) ?? pickString(body.contact_id) ?? pickString(body.id);
