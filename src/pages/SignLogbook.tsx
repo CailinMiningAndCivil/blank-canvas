@@ -1,14 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2, Loader2, RotateCcw } from "lucide-react";
 
 const FN_URL = `${
@@ -176,17 +168,14 @@ const SignLogbook = () => {
         <h1 className="text-3xl font-bold mb-6 text-foreground">Trainer Sign-Off</h1>
 
         {!entry && error && (
-          <Card>
-            <CardContent className="py-8 text-center text-muted-foreground">{error}</CardContent>
-          </Card>
+          <div className="rounded-xl border border-border bg-card p-8 text-center text-muted-foreground">
+            {error}
+          </div>
         )}
 
         {entry && (
-          <Card>
-            <CardHeader>
-              <CardTitle>{entry.student_name}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
+          <div className="rounded-xl border border-border bg-card p-6 space-y-6">
+            <h2 className="text-xl font-semibold text-foreground">{entry.student_name}</h2>
               <dl className="grid grid-cols-2 gap-3 text-sm">
                 <div>
                   <dt className="text-muted-foreground">Date</dt>
@@ -230,18 +219,18 @@ const SignLogbook = () => {
                 <>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-foreground">Trainer</label>
-                    <Select value={trainerId} onValueChange={setTrainerId}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select your name" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {trainers.map((t) => (
-                          <SelectItem key={t.id} value={t.id}>
-                            {t.full_name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <select
+                      value={trainerId}
+                      onChange={(e) => setTrainerId(e.target.value)}
+                      className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                    >
+                      <option value="">Select your name</option>
+                      {trainers.map((t) => (
+                        <option key={t.id} value={t.id}>
+                          {t.full_name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   <div className="space-y-2">
@@ -273,8 +262,7 @@ const SignLogbook = () => {
                   </Button>
                 </>
               )}
-            </CardContent>
-          </Card>
+          </div>
         )}
       </div>
     </div>
