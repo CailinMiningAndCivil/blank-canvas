@@ -142,13 +142,17 @@ Deno.serve(async (req) => {
   }
 
   console.log(
-    "logbook-entry keys with values",
+    "logbook-entry short keys",
     JSON.stringify(
       Object.entries(body)
-        .filter(([, v]) => v !== null && v !== undefined && String(v).trim() !== "")
-        .map(([k]) => k),
-    ).slice(0, 2000),
+        .filter(
+          ([k, v]) =>
+            k.length < 45 && v !== null && v !== undefined && String(v).trim() !== "",
+        )
+        .map(([k, v]) => `${k}=${String(v).slice(0, 60)}`),
+    ).slice(0, 3000),
   );
+
 
 
   const contactId =
