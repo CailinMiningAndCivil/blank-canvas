@@ -170,6 +170,84 @@ export type Database = {
         }
         Relationships: []
       }
+      logbook_entries: {
+        Row: {
+          competency: string | null
+          created_at: string
+          hours: number | null
+          id: string
+          machine: string | null
+          notes: string | null
+          session_date: string
+          session_type: string
+          sign_token: string
+          signed_at: string | null
+          signed_ip: string | null
+          status: string
+          student_id: string
+          token_expires_at: string
+          trainer_id: string | null
+          trainer_name: string | null
+          trainer_signature_path: string | null
+          updated_at: string
+        }
+        Insert: {
+          competency?: string | null
+          created_at?: string
+          hours?: number | null
+          id?: string
+          machine?: string | null
+          notes?: string | null
+          session_date?: string
+          session_type: string
+          sign_token?: string
+          signed_at?: string | null
+          signed_ip?: string | null
+          status?: string
+          student_id: string
+          token_expires_at?: string
+          trainer_id?: string | null
+          trainer_name?: string | null
+          trainer_signature_path?: string | null
+          updated_at?: string
+        }
+        Update: {
+          competency?: string | null
+          created_at?: string
+          hours?: number | null
+          id?: string
+          machine?: string | null
+          notes?: string | null
+          session_date?: string
+          session_type?: string
+          sign_token?: string
+          signed_at?: string | null
+          signed_ip?: string | null
+          status?: string
+          student_id?: string
+          token_expires_at?: string
+          trainer_id?: string | null
+          trainer_name?: string | null
+          trainer_signature_path?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "logbook_entries_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "logbook_entries_trainer_id_fkey"
+            columns: ["trainer_id"]
+            isOneToOne: false
+            referencedRelation: "trainers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       refresher_training_requests: {
         Row: {
           acknowledged: boolean
@@ -254,6 +332,60 @@ export type Database = {
           error?: string
           id?: string
           name?: string | null
+        }
+        Relationships: []
+      }
+      students: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string
+          ghl_contact_id: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name: string
+          ghl_contact_id?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          ghl_contact_id?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      trainers: {
+        Row: {
+          active: boolean
+          created_at: string
+          full_name: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          full_name: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          full_name?: string
+          id?: string
+          updated_at?: string
         }
         Relationships: []
       }
