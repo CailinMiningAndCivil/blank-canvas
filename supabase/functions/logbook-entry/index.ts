@@ -105,6 +105,24 @@ function buildNotes(tasks: string | null, additional: string | null): string | n
   return parts.length ? parts.join("\n\n") : null;
 }
 
+// GHL sends the whole contact payload with human-readable labels as keys.
+// Match by normalized key so long assessment questions never produce false hits.
+function normKey(k: string) {
+  return k.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function findValue(body: Record<string, unknown>, candidates: string[]): string | null {
+  const wanted = new Set(candidates.map(normKey));
+  for (const [k, v] of Object.entries(body)) {
+    if (!wanted.has(normKey(k))) continue;
+    const s = pickString(v) ?? (typeof v === "number" ? String(v) : null);
+    if (s) return s;
+  }
+  return null;
+}
+
+
+
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
