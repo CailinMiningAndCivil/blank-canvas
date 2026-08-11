@@ -181,7 +181,12 @@ export default function SignatureBackfill() {
 
   return (
     <div className="min-h-screen bg-background p-8 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-2">Student Signature Backfill</h1>
+      <div className="flex items-center justify-between mb-2">
+        <h1 className="text-3xl font-bold">Student Signature Backfill</h1>
+        <Link to="/admin/logbook" className="text-sm text-primary hover:underline">
+          Training Logbook →
+        </Link>
+      </div>
       <p className="text-muted-foreground mb-8">
         Extracts the signature image from GHL signed PDFs and saves the URL to the{" "}
         <code>Signature Student Declaration URL TXT</code> custom field.
