@@ -264,15 +264,14 @@ Deno.serve(async (req) => {
         "tasks_completed__training_activities",
       ]),
       findValue(body, [
-        "Provide any relevant additional information",
         "Additional Notes",
         "additional_notes",
+        "Provide any relevant additional information",
       ]),
     );
     const sessionType = findValue(body, [
-      "Which Course Are You Booking",
-      "Which Course Are You Booking For",
-      "which_course_are_you_booking_for",
+      "Which Course Are You Uploading Documents For?",
+      "Which Course Are You Uploading Documents For",
       "session_type",
       "course_booked",
     ]);
