@@ -179,14 +179,10 @@ Deno.serve(async (req) => {
       ),
     ),
   );
-  const INTEREST = ["hour", "date", "course", "task", "note", "machine", "train", "additional"];
   const interesting = Object.entries(body)
     .filter(([k, v]) => {
       const s = String(v ?? "").trim();
-      if (!s || s.length > 120) return false;
-      const lk = k.toLowerCase();
-      if (lk.length > 60) return false;
-      return INTEREST.some((w) => lk.includes(w));
+      return s && s.length <= 70 && k.length <= 70 && !k.includes("?");
     })
     .map(([k, v]) => `${k} = ${String(v)}`);
   for (let i = 0; i < interesting.length; i += 10) {
