@@ -18,6 +18,7 @@ const supabase = createClient(
 );
 
 const WEBHOOK_TOKEN = Deno.env.get("SIGNATURE_WEBHOOK_TOKEN") ?? "";
+const TRAINER_PIN = Deno.env.get("TRAINER_PIN") ?? "";
 
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -36,9 +37,10 @@ Deno.serve(async (req) => {
 
   const url = new URL(req.url);
   const provided = req.headers.get("x-admin-key") ?? url.searchParams.get("token") ?? "";
-  if (!WEBHOOK_TOKEN || provided !== WEBHOOK_TOKEN) {
-    return json({ error: "Unauthorized" }, 401);
-  }
+  let role: "admin" | "trainer" | null = null;
+  if (WEBHOOK_TOKEN && provided === WEBHOOK_TOKEN) role = "admin";
+  else if (TRAINER_PIN && provided === TRAINER_PIN) role = "trainer";
+  if (!role) return json({ error: "Unauthorized" }, 401);
 
   let body: Record<string, unknown> = {};
   try {
@@ -67,6 +69,11 @@ Deno.serve(async (req) => {
     const rows = await Promise.all((entries ?? []).map(async (entry: any) => {
       const student = Array.isArray(entry.students) ? entry.students[0] : entry.students;
       const row = { ...entry, student: student ?? null } as Record<string, unknown>;
+      if (role === "trainer") {
+        // Read-only view: no signing tokens or IP addresses.
+        delete row.sign_token;
+        delete row.signed_ip;
+      }
       // Generate a temporary signed URL for the signature image when present.
       if (entry.trainer_signature_path) {
         const { data } = await supabase.storage
@@ -79,7 +86,7 @@ Deno.serve(async (req) => {
       return row;
     }));
 
-    return json({ entries: rows });
+    return json({ entries: rows, role });
   } catch (e) {
     console.error("logbook-list error", e);
     return json({ error: "Failed to load logbook entries" }, 500);
