@@ -111,12 +111,30 @@ function normKey(k: string) {
   return k.toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
+// Candidates are checked IN ORDER so the exact form labels win over
+// any stale contact-field fallbacks further down the list.
 function findValue(body: Record<string, unknown>, candidates: string[]): string | null {
-  const wanted = new Set(candidates.map(normKey));
-  for (const [k, v] of Object.entries(body)) {
-    if (!wanted.has(normKey(k))) continue;
-    const s = pickString(v) ?? (typeof v === "number" ? String(v) : null);
-    if (s) return s;
+  const entries = Object.entries(body).map(([k, v]) => [normKey(k), v] as const);
+  const read = (v: unknown) =>
+    pickString(v) ?? (typeof v === "number" ? String(v) : null);
+
+  for (const cand of candidates) {
+    const want = normKey(cand);
+    for (const [k, v] of entries) {
+      if (k !== want) continue;
+      const s = read(v);
+      if (s) return s;
+    }
+  }
+  // second pass: prefix match (handles truncated / slightly different labels)
+  for (const cand of candidates) {
+    const want = normKey(cand);
+    if (want.length < 6) continue;
+    for (const [k, v] of entries) {
+      if (!k.startsWith(want) && !want.startsWith(k)) continue;
+      const s = read(v);
+      if (s) return s;
+    }
   }
   return null;
 }
@@ -160,6 +178,14 @@ Deno.serve(async (req) => {
         TARGETS.map((k) => [k, k in body ? String((body as any)[k] ?? "").slice(0, 80) : "<MISSING>"]),
       ),
     ),
+  );
+  console.log(
+    "logbook-entry non-empty keys",
+    JSON.stringify(
+      Object.entries(body)
+        .filter(([, v]) => v !== null && v !== undefined && String(v).trim() !== "")
+        .map(([k, v]) => `${k}=${String(v).slice(0, 40)}`),
+    ).slice(0, 3000),
   );
 
 
@@ -216,54 +242,43 @@ Deno.serve(async (req) => {
     }
 
     const hoursStr = findValue(body, [
-      "hours",
       "Hours Trained",
+      "hours",
+      "hours_trained",
       "training_hours",
-      "hours_operated",
-      "seat_time",
-      "machine_hours",
     ]);
     const hours = hoursStr && !isNaN(Number(hoursStr)) ? Number(hoursStr) : null;
 
     const sessionDate = pickDate(
       findValue(body, [
-        "training_date",
         "Training Date",
+        "training_date",
         "session_date",
-        "date_of_training",
-        "Course Date Start",
-        "Course Enrolled Start Date",
       ]),
     );
     const notes = buildNotes(
       findValue(body, [
-        "tasks_completed",
         "Tasks Completed / Training Activities",
+        "tasks_completed",
         "tasks_completed__training_activities",
-        "tasks",
-        "activities",
       ]),
       findValue(body, [
+        "Additional Notes",
         "additional_notes",
-        "Provide any relevant additional information",
-        "notes",
-        "additional_comments",
-        "Additional Information",
       ]),
     );
     const sessionType = findValue(body, [
+      "Which Course Are You Booking",
+      "Which Course Are You Booking For",
+      "which_course_are_you_booking_for",
       "session_type",
       "course_booked",
-      "training_type",
-      "select_course_for_document_upload",
-      "On-Site Course Purchased",
     ]);
     const machine = findValue(body, [
       "machine",
       "machine_type",
       "equipment",
-      "On-Site Course Purchased",
-    ]);
+    ]) ?? sessionType;
 
 
     const insertPayload: Record<string, unknown> = {
