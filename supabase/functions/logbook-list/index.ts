@@ -37,10 +37,9 @@ Deno.serve(async (req) => {
 
   const url = new URL(req.url);
   const provided = req.headers.get("x-admin-key") ?? url.searchParams.get("token") ?? "";
-  let role: "admin" | "trainer" | null = null;
+  // No key = public trainer view (read-only, no contact details or tokens).
+  let role: "admin" | "trainer" = "trainer";
   if (WEBHOOK_TOKEN && provided === WEBHOOK_TOKEN) role = "admin";
-  else if (TRAINER_PIN && provided === TRAINER_PIN) role = "trainer";
-  if (!role) return json({ error: "Unauthorized" }, 401);
 
   let body: Record<string, unknown> = {};
   try {
@@ -69,10 +68,13 @@ Deno.serve(async (req) => {
     const rows = await Promise.all((entries ?? []).map(async (entry: any) => {
       const student = Array.isArray(entry.students) ? entry.students[0] : entry.students;
       const row = { ...entry, student: student ?? null } as Record<string, unknown>;
+      delete (row as any).students;
       if (role === "trainer") {
-        // Read-only view: no signing tokens or IP addresses.
+        // Read-only view: no signing tokens, IP addresses or student contact details.
         delete row.sign_token;
         delete row.signed_ip;
+        delete row.students;
+        row.student = student ? { full_name: (student as any).full_name ?? null } : null;
       }
       // Generate a temporary signed URL for the signature image when present.
       if (entry.trainer_signature_path) {
