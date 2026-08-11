@@ -68,13 +68,13 @@ Deno.serve(async (req) => {
     const rows = await Promise.all((entries ?? []).map(async (entry: any) => {
       const student = Array.isArray(entry.students) ? entry.students[0] : entry.students;
       const row = { ...entry, student: student ?? null } as Record<string, unknown>;
+      delete (row as any).students;
       if (role === "trainer") {
         // Read-only view: no signing tokens, IP addresses or student contact details.
         delete row.sign_token;
         delete row.signed_ip;
-        if (row.student) {
-          row.student = { full_name: (student as any)?.full_name ?? null };
-        }
+        delete row.students;
+        row.student = student ? { full_name: (student as any).full_name ?? null } : null;
       }
       // Generate a temporary signed URL for the signature image when present.
       if (entry.trainer_signature_path) {
