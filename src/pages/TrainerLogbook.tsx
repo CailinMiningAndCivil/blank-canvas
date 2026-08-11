@@ -19,6 +19,8 @@ export default function TrainerLogbook() {
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState<"all" | "pending" | "signed">("all");
   const [search, setSearch] = useState("");
+  const [studentFilter, setStudentFilter] = useState<string>("all");
+  const [page, setPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<any | null>(null);
 
@@ -31,6 +33,7 @@ export default function TrainerLogbook() {
       });
       if (fnError) throw fnError;
       setEntries((data?.entries ?? []) as any[]);
+      setPage(1);
     } catch {
       setError("Could not load logbook entries. Please try again.");
       setEntries([]);
@@ -44,17 +47,34 @@ export default function TrainerLogbook() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
+  const students = useMemo(() => {
+    const names = new Set<string>();
+    for (const e of entries) {
+      if (e.student?.full_name) names.add(e.student.full_name);
+    }
+    return Array.from(names).sort();
+  }, [entries]);
+
   const filtered = useMemo(() => {
     const term = search.toLowerCase();
-    return entries.filter((e) =>
-      !term
+    return entries.filter((e) => {
+      const matchesSearch = !term
         ? true
         : (e.student?.full_name ?? "").toLowerCase().includes(term) ||
           (e.session_type ?? "").toLowerCase().includes(term) ||
           (e.machine ?? "").toLowerCase().includes(term) ||
-          (e.trainer_name ?? "").toLowerCase().includes(term),
-    );
-  }, [entries, search]);
+          (e.trainer_name ?? "").toLowerCase().includes(term);
+      const matchesStudent = studentFilter === "all" || e.student?.full_name === studentFilter;
+      return matchesSearch && matchesStudent;
+    });
+  }, [entries, search, studentFilter]);
+
+  const paged = useMemo(() => {
+    const start = (page - 1) * PAGE_SIZE;
+    return filtered.slice(start, start + PAGE_SIZE);
+  }, [filtered, page]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
 
   const totals = useMemo(() => {
     let hours = 0;
