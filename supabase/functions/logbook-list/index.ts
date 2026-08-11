@@ -64,11 +64,11 @@ Deno.serve(async (req) => {
     const { data: entries, error } = await query;
     if (error) throw error;
 
-    const rows = (entries ?? []).map((entry: any) => {
+    const rows = await Promise.all((entries ?? []).map(async (entry: any) => {
       const row = { ...entry } as Record<string, unknown>;
       // Generate a temporary signed URL for the signature image when present.
       if (entry.trainer_signature_path) {
-        const { data } = supabase.storage
+        const { data } = await supabase.storage
           .from("logbook-signatures")
           .createSignedUrl(entry.trainer_signature_path, 60 * 60); // 1 hour
         row.signature_url = data?.signedUrl ?? null;
@@ -76,7 +76,7 @@ Deno.serve(async (req) => {
         row.signature_url = null;
       }
       return row;
-    });
+    }));
 
     return json({ entries: rows });
   } catch (e) {
