@@ -179,14 +179,19 @@ Deno.serve(async (req) => {
       ),
     ),
   );
-  console.log(
-    "logbook-entry non-empty keys",
-    JSON.stringify(
-      Object.entries(body)
-        .filter(([, v]) => v !== null && v !== undefined && String(v).trim() !== "")
-        .map(([k, v]) => `${k}=${String(v).slice(0, 40)}`),
-    ).slice(0, 3000),
-  );
+  const INTEREST = ["hour", "date", "course", "task", "note", "machine", "train", "additional"];
+  const interesting = Object.entries(body)
+    .filter(([k, v]) => {
+      const s = String(v ?? "").trim();
+      if (!s || s.length > 120) return false;
+      const lk = k.toLowerCase();
+      if (lk.length > 60) return false;
+      return INTEREST.some((w) => lk.includes(w));
+    })
+    .map(([k, v]) => `${k} = ${String(v)}`);
+  for (let i = 0; i < interesting.length; i += 10) {
+    console.log(`logbook-entry fields[${i}]`, JSON.stringify(interesting.slice(i, i + 10)));
+  }
 
 
 
