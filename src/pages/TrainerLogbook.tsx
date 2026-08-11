@@ -191,7 +191,7 @@ export default function TrainerLogbook() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((e) => (
+                {paged.map((e) => (
                   <tr
                     key={e.id}
                     onClick={() => setSelected(e)}
@@ -225,6 +225,32 @@ export default function TrainerLogbook() {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {totalPages > 1 && (
+          <div className="flex items-center justify-between pt-2">
+            <div className="text-sm text-muted-foreground">
+              Page {page} of {totalPages}
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         )}
       </section>
