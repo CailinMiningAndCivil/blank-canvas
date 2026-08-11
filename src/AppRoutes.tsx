@@ -38,6 +38,7 @@ import SignatureBackfill from "./pages/admin/SignatureBackfill";
 import LogbookAdmin from "./pages/admin/Logbook";
 import FAQ from "./pages/FAQ";
 import SignLogbook from "./pages/SignLogbook";
+import TrainerLogbook from "./pages/TrainerLogbook";
 
 const CareersRedirect = () => {
   if (typeof window !== "undefined") {
@@ -88,6 +89,7 @@ export const AppRoutes = () => (
       <Route path="/rigid-haul-truck-schedule" element={<RigidHaulTruckSchedule />} />
       <Route path="/admin/signature-backfill" element={<SignatureBackfill />} />
       <Route path="/admin/logbook" element={<LogbookAdmin />} />
+      <Route path="/trainer/logbook" element={<TrainerLogbook />} />
       <Route path="/faq" element={<FAQ />} />
       <Route path="/practical-assessments" element={<Navigate to="/courses" replace />} />
       <Route path="/cailin-courses" element={<Navigate to="/courses" replace />} />
