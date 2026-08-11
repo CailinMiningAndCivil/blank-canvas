@@ -268,6 +268,7 @@ Deno.serve(async (req) => {
         "tasks_completed__training_activities",
       ]),
       findValue(body, [
+        "Provide any relevant additional information",
         "Additional Notes",
         "additional_notes",
       ]),
