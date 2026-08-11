@@ -1,0 +1,1 @@
+update public.logbook_entries set machine = session_type where machine = 'No';
