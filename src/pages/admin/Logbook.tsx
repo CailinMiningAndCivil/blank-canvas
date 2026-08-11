@@ -206,9 +206,17 @@ export default function LogbookAdmin() {
                             href={e.signature_url}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                            className="inline-flex flex-col gap-1 text-xs text-primary hover:underline"
                           >
-                            <FileText className="h-3 w-3" /> Signature
+                            <img
+                              src={e.signature_url}
+                              alt={`Signature by ${e.trainer_name ?? "trainer"}`}
+                              loading="lazy"
+                              className="h-12 w-auto max-w-[140px] rounded border bg-white object-contain p-1"
+                            />
+                            <span className="inline-flex items-center gap-1">
+                              <FileText className="h-3 w-3" /> View signature
+                            </span>
                           </a>
                         )}
                       </div>
