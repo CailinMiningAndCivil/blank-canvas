@@ -111,12 +111,30 @@ function normKey(k: string) {
   return k.toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
+// Candidates are checked IN ORDER so the exact form labels win over
+// any stale contact-field fallbacks further down the list.
 function findValue(body: Record<string, unknown>, candidates: string[]): string | null {
-  const wanted = new Set(candidates.map(normKey));
-  for (const [k, v] of Object.entries(body)) {
-    if (!wanted.has(normKey(k))) continue;
-    const s = pickString(v) ?? (typeof v === "number" ? String(v) : null);
-    if (s) return s;
+  const entries = Object.entries(body).map(([k, v]) => [normKey(k), v] as const);
+  const read = (v: unknown) =>
+    pickString(v) ?? (typeof v === "number" ? String(v) : null);
+
+  for (const cand of candidates) {
+    const want = normKey(cand);
+    for (const [k, v] of entries) {
+      if (k !== want) continue;
+      const s = read(v);
+      if (s) return s;
+    }
+  }
+  // second pass: prefix match (handles truncated / slightly different labels)
+  for (const cand of candidates) {
+    const want = normKey(cand);
+    if (want.length < 6) continue;
+    for (const [k, v] of entries) {
+      if (!k.startsWith(want) && !want.startsWith(k)) continue;
+      const s = read(v);
+      if (s) return s;
+    }
   }
   return null;
 }
