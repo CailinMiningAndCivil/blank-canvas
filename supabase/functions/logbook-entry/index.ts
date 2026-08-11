@@ -275,11 +275,7 @@ Deno.serve(async (req) => {
       "session_type",
       "course_booked",
     ]);
-    const machine = findValue(body, [
-      "machine",
-      "machine_type",
-      "equipment",
-    ]) ?? sessionType;
+    const machine = sessionType;
 
 
     const insertPayload: Record<string, unknown> = {
