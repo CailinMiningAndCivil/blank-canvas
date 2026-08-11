@@ -162,13 +162,8 @@ Deno.serve(async (req) => {
     ),
   );
 
-  // Dump every non-empty key so we can see what GHL actually posts.
-  const nonEmpty = Object.entries(body)
-    .filter(([, v]) => v !== null && v !== undefined && String(v).trim() !== "" && typeof v !== "object")
-    .map(([k, v]) => `${k.slice(0, 60)} = ${String(v).slice(0, 60)}`);
-  for (let i = 0; i < nonEmpty.length; i += 15) {
-    console.log(`logbook-entry payload [${i}]`, nonEmpty.slice(i, i + 15).join(" | "));
-  }
+
+
 
 
 
@@ -222,6 +217,7 @@ Deno.serve(async (req) => {
 
     const hoursStr = findValue(body, [
       "hours",
+      "Hours Trained",
       "training_hours",
       "hours_operated",
       "seat_time",
@@ -232,6 +228,7 @@ Deno.serve(async (req) => {
     const sessionDate = pickDate(
       findValue(body, [
         "training_date",
+        "Training Date",
         "session_date",
         "date_of_training",
         "Course Date Start",
@@ -241,12 +238,14 @@ Deno.serve(async (req) => {
     const notes = buildNotes(
       findValue(body, [
         "tasks_completed",
+        "Tasks Completed / Training Activities",
         "tasks_completed__training_activities",
         "tasks",
         "activities",
       ]),
       findValue(body, [
         "additional_notes",
+        "Provide any relevant additional information",
         "notes",
         "additional_comments",
         "Additional Information",
