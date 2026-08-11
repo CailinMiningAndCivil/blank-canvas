@@ -234,54 +234,43 @@ Deno.serve(async (req) => {
     }
 
     const hoursStr = findValue(body, [
-      "hours",
       "Hours Trained",
+      "hours",
+      "hours_trained",
       "training_hours",
-      "hours_operated",
-      "seat_time",
-      "machine_hours",
     ]);
     const hours = hoursStr && !isNaN(Number(hoursStr)) ? Number(hoursStr) : null;
 
     const sessionDate = pickDate(
       findValue(body, [
-        "training_date",
         "Training Date",
+        "training_date",
         "session_date",
-        "date_of_training",
-        "Course Date Start",
-        "Course Enrolled Start Date",
       ]),
     );
     const notes = buildNotes(
       findValue(body, [
-        "tasks_completed",
         "Tasks Completed / Training Activities",
+        "tasks_completed",
         "tasks_completed__training_activities",
-        "tasks",
-        "activities",
       ]),
       findValue(body, [
+        "Additional Notes",
         "additional_notes",
-        "Provide any relevant additional information",
-        "notes",
-        "additional_comments",
-        "Additional Information",
       ]),
     );
     const sessionType = findValue(body, [
+      "Which Course Are You Booking",
+      "Which Course Are You Booking For",
+      "which_course_are_you_booking_for",
       "session_type",
       "course_booked",
-      "training_type",
-      "select_course_for_document_upload",
-      "On-Site Course Purchased",
     ]);
     const machine = findValue(body, [
       "machine",
       "machine_type",
       "equipment",
-      "On-Site Course Purchased",
-    ]);
+    ]) ?? sessionType;
 
 
     const insertPayload: Record<string, unknown> = {
