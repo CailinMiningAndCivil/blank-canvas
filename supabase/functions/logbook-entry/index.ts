@@ -179,6 +179,14 @@ Deno.serve(async (req) => {
       ),
     ),
   );
+  console.log(
+    "logbook-entry non-empty keys",
+    JSON.stringify(
+      Object.entries(body)
+        .filter(([, v]) => v !== null && v !== undefined && String(v).trim() !== "")
+        .map(([k, v]) => `${k}=${String(v).slice(0, 40)}`),
+    ).slice(0, 3000),
+  );
 
 
 
