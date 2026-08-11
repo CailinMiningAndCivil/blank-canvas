@@ -162,13 +162,8 @@ Deno.serve(async (req) => {
     ),
   );
 
-  // Dump every non-empty key so we can see what GHL actually posts.
-  const nonEmpty = Object.entries(body)
-    .filter(([, v]) => v !== null && v !== undefined && String(v).trim() !== "" && typeof v !== "object")
-    .map(([k, v]) => `${k.slice(0, 60)} = ${String(v).slice(0, 60)}`);
-  for (let i = 0; i < nonEmpty.length; i += 15) {
-    console.log(`logbook-entry payload [${i}]`, nonEmpty.slice(i, i + 15).join(" | "));
-  }
+
+
 
 
 
