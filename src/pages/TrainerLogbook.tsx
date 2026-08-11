@@ -114,37 +114,49 @@ export default function TrainerLogbook() {
       </div>
 
       <section className="border rounded-lg p-6 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <h2 className="text-xl font-semibold">
-            Entries{" "}
-            <span className="text-muted-foreground text-sm font-normal">
-              ({filtered.length} of {entries.length})
-            </span>
-          </h2>
-          <div className="flex items-center gap-3">
-            <Label htmlFor="trainer-search" className="sr-only">Search</Label>
-            <Input
-              id="trainer-search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search student, course, trainer..."
-              className="w-56"
-            />
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value as any)}
-              className="h-10 rounded-md border border-input bg-background px-3 text-sm"
-            >
-              <option value="all">All statuses</option>
-              <option value="pending">Pending</option>
-              <option value="signed">Signed</option>
-            </select>
-            <Button variant="outline" onClick={load} disabled={loading}>
-              {loading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-              Refresh
-            </Button>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <h2 className="text-xl font-semibold">
+              Entries{" "}
+              <span className="text-muted-foreground text-sm font-normal">
+                ({filtered.length} of {entries.length})
+              </span>
+            </h2>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <Label htmlFor="trainer-search" className="sr-only">Search</Label>
+              <Input
+                id="trainer-search"
+                value={search}
+                onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                placeholder="Search student, course, trainer..."
+                className="w-56"
+              />
+              <select
+                value={studentFilter}
+                onChange={(e) => { setStudentFilter(e.target.value); setPage(1); }}
+                className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+                aria-label="Filter by student"
+              >
+                <option value="all">All students</option>
+                {students.map((s) => (
+                  <option key={s} value={s}>{s}</option>
+                ))}
+              </select>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value as any)}
+                className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+                aria-label="Filter by status"
+              >
+                <option value="all">All statuses</option>
+                <option value="pending">Pending</option>
+                <option value="signed">Signed</option>
+              </select>
+              <Button variant="outline" onClick={load} disabled={loading}>
+                {loading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                Refresh
+              </Button>
+            </div>
           </div>
-        </div>
 
         {error && (
           <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive flex items-start gap-2">
