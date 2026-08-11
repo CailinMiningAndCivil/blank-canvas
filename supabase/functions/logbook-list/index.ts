@@ -65,7 +65,8 @@ Deno.serve(async (req) => {
     if (error) throw error;
 
     const rows = await Promise.all((entries ?? []).map(async (entry: any) => {
-      const row = { ...entry } as Record<string, unknown>;
+      const student = Array.isArray(entry.students) ? entry.students[0] : entry.students;
+      const row = { ...entry, student: student ?? null } as Record<string, unknown>;
       // Generate a temporary signed URL for the signature image when present.
       if (entry.trainer_signature_path) {
         const { data } = await supabase.storage
