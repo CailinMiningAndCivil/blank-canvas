@@ -217,6 +217,7 @@ Deno.serve(async (req) => {
 
     const hoursStr = findValue(body, [
       "hours",
+      "Hours Trained",
       "training_hours",
       "hours_operated",
       "seat_time",
@@ -227,6 +228,7 @@ Deno.serve(async (req) => {
     const sessionDate = pickDate(
       findValue(body, [
         "training_date",
+        "Training Date",
         "session_date",
         "date_of_training",
         "Course Date Start",
@@ -236,12 +238,14 @@ Deno.serve(async (req) => {
     const notes = buildNotes(
       findValue(body, [
         "tasks_completed",
+        "Tasks Completed / Training Activities",
         "tasks_completed__training_activities",
         "tasks",
         "activities",
       ]),
       findValue(body, [
         "additional_notes",
+        "Provide any relevant additional information",
         "notes",
         "additional_comments",
         "Additional Information",
