@@ -139,6 +139,18 @@ function findValue(body: Record<string, unknown>, candidates: string[]): string 
   return null;
 }
 
+// GHL places values configured in the Webhook action under customData while
+// also including older contact custom fields at the payload root. Always use
+// the fresh Webhook values first so stale contact data cannot override them.
+function findWebhookValue(body: Record<string, unknown>, candidates: string[]): string | null {
+  const customData = body.customData;
+  if (customData && typeof customData === "object" && !Array.isArray(customData)) {
+    const fresh = findValue(customData as Record<string, unknown>, candidates);
+    if (fresh) return fresh;
+  }
+  return findValue(body, candidates);
+}
+
 
 
 
@@ -242,7 +254,7 @@ Deno.serve(async (req) => {
       studentId = created.id;
     }
 
-    const hoursStr = findValue(body, [
+    const hoursStr = findWebhookValue(body, [
       "Hours Trained",
       "hours",
       "hours_trained",
@@ -251,25 +263,25 @@ Deno.serve(async (req) => {
     const hours = hoursStr && !isNaN(Number(hoursStr)) ? Number(hoursStr) : null;
 
     const sessionDate = pickDate(
-      findValue(body, [
+      findWebhookValue(body, [
         "Training Date",
         "training_date",
         "session_date",
       ]),
     );
     const notes = buildNotes(
-      findValue(body, [
+      findWebhookValue(body, [
         "Tasks Completed / Training Activities",
         "tasks_completed",
         "tasks_completed__training_activities",
       ]),
-      findValue(body, [
+      findWebhookValue(body, [
         "Additional Notes",
         "additional_notes",
         "Provide any relevant additional information",
       ]),
     );
-    const sessionType = findValue(body, [
+    const sessionType = findWebhookValue(body, [
       "Which Course Are You Uploading Documents For?",
       "Which Course Are You Uploading Documents For",
       "session_type",
