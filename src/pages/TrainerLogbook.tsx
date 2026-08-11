@@ -10,13 +10,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Loader2, CheckCircle2, Clock, AlertCircle } from "lucide-react";
+import { Loader2, CheckCircle2, Clock, AlertCircle, ChevronLeft, ChevronRight } from "lucide-react";
+
+const PAGE_SIZE = 20;
 
 export default function TrainerLogbook() {
   const [entries, setEntries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState<"all" | "pending" | "signed">("all");
   const [search, setSearch] = useState("");
+  const [studentFilter, setStudentFilter] = useState<string>("all");
+  const [page, setPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<any | null>(null);
 
@@ -29,6 +33,7 @@ export default function TrainerLogbook() {
       });
       if (fnError) throw fnError;
       setEntries((data?.entries ?? []) as any[]);
+      setPage(1);
     } catch {
       setError("Could not load logbook entries. Please try again.");
       setEntries([]);
@@ -42,17 +47,34 @@ export default function TrainerLogbook() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
+  const students = useMemo(() => {
+    const names = new Set<string>();
+    for (const e of entries) {
+      if (e.student?.full_name) names.add(e.student.full_name);
+    }
+    return Array.from(names).sort();
+  }, [entries]);
+
   const filtered = useMemo(() => {
     const term = search.toLowerCase();
-    return entries.filter((e) =>
-      !term
+    return entries.filter((e) => {
+      const matchesSearch = !term
         ? true
         : (e.student?.full_name ?? "").toLowerCase().includes(term) ||
           (e.session_type ?? "").toLowerCase().includes(term) ||
           (e.machine ?? "").toLowerCase().includes(term) ||
-          (e.trainer_name ?? "").toLowerCase().includes(term),
-    );
-  }, [entries, search]);
+          (e.trainer_name ?? "").toLowerCase().includes(term);
+      const matchesStudent = studentFilter === "all" || e.student?.full_name === studentFilter;
+      return matchesSearch && matchesStudent;
+    });
+  }, [entries, search, studentFilter]);
+
+  const paged = useMemo(() => {
+    const start = (page - 1) * PAGE_SIZE;
+    return filtered.slice(start, start + PAGE_SIZE);
+  }, [filtered, page]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
 
   const totals = useMemo(() => {
     let hours = 0;
@@ -92,37 +114,49 @@ export default function TrainerLogbook() {
       </div>
 
       <section className="border rounded-lg p-6 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <h2 className="text-xl font-semibold">
-            Entries{" "}
-            <span className="text-muted-foreground text-sm font-normal">
-              ({filtered.length} of {entries.length})
-            </span>
-          </h2>
-          <div className="flex items-center gap-3">
-            <Label htmlFor="trainer-search" className="sr-only">Search</Label>
-            <Input
-              id="trainer-search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search student, course, trainer..."
-              className="w-56"
-            />
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value as any)}
-              className="h-10 rounded-md border border-input bg-background px-3 text-sm"
-            >
-              <option value="all">All statuses</option>
-              <option value="pending">Pending</option>
-              <option value="signed">Signed</option>
-            </select>
-            <Button variant="outline" onClick={load} disabled={loading}>
-              {loading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
-              Refresh
-            </Button>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <h2 className="text-xl font-semibold">
+              Entries{" "}
+              <span className="text-muted-foreground text-sm font-normal">
+                ({filtered.length} of {entries.length})
+              </span>
+            </h2>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <Label htmlFor="trainer-search" className="sr-only">Search</Label>
+              <Input
+                id="trainer-search"
+                value={search}
+                onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                placeholder="Search student, course, trainer..."
+                className="w-56"
+              />
+              <select
+                value={studentFilter}
+                onChange={(e) => { setStudentFilter(e.target.value); setPage(1); }}
+                className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+                aria-label="Filter by student"
+              >
+                <option value="all">All students</option>
+                {students.map((s) => (
+                  <option key={s} value={s}>{s}</option>
+                ))}
+              </select>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value as any)}
+                className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+                aria-label="Filter by status"
+              >
+                <option value="all">All statuses</option>
+                <option value="pending">Pending</option>
+                <option value="signed">Signed</option>
+              </select>
+              <Button variant="outline" onClick={load} disabled={loading}>
+                {loading && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                Refresh
+              </Button>
+            </div>
           </div>
-        </div>
 
         {error && (
           <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive flex items-start gap-2">
@@ -157,7 +191,7 @@ export default function TrainerLogbook() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((e) => (
+                {paged.map((e) => (
                   <tr
                     key={e.id}
                     onClick={() => setSelected(e)}
@@ -191,6 +225,32 @@ export default function TrainerLogbook() {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {totalPages > 1 && (
+          <div className="flex items-center justify-between pt-2">
+            <div className="text-sm text-muted-foreground">
+              Page {page} of {totalPages}
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         )}
       </section>
