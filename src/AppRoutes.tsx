@@ -35,6 +35,7 @@ import RigidHaulTruckApplication from "./pages/RigidHaulTruckApplication";
 import RigidHaulTruckBooking from "./pages/RigidHaulTruckBooking";
 import RigidHaulTruckSchedule from "./pages/RigidHaulTruckSchedule";
 import SignatureBackfill from "./pages/admin/SignatureBackfill";
+import LogbookAdmin from "./pages/admin/Logbook";
 import FAQ from "./pages/FAQ";
 import SignLogbook from "./pages/SignLogbook";
 
@@ -86,6 +87,7 @@ export const AppRoutes = () => (
       <Route path="/rigid-haul-truck-booking" element={<RigidHaulTruckBooking />} />
       <Route path="/rigid-haul-truck-schedule" element={<RigidHaulTruckSchedule />} />
       <Route path="/admin/signature-backfill" element={<SignatureBackfill />} />
+      <Route path="/admin/logbook" element={<LogbookAdmin />} />
       <Route path="/faq" element={<FAQ />} />
       <Route path="/practical-assessments" element={<Navigate to="/courses" replace />} />
       <Route path="/cailin-courses" element={<Navigate to="/courses" replace />} />
