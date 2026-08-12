@@ -1,11 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Loader2, RotateCcw } from "lucide-react";
+import { CheckCircle2, Loader2, Pencil, RotateCcw } from "lucide-react";
 
 const FN_URL = `${
   import.meta.env.VITE_SUPABASE_URL || "https://opdxvpqimcfhawcznxyc.supabase.co"
 }/functions/v1/logbook-sign`;
+
+const UPDATE_URL = `${
+  import.meta.env.VITE_SUPABASE_URL || "https://opdxvpqimcfhawcznxyc.supabase.co"
+}/functions/v1/logbook-update`;
+
 
 type Entry = {
   id: string;
