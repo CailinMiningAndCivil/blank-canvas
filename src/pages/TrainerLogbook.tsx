@@ -255,12 +255,12 @@ export default function TrainerLogbook() {
         )}
       </section>
 
-      <Dialog open={!!selected} onOpenChange={(o) => !o && setSelected(null)}>
+      <Dialog open={!!selected} onOpenChange={(o) => { if (!o) { setSelected(null); setEditing(false); } }}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle>{selected?.student?.full_name ?? "Logbook entry"}</DialogTitle>
           </DialogHeader>
-          {selected && (
+          {selected && !editing && (
             <div className="space-y-4 text-sm">
               <div className="grid grid-cols-2 gap-3">
                 <div>
@@ -307,6 +307,86 @@ export default function TrainerLogbook() {
                 ) : (
                   <div className="text-amber-600">Awaiting trainer signature.</div>
                 )}
+              </div>
+
+              {selected.status !== "signed" && selected.sign_token ? (
+                <div className="flex flex-wrap gap-2 pt-2">
+                  <Button onClick={startEdit}>Edit entry</Button>
+                  <Button variant="outline" asChild>
+                    <a href={`/sign-logbook/${selected.sign_token}`} target="_blank" rel="noreferrer">
+                      Open signing link
+                    </a>
+                  </Button>
+                </div>
+              ) : (
+                <p className="text-xs text-muted-foreground pt-2">
+                  Signed entries are locked and cannot be edited.
+                </p>
+              )}
+            </div>
+          )}
+
+          {selected && editing && (
+            <div className="space-y-4 text-sm">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <Label htmlFor="edit-date">Training date</Label>
+                  <Input
+                    id="edit-date"
+                    type="date"
+                    value={form.session_date}
+                    onChange={(e) => setForm({ ...form, session_date: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="edit-hours">Hours</Label>
+                  <Input
+                    id="edit-hours"
+                    type="number"
+                    step="0.5"
+                    min="0"
+                    max="24"
+                    value={form.hours}
+                    onChange={(e) => setForm({ ...form, hours: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="edit-course">Course</Label>
+                  <Input
+                    id="edit-course"
+                    value={form.session_type}
+                    onChange={(e) => setForm({ ...form, session_type: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="edit-machine">Machine</Label>
+                  <Input
+                    id="edit-machine"
+                    value={form.machine}
+                    onChange={(e) => setForm({ ...form, machine: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="edit-notes">Comments / notes</Label>
+                <Textarea
+                  id="edit-notes"
+                  rows={4}
+                  value={form.notes}
+                  onChange={(e) => setForm({ ...form, notes: e.target.value })}
+                />
+              </div>
+
+              {saveError && <p className="text-sm text-destructive">{saveError}</p>}
+
+              <div className="flex gap-2">
+                <Button onClick={saveEdit} disabled={saving}>
+                  {saving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                  Save changes
+                </Button>
+                <Button variant="outline" onClick={() => setEditing(false)} disabled={saving}>
+                  Cancel
+                </Button>
               </div>
             </div>
           )}
