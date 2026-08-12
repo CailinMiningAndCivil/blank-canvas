@@ -37,14 +37,14 @@ type CTFSubmissionNotification = ContactSubmission & {
   _ctfFields?: Record<string, string>;
 };
 
-const insertContactSubmission = async (submissionData: ContactSubmission) => {
+const insertContactSubmission = async (submissionData: ContactSubmission): Promise<string | null> => {
   const response = await fetch(CONTACT_SUBMISSIONS_ENDPOINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       apikey: PUBLISHABLE_KEY,
       Authorization: `Bearer ${PUBLISHABLE_KEY}`,
-      Prefer: "return=minimal",
+      Prefer: "return=representation",
     },
     body: JSON.stringify(submissionData),
   });
@@ -53,9 +53,15 @@ const insertContactSubmission = async (submissionData: ContactSubmission) => {
     const errorText = await response.text();
     throw new Error(errorText || "Failed to save submission");
   }
+
+  const rows = await response.json().catch(() => null);
+  return Array.isArray(rows) && rows[0]?.id ? String(rows[0].id) : null;
 };
 
-const triggerSubmissionNotification = async (submissionData: CTFSubmissionNotification) => {
+const triggerSubmissionNotification = async (
+  submissionId: string,
+  ctfFields?: Record<string, string>,
+) => {
   const response = await fetch(NOTIFY_SUBMISSION_ENDPOINT, {
     method: "POST",
     headers: {
@@ -63,12 +69,9 @@ const triggerSubmissionNotification = async (submissionData: CTFSubmissionNotifi
       apikey: PUBLISHABLE_KEY,
       Authorization: `Bearer ${PUBLISHABLE_KEY}`,
     },
-      body: JSON.stringify({
-      record: {
-        ...submissionData,
-        created_at: new Date().toISOString(),
-        ...(submissionData as any)._ctfFields,
-      },
+    body: JSON.stringify({
+      submission_id: submissionId,
+      record: { ...(ctfFields ?? {}) },
     }),
   });
 
