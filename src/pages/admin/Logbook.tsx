@@ -4,7 +4,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, CheckCircle2, Clock, AlertCircle, FileText, ExternalLink } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Loader2, CheckCircle2, Clock, AlertCircle, FileText, ExternalLink, Pencil } from "lucide-react";
 
 const ADMIN_KEY_STORAGE = "signature_admin_key";
 
@@ -15,6 +22,55 @@ export default function LogbookAdmin() {
   const [status, setStatus] = useState<"all" | "pending" | "signed">("all");
   const [search, setSearch] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [editingEntry, setEditingEntry] = useState<any | null>(null);
+  const [form, setForm] = useState({
+    session_date: "",
+    session_type: "",
+    machine: "",
+    hours: "",
+    notes: "",
+  });
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+
+  function openEdit(e: any) {
+    setEditingEntry(e);
+    setForm({
+      session_date: e.session_date ?? "",
+      session_type: e.session_type ?? "",
+      machine: e.machine ?? "",
+      hours: e.hours === null || e.hours === undefined ? "" : String(e.hours),
+      notes: e.notes ?? "",
+    });
+    setSaveError(null);
+  }
+
+  async function saveEdit() {
+    if (!editingEntry) return;
+    setSaving(true);
+    setSaveError(null);
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke("logbook-update", {
+        headers: { "x-admin-key": adminKey },
+        body: {
+          entry_id: editingEntry.id,
+          session_date: form.session_date,
+          session_type: form.session_type,
+          machine: form.machine,
+          hours: form.hours === "" ? null : form.hours,
+          notes: form.notes,
+        },
+      });
+      if (fnError || data?.error) throw new Error(data?.error ?? "Could not save changes");
+      setEntries((prev) => prev.map((e) => (e.id === editingEntry.id ? { ...e, ...data.entry } : e)));
+      setEditingEntry(null);
+    } catch (e: any) {
+      setSaveError(e?.message ?? "Could not save changes");
+    } finally {
+      setSaving(false);
+    }
+  }
+
 
   function saveKey(v: string) {
     setAdminKey(v);
