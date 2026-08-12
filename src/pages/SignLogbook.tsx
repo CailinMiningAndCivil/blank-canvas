@@ -176,6 +176,66 @@ const SignLogbook = () => {
         {entry && (
           <div className="rounded-xl border border-border bg-card p-6 space-y-6">
             <h2 className="text-xl font-semibold text-foreground">{entry.student_name}</h2>
+
+            {editing ? (
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="space-y-1">
+                  <label className="text-muted-foreground text-xs">Date</label>
+                  <input
+                    type="date"
+                    value={form.session_date}
+                    onChange={(e) => setForm({ ...form, session_date: e.target.value })}
+                    className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-muted-foreground text-xs">Seat time (hours)</label>
+                  <input
+                    type="number"
+                    step="0.5"
+                    min="0"
+                    max="24"
+                    value={form.hours}
+                    onChange={(e) => setForm({ ...form, hours: e.target.value })}
+                    className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-muted-foreground text-xs">Session</label>
+                  <input
+                    value={form.session_type}
+                    onChange={(e) => setForm({ ...form, session_type: e.target.value })}
+                    className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-muted-foreground text-xs">Machine</label>
+                  <input
+                    value={form.machine}
+                    onChange={(e) => setForm({ ...form, machine: e.target.value })}
+                    className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                  />
+                </div>
+                <div className="col-span-2 space-y-1">
+                  <label className="text-muted-foreground text-xs">Notes</label>
+                  <textarea
+                    rows={4}
+                    value={form.notes}
+                    onChange={(e) => setForm({ ...form, notes: e.target.value })}
+                    className="w-full rounded-md border border-input bg-background p-3 text-sm text-foreground"
+                  />
+                </div>
+                <div className="col-span-2 flex gap-2">
+                  <Button onClick={saveEdit} disabled={saving} size="sm">
+                    {saving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                    Save details
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => setEditing(false)} disabled={saving}>
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            ) : (
               <dl className="grid grid-cols-2 gap-3 text-sm">
                 <div>
                   <dt className="text-muted-foreground">Date</dt>
@@ -205,7 +265,16 @@ const SignLogbook = () => {
                     </dd>
                   </div>
                 )}
+                {!done && (
+                  <div className="col-span-2">
+                    <Button type="button" variant="outline" size="sm" onClick={startEdit}>
+                      <Pencil className="h-4 w-4 mr-1" />
+                      Edit details
+                    </Button>
+                  </div>
+                )}
               </dl>
+            )}
 
               {done ? (
                 <div className="flex items-center gap-3 rounded-lg border border-border bg-muted/40 p-4">
