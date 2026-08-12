@@ -122,11 +122,15 @@ export const RPLApplicationForm = () => {
         message,
       };
 
-      const { error } = await supabase.from("contact_submissions").insert(submissionData);
+      const { data: inserted, error } = await supabase
+        .from("contact_submissions")
+        .insert(submissionData)
+        .select("id")
+        .single();
       if (error) throw error;
 
       supabase.functions.invoke("notify-submission", {
-        body: { record: { ...submissionData, created_at: new Date().toISOString() } },
+        body: { submission_id: inserted?.id },
       }).catch((err) => console.error("Notify error:", err));
 
       toast.success("Your RPL enquiry has been submitted! We'll be in touch soon.");

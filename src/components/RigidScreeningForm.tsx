@@ -158,26 +158,23 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
         source,
       };
 
-      const { error: insertError } = await supabase
+      const { data: insertedApp, error: insertError } = await supabase
         .from("haul_truck_applications")
-        .insert(record);
+        .insert(record)
+        .select("id")
+        .single();
 
       if (insertError) {
         console.error("insert error", insertError);
         throw insertError;
       }
 
+      const applicationId = insertedApp?.id;
+
       // Forward to GHL via notify-submission for record-keeping
       try {
         await supabase.functions.invoke("notify-submission", {
-          body: {
-            record: {
-              name: fullName.trim(),
-              email: email.trim(),
-              phone: phone.trim(),
-              message: `[Rigid Haul Truck Screening - ${source}]\nPostcode: ${postcode}\nExperience: ${hasExperience}\nMachines: ${machines || "n/a"}\nHR Licence: ${hasHrLicence || "n/a"}\nQualified: ${qualified ? "YES" : "NO"}${reason ? ` (${reason})` : ""}`,
-            },
-          },
+          body: { application_id: applicationId },
         });
       } catch (err) {
         console.warn("notify-submission failed", err);
@@ -186,19 +183,7 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
       // Append to Google Sheet (best effort)
       try {
         await supabase.functions.invoke("sync-rigid-application", {
-          body: {
-            full_name: fullName.trim(),
-            email: email.trim(),
-            phone: phone.trim(),
-            postcode: postcode.trim(),
-            previous_experience: hasExperience === "yes",
-            machines_operated: hasExperience === "yes" ? machines.trim() : null,
-            has_hr_licence: hasExperience === "no" ? hasHrLicence === "yes" : null,
-            evidence_file_path: evidencePath,
-            hr_licence_file_path: hrPath,
-            qualified,
-            source,
-          },
+          body: { application_id: applicationId },
         });
       } catch (err) {
         console.warn("sync-rigid-application failed", err);
