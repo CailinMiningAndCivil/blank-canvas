@@ -1,11 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Loader2, RotateCcw } from "lucide-react";
+import { CheckCircle2, Loader2, Pencil, RotateCcw } from "lucide-react";
 
 const FN_URL = `${
   import.meta.env.VITE_SUPABASE_URL || "https://opdxvpqimcfhawcznxyc.supabase.co"
 }/functions/v1/logbook-sign`;
+
+const UPDATE_URL = `${
+  import.meta.env.VITE_SUPABASE_URL || "https://opdxvpqimcfhawcznxyc.supabase.co"
+}/functions/v1/logbook-update`;
+
 
 type Entry = {
   id: string;
@@ -32,9 +37,62 @@ const SignLogbook = () => {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState<string | null>(null);
   const [hasInk, setHasInk] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [form, setForm] = useState({
+    session_date: "",
+    session_type: "",
+    machine: "",
+    hours: "",
+    notes: "",
+  });
+
+  const startEdit = () => {
+    if (!entry) return;
+    setForm({
+      session_date: entry.session_date ?? "",
+      session_type: entry.session_type ?? "",
+      machine: entry.machine ?? "",
+      hours: entry.hours === null || entry.hours === undefined ? "" : String(entry.hours),
+      notes: entry.notes ?? "",
+    });
+    setError(null);
+    setEditing(true);
+  };
+
+  const saveEdit = async () => {
+    setSaving(true);
+    setError(null);
+    try {
+      const res = await fetch(UPDATE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token,
+          session_date: form.session_date,
+          session_type: form.session_type,
+          machine: form.machine,
+          hours: form.hours === "" ? null : form.hours,
+          notes: form.notes,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data?.error ?? "Could not save these details. Please try again.");
+      } else {
+        setEntry((prev) => (prev ? { ...prev, ...data.entry } : prev));
+        setEditing(false);
+      }
+    } catch {
+      setError("Could not save these details. Please try again.");
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawing = useRef(false);
+
 
   useEffect(() => {
     let active = true;
@@ -176,6 +234,66 @@ const SignLogbook = () => {
         {entry && (
           <div className="rounded-xl border border-border bg-card p-6 space-y-6">
             <h2 className="text-xl font-semibold text-foreground">{entry.student_name}</h2>
+
+            {editing ? (
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="space-y-1">
+                  <label className="text-muted-foreground text-xs">Date</label>
+                  <input
+                    type="date"
+                    value={form.session_date}
+                    onChange={(e) => setForm({ ...form, session_date: e.target.value })}
+                    className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-muted-foreground text-xs">Seat time (hours)</label>
+                  <input
+                    type="number"
+                    step="0.5"
+                    min="0"
+                    max="24"
+                    value={form.hours}
+                    onChange={(e) => setForm({ ...form, hours: e.target.value })}
+                    className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-muted-foreground text-xs">Session</label>
+                  <input
+                    value={form.session_type}
+                    onChange={(e) => setForm({ ...form, session_type: e.target.value })}
+                    className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-muted-foreground text-xs">Machine</label>
+                  <input
+                    value={form.machine}
+                    onChange={(e) => setForm({ ...form, machine: e.target.value })}
+                    className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground"
+                  />
+                </div>
+                <div className="col-span-2 space-y-1">
+                  <label className="text-muted-foreground text-xs">Notes</label>
+                  <textarea
+                    rows={4}
+                    value={form.notes}
+                    onChange={(e) => setForm({ ...form, notes: e.target.value })}
+                    className="w-full rounded-md border border-input bg-background p-3 text-sm text-foreground"
+                  />
+                </div>
+                <div className="col-span-2 flex gap-2">
+                  <Button onClick={saveEdit} disabled={saving} size="sm">
+                    {saving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                    Save details
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => setEditing(false)} disabled={saving}>
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            ) : (
               <dl className="grid grid-cols-2 gap-3 text-sm">
                 <div>
                   <dt className="text-muted-foreground">Date</dt>
@@ -205,7 +323,16 @@ const SignLogbook = () => {
                     </dd>
                   </div>
                 )}
+                {!done && (
+                  <div className="col-span-2">
+                    <Button type="button" variant="outline" size="sm" onClick={startEdit}>
+                      <Pencil className="h-4 w-4 mr-1" />
+                      Edit details
+                    </Button>
+                  </div>
+                )}
               </dl>
+            )}
 
               {done ? (
                 <div className="flex items-center gap-3 rounded-lg border border-border bg-muted/40 p-4">

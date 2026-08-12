@@ -4,7 +4,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, CheckCircle2, Clock, AlertCircle, FileText, ExternalLink } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Loader2, CheckCircle2, Clock, AlertCircle, FileText, ExternalLink, Pencil } from "lucide-react";
 
 const ADMIN_KEY_STORAGE = "signature_admin_key";
 
@@ -15,6 +22,55 @@ export default function LogbookAdmin() {
   const [status, setStatus] = useState<"all" | "pending" | "signed">("all");
   const [search, setSearch] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [editingEntry, setEditingEntry] = useState<any | null>(null);
+  const [form, setForm] = useState({
+    session_date: "",
+    session_type: "",
+    machine: "",
+    hours: "",
+    notes: "",
+  });
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+
+  function openEdit(e: any) {
+    setEditingEntry(e);
+    setForm({
+      session_date: e.session_date ?? "",
+      session_type: e.session_type ?? "",
+      machine: e.machine ?? "",
+      hours: e.hours === null || e.hours === undefined ? "" : String(e.hours),
+      notes: e.notes ?? "",
+    });
+    setSaveError(null);
+  }
+
+  async function saveEdit() {
+    if (!editingEntry) return;
+    setSaving(true);
+    setSaveError(null);
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke("logbook-update", {
+        headers: { "x-admin-key": adminKey },
+        body: {
+          entry_id: editingEntry.id,
+          session_date: form.session_date,
+          session_type: form.session_type,
+          machine: form.machine,
+          hours: form.hours === "" ? null : form.hours,
+          notes: form.notes,
+        },
+      });
+      if (fnError || data?.error) throw new Error(data?.error ?? "Could not save changes");
+      setEntries((prev) => prev.map((e) => (e.id === editingEntry.id ? { ...e, ...data.entry } : e)));
+      setEditingEntry(null);
+    } catch (e: any) {
+      setSaveError(e?.message ?? "Could not save changes");
+    } finally {
+      setSaving(false);
+    }
+  }
+
 
   function saveKey(v: string) {
     setAdminKey(v);
@@ -219,6 +275,13 @@ export default function LogbookAdmin() {
                             </span>
                           </a>
                         )}
+                        <button
+                          type="button"
+                          onClick={() => openEdit(e)}
+                          className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                        >
+                          <Pencil className="h-3 w-3" /> Edit
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -228,6 +291,74 @@ export default function LogbookAdmin() {
           </div>
         )}
       </section>
+
+      <Dialog open={!!editingEntry} onOpenChange={(o) => !o && setEditingEntry(null)}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Edit entry — {editingEntry?.student?.full_name ?? ""}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 text-sm">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <Label htmlFor="a-date">Training date</Label>
+                <Input
+                  id="a-date"
+                  type="date"
+                  value={form.session_date}
+                  onChange={(ev) => setForm({ ...form, session_date: ev.target.value })}
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="a-hours">Hours</Label>
+                <Input
+                  id="a-hours"
+                  type="number"
+                  step="0.5"
+                  min="0"
+                  max="24"
+                  value={form.hours}
+                  onChange={(ev) => setForm({ ...form, hours: ev.target.value })}
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="a-course">Course</Label>
+                <Input
+                  id="a-course"
+                  value={form.session_type}
+                  onChange={(ev) => setForm({ ...form, session_type: ev.target.value })}
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="a-machine">Machine</Label>
+                <Input
+                  id="a-machine"
+                  value={form.machine}
+                  onChange={(ev) => setForm({ ...form, machine: ev.target.value })}
+                />
+              </div>
+            </div>
+            <div className="space-y-1">
+              <Label htmlFor="a-notes">Comments / notes</Label>
+              <Textarea
+                id="a-notes"
+                rows={4}
+                value={form.notes}
+                onChange={(ev) => setForm({ ...form, notes: ev.target.value })}
+              />
+            </div>
+            {saveError && <p className="text-sm text-destructive">{saveError}</p>}
+            <div className="flex gap-2">
+              <Button onClick={saveEdit} disabled={saving}>
+                {saving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                Save changes
+              </Button>
+              <Button variant="outline" onClick={() => setEditingEntry(null)} disabled={saving}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

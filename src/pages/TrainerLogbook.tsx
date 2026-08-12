@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
   DialogContent,
@@ -14,6 +15,8 @@ import { Loader2, CheckCircle2, Clock, AlertCircle, ChevronLeft, ChevronRight } 
 
 const PAGE_SIZE = 20;
 
+const emptyForm = { session_date: "", session_type: "", machine: "", hours: "", notes: "" };
+
 export default function TrainerLogbook() {
   const [entries, setEntries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -23,6 +26,51 @@ export default function TrainerLogbook() {
   const [page, setPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<any | null>(null);
+  const [editing, setEditing] = useState(false);
+  const [form, setForm] = useState(emptyForm);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+
+  function startEdit() {
+    if (!selected) return;
+    setForm({
+      session_date: selected.session_date ?? "",
+      session_type: selected.session_type ?? "",
+      machine: selected.machine ?? "",
+      hours: selected.hours === null || selected.hours === undefined ? "" : String(selected.hours),
+      notes: selected.notes ?? "",
+    });
+    setSaveError(null);
+    setEditing(true);
+  }
+
+  async function saveEdit() {
+    if (!selected?.sign_token) return;
+    setSaving(true);
+    setSaveError(null);
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke("logbook-update", {
+        body: {
+          token: selected.sign_token,
+          session_date: form.session_date,
+          session_type: form.session_type,
+          machine: form.machine,
+          hours: form.hours === "" ? null : form.hours,
+          notes: form.notes,
+        },
+      });
+      if (fnError || data?.error) throw new Error(data?.error ?? "Could not save changes");
+      const updated = { ...selected, ...data.entry };
+      setSelected(updated);
+      setEntries((prev) => prev.map((e) => (e.id === updated.id ? { ...e, ...data.entry } : e)));
+      setEditing(false);
+    } catch (e: any) {
+      setSaveError(e?.message ?? "Could not save changes. Please try again.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
 
   async function load() {
     setLoading(true);
@@ -255,12 +303,12 @@ export default function TrainerLogbook() {
         )}
       </section>
 
-      <Dialog open={!!selected} onOpenChange={(o) => !o && setSelected(null)}>
+      <Dialog open={!!selected} onOpenChange={(o) => { if (!o) { setSelected(null); setEditing(false); } }}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle>{selected?.student?.full_name ?? "Logbook entry"}</DialogTitle>
           </DialogHeader>
-          {selected && (
+          {selected && !editing && (
             <div className="space-y-4 text-sm">
               <div className="grid grid-cols-2 gap-3">
                 <div>
@@ -307,6 +355,86 @@ export default function TrainerLogbook() {
                 ) : (
                   <div className="text-amber-600">Awaiting trainer signature.</div>
                 )}
+              </div>
+
+              {selected.status !== "signed" && selected.sign_token ? (
+                <div className="flex flex-wrap gap-2 pt-2">
+                  <Button onClick={startEdit}>Edit entry</Button>
+                  <Button variant="outline" asChild>
+                    <a href={`/sign-logbook/${selected.sign_token}`} target="_blank" rel="noreferrer">
+                      Open signing link
+                    </a>
+                  </Button>
+                </div>
+              ) : (
+                <p className="text-xs text-muted-foreground pt-2">
+                  Signed entries are locked and cannot be edited.
+                </p>
+              )}
+            </div>
+          )}
+
+          {selected && editing && (
+            <div className="space-y-4 text-sm">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <Label htmlFor="edit-date">Training date</Label>
+                  <Input
+                    id="edit-date"
+                    type="date"
+                    value={form.session_date}
+                    onChange={(e) => setForm({ ...form, session_date: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="edit-hours">Hours</Label>
+                  <Input
+                    id="edit-hours"
+                    type="number"
+                    step="0.5"
+                    min="0"
+                    max="24"
+                    value={form.hours}
+                    onChange={(e) => setForm({ ...form, hours: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="edit-course">Course</Label>
+                  <Input
+                    id="edit-course"
+                    value={form.session_type}
+                    onChange={(e) => setForm({ ...form, session_type: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="edit-machine">Machine</Label>
+                  <Input
+                    id="edit-machine"
+                    value={form.machine}
+                    onChange={(e) => setForm({ ...form, machine: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="edit-notes">Comments / notes</Label>
+                <Textarea
+                  id="edit-notes"
+                  rows={4}
+                  value={form.notes}
+                  onChange={(e) => setForm({ ...form, notes: e.target.value })}
+                />
+              </div>
+
+              {saveError && <p className="text-sm text-destructive">{saveError}</p>}
+
+              <div className="flex gap-2">
+                <Button onClick={saveEdit} disabled={saving}>
+                  {saving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                  Save changes
+                </Button>
+                <Button variant="outline" onClick={() => setEditing(false)} disabled={saving}>
+                  Cancel
+                </Button>
               </div>
             </div>
           )}
