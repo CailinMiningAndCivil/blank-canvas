@@ -275,6 +275,13 @@ export default function LogbookAdmin() {
                             </span>
                           </a>
                         )}
+                        <button
+                          type="button"
+                          onClick={() => openEdit(e)}
+                          className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                        >
+                          <Pencil className="h-3 w-3" /> Edit
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -284,6 +291,74 @@ export default function LogbookAdmin() {
           </div>
         )}
       </section>
+
+      <Dialog open={!!editingEntry} onOpenChange={(o) => !o && setEditingEntry(null)}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Edit entry — {editingEntry?.student?.full_name ?? ""}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 text-sm">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <Label htmlFor="a-date">Training date</Label>
+                <Input
+                  id="a-date"
+                  type="date"
+                  value={form.session_date}
+                  onChange={(ev) => setForm({ ...form, session_date: ev.target.value })}
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="a-hours">Hours</Label>
+                <Input
+                  id="a-hours"
+                  type="number"
+                  step="0.5"
+                  min="0"
+                  max="24"
+                  value={form.hours}
+                  onChange={(ev) => setForm({ ...form, hours: ev.target.value })}
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="a-course">Course</Label>
+                <Input
+                  id="a-course"
+                  value={form.session_type}
+                  onChange={(ev) => setForm({ ...form, session_type: ev.target.value })}
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="a-machine">Machine</Label>
+                <Input
+                  id="a-machine"
+                  value={form.machine}
+                  onChange={(ev) => setForm({ ...form, machine: ev.target.value })}
+                />
+              </div>
+            </div>
+            <div className="space-y-1">
+              <Label htmlFor="a-notes">Comments / notes</Label>
+              <Textarea
+                id="a-notes"
+                rows={4}
+                value={form.notes}
+                onChange={(ev) => setForm({ ...form, notes: ev.target.value })}
+              />
+            </div>
+            {saveError && <p className="text-sm text-destructive">{saveError}</p>}
+            <div className="flex gap-2">
+              <Button onClick={saveEdit} disabled={saving}>
+                {saving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                Save changes
+              </Button>
+              <Button variant="outline" onClick={() => setEditingEntry(null)} disabled={saving}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
