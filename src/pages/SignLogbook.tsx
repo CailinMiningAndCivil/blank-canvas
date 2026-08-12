@@ -37,9 +37,62 @@ const SignLogbook = () => {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState<string | null>(null);
   const [hasInk, setHasInk] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [form, setForm] = useState({
+    session_date: "",
+    session_type: "",
+    machine: "",
+    hours: "",
+    notes: "",
+  });
+
+  const startEdit = () => {
+    if (!entry) return;
+    setForm({
+      session_date: entry.session_date ?? "",
+      session_type: entry.session_type ?? "",
+      machine: entry.machine ?? "",
+      hours: entry.hours === null || entry.hours === undefined ? "" : String(entry.hours),
+      notes: entry.notes ?? "",
+    });
+    setError(null);
+    setEditing(true);
+  };
+
+  const saveEdit = async () => {
+    setSaving(true);
+    setError(null);
+    try {
+      const res = await fetch(UPDATE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token,
+          session_date: form.session_date,
+          session_type: form.session_type,
+          machine: form.machine,
+          hours: form.hours === "" ? null : form.hours,
+          notes: form.notes,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data?.error ?? "Could not save these details. Please try again.");
+      } else {
+        setEntry((prev) => (prev ? { ...prev, ...data.entry } : prev));
+        setEditing(false);
+      }
+    } catch {
+      setError("Could not save these details. Please try again.");
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawing = useRef(false);
+
 
   useEffect(() => {
     let active = true;
