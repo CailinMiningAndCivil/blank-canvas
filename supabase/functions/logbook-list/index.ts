@@ -70,8 +70,9 @@ Deno.serve(async (req) => {
       const row = { ...entry, student: student ?? null } as Record<string, unknown>;
       delete (row as any).students;
       if (role === "trainer") {
-        // Read-only view: no signing tokens, IP addresses or student contact details.
-        delete row.sign_token;
+        // Read-only view: no IP addresses or student contact details.
+        // Pending entries keep their sign token so trainers can edit/sign them.
+        if (entry.status === "signed") delete row.sign_token;
         delete row.signed_ip;
         delete row.students;
         row.student = student ? { full_name: (student as any).full_name ?? null } : null;
