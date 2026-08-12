@@ -6,28 +6,22 @@ const SHEET_NAME = 'Rigid Training Application Form';
 const GATEWAY_URL = 'https://connector-gateway.lovable.dev/google_sheets/v4';
 const BUCKET = 'haul-truck-applications';
 const SIGNED_URL_TTL = 60 * 60 * 24 * 30; // 30 days
+const FRESH_WINDOW_MS = 30 * 60 * 1000;
 
 const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY') ?? '';
 const GOOGLE_SHEETS_API_KEY = Deno.env.get('GOOGLE_SHEETS_API_KEY') ?? '';
-
-interface Payload {
-  full_name: string;
-  email: string;
-  phone: string;
-  postcode: string;
-  previous_experience: boolean;
-  machines_operated?: string | null;
-  has_hr_licence?: boolean | null;
-  evidence_file_path?: string | null;
-  hr_licence_file_path?: string | null;
-  qualified: boolean;
-  source: string;
-}
 
 const supabase = createClient(
   Deno.env.get('SUPABASE_URL') ?? '',
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 );
+
+const isUuid = (v: unknown): v is string =>
+  typeof v === 'string' &&
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(v);
+
+const AU_PHONE = /^(\+?61|0)[2-478](?:[ -]?\d){8}$/;
+const AU_POSTCODE = /^\d{4}$/;
 
 async function signed(path?: string | null): Promise<string> {
   if (!path) return '';
@@ -38,6 +32,13 @@ async function signed(path?: string | null): Promise<string> {
   return data.signedUrl;
 }
 
+function json(body: unknown, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -46,16 +47,50 @@ Deno.serve(async (req) => {
   try {
     if (!LOVABLE_API_KEY || !GOOGLE_SHEETS_API_KEY) {
       console.error('Missing gateway credentials');
-      return new Response(
-        JSON.stringify({ success: false, error: 'Gateway credentials not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return json({ success: false, error: 'Gateway credentials not configured' }, 500);
     }
 
-    const body = (await req.json()) as Payload;
+    const body = (await req.json().catch(() => null)) as Record<string, unknown> | null;
+    const applicationId = body?.application_id;
+    if (!isUuid(applicationId)) {
+      return json({ success: false, error: 'Not authorised' }, 401);
+    }
 
-    const evidenceUrl = await signed(body.evidence_file_path);
-    const hrUrl = await signed(body.hr_licence_file_path);
+    // Only sync applications that really exist; never trust client-supplied values.
+    const { data: app } = await supabase
+      .from('haul_truck_applications')
+      .select(
+        'full_name, email, phone, postcode, previous_experience, machines_operated, has_hr_licence, evidence_file_path, hr_licence_file_path, source, created_at'
+      )
+      .eq('id', applicationId)
+      .maybeSingle();
+
+    if (!app) return json({ success: false, error: 'Application not found' }, 404);
+
+    if (app.created_at && Date.now() - new Date(app.created_at).getTime() > FRESH_WINDOW_MS) {
+      return json({ success: false, error: 'Application expired' }, 409);
+    }
+
+    const evidenceUrl = await signed(app.evidence_file_path);
+    const hrUrl = await signed(app.hr_licence_file_path);
+
+    // Recompute qualification server-side — the client flag is never trusted.
+    const phoneOk = AU_PHONE.test(String(app.phone ?? '').replace(/\s+/g, ''));
+    const postcodeOk = AU_POSTCODE.test(String(app.postcode ?? '').trim());
+    let qualified = false;
+    if (phoneOk && postcodeOk) {
+      if (app.previous_experience) {
+        qualified = Boolean(String(app.machines_operated ?? '').trim() && app.evidence_file_path);
+      } else if (app.has_hr_licence === true) {
+        qualified = Boolean(app.hr_licence_file_path);
+      }
+    }
+
+    // Keep the stored record consistent with the server-side outcome.
+    await supabase
+      .from('haul_truck_applications')
+      .update({ qualified })
+      .eq('id', applicationId);
 
     const supportingDocs = [
       evidenceUrl && `Evidence: ${evidenceUrl}`,
@@ -64,28 +99,26 @@ Deno.serve(async (req) => {
       .filter(Boolean)
       .join('\n');
 
-    // Build "Machine Operated" cell with embedded qualification & HR info
     let machineCell = '';
-    if (body.previous_experience) {
-      machineCell = body.machines_operated || '';
-    } else if (body.has_hr_licence === true) {
+    if (app.previous_experience) {
+      machineCell = app.machines_operated || '';
+    } else if (app.has_hr_licence === true) {
       machineCell = 'No machinery experience — HR Licence: YES';
-    } else if (body.has_hr_licence === false) {
+    } else if (app.has_hr_licence === false) {
       machineCell = 'No machinery experience — HR Licence: NO';
     }
 
-    const qualifiedTag = body.qualified
-      ? '✅ QUALIFIED'
-      : '⛔ NOT QUALIFIED';
-    machineCell = `[${qualifiedTag}] [${body.source}] ${machineCell}`.trim();
+    const qualifiedTag = qualified ? '✅ QUALIFIED' : '⛔ NOT QUALIFIED';
+    const source = String(app.source ?? 'website').slice(0, 60);
+    machineCell = `[${qualifiedTag}] [${source}] ${machineCell}`.trim();
 
     const row = [
-      body.full_name,
-      body.phone,
-      body.email,
-      body.previous_experience ? 'Yes' : 'No',
+      app.full_name,
+      app.phone,
+      app.email,
+      app.previous_experience ? 'Yes' : 'No',
       supportingDocs,
-      body.postcode ?? '',
+      app.postcode ?? '',
       machineCell,
     ];
 
@@ -105,23 +138,14 @@ Deno.serve(async (req) => {
     if (!sheetsRes.ok) {
       const txt = await sheetsRes.text();
       console.error('Sheets append failed', sheetsRes.status, txt);
-      return new Response(
-        JSON.stringify({ success: false, error: 'An internal error occurred. Please try again.' }),
-        { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return json({ success: false, error: 'An internal error occurred. Please try again.' }, 502);
     }
 
     await sheetsRes.text();
 
-    return new Response(JSON.stringify({ success: true }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return json({ success: true, qualified });
   } catch (err) {
     console.error('sync-rigid-application error', err);
-    return new Response(
-      JSON.stringify({ success: false, error: 'An internal error occurred. Please try again.' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return json({ success: false, error: 'An internal error occurred. Please try again.' }, 500);
   }
 });
-
