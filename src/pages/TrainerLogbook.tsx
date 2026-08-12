@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
   DialogContent,
@@ -14,6 +15,8 @@ import { Loader2, CheckCircle2, Clock, AlertCircle, ChevronLeft, ChevronRight } 
 
 const PAGE_SIZE = 20;
 
+const emptyForm = { session_date: "", session_type: "", machine: "", hours: "", notes: "" };
+
 export default function TrainerLogbook() {
   const [entries, setEntries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -23,6 +26,51 @@ export default function TrainerLogbook() {
   const [page, setPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<any | null>(null);
+  const [editing, setEditing] = useState(false);
+  const [form, setForm] = useState(emptyForm);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+
+  function startEdit() {
+    if (!selected) return;
+    setForm({
+      session_date: selected.session_date ?? "",
+      session_type: selected.session_type ?? "",
+      machine: selected.machine ?? "",
+      hours: selected.hours === null || selected.hours === undefined ? "" : String(selected.hours),
+      notes: selected.notes ?? "",
+    });
+    setSaveError(null);
+    setEditing(true);
+  }
+
+  async function saveEdit() {
+    if (!selected?.sign_token) return;
+    setSaving(true);
+    setSaveError(null);
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke("logbook-update", {
+        body: {
+          token: selected.sign_token,
+          session_date: form.session_date,
+          session_type: form.session_type,
+          machine: form.machine,
+          hours: form.hours === "" ? null : form.hours,
+          notes: form.notes,
+        },
+      });
+      if (fnError || data?.error) throw new Error(data?.error ?? "Could not save changes");
+      const updated = { ...selected, ...data.entry };
+      setSelected(updated);
+      setEntries((prev) => prev.map((e) => (e.id === updated.id ? { ...e, ...data.entry } : e)));
+      setEditing(false);
+    } catch (e: any) {
+      setSaveError(e?.message ?? "Could not save changes. Please try again.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
 
   async function load() {
     setLoading(true);
