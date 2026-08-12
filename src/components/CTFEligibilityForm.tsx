@@ -165,13 +165,15 @@ This person has submitted the CTF eligibility form and would like more informati
         },
       };
 
-      await insertContactSubmission({
+      const submissionId = await insertContactSubmission({
         name: submissionData.name,
         email: submissionData.email,
         phone: submissionData.phone,
         message: submissionData.message,
       });
-      void triggerSubmissionNotification(submissionData);
+      if (submissionId) {
+        void triggerSubmissionNotification(submissionId, submissionData._ctfFields);
+      }
 
       toast({
         title: "Application Submitted!",
