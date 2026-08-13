@@ -37,18 +37,27 @@ function ghlHeaders() {
 async function syncStudentLogbookUrl(entryId: string) {
   let student: { id: string; ghl_contact_id: string | null; logbook_token: string } | null = null;
   try {
-    const { data: entry } = await supabase
+    const { data: entry, error: entryErr } = await supabase
       .from("logbook_entries")
-      .select("students(id, ghl_contact_id, logbook_token)")
+      .select("student_id")
       .eq("id", entryId)
       .maybeSingle();
+    if (entryErr) throw new Error(`entry lookup: ${entryErr.message}`);
+    if (!entry?.student_id) throw new Error("entry has no student_id");
 
-    const s = (entry as any)?.students;
-    student = Array.isArray(s) ? s[0] : s;
-    if (!student) return;
+    const { data: st, error: stErr } = await supabase
+      .from("students")
+      .select("id, ghl_contact_id, logbook_token")
+      .eq("id", entry.student_id)
+      .maybeSingle();
+    if (stErr) throw new Error(`student lookup: ${stErr.message}`);
+    if (!st) throw new Error("student not found");
+    student = st as typeof student;
 
-    const logbookUrl = `${SITE_URL}/my-logbook/${student.logbook_token}`;
-    if (!student.ghl_contact_id || !PIT || !LOCATION_ID) return;
+    const logbookUrl = `${SITE_URL}/my-logbook/${student!.logbook_token}`;
+    if (!student!.ghl_contact_id) throw new Error("student has no ghl_contact_id");
+    if (!PIT || !LOCATION_ID) throw new Error("GHL credentials missing");
+
 
     const fieldsRes = await fetch(`${GHL_BASE}/locations/${LOCATION_ID}/customFields`, {
       headers: ghlHeaders(),
