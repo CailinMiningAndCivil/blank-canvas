@@ -215,6 +215,8 @@ Deno.serve(async (req) => {
       return json({ error: "This entry was just signed by another trainer" }, 409);
     }
 
+    await syncStudentLogbookUrl(entry.id);
+
     return json({ ok: true, trainer_name: trainer.full_name });
   } catch (e) {
     console.error("logbook-sign error", e);
