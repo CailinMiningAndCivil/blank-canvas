@@ -39,6 +39,7 @@ import LogbookAdmin from "./pages/admin/Logbook";
 import FAQ from "./pages/FAQ";
 import SignLogbook from "./pages/SignLogbook";
 import TrainerLogbook from "./pages/TrainerLogbook";
+import MyLogbook from "./pages/MyLogbook";
 
 const CareersRedirect = () => {
   if (typeof window !== "undefined") {
