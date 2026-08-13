@@ -335,6 +335,38 @@ export type Database = {
         }
         Relationships: []
       }
+      student_logbook_errors: {
+        Row: {
+          created_at: string
+          error: string
+          ghl_contact_id: string | null
+          id: string
+          student_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          error: string
+          ghl_contact_id?: string | null
+          id?: string
+          student_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          error?: string
+          ghl_contact_id?: string | null
+          id?: string
+          student_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_logbook_errors_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       students: {
         Row: {
           created_at: string
@@ -342,6 +374,7 @@ export type Database = {
           full_name: string
           ghl_contact_id: string | null
           id: string
+          logbook_token: string
           phone: string | null
           updated_at: string
         }
@@ -351,6 +384,7 @@ export type Database = {
           full_name: string
           ghl_contact_id?: string | null
           id?: string
+          logbook_token?: string
           phone?: string | null
           updated_at?: string
         }
@@ -360,6 +394,7 @@ export type Database = {
           full_name?: string
           ghl_contact_id?: string | null
           id?: string
+          logbook_token?: string
           phone?: string | null
           updated_at?: string
         }

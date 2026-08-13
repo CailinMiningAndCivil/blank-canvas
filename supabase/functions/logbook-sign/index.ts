@@ -17,6 +17,67 @@ const supabase = createClient(
   Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
 );
 
+const GHL_BASE = "https://services.leadconnectorhq.com";
+const GHL_VERSION = "2021-07-28";
+const PIT = Deno.env.get("GHL_PIT_TOKEN") ?? "";
+const LOCATION_ID = Deno.env.get("GHL_LOCATION_ID") ?? "";
+const SITE_URL = "https://www.cailinminingcivil.com";
+const STUDENT_FIELD_NAME = "Student Logbook URL";
+
+function ghlHeaders() {
+  return {
+    Authorization: `Bearer ${PIT}`,
+    Version: GHL_VERSION,
+    Accept: "application/json",
+  };
+}
+
+// After a successful sign-off, make sure the student's consolidated logbook URL
+// is present on their GHL contact. Never allowed to break the signing flow.
+async function syncStudentLogbookUrl(entryId: string) {
+  let student: { id: string; ghl_contact_id: string | null; logbook_token: string } | null = null;
+  try {
+    const { data: entry } = await supabase
+      .from("logbook_entries")
+      .select("students(id, ghl_contact_id, logbook_token)")
+      .eq("id", entryId)
+      .maybeSingle();
+
+    const s = (entry as any)?.students;
+    student = Array.isArray(s) ? s[0] : s;
+    if (!student) return;
+
+    const logbookUrl = `${SITE_URL}/my-logbook/${student.logbook_token}`;
+    if (!student.ghl_contact_id || !PIT || !LOCATION_ID) return;
+
+    const fieldsRes = await fetch(`${GHL_BASE}/locations/${LOCATION_ID}/customFields`, {
+      headers: ghlHeaders(),
+    });
+    if (!fieldsRes.ok) throw new Error(`customFields ${fieldsRes.status}`);
+    const fields = await fieldsRes.json();
+    const field = (fields.customFields ?? []).find((f: any) => f.name === STUDENT_FIELD_NAME);
+    if (!field) throw new Error(`Custom field "${STUDENT_FIELD_NAME}" not found in GHL`);
+
+    const upd = await fetch(`${GHL_BASE}/contacts/${student.ghl_contact_id}`, {
+      method: "PUT",
+      headers: { ...ghlHeaders(), "Content-Type": "application/json" },
+      body: JSON.stringify({ customFields: [{ id: field.id, field_value: logbookUrl }] }),
+    });
+    if (!upd.ok) throw new Error(`updateContact ${upd.status}`);
+  } catch (e) {
+    console.error("student logbook sync failed", e);
+    try {
+      await supabase.from("student_logbook_errors").insert({
+        student_id: student?.id ?? null,
+        ghl_contact_id: student?.ghl_contact_id ?? null,
+        error: String((e as Error)?.message ?? e).slice(0, 500),
+      });
+    } catch (_) {
+      // swallow
+    }
+  }
+}
+
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
@@ -153,6 +214,8 @@ Deno.serve(async (req) => {
       await supabase.storage.from("logbook-signatures").remove([path]);
       return json({ error: "This entry was just signed by another trainer" }, 409);
     }
+
+    await syncStudentLogbookUrl(entry.id);
 
     return json({ ok: true, trainer_name: trainer.full_name });
   } catch (e) {

@@ -39,6 +39,7 @@ import LogbookAdmin from "./pages/admin/Logbook";
 import FAQ from "./pages/FAQ";
 import SignLogbook from "./pages/SignLogbook";
 import TrainerLogbook from "./pages/TrainerLogbook";
+import MyLogbook from "./pages/MyLogbook";
 
 const CareersRedirect = () => {
   if (typeof window !== "undefined") {
@@ -54,6 +55,7 @@ export const AppRoutes = () => (
       <Route path="/" element={<Index />} />
       <Route path="/courses" element={<Courses />} />
       <Route path="/sign-logbook/:token" element={<SignLogbook />} />
+      <Route path="/my-logbook/:token" element={<MyLogbook />} />
       <Route path="/rpl" element={<RPL />} />
       <Route path="/rplad" element={<RPLAd />} />
       <Route path="/courses/bundles" element={<TicketsTraining />} />
