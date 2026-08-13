@@ -28,13 +28,14 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   const url = new URL(req.url);
   const key = req.headers.get("x-admin-key") ?? url.searchParams.get("token") ?? "";
-  if (false && (!ADMIN || key !== ADMIN)) {
+  if (!ADMIN || key !== ADMIN) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
 
+  const write = url.searchParams.get("write") === "1";
   const out: unknown[] = [];
   try {
     const fieldsRes = await fetch(`${GHL_BASE}/locations/${LOCATION_ID}/customFields`, { headers: headers() });
@@ -50,6 +51,14 @@ Deno.serve(async (req) => {
         out.push({ name: s.full_name, ghl: null, value: null });
         continue;
       }
+      const expected = `https://www.cailinminingcivil.com/my-logbook/${s.logbook_token}`;
+      if (write && field?.id) {
+        await fetch(`${GHL_BASE}/contacts/${s.ghl_contact_id}`, {
+          method: "PUT",
+          headers: { ...headers(), "Content-Type": "application/json" },
+          body: JSON.stringify({ customFields: [{ id: field.id, field_value: expected }] }),
+        });
+      }
       const r = await fetch(`${GHL_BASE}/contacts/${s.ghl_contact_id}`, { headers: headers() });
       const j = await r.json();
       const cf = (j?.contact?.customFields ?? []).find((c: any) => c.id === field?.id);
@@ -57,8 +66,7 @@ Deno.serve(async (req) => {
         name: s.full_name,
         status: r.status,
         value: cf?.value ?? cf?.fieldValue ?? null,
-        raw: j?.contact?.customFields ?? j?.contact?.customField ?? null,
-        expected: `https://www.cailinminingcivil.com/my-logbook/${s.logbook_token}`,
+        expected,
       });
     }
 
