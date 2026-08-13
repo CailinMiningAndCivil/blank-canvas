@@ -49,7 +49,7 @@ const MyLogbook = () => {
       <SEO
         title="My Training Logbook | Cailin Mining & Civil"
         description="Access your personal Cailin Mining & Civil training logbook."
-        noindex
+        path={`/my-logbook/${token ?? ""}`}
       />
       <section className="bg-secondary/40 py-16">
         <div className="container mx-auto max-w-3xl px-4">
