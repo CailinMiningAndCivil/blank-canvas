@@ -57,6 +57,7 @@ Deno.serve(async (req) => {
         name: s.full_name,
         status: r.status,
         value: cf?.value ?? cf?.fieldValue ?? null,
+        raw: j?.contact?.customFields ?? j?.contact?.customField ?? null,
         expected: `https://www.cailinminingcivil.com/my-logbook/${s.logbook_token}`,
       });
     }
