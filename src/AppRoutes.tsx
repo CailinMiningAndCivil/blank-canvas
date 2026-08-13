@@ -55,6 +55,7 @@ export const AppRoutes = () => (
       <Route path="/" element={<Index />} />
       <Route path="/courses" element={<Courses />} />
       <Route path="/sign-logbook/:token" element={<SignLogbook />} />
+      <Route path="/my-logbook/:token" element={<MyLogbook />} />
       <Route path="/rpl" element={<RPL />} />
       <Route path="/rplad" element={<RPLAd />} />
       <Route path="/courses/bundles" element={<TicketsTraining />} />
