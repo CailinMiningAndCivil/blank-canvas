@@ -21,7 +21,7 @@ const supabase = createClient(
   Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
 );
 
-const NAVY = rgb(0.06, 0.09, 0.16);
+const NAVY = rgb(0.137, 0.122, 0.125);
 const ORANGE = rgb(0.96, 0.51, 0.13);
 const TEXT = rgb(0.13, 0.15, 0.19);
 const MUTED = rgb(0.42, 0.45, 0.5);
