@@ -28,9 +28,10 @@ const MUTED = rgb(0.42, 0.45, 0.5);
 const LINE = rgb(0.85, 0.87, 0.9);
 const CARD = rgb(0.97, 0.98, 0.99);
 
-const PAGE_W = 595.28;
-const PAGE_H = 841.89;
-const MARGIN = 48;
+// A4 landscape
+const PAGE_W = 841.89;
+const PAGE_H = 595.28;
+const MARGIN = 40;
 const CONTENT_W = PAGE_W - MARGIN * 2;
 
 function json(body: unknown, status = 200) {
@@ -178,7 +179,7 @@ Deno.serve(async (req) => {
     }
 
 
-    // ---- Build PDF ----
+    // ---- Build PDF (A4 landscape, printable training register) ----
     const pdf = await PDFDocument.create();
     pdf.setTitle(`Cailin Mining & Civil Training Logbook - ${student.full_name}`);
     pdf.setAuthor("Cailin Mining & Civil");
@@ -188,383 +189,358 @@ Deno.serve(async (req) => {
     const bold = await pdf.embedFont(StandardFonts.HelveticaBold);
     const logo = await pdf.embedPng(b64ToBytes(CAILIN_LOGO_PNG_BASE64));
 
+    // Pre-load signatures
+    const sigMap = new Map<string, any>();
+    for (const e of entries) {
+      if (!e.trainer_signature_path || sigMap.has(e.id)) continue;
+      try {
+        const { data: file } = await supabase.storage
+          .from("logbook-signatures")
+          .download(e.trainer_signature_path);
+        if (file) {
+          const bytes = new Uint8Array(await file.arrayBuffer());
+          sigMap.set(
+            e.id,
+            e.trainer_signature_path.toLowerCase().endsWith(".png")
+              ? await pdf.embedPng(bytes)
+              : await pdf.embedJpg(bytes),
+          );
+        }
+      } catch (_) { /* ignore */ }
+    }
+
+    const COLS = [
+      { key: "date", label: "DATE", w: 78 },
+      { key: "machine", label: "COURSE / MACHINE", w: 132 },
+      { key: "hours", label: "HOURS", w: 46 },
+      { key: "tasks", label: "TASKS COMPLETED", w: 285 },
+      { key: "trainer", label: "TRAINER", w: 90 },
+      { key: "sign", label: "SIGN-OFF", w: 130.89 },
+    ];
+    const colX: number[] = [];
+    {
+      let x = MARGIN;
+      for (const c of COLS) {
+        colX.push(x);
+        x += c.w;
+      }
+    }
+    const TABLE_BOTTOM = 58;
+    const PAD = 6;
+    const FS = 8.5;
+    const LH = 11;
+
     let page = pdf.addPage([PAGE_W, PAGE_H]);
     let y = PAGE_H;
 
-    const drawBanner = () => {
-      const h = 96;
-      page.drawRectangle({ x: 0, y: PAGE_H - h, width: PAGE_W, height: h, color: NAVY });
-      page.drawRectangle({ x: 0, y: PAGE_H - h - 4, width: PAGE_W, height: 4, color: ORANGE });
-      const lw = 150;
+    const drawHeader = (withDetails: boolean) => {
+      const lw = 118;
       const lh = (logo.height / logo.width) * lw;
-      page.drawImage(logo, { x: MARGIN, y: PAGE_H - h / 2 - lh / 2, width: lw, height: lh });
+      page.drawImage(logo, { x: MARGIN, y: PAGE_H - 30 - lh, width: lw, height: lh });
+
       page.drawText("STUDENT TRAINING LOGBOOK", {
-        x: PAGE_W - MARGIN - bold.widthOfTextAtSize("STUDENT TRAINING LOGBOOK", 12),
-        y: PAGE_H - 48,
-        size: 12,
+        x: PAGE_W - MARGIN - bold.widthOfTextAtSize("STUDENT TRAINING LOGBOOK", 14),
+        y: PAGE_H - 42,
+        size: 14,
         font: bold,
-        color: rgb(1, 1, 1),
+        color: NAVY,
       });
       page.drawText("RTO 46489", {
-        x: PAGE_W - MARGIN - font.widthOfTextAtSize("RTO 46489", 9),
-        y: PAGE_H - 64,
-        size: 9,
+        x: PAGE_W - MARGIN - font.widthOfTextAtSize("RTO 46489", 9.5),
+        y: PAGE_H - 56,
+        size: 9.5,
         font,
         color: ORANGE,
       });
-      y = PAGE_H - h - 32;
+
+      let hy = PAGE_H - 30 - Math.max(lh, 40) - 10;
+      page.drawLine({
+        start: { x: MARGIN, y: hy },
+        end: { x: PAGE_W - MARGIN, y: hy },
+        thickness: 1.2,
+        color: ORANGE,
+      });
+      hy -= 18;
+
+      if (withDetails) {
+        const fields: [string, string][] = [
+          ["Student Name", sanitize(student.full_name)],
+          ["Logbook Reference", reference],
+          ["Last Updated", fmtDate(new Date().toISOString())],
+        ];
+        let fx = MARGIN;
+        for (const [k, v] of fields) {
+          page.drawText(`${k}:`, { x: fx, y: hy, size: 9, font, color: MUTED });
+          page.drawText(v, {
+            x: fx + font.widthOfTextAtSize(`${k}: `, 9),
+            y: hy,
+            size: 9.5,
+            font: bold,
+            color: TEXT,
+          });
+          fx += 270;
+        }
+        hy -= 20;
+      } else {
+        page.drawText(
+          `${sanitize(student.full_name)}  |  ${reference}  (continued)`,
+          { x: MARGIN, y: hy, size: 9, font, color: MUTED },
+        );
+        hy -= 20;
+      }
+      y = hy;
+    };
+
+    const drawTableHead = () => {
+      const h = 20;
+      page.drawRectangle({
+        x: MARGIN,
+        y: y - h,
+        width: CONTENT_W,
+        height: h,
+        color: NAVY,
+      });
+      COLS.forEach((c, i) => {
+        page.drawText(c.label, {
+          x: colX[i] + PAD,
+          y: y - h + 7,
+          size: 7.5,
+          font: bold,
+          color: rgb(1, 1, 1),
+        });
+      });
+      y -= h;
     };
 
     const drawFooters = () => {
       const pages = pdf.getPages();
       pages.forEach((p, i) => {
         p.drawLine({
-          start: { x: MARGIN, y: 46 },
-          end: { x: PAGE_W - MARGIN, y: 46 },
+          start: { x: MARGIN, y: 40 },
+          end: { x: PAGE_W - MARGIN, y: 40 },
           thickness: 0.5,
           color: LINE,
         });
-        p.drawText("Cailin Mining & Civil  |  RTO 46489  |  cailinminingcivil.com", {
-          x: MARGIN,
-          y: 32,
-          size: 8,
-          font,
-          color: MUTED,
-        });
+        p.drawText(
+          `Cailin Mining & Civil  |  RTO 46489  |  cailinminingcivil.com  |  ${reference}`,
+          { x: MARGIN, y: 28, size: 7.5, font, color: MUTED },
+        );
         const label = `Page ${i + 1} of ${pages.length}`;
         p.drawText(label, {
-          x: PAGE_W - MARGIN - font.widthOfTextAtSize(label, 8),
-          y: 32,
-          size: 8,
+          x: PAGE_W - MARGIN - font.widthOfTextAtSize(label, 7.5),
+          y: 28,
+          size: 7.5,
           font,
           color: MUTED,
         });
       });
     };
 
-    const newPage = () => {
-      page = pdf.addPage([PAGE_W, PAGE_H]);
-      drawBanner();
-    };
-
-    const ensure = (needed: number) => {
-      if (y - needed < 70) newPage();
-    };
-
-    const text = (
-      s: string,
-      x: number,
-      size: number,
-      f = font,
-      color = TEXT,
-    ) => {
-      page.drawText(sanitize(s), { x, y, size, font: f, color });
-    };
-
-    drawBanner();
-
-    // Student details card
-    const cardH = 88;
-    page.drawRectangle({
-      x: MARGIN,
-      y: y - cardH,
-      width: CONTENT_W,
-      height: cardH,
-      color: CARD,
-      borderColor: LINE,
-      borderWidth: 1,
-    });
-    page.drawRectangle({ x: MARGIN, y: y - cardH, width: 4, height: cardH, color: ORANGE });
-
-    let cy = y - 24;
-    page.drawText(sanitize(student.full_name), {
-      x: MARGIN + 18,
-      y: cy,
-      size: 18,
-      font: bold,
-      color: NAVY,
-    });
-    cy -= 20;
-    const details: [string, string][] = [
-      ["Logbook Reference", reference],
-      ["Last Updated", fmtDate(new Date().toISOString())],
-      ["Signed Entries", String(entries.length)],
-    ];
-    for (const [k, v] of details) {
-      page.drawText(`${k}:`, { x: MARGIN + 18, y: cy, size: 9.5, font, color: MUTED });
-      page.drawText(sanitize(v), {
-        x: MARGIN + 130,
-        y: cy,
-        size: 9.5,
-        font: bold,
-        color: TEXT,
-      });
-      cy -= 15;
-    }
-    y -= cardH + 30;
-
-    // Training summary
-    ensure(120);
-    text("Training Summary", MARGIN, 13, bold, NAVY);
-    y -= 8;
-    page.drawLine({
-      start: { x: MARGIN, y },
-      end: { x: MARGIN + CONTENT_W, y },
-      thickness: 1,
-      color: ORANGE,
-    });
-    y -= 22;
+    drawHeader(true);
+    drawTableHead();
 
     if (!entries.length) {
-      text(
-        "No signed training entries have been recorded for this logbook yet.",
-        MARGIN,
-        10,
-        font,
-        MUTED,
-      );
-      y -= 20;
-    } else {
-      const totals = new Map<string, number>();
-      for (const e of entries) {
-        const key = (e.machine || e.session_type || "Training session").trim();
-        totals.set(key, (totals.get(key) ?? 0) + (Number(e.hours) || 0));
-      }
-
-      const rowH = 20;
-      // header row
+      const h = 30;
       page.drawRectangle({
         x: MARGIN,
-        y: y - 6,
+        y: y - h,
         width: CONTENT_W,
-        height: rowH,
-        color: NAVY,
+        height: h,
+        borderColor: LINE,
+        borderWidth: 0.75,
       });
-      page.drawText("TRAINING / MACHINE", {
-        x: MARGIN + 10,
-        y,
-        size: 8.5,
-        font: bold,
-        color: rgb(1, 1, 1),
+      page.drawText("No signed training entries have been recorded yet.", {
+        x: MARGIN + PAD,
+        y: y - 19,
+        size: 9,
+        font,
+        color: MUTED,
       });
-      page.drawText("TOTAL HOURS", {
-        x: MARGIN + CONTENT_W - 110,
-        y,
-        size: 8.5,
-        font: bold,
-        color: rgb(1, 1, 1),
-      });
-      y -= rowH + 4;
+      y -= h;
+    } else {
+      let zebra = false;
+      for (const e of entries) {
+        const { tasks, comments } = splitNotes(e.notes);
+        const taskText = [tasks, comments].filter(Boolean).join("\n");
+        const taskLines = taskText
+          ? wrap(sanitize(taskText), font, FS, COLS[3].w - PAD * 2)
+          : ["—"];
+        const machineLines = wrap(
+          sanitize(e.machine || e.session_type || "Training session"),
+          font,
+          FS,
+          COLS[1].w - PAD * 2,
+        );
+        const trainerLines = wrap(
+          sanitize(e.trainer_name || "—"),
+          font,
+          FS,
+          COLS[4].w - PAD * 2,
+        );
 
-      let odd = false;
-      for (const [name, hrs] of totals) {
-        ensure(rowH + 40);
-        if (odd) {
+        const sigImg = sigMap.get(e.id);
+        const sigW = sigImg ? Math.min(COLS[5].w - PAD * 2, 96) : 0;
+        const sigH = sigImg ? Math.min(26, (sigImg.height / sigImg.width) * sigW) : 0;
+
+        const textH =
+          Math.max(taskLines.length, machineLines.length, trainerLines.length) * LH;
+        const signBlockH = (sigImg ? sigH + 3 : 0) + LH + LH; // signature + "Signed" + date
+        const rowH = Math.max(textH, signBlockH) + PAD * 2;
+
+        // page break
+        if (y - rowH < TABLE_BOTTOM) {
+          page = pdf.addPage([PAGE_W, PAGE_H]);
+          drawHeader(false);
+          drawTableHead();
+        }
+
+        const top = y;
+        if (zebra) {
           page.drawRectangle({
             x: MARGIN,
-            y: y - 6,
+            y: top - rowH,
             width: CONTENT_W,
             height: rowH,
             color: CARD,
           });
         }
-        odd = !odd;
-        const nameLines = wrap(sanitize(name), font, 10, CONTENT_W - 140);
-        page.drawText(nameLines[0], { x: MARGIN + 10, y, size: 10, font, color: TEXT });
-        page.drawText(hrs > 0 ? fmtHours(hrs) : "As recorded", {
-          x: MARGIN + CONTENT_W - 110,
-          y,
-          size: 10,
+        zebra = !zebra;
+
+        // borders
+        page.drawRectangle({
+          x: MARGIN,
+          y: top - rowH,
+          width: CONTENT_W,
+          height: rowH,
+          borderColor: LINE,
+          borderWidth: 0.75,
+        });
+        for (let i = 1; i < COLS.length; i++) {
+          page.drawLine({
+            start: { x: colX[i], y: top },
+            end: { x: colX[i], y: top - rowH },
+            thickness: 0.5,
+            color: LINE,
+          });
+        }
+
+        const cellTop = top - PAD - FS;
+
+        page.drawText(fmtDate(e.session_date), {
+          x: colX[0] + PAD,
+          y: cellTop,
+          size: FS,
           font,
           color: TEXT,
         });
-        y -= rowH;
-      }
 
-      y -= 6;
-      page.drawLine({
-        start: { x: MARGIN, y: y + 8 },
-        end: { x: MARGIN + CONTENT_W, y: y + 8 },
-        thickness: 0.75,
-        color: LINE,
-      });
-      y -= 8;
-      page.drawText("Total Recorded Training", {
-        x: MARGIN + 10,
-        y,
-        size: 10.5,
-        font: bold,
-        color: NAVY,
-      });
-      page.drawText(totalHours > 0 ? fmtHours(totalHours) : "As recorded", {
-        x: MARGIN + CONTENT_W - 110,
-        y,
-        size: 10.5,
-        font: bold,
-        color: NAVY,
-      });
-      y -= 34;
-    }
-
-    // Detailed history
-    if (entries.length) {
-      ensure(60);
-      text("Training History", MARGIN, 13, bold, NAVY);
-      y -= 8;
-      page.drawLine({
-        start: { x: MARGIN, y },
-        end: { x: MARGIN + CONTENT_W, y },
-        thickness: 1,
-        color: ORANGE,
-      });
-      y -= 24;
-
-      for (const e of entries) {
-        const { tasks, comments } = splitNotes(e.notes);
-        const title = sanitize(e.machine || e.session_type || "Training session");
-        const bodyWidth = CONTENT_W - 28;
-
-        const taskLines = tasks ? wrap(sanitize(tasks), font, 9.5, bodyWidth) : [];
-        const commentLines = comments ? wrap(sanitize(comments), font, 9.5, bodyWidth) : [];
-
-        // signature image
-        let sigImg: any = null;
-        if (e.trainer_signature_path) {
-          try {
-            const { data: file } = await supabase.storage
-              .from("logbook-signatures")
-              .download(e.trainer_signature_path);
-            if (file) {
-              const bytes = new Uint8Array(await file.arrayBuffer());
-              sigImg = e.trainer_signature_path.toLowerCase().endsWith(".png")
-                ? await pdf.embedPng(bytes)
-                : await pdf.embedJpg(bytes);
-            }
-          } catch (_) {
-            sigImg = null;
-          }
-        }
-
-        const sigW = 120;
-        const sigH = sigImg ? Math.min(42, (sigImg.height / sigImg.width) * sigW) : 0;
-
-        const height =
-          46 + // header + meta row
-          (taskLines.length ? 16 + taskLines.length * 12 : 0) +
-          (commentLines.length ? 16 + commentLines.length * 12 : 0) +
-          22 + // signature label block
-          (sigImg ? sigH + 6 : 12) +
-          18;
-
-        ensure(height + 12);
-
-        const top = y + 6;
-        page.drawRectangle({
-          x: MARGIN,
-          y: top - height,
-          width: CONTENT_W,
-          height,
-          color: rgb(1, 1, 1),
-          borderColor: LINE,
-          borderWidth: 1,
+        machineLines.forEach((l, i) => {
+          page.drawText(l, {
+            x: colX[1] + PAD,
+            y: cellTop - i * LH,
+            size: FS,
+            font: bold,
+            color: NAVY,
+          });
         });
-        page.drawRectangle({
-          x: MARGIN,
-          y: top - height,
-          width: 3,
-          height,
+
+        page.drawText(fmtHours(e.hours).replace(/ hours?$/, ""), {
+          x: colX[2] + PAD,
+          y: cellTop,
+          size: FS,
+          font,
+          color: TEXT,
+        });
+
+        taskLines.forEach((l, i) => {
+          page.drawText(l, {
+            x: colX[3] + PAD,
+            y: cellTop - i * LH,
+            size: FS,
+            font,
+            color: TEXT,
+          });
+        });
+
+        trainerLines.forEach((l, i) => {
+          page.drawText(l, {
+            x: colX[4] + PAD,
+            y: cellTop - i * LH,
+            size: FS,
+            font,
+            color: TEXT,
+          });
+        });
+
+        // Sign-off cell
+        let sy = cellTop;
+        page.drawText("Signed", {
+          x: colX[5] + PAD,
+          y: sy,
+          size: FS,
+          font: bold,
           color: ORANGE,
         });
-
-        let by = top - 20;
-        page.drawText(title, { x: MARGIN + 16, y: by, size: 11.5, font: bold, color: NAVY });
-        const dateLabel = fmtDate(e.session_date);
-        page.drawText(dateLabel, {
-          x: MARGIN + CONTENT_W - 16 - bold.widthOfTextAtSize(dateLabel, 10),
-          y: by,
-          size: 10,
-          font: bold,
-          color: TEXT,
-        });
-        by -= 15;
-        page.drawText(`Hours trained: ${fmtHours(e.hours)}`, {
-          x: MARGIN + 16,
-          y: by,
-          size: 9.5,
+        sy -= LH;
+        page.drawText(fmtDate(e.signed_at), {
+          x: colX[5] + PAD,
+          y: sy,
+          size: 7.5,
           font,
           color: MUTED,
         });
-        by -= 16;
-
-        if (taskLines.length) {
-          page.drawText("Tasks completed", {
-            x: MARGIN + 16,
-            y: by,
-            size: 9,
-            font: bold,
-            color: MUTED,
-          });
-          by -= 13;
-          for (const l of taskLines) {
-            page.drawText(l, { x: MARGIN + 16, y: by, size: 9.5, font, color: TEXT });
-            by -= 12;
-          }
-          by -= 3;
-        }
-
-        if (commentLines.length) {
-          page.drawText("Trainer comments", {
-            x: MARGIN + 16,
-            y: by,
-            size: 9,
-            font: bold,
-            color: MUTED,
-          });
-          by -= 13;
-          for (const l of commentLines) {
-            page.drawText(l, { x: MARGIN + 16, y: by, size: 9.5, font, color: TEXT });
-            by -= 12;
-          }
-          by -= 3;
-        }
-
-        page.drawLine({
-          start: { x: MARGIN + 16, y: by + 2 },
-          end: { x: MARGIN + CONTENT_W - 16, y: by + 2 },
-          thickness: 0.5,
-          color: LINE,
-        });
-        by -= 12;
-        page.drawText(`Trainer: ${sanitize(e.trainer_name ?? "—")}`, {
-          x: MARGIN + 16,
-          y: by,
-          size: 9.5,
-          font: bold,
-          color: TEXT,
-        });
-        const signedLabel = `Signed: ${fmtDate(e.signed_at)}`;
-        page.drawText(signedLabel, {
-          x: MARGIN + CONTENT_W - 16 - font.widthOfTextAtSize(signedLabel, 9.5),
-          y: by,
-          size: 9.5,
-          font,
-          color: MUTED,
-        });
-        by -= 6;
         if (sigImg) {
+          sy -= 3;
           page.drawImage(sigImg, {
-            x: MARGIN + 16,
-            y: by - sigH,
+            x: colX[5] + PAD,
+            y: sy - sigH,
             width: sigW,
             height: sigH,
           });
         }
 
-        y = top - height - 14;
+        y = top - rowH;
       }
+
+      // Totals row
+      const totH = 24;
+      if (y - totH < TABLE_BOTTOM) {
+        page = pdf.addPage([PAGE_W, PAGE_H]);
+        drawHeader(false);
+        drawTableHead();
+      }
+      page.drawRectangle({
+        x: MARGIN,
+        y: y - totH,
+        width: CONTENT_W,
+        height: totH,
+        color: rgb(1, 1, 1),
+        borderColor: NAVY,
+        borderWidth: 1,
+      });
+      page.drawText("TOTAL TRAINING HOURS", {
+        x: colX[1] + PAD,
+        y: y - 16,
+        size: 9.5,
+        font: bold,
+        color: NAVY,
+      });
+      page.drawText(
+        totalHours > 0 ? String(Number.isInteger(totalHours) ? totalHours : totalHours.toFixed(1)) : "—",
+        { x: colX[2] + PAD, y: y - 16, size: 9.5, font: bold, color: NAVY },
+      );
+      page.drawText(`${entries.length} signed ${entries.length === 1 ? "entry" : "entries"}`, {
+        x: colX[3] + PAD,
+        y: y - 16,
+        size: 8.5,
+        font,
+        color: MUTED,
+      });
+      y -= totH;
     }
 
     drawFooters();
+
 
     const bytes = await pdf.save();
     const safeName = sanitize(student.full_name).replace(/[^A-Za-z0-9]+/g, "-").replace(/^-|-$/g, "");
