@@ -4,7 +4,6 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Download, FileText } from "lucide-react";
-import { Download, FileText } from "lucide-react";
 
 const FUNCTIONS_URL = `${import.meta.env.VITE_SUPABASE_URL || "https://opdxvpqimcfhawcznxyc.supabase.co"}/functions/v1/student-logbook`;
 
