@@ -4,7 +4,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Download, FileText } from "lucide-react";
-import logo from "@/assets/cailin-logo.svg";
+import { Download, FileText } from "lucide-react";
 
 const FUNCTIONS_URL = `${import.meta.env.VITE_SUPABASE_URL || "https://opdxvpqimcfhawcznxyc.supabase.co"}/functions/v1/student-logbook`;
 
@@ -90,11 +90,6 @@ const MyLogbook = () => {
         <div className="container mx-auto max-w-6xl px-4">
           <div className="mb-8 flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
             <div>
-              <img
-                src={logo}
-                alt="Cailin Mining & Civil"
-                className="mb-4 h-12 w-auto rounded bg-foreground/90 p-1.5"
-              />
               <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
                 Student Training Logbook
               </h1>
