@@ -28,9 +28,10 @@ const MUTED = rgb(0.42, 0.45, 0.5);
 const LINE = rgb(0.85, 0.87, 0.9);
 const CARD = rgb(0.97, 0.98, 0.99);
 
-const PAGE_W = 595.28;
-const PAGE_H = 841.89;
-const MARGIN = 48;
+// A4 landscape
+const PAGE_W = 841.89;
+const PAGE_H = 595.28;
+const MARGIN = 40;
 const CONTENT_W = PAGE_W - MARGIN * 2;
 
 function json(body: unknown, status = 200) {
