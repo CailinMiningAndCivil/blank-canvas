@@ -157,11 +157,26 @@ Deno.serve(async (req) => {
       return json({
         student_name: student.full_name,
         reference,
-        entries: entries.length,
+        entries: entries.map((e) => {
+          const { tasks, comments } = splitNotes(e.notes);
+          return {
+            id: e.id,
+            session_date: e.session_date,
+            session_type: e.session_type,
+            machine: e.machine,
+            hours: e.hours,
+            tasks: tasks ?? comments,
+            trainer_name: e.trainer_name,
+            signed_at: e.signed_at,
+            status: "signed",
+          };
+        }),
+        entries_count: entries.length,
         total_hours: totalHours,
         last_updated: new Date().toISOString(),
       });
     }
+
 
     // ---- Build PDF ----
     const pdf = await PDFDocument.create();
