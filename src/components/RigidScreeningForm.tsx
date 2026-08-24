@@ -56,6 +56,10 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
   const [hasHrLicence, setHasHrLicence] = useState<"" | "yes" | "no">("");
   const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
   const [hrLicenceFile, setHrLicenceFile] = useState<File | null>(null);
+  const [hasInjuries, setHasInjuries] = useState<"" | "yes" | "no">("");
+  const [under100kg, setUnder100kg] = useState<"" | "yes" | "no">("");
+  const [paidEmployment, setPaidEmployment] = useState<"" | "yes" | "no">("");
+  const [employerName, setEmployerName] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
