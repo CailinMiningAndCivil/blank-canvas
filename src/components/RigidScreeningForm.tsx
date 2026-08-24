@@ -328,6 +328,47 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
       </div>
 
       <div>
+        <Label>
+          Do you have any pre-existing injuries that the site needs to be made aware of that may
+          affect your ability to gain site access? *
+        </Label>
+        <RadioGroup
+          value={hasInjuries}
+          onValueChange={(v) => setHasInjuries(v as "yes" | "no")}
+          className="flex gap-6 mt-2"
+        >
+          <div className="flex items-center gap-2">
+            <RadioGroupItem id="inj-yes" value="yes" />
+            <Label htmlFor="inj-yes" className="font-normal cursor-pointer">Yes</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <RadioGroupItem id="inj-no" value="no" />
+            <Label htmlFor="inj-no" className="font-normal cursor-pointer">No</Label>
+          </div>
+        </RadioGroup>
+        {errors.hasInjuries && <p className="text-sm text-destructive mt-1">{errors.hasInjuries}</p>}
+      </div>
+
+      <div>
+        <Label>Are you under 100kg? *</Label>
+        <RadioGroup
+          value={under100kg}
+          onValueChange={(v) => setUnder100kg(v as "yes" | "no")}
+          className="flex gap-6 mt-2"
+        >
+          <div className="flex items-center gap-2">
+            <RadioGroupItem id="kg-yes" value="yes" />
+            <Label htmlFor="kg-yes" className="font-normal cursor-pointer">Yes</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <RadioGroupItem id="kg-no" value="no" />
+            <Label htmlFor="kg-no" className="font-normal cursor-pointer">No</Label>
+          </div>
+        </RadioGroup>
+        {errors.under100kg && <p className="text-sm text-destructive mt-1">{errors.under100kg}</p>}
+      </div>
+
+      <div>
         <Label>Do you have machinery / equipment operating experience? *</Label>
         <RadioGroup
           value={hasExperience}
