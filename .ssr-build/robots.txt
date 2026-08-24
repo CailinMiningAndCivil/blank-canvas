@@ -1,0 +1,28 @@
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: *
+Disallow: /tmp/
+Disallow: */builder-preview/
+Disallow: */workspaces/
+Disallow: /admin/
+
+Sitemap: https://www.cailinminingcivil.com/sitemap.xml
