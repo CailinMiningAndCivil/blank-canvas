@@ -154,14 +154,31 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
         phone: phone.trim(),
         postcode: postcode.trim(),
         previous_experience: hasExperience === "yes",
-        experience_details:
+        experience_details: [
           hasExperience === "yes"
             ? `Machines: ${machines.trim()}`
             : hasHrLicence === "yes"
             ? "No machinery experience. Holds HR Licence."
             : "No machinery experience. No HR Licence.",
+          `Pre-existing injuries: ${hasInjuries === "yes" ? "Yes" : "No"}`,
+          `Under 100kg: ${under100kg === "yes" ? "Yes" : "No"}`,
+          hasExperience === "yes" && paidEmployment
+            ? `Paid employment using this experience: ${paidEmployment === "yes" ? "Yes" : "No"}`
+            : "",
+          hasExperience === "yes" && paidEmployment === "yes" && employerName.trim()
+            ? `Employed at: ${employerName.trim()}`
+            : "",
+        ]
+          .filter(Boolean)
+          .join(" | "),
         machines_operated: hasExperience === "yes" ? machines.trim() : null,
         has_hr_licence: hasExperience === "no" ? hasHrLicence === "yes" : null,
+        pre_existing_injuries: hasInjuries === "yes",
+        under_100kg: under100kg === "yes",
+        paid_employment_experience:
+          hasExperience === "yes" && paidEmployment ? paidEmployment === "yes" : null,
+        previous_employer:
+          hasExperience === "yes" && paidEmployment === "yes" ? employerName.trim() : null,
         evidence_file_path: evidencePath,
         hr_licence_file_path: hrPath,
         qualified,
