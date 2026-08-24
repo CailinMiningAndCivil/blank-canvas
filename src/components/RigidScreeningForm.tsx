@@ -412,6 +412,44 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
             <p className="text-xs text-muted-foreground mt-1">PDF, JPG, PNG or DOC (max 10MB)</p>
             {errors.evidenceFile && <p className="text-sm text-destructive mt-1">{errors.evidenceFile}</p>}
           </div>
+          <div>
+            <Label>
+              Have you been employed in a paid role using this machinery/equipment experience or
+              ticket? *
+            </Label>
+            <RadioGroup
+              value={paidEmployment}
+              onValueChange={(v) => setPaidEmployment(v as "yes" | "no")}
+              className="flex gap-6 mt-2"
+            >
+              <div className="flex items-center gap-2">
+                <RadioGroupItem id="paid-yes" value="yes" />
+                <Label htmlFor="paid-yes" className="font-normal cursor-pointer">Yes</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <RadioGroupItem id="paid-no" value="no" />
+                <Label htmlFor="paid-no" className="font-normal cursor-pointer">No</Label>
+              </div>
+            </RadioGroup>
+            {errors.paidEmployment && (
+              <p className="text-sm text-destructive mt-1">{errors.paidEmployment}</p>
+            )}
+          </div>
+          {paidEmployment === "yes" && (
+            <div>
+              <Label htmlFor="employer">Where were you employed? *</Label>
+              <Input
+                id="employer"
+                value={employerName}
+                onChange={(e) => setEmployerName(e.target.value)}
+                placeholder="Company / site name"
+                maxLength={200}
+              />
+              {errors.employerName && (
+                <p className="text-sm text-destructive mt-1">{errors.employerName}</p>
+              )}
+            </div>
+          )}
         </div>
       )}
 
