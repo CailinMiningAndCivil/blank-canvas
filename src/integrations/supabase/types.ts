@@ -130,11 +130,15 @@ export type Database = {
           hr_licence_file_path: string | null
           id: string
           machines_operated: string | null
+          paid_employment_experience: boolean | null
           phone: string
           postcode: string | null
+          pre_existing_injuries: boolean | null
+          previous_employer: string | null
           previous_experience: boolean
           qualified: boolean
           source: string | null
+          under_100kg: boolean | null
         }
         Insert: {
           created_at?: string
@@ -146,11 +150,15 @@ export type Database = {
           hr_licence_file_path?: string | null
           id?: string
           machines_operated?: string | null
+          paid_employment_experience?: boolean | null
           phone: string
           postcode?: string | null
+          pre_existing_injuries?: boolean | null
+          previous_employer?: string | null
           previous_experience: boolean
           qualified?: boolean
           source?: string | null
+          under_100kg?: boolean | null
         }
         Update: {
           created_at?: string
@@ -162,11 +170,15 @@ export type Database = {
           hr_licence_file_path?: string | null
           id?: string
           machines_operated?: string | null
+          paid_employment_experience?: boolean | null
           phone?: string
           postcode?: string | null
+          pre_existing_injuries?: boolean | null
+          previous_employer?: string | null
           previous_experience?: boolean
           qualified?: boolean
           source?: string | null
+          under_100kg?: boolean | null
         }
         Relationships: []
       }

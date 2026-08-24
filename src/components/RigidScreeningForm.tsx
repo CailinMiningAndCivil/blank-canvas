@@ -56,6 +56,10 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
   const [hasHrLicence, setHasHrLicence] = useState<"" | "yes" | "no">("");
   const [evidenceFile, setEvidenceFile] = useState<File | null>(null);
   const [hrLicenceFile, setHrLicenceFile] = useState<File | null>(null);
+  const [hasInjuries, setHasInjuries] = useState<"" | "yes" | "no">("");
+  const [under100kg, setUnder100kg] = useState<"" | "yes" | "no">("");
+  const [paidEmployment, setPaidEmployment] = useState<"" | "yes" | "no">("");
+  const [employerName, setEmployerName] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
@@ -95,10 +99,16 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
         newErrors[issue.path[0] as string] = issue.message;
       }
     }
+    if (!hasInjuries) newErrors.hasInjuries = "Please answer this question";
+    if (!under100kg) newErrors.under100kg = "Please answer this question";
     if (!hasExperience) newErrors.hasExperience = "Please answer this question";
     if (hasExperience === "yes") {
       if (!machines.trim()) newErrors.machines = "List the machines you have operated";
       if (!evidenceFile) newErrors.evidenceFile = "Upload a resume and/or tickets";
+      if (!paidEmployment) newErrors.paidEmployment = "Please answer this question";
+      if (paidEmployment === "yes" && !employerName.trim()) {
+        newErrors.employerName = "Please tell us where you were employed";
+      }
     }
     if (hasExperience === "no") {
       if (!hasHrLicence) newErrors.hasHrLicence = "Please answer this question";
@@ -144,14 +154,31 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
         phone: phone.trim(),
         postcode: postcode.trim(),
         previous_experience: hasExperience === "yes",
-        experience_details:
+        experience_details: [
           hasExperience === "yes"
             ? `Machines: ${machines.trim()}`
             : hasHrLicence === "yes"
             ? "No machinery experience. Holds HR Licence."
             : "No machinery experience. No HR Licence.",
+          `Pre-existing injuries: ${hasInjuries === "yes" ? "Yes" : "No"}`,
+          `Under 100kg: ${under100kg === "yes" ? "Yes" : "No"}`,
+          hasExperience === "yes" && paidEmployment
+            ? `Paid employment using this experience: ${paidEmployment === "yes" ? "Yes" : "No"}`
+            : "",
+          hasExperience === "yes" && paidEmployment === "yes" && employerName.trim()
+            ? `Employed at: ${employerName.trim()}`
+            : "",
+        ]
+          .filter(Boolean)
+          .join(" | "),
         machines_operated: hasExperience === "yes" ? machines.trim() : null,
         has_hr_licence: hasExperience === "no" ? hasHrLicence === "yes" : null,
+        pre_existing_injuries: hasInjuries === "yes",
+        under_100kg: under100kg === "yes",
+        paid_employment_experience:
+          hasExperience === "yes" && paidEmployment ? paidEmployment === "yes" : null,
+        previous_employer:
+          hasExperience === "yes" && paidEmployment === "yes" ? employerName.trim() : null,
         evidence_file_path: evidencePath,
         hr_licence_file_path: hrPath,
         qualified,
@@ -301,6 +328,47 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
       </div>
 
       <div>
+        <Label>
+          Do you have any pre-existing injuries that the site needs to be made aware of that may
+          affect your ability to gain site access? *
+        </Label>
+        <RadioGroup
+          value={hasInjuries}
+          onValueChange={(v) => setHasInjuries(v as "yes" | "no")}
+          className="flex gap-6 mt-2"
+        >
+          <div className="flex items-center gap-2">
+            <RadioGroupItem id="inj-yes" value="yes" />
+            <Label htmlFor="inj-yes" className="font-normal cursor-pointer">Yes</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <RadioGroupItem id="inj-no" value="no" />
+            <Label htmlFor="inj-no" className="font-normal cursor-pointer">No</Label>
+          </div>
+        </RadioGroup>
+        {errors.hasInjuries && <p className="text-sm text-destructive mt-1">{errors.hasInjuries}</p>}
+      </div>
+
+      <div>
+        <Label>Are you under 100kg? *</Label>
+        <RadioGroup
+          value={under100kg}
+          onValueChange={(v) => setUnder100kg(v as "yes" | "no")}
+          className="flex gap-6 mt-2"
+        >
+          <div className="flex items-center gap-2">
+            <RadioGroupItem id="kg-yes" value="yes" />
+            <Label htmlFor="kg-yes" className="font-normal cursor-pointer">Yes</Label>
+          </div>
+          <div className="flex items-center gap-2">
+            <RadioGroupItem id="kg-no" value="no" />
+            <Label htmlFor="kg-no" className="font-normal cursor-pointer">No</Label>
+          </div>
+        </RadioGroup>
+        {errors.under100kg && <p className="text-sm text-destructive mt-1">{errors.under100kg}</p>}
+      </div>
+
+      <div>
         <Label>Do you have machinery / equipment operating experience? *</Label>
         <RadioGroup
           value={hasExperience}
@@ -344,6 +412,44 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
             <p className="text-xs text-muted-foreground mt-1">PDF, JPG, PNG or DOC (max 10MB)</p>
             {errors.evidenceFile && <p className="text-sm text-destructive mt-1">{errors.evidenceFile}</p>}
           </div>
+          <div>
+            <Label>
+              Have you been employed in a paid role using this machinery/equipment experience or
+              ticket? *
+            </Label>
+            <RadioGroup
+              value={paidEmployment}
+              onValueChange={(v) => setPaidEmployment(v as "yes" | "no")}
+              className="flex gap-6 mt-2"
+            >
+              <div className="flex items-center gap-2">
+                <RadioGroupItem id="paid-yes" value="yes" />
+                <Label htmlFor="paid-yes" className="font-normal cursor-pointer">Yes</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <RadioGroupItem id="paid-no" value="no" />
+                <Label htmlFor="paid-no" className="font-normal cursor-pointer">No</Label>
+              </div>
+            </RadioGroup>
+            {errors.paidEmployment && (
+              <p className="text-sm text-destructive mt-1">{errors.paidEmployment}</p>
+            )}
+          </div>
+          {paidEmployment === "yes" && (
+            <div>
+              <Label htmlFor="employer">Where were you employed? *</Label>
+              <Input
+                id="employer"
+                value={employerName}
+                onChange={(e) => setEmployerName(e.target.value)}
+                placeholder="Company / site name"
+                maxLength={200}
+              />
+              {errors.employerName && (
+                <p className="text-sm text-destructive mt-1">{errors.employerName}</p>
+              )}
+            </div>
+          )}
         </div>
       )}
 
