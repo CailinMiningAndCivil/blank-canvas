@@ -99,10 +99,16 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
         newErrors[issue.path[0] as string] = issue.message;
       }
     }
+    if (!hasInjuries) newErrors.hasInjuries = "Please answer this question";
+    if (!under100kg) newErrors.under100kg = "Please answer this question";
     if (!hasExperience) newErrors.hasExperience = "Please answer this question";
     if (hasExperience === "yes") {
       if (!machines.trim()) newErrors.machines = "List the machines you have operated";
       if (!evidenceFile) newErrors.evidenceFile = "Upload a resume and/or tickets";
+      if (!paidEmployment) newErrors.paidEmployment = "Please answer this question";
+      if (paidEmployment === "yes" && !employerName.trim()) {
+        newErrors.employerName = "Please tell us where you were employed";
+      }
     }
     if (hasExperience === "no") {
       if (!hasHrLicence) newErrors.hasHrLicence = "Please answer this question";
