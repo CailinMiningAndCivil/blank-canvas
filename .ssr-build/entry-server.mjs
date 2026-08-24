@@ -8004,87 +8004,7 @@ const RigidHaulTruckApplication = () => {
     ) }) }) }) })
   ] });
 };
-function brokeredPreviewStorage() {
-  var _a, _b;
-  if (typeof window === "undefined") return void 0;
-  const host = location.hostname;
-  const PREVIEW_ZONES = ["lovableproject.com", "lovableproject-dev.com", "lovable.app", "gpt-eng.com", "gptengineer.run"];
-  const onPreviewZone = PREVIEW_ZONES.some((z2) => host === z2 || host.endsWith("." + z2));
-  const UUID = "[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}";
-  const projectId = onPreviewZone ? ((_a = host.match(new RegExp("^(?:id-preview(?:-[a-z0-9]+)?|project)--(" + UUID + ")(?:-dev)?(?=\\.|$)", "i"))) == null ? void 0 : _a[1]) ?? ((_b = host.match(new RegExp("^(" + UUID + ")(?=[.-])", "i"))) == null ? void 0 : _b[1]) : void 0;
-  const framed = window.parent && window.parent !== window;
-  if (!projectId || !framed) return localStorage;
-  const dev = host.endsWith(".lovableproject-dev.com") || host.endsWith(".gpt-eng.com");
-  const EDITOR = dev ? /^https:\/\/([a-z0-9-]+\.)*(lovable\.dev|gptengineer\.app)$|^http:\/\/localhost:3000$/ : /^https:\/\/([a-z0-9-]+\.)*(lovable\.dev|gptengineer\.app)$/;
-  const ancestor = location.ancestorOrigins && location.ancestorOrigins[0] || (document.referrer ? new URL(document.referrer).origin : "");
-  const editorOrigins = ancestor && EDITOR.test(ancestor) ? [ancestor] : dev ? ["https://lovable.dev", "http://localhost:3000"] : ["https://lovable.dev"];
-  const RESULT = "lovable-preview-auth:result";
-  const TIMEOUT = 2e3;
-  const newId = () => Math.random().toString(36).slice(2) + Date.now().toString(36);
-  const request = (type, key, value) => new Promise((resolve) => {
-    const requestId = newId();
-    let done = false;
-    let timer;
-    const finish = (r) => {
-      if (done) return;
-      done = true;
-      clearTimeout(timer);
-      window.removeEventListener("message", onMessage);
-      resolve(r);
-    };
-    const onMessage = (e) => {
-      if (editorOrigins.indexOf(e.origin) < 0) return;
-      const d = e.data;
-      if (d && d.type === RESULT && d.requestId === requestId) finish(d);
-    };
-    window.addEventListener("message", onMessage);
-    const msg = { type, requestId, projectId, key };
-    if (value !== void 0) msg["value"] = value;
-    for (const origin of editorOrigins) window.parent.postMessage(msg, origin);
-    timer = setTimeout(() => finish(null), TIMEOUT);
-  });
-  let firstGet = true;
-  const RETRY_DELAY = 250;
-  return {
-    getItem: async (key) => {
-      let res = await request("lovable-preview-auth:get", key);
-      if (!res && firstGet) {
-        await new Promise((r) => setTimeout(r, RETRY_DELAY));
-        res = await request("lovable-preview-auth:get", key);
-      }
-      firstGet = false;
-      if (res && res.ok && typeof res.value === "string") {
-        if (res.value === "") {
-          localStorage.removeItem(key);
-          return null;
-        }
-        return res.value;
-      }
-      return localStorage.getItem(key);
-    },
-    setItem: (key, value) => {
-      localStorage.setItem(key, value);
-      return request("lovable-preview-auth:set", key, value).then(() => void 0);
-    },
-    removeItem: (key) => {
-      localStorage.removeItem(key);
-      return request("lovable-preview-auth:remove", key).then(() => void 0);
-    }
-  };
-}
-const SUPABASE_URL = "https://opdxvpqimcfhawcznxyc.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZHh2cHFpbWNmaGF3Y3pueHljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMTY3NzksImV4cCI6MjA4OTg5Mjc3OX0.fQ32jaRclUNFt-8KsNf0VYLyRZCly4xLYX-f-AxUIzA";
-const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-  auth: {
-    storage: brokeredPreviewStorage(),
-    persistSession: true,
-    autoRefreshToken: true
-  }
-});
-const client = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  supabase
-}, Symbol.toStringTag, { value: "Module" }));
+const getSupabase = async () => (await Promise.resolve().then(() => client)).supabase;
 const auPhoneRegex = /^(\+?61|0)[2-478](?:[ -]?\d){8}$/;
 const auPostcodeRegex = /^(0[289][0-9]{2}|[1-9][0-9]{3})$/;
 const baseSchema = z.object({
@@ -8119,7 +8039,8 @@ const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }) => {
     }
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
     const path = `${prefix}/${Date.now()}-${safeName}`;
-    const { error } = await supabase.storage.from("haul-truck-applications").upload(path, file, { upsert: false });
+    const supabase2 = await getSupabase();
+    const { error } = await supabase2.storage.from("haul-truck-applications").upload(path, file, { upsert: false });
     if (error) {
       console.error("upload error", error);
       return null;
@@ -8207,21 +8128,22 @@ const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }) => {
         qualified,
         source
       };
-      const { data: insertedApp, error: insertError } = await supabase.from("haul_truck_applications").insert(record).select("id").single();
+      const supabase2 = await getSupabase();
+      const { data: insertedApp, error: insertError } = await supabase2.from("haul_truck_applications").insert(record).select("id").single();
       if (insertError) {
         console.error("insert error", insertError);
         throw insertError;
       }
       const applicationId = insertedApp == null ? void 0 : insertedApp.id;
       try {
-        await supabase.functions.invoke("notify-submission", {
+        await supabase2.functions.invoke("notify-submission", {
           body: { application_id: applicationId }
         });
       } catch (err) {
         console.warn("notify-submission failed", err);
       }
       try {
-        await supabase.functions.invoke("sync-rigid-application", {
+        await supabase2.functions.invoke("sync-rigid-application", {
           body: { application_id: applicationId }
         });
       } catch (err) {
@@ -8985,6 +8907,87 @@ const RigidHaulTruckSchedule = () => {
     ] }) }) })
   ] });
 };
+function brokeredPreviewStorage() {
+  var _a, _b;
+  if (typeof window === "undefined") return void 0;
+  const host = location.hostname;
+  const PREVIEW_ZONES = ["lovableproject.com", "lovableproject-dev.com", "lovable.app", "gpt-eng.com", "gptengineer.run"];
+  const onPreviewZone = PREVIEW_ZONES.some((z2) => host === z2 || host.endsWith("." + z2));
+  const UUID = "[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}";
+  const projectId = onPreviewZone ? ((_a = host.match(new RegExp("^(?:id-preview(?:-[a-z0-9]+)?|project)--(" + UUID + ")(?:-dev)?(?=\\.|$)", "i"))) == null ? void 0 : _a[1]) ?? ((_b = host.match(new RegExp("^(" + UUID + ")(?=[.-])", "i"))) == null ? void 0 : _b[1]) : void 0;
+  const framed = window.parent && window.parent !== window;
+  if (!projectId || !framed) return localStorage;
+  const dev = host.endsWith(".lovableproject-dev.com") || host.endsWith(".gpt-eng.com");
+  const EDITOR = dev ? /^https:\/\/([a-z0-9-]+\.)*(lovable\.dev|gptengineer\.app)$|^http:\/\/localhost:3000$/ : /^https:\/\/([a-z0-9-]+\.)*(lovable\.dev|gptengineer\.app)$/;
+  const ancestor = location.ancestorOrigins && location.ancestorOrigins[0] || (document.referrer ? new URL(document.referrer).origin : "");
+  const editorOrigins = ancestor && EDITOR.test(ancestor) ? [ancestor] : dev ? ["https://lovable.dev", "http://localhost:3000"] : ["https://lovable.dev"];
+  const RESULT = "lovable-preview-auth:result";
+  const TIMEOUT = 2e3;
+  const newId = () => Math.random().toString(36).slice(2) + Date.now().toString(36);
+  const request = (type, key, value) => new Promise((resolve) => {
+    const requestId = newId();
+    let done = false;
+    let timer;
+    const finish = (r) => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      window.removeEventListener("message", onMessage);
+      resolve(r);
+    };
+    const onMessage = (e) => {
+      if (editorOrigins.indexOf(e.origin) < 0) return;
+      const d = e.data;
+      if (d && d.type === RESULT && d.requestId === requestId) finish(d);
+    };
+    window.addEventListener("message", onMessage);
+    const msg = { type, requestId, projectId, key };
+    if (value !== void 0) msg["value"] = value;
+    for (const origin of editorOrigins) window.parent.postMessage(msg, origin);
+    timer = setTimeout(() => finish(null), TIMEOUT);
+  });
+  let firstGet = true;
+  const RETRY_DELAY = 250;
+  return {
+    getItem: async (key) => {
+      let res = await request("lovable-preview-auth:get", key);
+      if (!res && firstGet) {
+        await new Promise((r) => setTimeout(r, RETRY_DELAY));
+        res = await request("lovable-preview-auth:get", key);
+      }
+      firstGet = false;
+      if (res && res.ok && typeof res.value === "string") {
+        if (res.value === "") {
+          localStorage.removeItem(key);
+          return null;
+        }
+        return res.value;
+      }
+      return localStorage.getItem(key);
+    },
+    setItem: (key, value) => {
+      localStorage.setItem(key, value);
+      return request("lovable-preview-auth:set", key, value).then(() => void 0);
+    },
+    removeItem: (key) => {
+      localStorage.removeItem(key);
+      return request("lovable-preview-auth:remove", key).then(() => void 0);
+    }
+  };
+}
+const SUPABASE_URL = "https://opdxvpqimcfhawcznxyc.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZHh2cHFpbWNmaGF3Y3pueHljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMTY3NzksImV4cCI6MjA4OTg5Mjc3OX0.fQ32jaRclUNFt-8KsNf0VYLyRZCly4xLYX-f-AxUIzA";
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+  auth: {
+    storage: brokeredPreviewStorage(),
+    persistSession: true,
+    autoRefreshToken: true
+  }
+});
+const client = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  supabase
+}, Symbol.toStringTag, { value: "Module" }));
 const ADMIN_KEY_STORAGE$1 = "signature_admin_key";
 function SignatureBackfill() {
   const [adminKey, setAdminKey] = useState(() => localStorage.getItem(ADMIN_KEY_STORAGE$1) ?? "");
