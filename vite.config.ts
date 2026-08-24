@@ -96,8 +96,20 @@ function prerenderPlugin(): Plugin {
         const g = globalThis as Record<string, unknown>;
         if (!g.localStorage) g.localStorage = memStore();
         if (!g.sessionStorage) g.sessionStorage = memStore();
+        if (!g.location)
+          g.location = {
+            hostname: "localhost",
+            host: "localhost",
+            href: "http://localhost/",
+            origin: "http://localhost",
+            protocol: "http:",
+            pathname: "/",
+            search: "",
+            hash: "",
+            ancestorOrigins: [] as unknown as DOMStringList,
+          };
         if (!g.window) g.window = g;
-        if (!g.document) g.document = { addEventListener() {}, removeEventListener() {}, cookie: "" };
+        if (!g.document) g.document = { addEventListener() {}, removeEventListener() {}, cookie: "", referrer: "" };
 
         const mod: { render: (url: string) => { html: string; head: string } } =
           await import(entryUrl);
