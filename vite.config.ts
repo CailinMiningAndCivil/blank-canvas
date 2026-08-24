@@ -106,7 +106,7 @@ function prerenderPlugin(): Plugin {
             pathname: "/",
             search: "",
             hash: "",
-            ancestorOrigins: [] as unknown as DOMStringList,
+            ancestorOrigins: [] as unknown as string[],
           };
         if (!g.window) g.window = g;
         if (!g.document) g.document = { addEventListener() {}, removeEventListener() {}, cookie: "", referrer: "" };
