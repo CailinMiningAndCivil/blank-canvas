@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { z } from "zod";
-const getSupabase = async () => (await import("@/integrations/supabase/client")).supabase;
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -71,7 +71,6 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
     }
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
     const path = `${prefix}/${Date.now()}-${safeName}`;
-    const supabase = await getSupabase();
     const { error } = await supabase.storage
       .from("haul-truck-applications")
       .upload(path, file, { upsert: false });
@@ -186,7 +185,6 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
         source,
       };
 
-      const supabase = await getSupabase();
       const { data: insertedApp, error: insertError } = await supabase
         .from("haul_truck_applications")
         .insert(record)
