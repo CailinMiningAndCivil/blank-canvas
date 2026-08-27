@@ -60,7 +60,7 @@ Deno.serve(async (req) => {
     const { data: app } = await supabase
       .from('haul_truck_applications')
       .select(
-        'full_name, email, phone, postcode, previous_experience, machines_operated, has_hr_licence, evidence_file_path, hr_licence_file_path, source, created_at'
+        'full_name, email, phone, postcode, previous_experience, machines_operated, has_hr_licence, evidence_file_path, hr_licence_file_path, source, created_at, pre_existing_injuries, under_100kg, paid_employment_experience, previous_employer'
       )
       .eq('id', applicationId)
       .maybeSingle();
@@ -112,6 +112,8 @@ Deno.serve(async (req) => {
     const source = String(app.source ?? 'website').slice(0, 60);
     machineCell = `[${qualifiedTag}] [${source}] ${machineCell}`.trim();
 
+    const yesNo = (v: unknown) => (v === true ? 'Yes' : v === false ? 'No' : '');
+
     const row = [
       app.full_name,
       app.phone,
@@ -120,9 +122,13 @@ Deno.serve(async (req) => {
       supportingDocs,
       app.postcode ?? '',
       machineCell,
+      yesNo(app.pre_existing_injuries),
+      yesNo(app.under_100kg),
+      yesNo(app.paid_employment_experience),
+      app.previous_employer ?? '',
     ];
 
-    const range = `${SHEET_NAME}!A:G`;
+    const range = `${SHEET_NAME}!A:K`;
     const url = `${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
 
     const sheetsRes = await fetch(url, {
