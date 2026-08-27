@@ -185,18 +185,19 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
         source,
       };
 
-      const { data: insertedApp, error: insertError } = await supabase
+      // Generate the id client-side: RLS allows inserts but not reads,
+      // so we cannot use .select() on the returned row.
+      const applicationId = crypto.randomUUID();
+
+      const { error: insertError } = await supabase
         .from("haul_truck_applications")
-        .insert(record)
-        .select("id")
-        .single();
+        .insert({ ...record, id: applicationId });
 
       if (insertError) {
         console.error("insert error", insertError);
         throw insertError;
       }
 
-      const applicationId = insertedApp?.id;
 
       // Forward to GHL via notify-submission for record-keeping
       try {
