@@ -60,7 +60,7 @@ Deno.serve(async (req) => {
     const { data: app } = await supabase
       .from('haul_truck_applications')
       .select(
-        'full_name, email, phone, postcode, previous_experience, machines_operated, has_hr_licence, evidence_file_path, hr_licence_file_path, source, created_at'
+        'full_name, email, phone, postcode, previous_experience, machines_operated, has_hr_licence, evidence_file_path, hr_licence_file_path, source, created_at, pre_existing_injuries, under_100kg, paid_employment_experience, previous_employer'
       )
       .eq('id', applicationId)
       .maybeSingle();
