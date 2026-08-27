@@ -199,15 +199,6 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
       }
 
 
-      // Forward to GHL via notify-submission for record-keeping
-      try {
-        await supabase.functions.invoke("notify-submission", {
-          body: { application_id: applicationId },
-        });
-      } catch (err) {
-        console.warn("notify-submission failed", err);
-      }
-
       // Append to Google Sheet (best effort)
       try {
         await supabase.functions.invoke("sync-rigid-application", {
