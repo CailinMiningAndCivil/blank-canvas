@@ -16,6 +16,7 @@ import {
 
 import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import trainerExcavatorDistance from "@/assets/photos/trainer-excavator-distance.jpg";
+import gpsTraining from "@/assets/photos/gps-training.jpg";
 import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseOptions = [
@@ -201,6 +202,48 @@ const Excavator = () => {
                 alt="Excavator training session" 
                 className="w-full rounded-2xl"
               />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* GPS Training Add-On */}
+      <section className="py-20 bg-secondary">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div className="order-2 lg:order-1 relative">
+              <img 
+                src={gpsTraining} 
+                alt="Excavator GPS training on a live mine site" 
+                className="w-full rounded-2xl"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <p className="text-primary font-medium tracking-widest uppercase mb-4">Specialist Add-On</p>
+              <h2 className="font-display text-4xl text-foreground mb-6">Excavator GPS Training</h2>
+              <p className="text-muted-foreground mb-6">
+                Learn to operate excavators with Topcon GPS guidance systems — the same technology used on 
+                modern mining and civil earthworks projects. We're WA's only private provider of this specialist training.
+              </p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                  <span className="text-foreground">Topcon GPS system setup and calibration</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                  <span className="text-foreground">Real-time dig guidance and grade control</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                  <span className="text-foreground">Designed for operators with excavator experience</span>
+                </li>
+              </ul>
+              <Button asChild variant="hero" size="lg">
+                <a href="mailto:mwkcivilmining@gmail.com?subject=Excavator%20GPS%20Training%20Enquiry">
+                  Enquire by Email
+                </a>
+              </Button>
             </div>
           </div>
         </div>
