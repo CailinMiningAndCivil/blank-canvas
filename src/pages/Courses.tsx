@@ -24,6 +24,7 @@ import rigidHaulTruck from "@/assets/photos/rigid-haul-truck.jpg";
 import safetyEquipmentCheck from "@/assets/photos/safety-equipment-check.jpg";
 import rplHero from "@/assets/photos/rpl-page-hero.png";
 import vocHero from "@/assets/photos/voc-page-hero.png";
+import gpsTraining from "@/assets/photos/gps-training.jpg";
 import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseCategories = [
