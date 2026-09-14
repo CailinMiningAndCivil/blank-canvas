@@ -164,6 +164,16 @@ const individualMachines = [
     link: "/courses/integrated-tool-carrier",
     alt: "Integrated Tool Carrier with fork attachment",
   },
+  {
+    id: "gps-training",
+    title: "GPS Training",
+    code: "Mine Site Surveying",
+    description: "Learn practical GPS and surveying skills used on live mining and civil sites. Enquire now to book your session.",
+    image: gpsTraining,
+    link: "mailto:mwkcivilmining@gmail.com?subject=GPS%20Training%20Enquiry",
+    alt: "GPS training on a live mine site with survey equipment",
+    badge: "Enquire",
+  },
 ];
 
 const features = [
@@ -204,6 +214,7 @@ const Courses = () => {
           { name: "Roller Operator Training (RIIMPO317F)", path: "/courses/roller", description: "Roller operator certification for compaction and civil works." },
           { name: "Watercart Training (RIIMPO206D)", path: "/courses/watercart", description: "Bulk water truck operations training for mining and civil sites." },
           { name: "Integrated Tool Carrier Fork Training (RIIHAN311F)", path: "/courses/integrated-tool-carrier", description: "ITC fork attachment short course." },
+          { name: "GPS Training", path: "/courses", description: "Practical GPS and mine site surveying training. Enquire by email to book." },
           { name: "Rigid Haul Truck Traineeship", path: "/rigid-haul-truck-traineeship", description: "Live mine site rigid haul truck traineeship with no prior experience required." },
           { name: "Recognition of Prior Learning (RPL)", path: "/rpl", description: "Convert prior experience or expired tickets into recognised Australian qualifications." },
         ])}
