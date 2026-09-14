@@ -51,6 +51,18 @@ Deno.serve(async (req) => {
     }
 
     const body = (await req.json().catch(() => null)) as Record<string, unknown> | null;
+
+    // One-off maintenance mode: re-sign expired storage links already in the sheet.
+    // Gated by the shared webhook/admin token (same trust level as extract-student-signature).
+    if (body?.mode === 'refresh_links') {
+      const token = req.headers.get('X-Admin-Key') ?? String(body?.token ?? '');
+      const expected = Deno.env.get('SIGNATURE_WEBHOOK_TOKEN') ?? '';
+      if (!expected || token !== expected) {
+        return json({ success: false, error: 'Not authorised' }, 401);
+      }
+      return await refreshSheetLinks();
+    }
+
     const applicationId = body?.application_id;
     if (!isUuid(applicationId)) {
       return json({ success: false, error: 'Not authorised' }, 401);
