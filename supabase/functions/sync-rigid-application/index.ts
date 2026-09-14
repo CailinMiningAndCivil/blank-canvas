@@ -39,14 +39,87 @@ function json(body: unknown, status = 200) {
   });
 }
 
+const GW_HEADERS = () => ({
+  Authorization: `Bearer ${LOVABLE_API_KEY}`,
+  'X-Connection-Api-Key': GOOGLE_SHEETS_API_KEY,
+  'Content-Type': 'application/json',
+});
+
+let cachedSheetId: number | null = null;
+async function sheetId(): Promise<number | null> {
+  if (cachedSheetId !== null) return cachedSheetId;
+  const res = await fetch(
+    `${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}?fields=sheets.properties`,
+    { headers: GW_HEADERS() }
+  );
+  if (!res.ok) {
+    console.error('Sheet metadata failed', res.status, await res.text());
+    return null;
+  }
+  const meta = (await res.json()) as {
+    sheets?: Array<{ properties: { sheetId: number; title: string } }>;
+  };
+  const match = meta.sheets?.find((s) => s.properties.title === SHEET_NAME);
+  cachedSheetId = match?.properties.sheetId ?? null;
+  return cachedSheetId;
+}
+
+// Builds rich-text link runs so URLs in a cell render as clickable links.
+function linkRuns(cell: string) {
+  const runs: Array<{ startIndex: number; format: { link: { uri: string } } }> = [];
+  const RE = /https:\/\/[^\s)]+/g;
+  for (const m of cell.matchAll(RE)) {
+    runs.push({ startIndex: m.index ?? 0, format: { link: { uri: m[0] } } });
+  }
+  return runs;
+}
+
+// Writes a cell value with clickable links via updateCells (rich text runs).
+async function writeCellWithLinks(rowIndex0: number, cell: string): Promise<boolean> {
+  const id = await sheetId();
+  if (id === null) return false;
+  const res = await fetch(`${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}:batchUpdate`, {
+    method: 'POST',
+    headers: GW_HEADERS(),
+    body: JSON.stringify({
+      requests: [
+        {
+          updateCells: {
+            range: {
+              sheetId: id,
+              startRowIndex: rowIndex0,
+              endRowIndex: rowIndex0 + 1,
+              startColumnIndex: 4,
+              endColumnIndex: 5,
+            },
+            rows: [
+              {
+                values: [
+                  {
+                    userEnteredValue: { stringValue: cell },
+                    textFormatRuns: linkRuns(cell),
+                  },
+                ],
+              },
+            ],
+            fields: 'userEnteredValue,textFormatRuns',
+          },
+        },
+      ],
+    }),
+  });
+  if (!res.ok) {
+    console.error('updateCells failed', res.status, await res.text());
+    return false;
+  }
+  await res.text();
+  return true;
+}
+
 // Re-signs every storage URL found in the sheet's Supporting Docs column (E).
 // The object path is recovered from the dead signed URL itself, so no DB matching is needed.
 async function refreshSheetLinks() {
-  const headers = {
-    Authorization: `Bearer ${LOVABLE_API_KEY}`,
-    'X-Connection-Api-Key': GOOGLE_SHEETS_API_KEY,
-    'Content-Type': 'application/json',
-  };
+  const headers = GW_HEADERS();
   const base = `${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}/values`;
   const readRange = encodeURIComponent(`${SHEET_NAME}!E:E`);
 
@@ -87,18 +160,10 @@ async function refreshSheetLinks() {
     let newCell = cell;
     for (const [oldUrl, fresh] of replacements) newCell = newCell.split(oldUrl).join(fresh);
 
-    const writeRange = encodeURIComponent(`${SHEET_NAME}!E${i + 1}`);
-    const writeRes = await fetch(`${base}/${writeRange}?valueInputOption=USER_ENTERED`, {
-      method: 'PUT',
-      headers,
-      body: JSON.stringify({ values: [[newCell]] }),
-    });
-    if (!writeRes.ok) {
-      console.error('Sheets update failed', writeRes.status, await writeRes.text());
-      failures.push(`row ${i + 1}`);
-    } else {
-      await writeRes.text();
+    if (await writeCellWithLinks(i, newCell)) {
       updated++;
+    } else {
+      failures.push(`row ${i + 1}`);
     }
   }
 
