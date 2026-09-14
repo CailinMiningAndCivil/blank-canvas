@@ -58,7 +58,7 @@ async function refreshSheetLinks() {
   const { values } = (await readRes.json()) as { values?: string[][] };
   const rows = values ?? [];
 
-  const URL_RE = /(https:\/\/[^\s)]*\/storage\/v1\/object\/sign\/haul-truck-applications\/([^\s?)]*))(?:\?[^\s)]*)?/g;
+  const URL_RE = /(https:\/\/[^\s)]*\/storage\/v1\/object\/sign\/haul-truck-applications\/([^\s?)]*)(?:\?[^\s)]*)?)/g;
 
   let updated = 0;
   let skipped = 0;
