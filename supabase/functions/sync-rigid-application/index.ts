@@ -5,7 +5,7 @@ const SPREADSHEET_ID = '1w8o5ZQ-HhYTpro3qo6Vdn_RYqlfK6ttLc73_VDU0PlY';
 const SHEET_NAME = 'Rigid Training Application Form';
 const GATEWAY_URL = 'https://connector-gateway.lovable.dev/google_sheets/v4';
 const BUCKET = 'haul-truck-applications';
-const SIGNED_URL_TTL = 60 * 60 * 24 * 30; // 30 days
+const SIGNED_URL_TTL = 60 * 60 * 24 * 365; // 1 year — links in the sheet must stay openable
 const FRESH_WINDOW_MS = 30 * 60 * 1000;
 
 const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY') ?? '';
