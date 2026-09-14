@@ -39,6 +39,72 @@ function json(body: unknown, status = 200) {
   });
 }
 
+// Re-signs every storage URL found in the sheet's Supporting Docs column (E).
+// The object path is recovered from the dead signed URL itself, so no DB matching is needed.
+async function refreshSheetLinks() {
+  const headers = {
+    Authorization: `Bearer ${LOVABLE_API_KEY}`,
+    'X-Connection-Api-Key': GOOGLE_SHEETS_API_KEY,
+    'Content-Type': 'application/json',
+  };
+  const base = `${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}/values`;
+  const readRange = encodeURIComponent(`${SHEET_NAME}!E:E`);
+
+  const readRes = await fetch(`${base}/${readRange}`, { headers });
+  if (!readRes.ok) {
+    console.error('Sheets read failed', readRes.status, await readRes.text());
+    return json({ success: false, error: 'An internal error occurred.' }, 502);
+  }
+  const { values } = (await readRes.json()) as { values?: string[][] };
+  const rows = values ?? [];
+
+  const URL_RE = /(https:\/\/[^\s)]*\/storage\/v1\/object\/sign\/haul-truck-applications\/([^\s?)]*))(?:\?[^\s)]*)?/g;
+
+  let updated = 0;
+  let skipped = 0;
+  const failures: string[] = [];
+
+  for (let i = 0; i < rows.length; i++) {
+    const cell = String(rows[i]?.[0] ?? '');
+    if (!cell.includes('/object/sign/')) continue;
+
+    const replacements: Array<[string, string]> = [];
+    for (const m of cell.matchAll(URL_RE)) {
+      const fullUrl = m[1];
+      const objectPath = decodeURIComponent(m[2]);
+      const fresh = await signed(objectPath);
+      if (fresh) {
+        replacements.push([fullUrl, fresh]);
+      } else {
+        failures.push(objectPath);
+      }
+    }
+    if (!replacements.length) {
+      skipped++;
+      continue;
+    }
+
+    let newCell = cell;
+    for (const [oldUrl, fresh] of replacements) newCell = newCell.split(oldUrl).join(fresh);
+
+    const writeRange = encodeURIComponent(`${SHEET_NAME}!E${i + 1}`);
+    const writeRes = await fetch(`${base}/${writeRange}?valueInputOption=RAW`, {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify({ values: [[newCell]] }),
+    });
+    if (!writeRes.ok) {
+      console.error('Sheets update failed', writeRes.status, await writeRes.text());
+      failures.push(`row ${i + 1}`);
+    } else {
+      await writeRes.text();
+      updated++;
+    }
+  }
+
+  return json({ success: true, rowsScanned: rows.length, rowsUpdated: updated, skipped, failures });
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
