@@ -294,7 +294,14 @@ Deno.serve(async (req) => {
       return json({ success: false, error: 'An internal error occurred. Please try again.' }, 502);
     }
 
-    await sheetsRes.text();
+    // Make the doc links clickable in the newly appended row.
+    const appendResult = (await sheetsRes.json()) as {
+      updates?: { updatedRange?: string };
+    };
+    const rowMatch = appendResult.updates?.updatedRange?.match(/!A(\d+):/);
+    if (rowMatch && supportingDocs) {
+      await writeCellWithLinks(Number(rowMatch[1]) - 1, supportingDocs);
+    }
 
     return json({ success: true, qualified });
   } catch (err) {
