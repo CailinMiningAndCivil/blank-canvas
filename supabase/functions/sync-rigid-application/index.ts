@@ -88,7 +88,7 @@ async function refreshSheetLinks() {
     for (const [oldUrl, fresh] of replacements) newCell = newCell.split(oldUrl).join(fresh);
 
     const writeRange = encodeURIComponent(`${SHEET_NAME}!E${i + 1}`);
-    const writeRes = await fetch(`${base}/${writeRange}?valueInputOption=RAW`, {
+    const writeRes = await fetch(`${base}/${writeRange}?valueInputOption=USER_ENTERED`, {
       method: 'PUT',
       headers,
       body: JSON.stringify({ values: [[newCell]] }),
