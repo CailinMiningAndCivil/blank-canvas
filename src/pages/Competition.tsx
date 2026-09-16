@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { SEO } from "@/components/SEO";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
@@ -86,6 +87,18 @@ const Competition = () => {
   const scrollToEnter = () => {
     document.getElementById("how-to-enter")?.scrollIntoView({ behavior: "smooth" });
   };
+
+  // Hide the global GHL chat widgets on this standalone campaign page.
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.textContent =
+      "chat-widget, lc-chat-widget, #chat-widget-container { display: none !important; }";
+    document.head.appendChild(style);
+    return () => {
+      style.remove();
+    };
+  }, []);
+
 
   return (
     <div className="min-h-screen bg-background">
