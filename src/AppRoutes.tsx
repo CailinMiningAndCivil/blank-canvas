@@ -98,6 +98,7 @@ export const AppRoutes = () => (
       <Route path="/cailin-courses" element={<Navigate to="/courses" replace />} />
       <Route path="/e-book" element={<Navigate to="/courses" replace />} />
       <Route path="/groups" element={<Navigate to="/" replace />} />
+      <Route path="/competition" element={<Competition />} />
       <Route path="/careers" element={<CareersRedirect />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
