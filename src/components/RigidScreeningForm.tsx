@@ -268,6 +268,18 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
 
   return (
     <form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-6 md:p-8 space-y-6">
+      <div className="flex items-start gap-3 bg-muted/60 border border-border rounded-xl p-4">
+        <AlertTriangle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+        <div>
+          <p className="text-sm font-semibold text-foreground">Please read before completing this form</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            The questions below help us assess how likely you are to succeed during your training.
+            Please answer honestly and to the best of your knowledge. If any information you provide
+            is inaccurate or misleading, and this affects the outcome of your training, Cailin
+            Mining &amp; Civil accepts no responsibility or liability for that outcome.
+          </p>
+        </div>
+      </div>
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="full_name">Full name *</Label>
