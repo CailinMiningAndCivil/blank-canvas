@@ -1,4 +1,3 @@
-import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
@@ -89,7 +88,7 @@ const Competition = () => {
   };
 
   return (
-    <Layout>
+    <div className="min-h-screen bg-background">
       <SEO
         title="Spot the Cailin Mining & Civil Car & Win $1,000 | Cailin Mining & Civil Competition"
         description="Found our Cailin Mining & Civil car? Snap it, share it and tag us for your chance to win $1,000."
@@ -347,7 +346,7 @@ const Competition = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </div>
   );
 };
 
