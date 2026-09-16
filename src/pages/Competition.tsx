@@ -54,14 +54,14 @@ const steps = [
   {
     icon: Search,
     step: "Step 1",
-    title: "Spot the CMC vehicle",
+    title: "Spot the Cailin Mining & Civil vehicle",
     description: "Keep an eye out for a Cailin Mining & Civil vehicle out on the road or on site.",
   },
   {
     icon: Camera,
     step: "Step 2",
     title: "Take a photo",
-    description: "Snap your best photo of the CMC vehicle where you found the QR code.",
+    description: "Snap your best photo of the Cailin Mining & Civil vehicle where you found the QR code.",
   },
   {
     icon: UserPlus,
@@ -72,7 +72,7 @@ const steps = [
   {
     icon: Share2,
     step: "Step 4",
-    title: "Post your photo & tag CMC",
+    title: "Post your photo & tag Cailin Mining & Civil",
     description: "Post your photo on your social media account and tag Cailin Mining & Civil.",
   },
   {
@@ -91,7 +91,7 @@ const Competition = () => {
   return (
     <Layout>
       <SEO
-        title="Spot the CMC Car & Win $1,000 | Cailin Mining & Civil Competition"
+        title="Spot the Cailin Mining & Civil Car & Win $1,000 | Cailin Mining & Civil Competition"
         description="Found our Cailin Mining & Civil car? Snap it, share it and tag us for your chance to win $1,000."
         path="/competition"
       />
@@ -118,8 +118,8 @@ const Competition = () => {
               Photo Competition
             </div>
 
-            <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight tracking-wide animate-fade-up">
-              SPOT THE CMC CAR
+            <h1 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight tracking-wide animate-fade-up">
+              SPOT THE CAILIN MINING &amp; CIVIL CAR
               <br />
               <span className="text-gradient">&amp; WIN $1,000</span>
             </h1>
@@ -215,7 +215,7 @@ const Competition = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h2 className="font-display font-bold text-3xl md:text-4xl">
-              Follow CMC
+              Follow Cailin Mining &amp; Civil
             </h2>
             <p className="mt-3 text-muted-foreground">
               Step 3 — follow us on your favourite platform. You'll need to be
@@ -287,7 +287,8 @@ const Competition = () => {
                   </h3>
                   <p className="text-sm text-muted-foreground mt-1">
                     Entrants must follow Cailin Mining &amp; Civil on social
-                    media and tag CMC in their photo post.
+                    media and tag Cailin Mining &amp; Civil in their photo
+                    post.
                   </p>
                 </div>
               </div>
@@ -303,7 +304,7 @@ const Competition = () => {
             Ready to win <span className="text-gradient">$1,000</span>?
           </h2>
           <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
-            Snap the CMC car, follow us, post and tag — that's all it takes.
+            Snap the Cailin Mining &amp; Civil car, follow us, post and tag — that's all it takes.
           </p>
           <Button
             size="lg"
