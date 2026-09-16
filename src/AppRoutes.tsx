@@ -40,6 +40,7 @@ import FAQ from "./pages/FAQ";
 import SignLogbook from "./pages/SignLogbook";
 import TrainerLogbook from "./pages/TrainerLogbook";
 import MyLogbook from "./pages/MyLogbook";
+import Competition from "./pages/Competition";
 
 const CareersRedirect = () => {
   if (typeof window !== "undefined") {
@@ -97,6 +98,7 @@ export const AppRoutes = () => (
       <Route path="/cailin-courses" element={<Navigate to="/courses" replace />} />
       <Route path="/e-book" element={<Navigate to="/courses" replace />} />
       <Route path="/groups" element={<Navigate to="/" replace />} />
+      <Route path="/competition" element={<Competition />} />
       <Route path="/careers" element={<CareersRedirect />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
