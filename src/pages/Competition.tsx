@@ -1,4 +1,4 @@
-import { Layout } from "@/components/layout/Layout";
+import { useEffect } from "react";
 import { SEO } from "@/components/SEO";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
@@ -88,8 +88,20 @@ const Competition = () => {
     document.getElementById("how-to-enter")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Hide the global GHL chat widgets on this standalone campaign page.
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.textContent =
+      "chat-widget, lc-chat-widget, #chat-widget-container { display: none !important; }";
+    document.head.appendChild(style);
+    return () => {
+      style.remove();
+    };
+  }, []);
+
+
   return (
-    <Layout>
+    <div className="min-h-screen bg-background">
       <SEO
         title="Spot the Cailin Mining & Civil Car & Win $1,000 | Cailin Mining & Civil Competition"
         description="Found our Cailin Mining & Civil car? Snap it, share it and tag us for your chance to win $1,000."
@@ -347,7 +359,7 @@ const Competition = () => {
           </div>
         </div>
       </section>
-    </Layout>
+    </div>
   );
 };
 
