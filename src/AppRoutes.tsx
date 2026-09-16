@@ -40,6 +40,7 @@ import FAQ from "./pages/FAQ";
 import SignLogbook from "./pages/SignLogbook";
 import TrainerLogbook from "./pages/TrainerLogbook";
 import MyLogbook from "./pages/MyLogbook";
+import Competition from "./pages/Competition";
 
 const CareersRedirect = () => {
   if (typeof window !== "undefined") {
