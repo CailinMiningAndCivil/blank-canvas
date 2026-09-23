@@ -24,9 +24,9 @@ import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseOptions = [
   {
-    title: "$600 Short Course",
+    title: "$650 Short Course",
     duration: "1.5 hours initial",
-    price: "$600",
+    price: "$650",
     description: "Quick moxy certification with nationally recognised qualification",
     bookingUrl: "https://live.cailintraining.com.au/short_course_moxy-book",
     highlight: false,
@@ -161,7 +161,7 @@ const MoxyTrainingPerth = () => {
         },
       ],
       "offers": [
-        { "@type": "Offer", "price": "600", "priceCurrency": "AUD", "name": "Short Course" },
+        { "@type": "Offer", "price": "650", "priceCurrency": "AUD", "name": "Short Course" },
         { "@type": "Offer", "price": "2500", "priceCurrency": "AUD", "name": "Full Day Training" },
         { "@type": "Offer", "price": "350", "priceCurrency": "AUD", "name": "RPL Assessment" },
       ],
@@ -393,7 +393,7 @@ const MoxyTrainingPerth = () => {
                 </div>
                 <p className="font-display text-3xl text-primary text-center mb-4">{option.price}</p>
                 <p className="text-foreground text-sm text-center mb-4">{option.description}</p>
-                {option.title === "$600 Short Course" && (
+                {option.title === "$650 Short Course" && (
                   <div className="flex items-start gap-2 bg-destructive/10 border border-destructive/30 rounded-lg p-3 mb-4">
                     <AlertCircle className="w-4 h-4 text-destructive shrink-0 mt-0.5" />
                     <p className="text-foreground text-xs">

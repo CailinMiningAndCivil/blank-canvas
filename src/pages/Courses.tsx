@@ -57,7 +57,7 @@ const courseCategories = [
     title: "Short Courses",
     subtitle: "Quick Certification",
     description: "Get a recognised national qualification in just 1.5 hours initial. Perfect for career exploration.",
-    price: "$600",
+    price: "$650",
     priceNote: "per machine",
     image: machinesCollage,
     link: "/courses/short-courses",
@@ -159,7 +159,7 @@ const individualMachines = [
     id: "integrated-tool-carrier",
     title: "Integrated Tool Carrier",
     code: "RIIHAN311F",
-    description: "$600 short course covering safe fork attachment operation on an Integrated Tool Carrier. Loader qualification required.",
+    description: "$650 short course covering safe fork attachment operation on an Integrated Tool Carrier. Loader qualification required.",
     image: itcAsset.url,
     link: "/courses/integrated-tool-carrier",
     alt: "Integrated Tool Carrier with fork attachment",
@@ -358,7 +358,7 @@ const Courses = () => {
                   <td className="p-4 text-foreground font-medium">Short Courses</td>
                   <td className="p-4 text-muted-foreground">Career exploration or quick certification</td>
                   <td className="p-4 text-muted-foreground">1.5 hours initial</td>
-                  <td className="p-4 text-primary font-semibold">$600</td>
+                  <td className="p-4 text-primary font-semibold">$650</td>
                 </tr>
                 <tr className="border-b border-border">
                   <td className="p-4 text-foreground font-medium">Starter Bundles</td>

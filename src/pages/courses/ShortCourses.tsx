@@ -103,8 +103,8 @@ const ShortCourses = () => {
     <Layout>
       
       <SEO
-        title="$600 Short Courses | Cailin Mining & Civil Perth"
-        description="Quick nationally recognised machine operator certification from $600. Perfect for career exploration or fast-tracked tickets."
+        title="$650 Short Courses | Cailin Mining & Civil Perth"
+        description="Quick nationally recognised machine operator certification from $650. Perfect for career exploration or fast-tracked tickets."
         path="/courses/short-courses"
       />
       {/* Hero Section with Image */}
@@ -122,7 +122,7 @@ const ShortCourses = () => {
               an operating role in Civil Construction or Mining industry.
             </p>
             <div className="inline-block bg-primary/10 px-8 py-4 rounded-xl">
-              <span className="text-primary font-display text-4xl">$600</span>
+              <span className="text-primary font-display text-4xl">$650</span>
               <span className="text-foreground ml-2">per machine</span>
             </div>
           </div>
