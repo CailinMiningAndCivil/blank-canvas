@@ -115,7 +115,7 @@ const ShortCourses = () => {
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-primary font-medium tracking-widest uppercase mb-4">Quick Certification</p>
             <h1 className="font-display text-5xl md:text-6xl text-foreground mb-6">
-              $600 Courses
+              Short Courses
             </h1>
             <p className="text-muted-foreground text-lg mb-8">
               Get a recognised national qualification and professional work referral needed to secure 

@@ -28,13 +28,13 @@ const returnTimeTable = [
     machine: "Roller",
     maxTime: "4 hours (half day)",
     link: "/courses/short-courses",
-    linkText: "See $600 Course",
+    linkText: "See Short Course",
   },
   {
     machine: "Watercart",
     maxTime: "4 hours (half day)",
     link: "/courses/short-courses",
-    linkText: "See $600 Course",
+    linkText: "See Short Course",
   },
 ];
 
@@ -230,7 +230,7 @@ const FullDay = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild variant="heroOutline" size="lg">
-              <Link to="/courses/short-courses">$600 Courses</Link>
+              <Link to="/courses/short-courses">Short Courses</Link>
             </Button>
             <Button asChild variant="heroOutline" size="lg">
               <Link to="/courses/bundles">Training Bundles</Link>
