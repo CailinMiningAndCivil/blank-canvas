@@ -52,6 +52,14 @@ export const Navbar = () => {
       <div className="hidden lg:block border-b border-border/50 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-end h-8 gap-4 text-xs">
+            <a
+              href="https://resume.cailinconnex.com.au/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium"
+            >
+              Free Resume Check →
+            </a>
             <Link
               to="/free-returns"
               className="text-muted-foreground hover:text-primary transition-colors font-medium"

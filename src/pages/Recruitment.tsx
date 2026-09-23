@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
+import { ConnexSection } from "@/components/ConnexSection";
 import { Button } from "@/components/ui/button";
 import { Users, Briefcase, Award, ArrowRight } from "lucide-react";
 
@@ -80,6 +81,8 @@ const Recruitment = () => {
           </div>
         </div>
       </section>
+
+      <ConnexSection />
 
       <section id="enquiry-form" className="py-16 md:py-24">
         <div className="container mx-auto px-4">

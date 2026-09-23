@@ -70,6 +70,16 @@ export const Footer = () => {
                   Refresher / Hourly Training
                 </Link>
               </li>
+              <li>
+                <a
+                  href="https://resume.cailinconnex.com.au/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  Free Resume Check
+                </a>
+              </li>
             </ul>
           </div>
 
