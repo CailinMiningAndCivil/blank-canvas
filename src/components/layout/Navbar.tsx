@@ -22,7 +22,7 @@ const navLinks = [
 
 const courseLinks = [
   { name: "All Courses", path: "/courses" },
-  { name: "$600 Courses", path: "/courses/short-courses" },
+  { name: "Short Courses", path: "/courses/short-courses" },
   { name: "Bundles", path: "/courses/bundles" },
   { name: "Full Day", path: "/courses/full-day" },
   { name: "Rigid Haul Truck 🆕", path: "/rigid-haul-truck-booking" },
