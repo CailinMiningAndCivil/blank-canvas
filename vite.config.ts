@@ -34,6 +34,7 @@ const PRERENDER_ROUTES = [
   "/privacypolicy",
   "/recruitment",
   "/affiliate",
+  "/ambassador",
   "/returning-student",
   "/refresher-training",
   "/rigid-haul-truck-application",
