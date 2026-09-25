@@ -29,6 +29,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import RtoDataSuccess from "./pages/RtoDataSuccess";
 import Recruitment from "./pages/Recruitment";
 import Affiliate from "./pages/Affiliate";
+import Ambassador from "./pages/Ambassador";
 import ReturningStudent from "./pages/ReturningStudent";
 import RefresherTraining from "./pages/RefresherTraining";
 import RigidHaulTruckApplication from "./pages/RigidHaulTruckApplication";
@@ -83,6 +84,7 @@ export const AppRoutes = () => (
       <Route path="/rtodata-success" element={<RtoDataSuccess />} />
       <Route path="/recruitment" element={<Recruitment />} />
       <Route path="/affiliate" element={<Affiliate />} />
+      <Route path="/ambassador" element={<Ambassador />} />
       <Route path="/returning-student" element={<ReturningStudent />} />
       <Route path="/free-returns" element={<ReturningStudent />} />
       <Route path="/refresher-training" element={<RefresherTraining />} />

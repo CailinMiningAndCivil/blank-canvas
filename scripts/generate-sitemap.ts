@@ -40,6 +40,7 @@ const entries: SitemapEntry[] = [
   { path: "/ctf-funding", changefreq: "monthly", priority: "0.7" },
   { path: "/recruitment", changefreq: "monthly", priority: "0.6" },
   { path: "/affiliate", changefreq: "monthly", priority: "0.5" },
+  { path: "/ambassador", changefreq: "monthly", priority: "0.5" },
   { path: "/returning-student", changefreq: "monthly", priority: "0.6" },
   { path: "/refresher-training", changefreq: "monthly", priority: "0.7" },
   { path: "/rigid-haul-truck-application", changefreq: "weekly", priority: "0.8" },
