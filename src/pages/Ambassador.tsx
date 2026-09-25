@@ -113,7 +113,10 @@ const Ambassador = () => (
           <iframe
             src="https://link.cailinminingcivil.com/widget/form/BQ6mVYXXnRkiLSMQ1ma8"
             style={{ width: "100%", height: "100%", border: "none" }}
+            id="BQ6mVYXXnRkiLSMQ1ma8"
             title="Ambassador Signup Form"
+            allow="payment; clipboard-read; clipboard-write; autoplay; camera; microphone"
+            sandbox="allow-top-navigation allow-scripts allow-same-origin allow-forms allow-popups"
             className="min-h-[900px] rounded-2xl"
           />
         </div>
