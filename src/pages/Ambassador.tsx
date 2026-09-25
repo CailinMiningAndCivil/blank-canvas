@@ -111,13 +111,25 @@ const Ambassador = () => (
             </p>
           </div>
           <iframe
-            src="https://link.cailinminingcivil.com/widget/form/BQ6mVYXXnRkiLSMQ1ma8"
+            src="https://link.cailinminingcivil.com/widget/form/2m4ENY68qqsHufO37s59"
             style={{ width: "100%", height: "100%", border: "none" }}
-            id="BQ6mVYXXnRkiLSMQ1ma8"
-            title="Ambassador Signup Form"
+            id="inline-2m4ENY68qqsHufO37s59"
+            title="Ambassador Form"
+            data-layout="{'id':'INLINE'}"
+            data-trigger-type="alwaysShow"
+            data-trigger-value=""
+            data-activation-type="alwaysActivated"
+            data-activation-value=""
+            data-deactivation-type="neverDeactivate"
+            data-deactivation-value=""
+            data-height="969"
+            data-layout-iframe-id="inline-2m4ENY68qqsHufO37s59"
+            data-form-id="2m4ENY68qqsHufO37s59"
+            data-cookie-consent="true"
+            data-cookie-consent-provider="auto"
             allow="payment; clipboard-read; clipboard-write; autoplay; camera; microphone"
             sandbox="allow-top-navigation allow-scripts allow-same-origin allow-forms allow-popups"
-            className="min-h-[900px] rounded-2xl"
+            className="min-h-[969px] rounded-2xl"
           />
         </div>
       </div>
