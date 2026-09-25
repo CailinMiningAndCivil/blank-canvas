@@ -30,6 +30,7 @@ import RtoDataSuccess from "./pages/RtoDataSuccess";
 import Recruitment from "./pages/Recruitment";
 import Affiliate from "./pages/Affiliate";
 import Ambassador from "./pages/Ambassador";
+import AmbassadorThankYou from "./pages/AmbassadorThankYou";
 import ReturningStudent from "./pages/ReturningStudent";
 import RefresherTraining from "./pages/RefresherTraining";
 import RigidHaulTruckApplication from "./pages/RigidHaulTruckApplication";
@@ -85,6 +86,7 @@ export const AppRoutes = () => (
       <Route path="/recruitment" element={<Recruitment />} />
       <Route path="/affiliate" element={<Affiliate />} />
       <Route path="/ambassador" element={<Ambassador />} />
+      <Route path="/ambassador/thank-you" element={<AmbassadorThankYou />} />
       <Route path="/returning-student" element={<ReturningStudent />} />
       <Route path="/free-returns" element={<ReturningStudent />} />
       <Route path="/refresher-training" element={<RefresherTraining />} />
