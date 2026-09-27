@@ -115,7 +115,7 @@ const SATURDAY_POPUP_KEY = "cailin-saturday-popup-shown";
 // TEMPORARY EXPO REDIRECT — flip EXPO_REDIRECT_ENABLED to false to restore the normal homepage.
 const EXPO_REDIRECT_ENABLED = true;
 const EXPO_REDIRECT_URL =
-  "https://link.cailinminingcivil.com/widget/form/c89hG3kRDP2TG3U9qpaM";
+  "https://link.cailinminingcivil.com/widget/form/LLTyYFEKrzzpLZvdOXVe";
 
 const Index = () => {
   // TEMPORARY EXPO REDIRECT — remove this block after the Expo.
