@@ -112,7 +112,18 @@ const individualMachines = [
 
 const SATURDAY_POPUP_KEY = "cailin-saturday-popup-shown";
 
+// TEMPORARY EXPO REDIRECT — flip EXPO_REDIRECT_ENABLED to false to restore the normal homepage.
+const EXPO_REDIRECT_ENABLED = true;
+const EXPO_REDIRECT_URL =
+  "https://link.cailinminingcivil.com/widget/form/c89hG3kRDP2TG3U9qpaM";
+
 const Index = () => {
+  // TEMPORARY EXPO REDIRECT — remove this block after the Expo.
+  if (EXPO_REDIRECT_ENABLED && typeof window !== "undefined") {
+    window.location.replace(EXPO_REDIRECT_URL);
+    return null;
+  }
+
   const [saturdayOpen, setSaturdayOpen] = useState(false);
 
   const handleDisclaimerClose = () => {
