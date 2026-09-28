@@ -113,7 +113,7 @@ const individualMachines = [
 const SATURDAY_POPUP_KEY = "cailin-saturday-popup-shown";
 
 // TEMPORARY EXPO REDIRECT — flip EXPO_REDIRECT_ENABLED to false to restore the normal homepage.
-const EXPO_REDIRECT_ENABLED = true;
+const EXPO_REDIRECT_ENABLED = false;
 const EXPO_REDIRECT_URL =
   "https://link.cailinminingcivil.com/widget/form/LLTyYFEKrzzpLZvdOXVe";
 
