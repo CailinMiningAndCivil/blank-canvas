@@ -50,7 +50,7 @@ const FullDay = () => {
     <Layout>
       <SEO
         title="Full Day Machine Operator Training Perth | Cailin Mining & Civil"
-        description="Full day 1:1 machine operator training in Perth on a live mine site. Master one machine with unlimited free returns. Starts at $1,200."
+        description="Full day 1:1 machine operator training in Perth on a live mine site. Master one machine with unlimited free returns. Starts at $1,300."
         path="/courses/full-day"
       />
       {/* Hero Section */}
@@ -68,7 +68,7 @@ const FullDay = () => {
               and job-ready — no rushing, no time limits.
             </p>
             <div className="inline-block bg-primary/10 px-8 py-4 rounded-xl">
-              <span className="text-primary font-display text-4xl block">Starts at $1,200</span>
+              <span className="text-primary font-display text-4xl block">Starts at $1,300</span>
               <span className="text-foreground text-sm mt-1 block">4 hours — Roller / Watercart</span>
             </div>
           </div>
@@ -203,7 +203,7 @@ const FullDay = () => {
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li className="flex justify-between">
                       <span>Price:</span>
-                       <span className="text-primary font-semibold">From $1,200</span>
+                       <span className="text-primary font-semibold">From $1,300</span>
                     </li>
                     <li className="flex justify-between">
                       <span>Duration:</span>

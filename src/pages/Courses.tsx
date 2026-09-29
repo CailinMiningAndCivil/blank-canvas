@@ -33,7 +33,7 @@ const courseCategories = [
     title: "Full Day Course",
     subtitle: "Unlimited Return Training",
     description: "Master any single machine with unlimited return sessions. Train until you're fully confident — no rushing, no time limits.",
-    price: "Starts at $1,200",
+    price: "Starts at $1,300",
     priceNote: "Includes Return for Free eligibility",
     image: fullDayHero,
     link: "/courses/full-day",
@@ -352,7 +352,7 @@ const Courses = () => {
                   <td className="p-4 text-foreground font-medium">Full Day Course</td>
                   <td className="p-4 text-muted-foreground">Single machine mastery with Return for Free eligibility</td>
                   <td className="p-4 text-muted-foreground">Unlimited returns*</td>
-                  <td className="p-4 text-primary font-semibold">Starts at $1,200</td>
+                  <td className="p-4 text-primary font-semibold">Starts at $1,300</td>
                 </tr>
                 <tr className="border-b border-border">
                   <td className="p-4 text-foreground font-medium">Short Courses</td>
