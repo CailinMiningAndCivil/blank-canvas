@@ -22,7 +22,7 @@ import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 const courseOptions = [
   {
     title: "$650 Short Course",
-    duration: "1.5 hours initial",
+    duration: "2 hours initial",
     price: "$650",
     description: "Quick excavator certification with nationally recognised qualification",
     bookingUrl: "https://live.cailintraining.com.au/short_course_excavator-book",
@@ -79,7 +79,7 @@ const faqs = [
   },
   {
     question: "How long does excavator operator training take in Perth?",
-    answer: "Training duration depends on your experience level. Our $650 short course runs 1.5 hours initial for those with some background. The full day excavator training in Perth has unlimited hours — we continue until you're genuinely confident and competent. There's no rushed timeframe. RPL assessment is available for experienced operators who just need formal certification.",
+    answer: "Training duration depends on your experience level. Our $650 short course runs 2 hours initial for those with some background. The full day excavator training in Perth has unlimited hours — we continue until you're genuinely confident and competent. There's no rushed timeframe. RPL assessment is available for experienced operators who just need formal certification.",
   },
   {
     question: "What's the job outlook for excavator operators in Perth?",

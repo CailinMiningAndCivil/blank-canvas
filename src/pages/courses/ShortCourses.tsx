@@ -73,7 +73,7 @@ const machines = [
 const faqs = [
   {
     question: "How long does the course take?",
-    answer: "The course typically takes 1.5 hours initial. Unlimited access is available when you book maximum training time — contact our team for details.",
+    answer: "The course typically takes 2 hours initial. Unlimited access is available when you book maximum training time — contact our team for details.",
   },
   {
     question: "What are the pre-requisites to undertake this course?",
@@ -92,7 +92,7 @@ const faqs = [
 const benefits = [
   "Nationally recognised qualification",
   "Professional work referral included",
-  "1.5 hours initial assessment",
+  "2 hours initial assessment",
   "Upgrade options available",
   "Ideal for career exploration",
   
