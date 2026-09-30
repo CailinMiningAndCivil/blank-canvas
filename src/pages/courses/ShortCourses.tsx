@@ -3,7 +3,7 @@ import { AlertCircle } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { HeroImage } from "@/components/ui/hero-image";
-import { CheckCircle, Award, ArrowRight, HelpCircle, Users } from "lucide-react";
+import { CheckCircle, Award, ArrowRight, HelpCircle, Users, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   Accordion,
@@ -124,6 +124,28 @@ const ShortCourses = () => {
             <div className="inline-block bg-primary/10 px-8 py-4 rounded-xl">
               <span className="text-primary font-display text-4xl">$650</span>
               <span className="text-foreground ml-2">per machine</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Not For Beginners Notice */}
+      <section className="py-8 bg-destructive/10 border-y-2 border-destructive">
+        <div className="container mx-auto px-4">
+          <div className="flex items-start gap-4 max-w-4xl mx-auto">
+            <AlertTriangle className="w-10 h-10 text-destructive shrink-0 mt-1" />
+            <div>
+              <h2 className="font-display text-3xl md:text-4xl text-destructive font-bold uppercase tracking-wide mb-2">
+                This is not for beginners
+              </h2>
+              <p className="text-foreground text-lg">
+                Our short courses are designed for students who already have some machine
+                operating experience. If you are a complete beginner, we recommend booking a{" "}
+                <Link to="/courses/full-day" className="text-primary font-semibold underline hover:text-primary/80">
+                  Full Day Course
+                </Link>{" "}
+                instead, where you'll get the training time you need to succeed.
+              </p>
             </div>
           </div>
         </div>
