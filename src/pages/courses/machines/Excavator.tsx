@@ -63,7 +63,7 @@ const faqs = [
   },
   {
     question: "Do I need prior experience?",
-    answer: "No prior experience is required for our full training program. For RPL assessment, you'll need to demonstrate existing competency from previous work experience.",
+    answer: "Prior experience as a machine operator is highly recommended. This is not a beginner-level course, and participants are expected to have existing operating experience and knowledge of the relevant machinery.",
   },
   {
     question: "How long does training take?",
