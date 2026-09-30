@@ -286,13 +286,15 @@ export const Navbar = () => {
               Affiliates
             </Link>
 
-            <Link
-              to="/recruitment"
+            <a
+              href="https://resume.cailinconnex.com.au/"
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}
               className="font-medium text-lg uppercase tracking-wider transition-colors duration-300 text-muted-foreground hover:text-foreground"
             >
               Careers
-            </Link>
+            </a>
 
             <Link
               to="/privatecall"

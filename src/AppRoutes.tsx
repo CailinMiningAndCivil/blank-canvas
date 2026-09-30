@@ -46,7 +46,7 @@ import Competition from "./pages/Competition";
 
 const CareersRedirect = () => {
   if (typeof window !== "undefined") {
-    window.location.href = "https://live.cailintraining.com.au/join_cailin_portal";
+    window.location.href = "https://resume.cailinconnex.com.au/";
   }
   return null;
 };
