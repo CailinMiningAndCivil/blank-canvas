@@ -20,7 +20,7 @@ import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 const courseOptions = [
   {
     title: "Short Course",
-    duration: "1.5 hours initial",
+    duration: "2 hours initial",
     price: "$650",
     description: "Quick certification with nationally recognised qualification",
     bookingUrl: "https://live.cailintraining.com.au/short_course_watercart-book",
@@ -65,7 +65,7 @@ const faqs = [
   },
   {
     question: "How long does training take?",
-    answer: "Our $650 course takes 1.5 hours initial. Full training with unlimited hours continues until you're confident and competent — there's no rushed timeframe.",
+    answer: "Our $650 course takes 2 hours initial. Full training with unlimited hours continues until you're confident and competent — there's no rushed timeframe.",
   },
   {
     question: "Is this included in any bundles?",
