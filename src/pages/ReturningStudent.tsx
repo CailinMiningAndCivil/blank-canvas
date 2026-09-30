@@ -141,9 +141,17 @@ const ReturningStudent = () => {
                 <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
                   You're eligible for a Free Return!
                 </h2>
-                <p className="text-lg text-muted-foreground max-w-lg mx-auto mb-6">
+                <p className="text-lg text-muted-foreground max-w-lg mx-auto mb-4">
                   We've opened your Free Return booking page in a new tab. If it didn't open, click below to continue.
                 </p>
+                <div className="max-w-lg mx-auto mb-6 rounded-xl border border-primary/30 bg-primary/5 p-4 text-sm text-left">
+                  <p className="font-semibold text-foreground mb-1">Please note:</p>
+                  <p className="text-muted-foreground">
+                    Booking a free return session does not guarantee loading — it really depends on machine
+                    availability. You'll receive a confirmation message once you've booked, and a separate
+                    confirmation once your session is confirmed.
+                  </p>
+                </div>
                 <Button asChild size="lg" variant="hero">
                   <a href={FREE_RETURN_REDIRECT_URL} target="_blank" rel="noopener noreferrer">
                     Continue to Free Return Booking

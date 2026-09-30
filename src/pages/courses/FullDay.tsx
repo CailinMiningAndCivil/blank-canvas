@@ -156,6 +156,14 @@ const FullDay = () => {
                     </tbody>
                   </table>
                 </div>
+                <div className="mt-6 rounded-xl border border-primary/30 bg-primary/5 p-4 text-sm text-foreground">
+                  <p className="font-semibold mb-1">Please note:</p>
+                  <p className="text-muted-foreground">
+                    A free return session does not guarantee loading — it really depends on machine availability.
+                    You'll receive a confirmation message once you've booked, and a separate confirmation once
+                    your session is confirmed.
+                  </p>
+                </div>
                 <p className="text-muted-foreground text-sm mt-4">
                   *Return training is subject to availability and must be booked in advance.
                 </p>
