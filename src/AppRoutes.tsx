@@ -43,6 +43,7 @@ import SignLogbook from "./pages/SignLogbook";
 import TrainerLogbook from "./pages/TrainerLogbook";
 import MyLogbook from "./pages/MyLogbook";
 import Competition from "./pages/Competition";
+import Migration from "./pages/Migration";
 
 const CareersRedirect = () => {
   if (typeof window !== "undefined") {
@@ -103,6 +104,7 @@ export const AppRoutes = () => (
       <Route path="/e-book" element={<Navigate to="/courses" replace />} />
       <Route path="/groups" element={<Navigate to="/" replace />} />
       <Route path="/competition" element={<Competition />} />
+      <Route path="/migration" element={<Migration />} />
       <Route path="/careers" element={<CareersRedirect />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
