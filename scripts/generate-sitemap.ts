@@ -46,6 +46,7 @@ const entries: SitemapEntry[] = [
   { path: "/rigid-haul-truck-application", changefreq: "weekly", priority: "0.8" },
   { path: "/rigid-haul-truck-booking", changefreq: "weekly", priority: "0.9" },
   { path: "/rigid-haul-truck-schedule", changefreq: "weekly", priority: "0.7" },
+  { path: "/migration", changefreq: "monthly", priority: "0.7" },
   { path: "/privacypolicy", changefreq: "yearly", priority: "0.3" },
   { path: "/termsandconditions", changefreq: "yearly", priority: "0.3" },
 ];

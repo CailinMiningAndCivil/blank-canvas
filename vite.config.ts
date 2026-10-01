@@ -43,6 +43,7 @@ const PRERENDER_ROUTES = [
   "/rigid-haul-truck-schedule",
   "/competition",
   "/faq",
+  "/migration",
 ];
 
 function prerenderPlugin(): Plugin {
