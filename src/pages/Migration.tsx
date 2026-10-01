@@ -151,7 +151,6 @@ const Migration = () => {
               id={`booking-${BOOKING_WIDGET_ID}`}
               title="Migration Skills Consultation Booking"
               allow="payment; camera; microphone; geolocation; fullscreen"
-              allowpaymentrequest="true"
               sandbox="allow-top-navigation allow-top-navigation-by-user-activation allow-scripts allow-same-origin allow-forms allow-popups"
               className="w-full min-h-[700px] rounded-2xl"
             />
