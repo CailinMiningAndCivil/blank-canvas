@@ -144,6 +144,7 @@ const Migration = () => {
               </p>
             </div>
             <iframe
+              {...({ allowpaymentrequest: "true" } as Record<string, string>)}
               src={`https://link.cailinminingcivil.com/widget/booking/${BOOKING_WIDGET_ID}`}
               style={{ width: "100%", border: "none", overflow: "hidden" }}
               scrolling="no"
