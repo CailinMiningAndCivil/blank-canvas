@@ -175,6 +175,18 @@ export const Navbar = () => {
               Private Call
             </Link>
 
+            <Link
+              to="/migration"
+              className={cn(
+                "font-medium text-sm uppercase tracking-wider transition-colors duration-300",
+                location.pathname === "/migration"
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Migration
+            </Link>
+
             {navLinks.slice(1).map((link) => (
               <Link
                 key={link.path}
@@ -307,6 +319,19 @@ export const Navbar = () => {
               )}
             >
               Private Call
+            </Link>
+
+            <Link
+              to="/migration"
+              onClick={() => setIsOpen(false)}
+              className={cn(
+                "font-medium text-lg uppercase tracking-wider transition-colors duration-300",
+                location.pathname === "/migration"
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Migration
             </Link>
 
             {navLinks.slice(1).map((link) => (
