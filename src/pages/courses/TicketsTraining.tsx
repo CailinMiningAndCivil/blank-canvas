@@ -14,7 +14,6 @@ import loaderMoxyBundle from "@/assets/photos/loader-moxy-bundle.png";
 import bundlesHero from "@/assets/photos/bundles-hero.png";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import starterBundleImg from "@/assets/photos/starter-bundle.jpg";
-import loaderDumptruckPair from "@/assets/photos/loader-dumptruck-pair.jpg";
 
 import interstateBundleImg from "@/assets/photos/interstate-bundle.jpg";
 import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
