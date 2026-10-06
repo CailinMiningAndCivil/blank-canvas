@@ -14,7 +14,6 @@ import loaderMoxyBundle from "@/assets/photos/loader-moxy-bundle.png";
 import bundlesHero from "@/assets/photos/bundles-hero.png";
 import articulatedDumptruck from "@/assets/photos/articulated-dumptruck.jpg";
 import starterBundleImg from "@/assets/photos/starter-bundle.jpg";
-import loaderDumptruckPair from "@/assets/photos/loader-dumptruck-pair.jpg";
 
 import interstateBundleImg from "@/assets/photos/interstate-bundle.jpg";
 import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
@@ -84,23 +83,6 @@ const bundles = [
     hours: [
       { machine: "Moxy", time: "4 hours" },
       { machine: "Roller", time: "1.5–2 hours" },
-      { machine: "Watercart", time: "1.5–2 hours" },
-    ],
-  },
-  {
-    id: "moxy-loader-watercart-bundle",
-    title: "Moxy, Loader & Watercart Bundle",
-    subtitle: "Articulated Truck + Wheel Loader + Watercart",
-    codes: ["RIIMPO337E", "RIIMPO304E", "RIIMPO206D"],
-    description:
-      "Master hauling, loading, and site water operations in one program. A versatile combination for civil construction and mining support roles.",
-    price: "$2,500",
-    image: loaderDumptruckPair,
-    bookingUrl: "https://live.cailintraining.com.au/moxy_loader_watercart_bundle",
-    highlight: false,
-    hours: [
-      { machine: "Moxy", time: "4 hours" },
-      { machine: "Wheel Loader", time: "4 hours" },
       { machine: "Watercart", time: "1.5–2 hours" },
     ],
   },
