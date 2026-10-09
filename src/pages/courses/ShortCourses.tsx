@@ -139,12 +139,13 @@ const ShortCourses = () => {
                 This is not for beginners
               </h2>
               <p className="text-foreground text-lg">
-                Our short courses are designed for students who already have some machine
-                operating experience. If you are a complete beginner, we recommend booking a{" "}
+                Our short courses are designed for someone who is just testing the waters before they
+                book more training. If you're new to machine operating, we recommend a minimum of 4–8
+                hours of beginner training instead of a{" "}
                 <Link to="/courses/full-day" className="text-primary font-semibold underline hover:text-primary/80">
                   Full Day Course
                 </Link>{" "}
-                instead, where you'll get the training time you need to succeed.
+                — get in touch and we'll help you find the right option.
               </p>
             </div>
           </div>
