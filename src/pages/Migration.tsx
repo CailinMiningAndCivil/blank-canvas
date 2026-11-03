@@ -5,7 +5,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { CheckCircle, Globe, Award, CalendarCheck, Compass, ShieldCheck, Map } from "lucide-react";
 import { HeroImage } from "@/components/ui/hero-image";
-import rplPageHero from "@/assets/photos/rpl-page-hero.png";
+import migrationFamilyHero from "@/assets/migration-family-airport.jpg";
 
 const BOOKING_WIDGET_ID = "aJC0g1ShRukSwglYc8x5";
 
@@ -84,7 +84,7 @@ const Migration = () => {
 
       {/* Hero */}
       <section className="relative py-32 overflow-hidden">
-        <HeroImage src={rplPageHero} alt="Overseas skilled worker starting a new pathway in Australia" />
+        <HeroImage src={migrationFamilyHero} alt="Family walking through an airport arrivals hall with their luggage" />
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-primary font-medium tracking-widest uppercase mb-4">
