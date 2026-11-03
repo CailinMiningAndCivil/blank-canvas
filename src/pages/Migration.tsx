@@ -5,7 +5,7 @@ import { Layout } from "@/components/layout/Layout";
 import { SEO } from "@/components/SEO";
 import { CheckCircle, Globe, Award, CalendarCheck, Compass, ShieldCheck, Map } from "lucide-react";
 import { HeroImage } from "@/components/ui/hero-image";
-import rplPageHero from "@/assets/photos/rpl-page-hero.png";
+import migrationFamilyHero from "@/assets/migration-family-airport.jpg";
 
 const BOOKING_WIDGET_ID = "aJC0g1ShRukSwglYc8x5";
 
