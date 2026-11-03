@@ -207,14 +207,14 @@ export const Navbar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Career Resources — direct link to Cailin Connex */}
+            {/* Resume Builder — direct link to Cailin Connex */}
             <a
               href={CAILIN_CONNEX_URL}
               target="_blank"
               rel="noopener noreferrer"
               className={desktopLinkClass(false)}
             >
-              Career Resources
+              Resume Builder
             </a>
 
             {/* About Dropdown */}
@@ -373,7 +373,7 @@ export const Navbar = () => {
               )}
             </div>
 
-            {/* Career Resources — direct link to Cailin Connex */}
+            {/* Resume Builder — direct link to Cailin Connex */}
             <a
               href={CAILIN_CONNEX_URL}
               target="_blank"
@@ -381,7 +381,7 @@ export const Navbar = () => {
               onClick={() => setIsOpen(false)}
               className={mobileLinkClass(false)}
             >
-              Career Resources
+              Resume Builder
             </a>
 
             {/* About Section */}
