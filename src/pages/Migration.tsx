@@ -13,7 +13,7 @@ const highlights = [
   "Turn your overseas skills and experience into recognised Australian qualifications",
   "One-on-one guidance for people with complex cases that don't fit standard visa routes",
   "Clear, honest advice on your realistic options — no cookie-cutter pathways",
-  "Trainers with real civil and mining industry experience",
+  "Migration agents with real civil and mining industry experience",
 ];
 
 const whoIsThisFor = [
