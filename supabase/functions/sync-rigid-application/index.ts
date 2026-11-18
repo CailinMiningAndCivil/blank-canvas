@@ -261,6 +261,10 @@ Deno.serve(async (req) => {
 
     const yesNo = (v: unknown) => (v === true ? 'Yes' : v === false ? 'No' : '');
 
+    const safe = (v: unknown) => {
+      const t = String(v ?? '');
+      return /^[=+\-@\t\r]/.test(t) ? `'${t}` : t;
+    };
     const row = [
       app.full_name,
       app.phone,
@@ -273,7 +277,7 @@ Deno.serve(async (req) => {
       yesNo(app.under_100kg),
       yesNo(app.paid_employment_experience),
       app.previous_employer ?? '',
-    ];
+    ].map(safe);
 
     const range = `${SHEET_NAME}!A:K`;
     const url = `${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;

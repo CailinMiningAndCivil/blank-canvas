@@ -221,7 +221,19 @@ async function extractSignatureFromPublicDocument(docFieldValue: string): Promis
 async function downloadPdf(docFieldValue: string): Promise<Uint8Array> {
   // If it's already a PDF URL, download directly
   if (docFieldValue.toLowerCase().endsWith(".pdf") || docFieldValue.includes("/pdf")) {
-    const r = await fetch(docFieldValue);
+    let host = "";
+    try {
+      const u = new URL(docFieldValue);
+      if (u.protocol !== "https:") throw new Error("bad protocol");
+      host = u.hostname.toLowerCase();
+    } catch {
+      throw new Error("Invalid document URL");
+    }
+    const allowed = ["leadconnectorhq.com", "msgsndr.com", "gohighlevel.com", "cailinminingcivil.com", "storage.googleapis.com", "firebasestorage.googleapis.com"];
+    if (!allowed.some((d) => host === d || host.endsWith(`.${d}`))) {
+      throw new Error("Document host not allowed");
+    }
+    const r = await fetch(docFieldValue, { redirect: "error" });
     if (!r.ok) throw new Error(`downloadPdf direct ${r.status}`);
     return new Uint8Array(await r.arrayBuffer());
   }
