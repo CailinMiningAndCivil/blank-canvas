@@ -414,6 +414,7 @@ export type Database = {
       }
       trainers: {
         Row: {
+          access_code_hash: string | null
           active: boolean
           created_at: string
           full_name: string
@@ -421,6 +422,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          access_code_hash?: string | null
           active?: boolean
           created_at?: string
           full_name: string
@@ -428,6 +430,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          access_code_hash?: string | null
           active?: boolean
           created_at?: string
           full_name?: string

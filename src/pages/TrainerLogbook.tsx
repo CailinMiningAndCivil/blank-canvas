@@ -30,6 +30,10 @@ export default function TrainerLogbook() {
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [accessCode, setAccessCode] = useState<string>(() =>
+    typeof window !== "undefined" ? sessionStorage.getItem("trainer_access_code") ?? "" : "",
+  );
+  const [codeInput, setCodeInput] = useState("");
 
   function startEdit() {
     if (!selected) return;
@@ -73,13 +77,18 @@ export default function TrainerLogbook() {
 
 
   async function load() {
+    if (!accessCode) { setLoading(false); return; }
     setLoading(true);
     setError(null);
     try {
       const { data, error: fnError } = await supabase.functions.invoke("logbook-list", {
-        body: { status },
+        body: { status, access_code: accessCode },
       });
-      if (fnError) throw fnError;
+      if (fnError) {
+        sessionStorage.removeItem("trainer_access_code");
+        setAccessCode("");
+        throw fnError;
+      }
       setEntries((data?.entries ?? []) as any[]);
       setPage(1);
     } catch {
@@ -93,7 +102,7 @@ export default function TrainerLogbook() {
   useEffect(() => {
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status]);
+  }, [status, accessCode]);
 
   const students = useMemo(() => {
     const names = new Set<string>();
@@ -133,6 +142,35 @@ export default function TrainerLogbook() {
       pending: entries.filter((e) => e.status !== "signed").length,
     };
   }, [entries]);
+
+  if (!accessCode) {
+    return (
+      <div className="min-h-screen bg-background p-6 flex items-center justify-center">
+        <Helmet>
+          <title>Trainer Logbook | Cailin Mining and Civil</title>
+          <meta name="robots" content="noindex,nofollow" />
+        </Helmet>
+        <form
+          className="w-full max-w-sm border rounded-lg p-6 space-y-4 bg-card"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const c = codeInput.trim();
+            if (c.length < 4) return;
+            sessionStorage.setItem("trainer_access_code", c);
+            setAccessCode(c);
+          }}
+        >
+          <h1 className="text-2xl font-bold">Trainer Logbook</h1>
+          {error && <p className="text-sm text-destructive">Access code not recognised.</p>}
+          <div className="space-y-2">
+            <Label htmlFor="tcode">Your trainer access code</Label>
+            <Input id="tcode" type="password" autoComplete="off" value={codeInput} onChange={(e) => setCodeInput(e.target.value)} />
+          </div>
+          <Button type="submit" className="w-full">Open logbook</Button>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background p-6 sm:p-8 max-w-7xl mx-auto">

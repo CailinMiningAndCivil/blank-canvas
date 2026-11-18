@@ -204,7 +204,7 @@ Deno.serve(async (req) => {
     if (windowExpired) {
       return new Response(JSON.stringify({
         matched: true, machines, eligible: true, hasPromoTag: true,
-        windowExpired: true, courseDate: latestCourseDate?.toISOString() ?? null,
+        windowExpired: true,
       }), { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
@@ -232,9 +232,6 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({
       matched: true, machines, eligible: true, hasPromoTag: true,
       windowExpired: false, weeklyBlocked, consecutiveBlocked,
-      upcomingBookings: userBookings.filter(b => b >= new Date(now.getTime() - 7*86400000))
-        .map(b => b.toISOString()),
-      courseDate: latestCourseDate?.toISOString() ?? null,
     }), { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
   } catch (error: unknown) {

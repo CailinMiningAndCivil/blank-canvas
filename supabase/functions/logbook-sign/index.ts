@@ -108,6 +108,11 @@ function dataUrlToBytes(dataUrl: string): { bytes: Uint8Array; ext: string } | n
   return { bytes, ext: m[1].toLowerCase() === "png" ? "png" : "jpg" };
 }
 
+async function sha256Hex(s: string): Promise<string> {
+  const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
+  return Array.from(new Uint8Array(b)).map((x) => x.toString(16).padStart(2, "0")).join("");
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
@@ -157,7 +162,7 @@ Deno.serve(async (req) => {
     const body = await req.json().catch(() => null);
     if (!body) return json({ error: "Invalid request" }, 400);
 
-    const { token, trainer_id, signature } = body as Record<string, unknown>;
+    const { token, trainer_id, signature, access_code } = body as Record<string, unknown>;
     if (!isValidToken(token)) return json({ error: "Invalid link" }, 400);
     if (typeof trainer_id !== "string" || trainer_id.length < 10) {
       return json({ error: "Please select your name" }, 400);
@@ -187,11 +192,17 @@ Deno.serve(async (req) => {
 
     const { data: trainer } = await supabase
       .from("trainers")
-      .select("id, full_name")
+      .select("id, full_name, access_code_hash")
       .eq("id", trainer_id)
       .eq("active", true)
       .maybeSingle();
     if (!trainer) return json({ error: "Please select your name" }, 400);
+    if (
+      typeof access_code !== "string" || access_code.trim().length < 4 || access_code.length > 64 ||
+      !trainer.access_code_hash || (await sha256Hex(access_code.trim())) !== trainer.access_code_hash
+    ) {
+      return json({ error: "Your trainer access code is incorrect" }, 403);
+    }
 
     const path = `${entry.id}/${Date.now()}.${img.ext}`;
     const { error: upErr } = await supabase.storage

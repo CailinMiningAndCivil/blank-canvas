@@ -31,6 +31,11 @@ function isValidStatus(s: unknown): s is "all" | "pending" | "signed" {
   return s === "all" || s === "pending" || s === "signed";
 }
 
+async function sha256Hex(s: string): Promise<string> {
+  const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
+  return Array.from(new Uint8Array(b)).map((x) => x.toString(16).padStart(2, "0")).join("");
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
@@ -38,7 +43,7 @@ Deno.serve(async (req) => {
   const url = new URL(req.url);
   const provided = req.headers.get("x-admin-key") ?? url.searchParams.get("token") ?? "";
   // No key = public trainer view (read-only, no contact details or tokens).
-  let role: "admin" | "trainer" = "trainer";
+  let role: "admin" | "trainer" | null = null;
   if (WEBHOOK_TOKEN && provided === WEBHOOK_TOKEN) role = "admin";
 
   let body: Record<string, unknown> = {};
@@ -47,6 +52,17 @@ Deno.serve(async (req) => {
   } catch {
     // ignore empty body
   }
+
+  if (!role) {
+    const code = typeof body.access_code === "string" ? body.access_code.trim() : "";
+    if (code.length >= 4 && code.length <= 64) {
+      const hash = await sha256Hex(code);
+      const { data: t } = await supabase
+        .from("trainers").select("id").eq("active", true).eq("access_code_hash", hash).maybeSingle();
+      if (t) role = "trainer";
+    }
+  }
+  if (!role) return json({ error: "Unauthorized" }, 401);
 
   const status = isValidStatus(body.status) ? body.status : "all";
 

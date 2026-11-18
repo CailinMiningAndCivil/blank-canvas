@@ -34,6 +34,7 @@ const SignLogbook = () => {
   const [entry, setEntry] = useState<Entry | null>(null);
   const [trainers, setTrainers] = useState<Trainer[]>([]);
   const [trainerId, setTrainerId] = useState("");
+  const [accessCode, setAccessCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState<string | null>(null);
   const [hasInk, setHasInk] = useState(false);
@@ -186,6 +187,10 @@ const SignLogbook = () => {
       setError("Please select your name from the list.");
       return;
     }
+    if (accessCode.trim().length < 4) {
+      setError("Please enter your trainer access code.");
+      return;
+    }
     if (!hasInk) {
       setError("Please draw your signature in the box.");
       return;
@@ -197,7 +202,7 @@ const SignLogbook = () => {
       const res = await fetch(FN_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, trainer_id: trainerId, signature }),
+        body: JSON.stringify({ token, trainer_id: trainerId, signature, access_code: accessCode.trim() }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -358,6 +363,19 @@ const SignLogbook = () => {
                         </option>
                       ))}
                     </select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="access-code" className="text-sm font-medium text-foreground">Your access code</label>
+                    <input
+                      id="access-code"
+                      type="password"
+                      inputMode="numeric"
+                      autoComplete="off"
+                      value={accessCode}
+                      onChange={(e) => setAccessCode(e.target.value)}
+                      className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                    />
                   </div>
 
                   <div className="space-y-2">
