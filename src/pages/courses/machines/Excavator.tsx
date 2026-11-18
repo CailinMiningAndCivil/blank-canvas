@@ -16,7 +16,7 @@ import {
 
 import excavatorOperation from "@/assets/photos/excavator-operation.jpg";
 import trainerExcavatorDistance from "@/assets/photos/trainer-excavator-distance.jpg";
-import gpsTraining from "@/assets/photos/gps-training.jpg";
+import gpsTraining from "@/assets/photos/gps-training-collage.jpg";
 import { DiscoveryCallButton } from "@/components/DiscoveryCallButton";
 
 const courseOptions = [
