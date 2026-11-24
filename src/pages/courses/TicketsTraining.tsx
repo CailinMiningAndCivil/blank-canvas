@@ -147,7 +147,12 @@ const TicketsTraining = () => {
             <Clock className="w-8 h-8 text-primary shrink-0" />
             <div>
               <p className="text-foreground font-semibold">Limited Time Offer</p>
-              <p className="text-muted-foreground text-sm">Return for Free is included with the Starter Bundle</p>
+              <p className="text-muted-foreground text-sm">
+                Return for Free is included with the Starter Bundle —{" "}
+                <Link to="/free-return-policy" className="text-primary underline">
+                  read the policy
+                </Link>
+              </p>
             </div>
           </div>
         </div>
@@ -234,7 +239,10 @@ const TicketsTraining = () => {
                     <div className="flex items-start gap-2 bg-primary/10 border border-primary/30 rounded-lg p-3 mb-4">
                       <Clock className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                       <p className="text-foreground text-xs">
-                        <strong>Limited Time Offer:</strong> This bundle includes Free Returns.
+                        <strong>Limited Time Offer:</strong> This bundle includes Free Returns.{" "}
+                        <Link to="/free-return-policy" className="text-primary underline">
+                          Read the Return for Free Policy
+                        </Link>
                       </p>
                     </div>
                   ) : (
