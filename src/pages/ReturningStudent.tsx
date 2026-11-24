@@ -252,6 +252,13 @@ const ReturningStudent = () => {
                 </p>
               </form>
             )}
+            <p className="text-sm text-muted-foreground text-center mt-8">
+              Free Returns are subject to our{" "}
+              <Link to="/free-return-policy" className="text-primary underline">
+                Return for Free Policy
+              </Link>
+              .
+            </p>
           </div>
         </div>
       </section>

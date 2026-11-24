@@ -42,6 +42,7 @@ const entries: SitemapEntry[] = [
   { path: "/affiliate", changefreq: "monthly", priority: "0.5" },
   { path: "/ambassador", changefreq: "monthly", priority: "0.5" },
   { path: "/returning-student", changefreq: "monthly", priority: "0.6" },
+  { path: "/free-return-policy", changefreq: "yearly", priority: "0.4" },
   { path: "/refresher-training", changefreq: "monthly", priority: "0.7" },
   { path: "/rigid-haul-truck-application", changefreq: "weekly", priority: "0.8" },
   { path: "/rigid-haul-truck-booking", changefreq: "weekly", priority: "0.9" },

@@ -37,6 +37,7 @@ const PRERENDER_ROUTES = [
   "/ambassador",
   "/ambassador/thank-you",
   "/returning-student",
+  "/free-return-policy",
   "/refresher-training",
   "/rigid-haul-truck-application",
   "/rigid-haul-truck-booking",

@@ -32,6 +32,7 @@ import Affiliate from "./pages/Affiliate";
 import Ambassador from "./pages/Ambassador";
 import AmbassadorThankYou from "./pages/AmbassadorThankYou";
 import ReturningStudent from "./pages/ReturningStudent";
+import FreeReturnPolicy from "./pages/FreeReturnPolicy";
 import RefresherTraining from "./pages/RefresherTraining";
 import RigidHaulTruckApplication from "./pages/RigidHaulTruckApplication";
 import RigidHaulTruckBooking from "./pages/RigidHaulTruckBooking";
@@ -90,6 +91,7 @@ export const AppRoutes = () => (
       <Route path="/ambassador/thank-you" element={<AmbassadorThankYou />} />
       <Route path="/returning-student" element={<ReturningStudent />} />
       <Route path="/free-returns" element={<ReturningStudent />} />
+      <Route path="/free-return-policy" element={<FreeReturnPolicy />} />
       <Route path="/refresher-training" element={<RefresherTraining />} />
       <Route path="/rigid-haul-truck-traineeship" element={<Navigate to="/rigid-haul-truck-booking" replace />} />
       <Route path="/rigid-haul-truck-application" element={<RigidHaulTruckApplication />} />
