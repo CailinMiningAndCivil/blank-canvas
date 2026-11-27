@@ -201,9 +201,14 @@ export const RigidScreeningForm = ({ source, qualifiedCta, qualifiedSlot }: Prop
 
       // Append to Google Sheet (best effort)
       try {
-        await supabase.functions.invoke("sync-rigid-application", {
+        const { data: syncData } = await supabase.functions.invoke("sync-rigid-application", {
           body: { application_id: applicationId },
         });
+        // The server reads the uploaded certificate and has the final say.
+        if (syncData && typeof syncData.qualified === "boolean" && !syncData.qualified && qualified) {
+          qualified = false;
+          reason = "Evidence did not meet requirements.";
+        }
       } catch (err) {
         console.warn("sync-rigid-application failed", err);
       }

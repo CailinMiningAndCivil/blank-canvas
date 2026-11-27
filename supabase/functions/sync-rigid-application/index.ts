@@ -32,6 +32,105 @@ async function signed(path?: string | null): Promise<string> {
   return data.signedUrl;
 }
 
+
+// ---- Evidence provider check (AI reads the uploaded certificate) ----
+// Certificates from these training providers do not qualify for the rigid course.
+const BLOCKED_PROVIDERS = [
+  { name: 'SafeRight', re: /safe\s*-?\s*right/i },
+  { name: 'RMS', re: /\bRMS\b|road\s*&?\s*maritime|rms\s*training/i },
+  { name: 'WEMAC', re: /\bwe\s*-?\s*mac\b|wemac/i },
+];
+
+function toBase64(bytes: Uint8Array): string {
+  let bin = '';
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    bin += String.fromCharCode(...bytes.subarray(i, i + chunk));
+  }
+  return btoa(bin);
+}
+
+async function filePart(path: string): Promise<Record<string, unknown> | null> {
+  const { data, error } = await supabase.storage.from(BUCKET).download(path);
+  if (error || !data) return null;
+  const bytes = new Uint8Array(await data.arrayBuffer());
+  if (!bytes.length || bytes.length > 15 * 1024 * 1024) return null;
+  const lower = path.toLowerCase();
+  let mime = data.type || '';
+  if (!mime || mime === 'application/octet-stream') {
+    mime = lower.endsWith('.pdf') ? 'application/pdf'
+      : lower.endsWith('.png') ? 'image/png'
+      : lower.endsWith('.webp') ? 'image/webp'
+      : 'image/jpeg';
+  }
+  if (mime === 'application/pdf') {
+    return { type: 'input_file', filename: 'evidence.pdf', file_data: `data:application/pdf;base64,${toBase64(bytes)}` };
+  }
+  if (!mime.startsWith('image/')) return null;
+  return { type: 'input_image', image_url: `data:${mime};base64,${toBase64(bytes)}` };
+}
+
+type EvidenceCheck = { provider: string; blocked: string | null; error?: boolean };
+
+async function checkEvidence(paths: string[]): Promise<EvidenceCheck> {
+  const parts = (await Promise.all(paths.map(filePart))).filter(Boolean) as Record<string, unknown>[];
+  if (!parts.length) return { provider: '', blocked: null, error: true };
+  try {
+    const res = await fetch('https://ai.gateway.lovable.dev/v1/responses', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Lovable-API-Key': LOVABLE_API_KEY,
+        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        'X-Lovable-AIG-SDK': 'fetch',
+      },
+      body: JSON.stringify({
+        model: 'openai/gpt-6-astra',
+        stream: true,
+        store: false,
+        reasoning: { effort: 'low' },
+        input: [{
+          role: 'user',
+          content: [
+            { type: 'input_text', text: 'These are training certificates or licences uploaded by an applicant. Identify the training provider / RTO / issuing organisation name shown on each document (logo, header, footer or RTO details). Reply with ONLY the provider names, comma separated, exactly as printed. If none is visible reply NONE.' },
+            ...parts,
+          ],
+        }],
+      }),
+    });
+    if (!res.ok || !res.body) {
+      console.error('Evidence check failed', res.status, await res.text().catch(() => ''));
+      return { provider: '', blocked: null, error: true };
+    }
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '';
+    let text = '';
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split('\n');
+      buf = lines.pop() ?? '';
+      for (const line of lines) {
+        if (!line.startsWith('data:')) continue;
+        const d = line.slice(5).trim();
+        if (!d || d === '[DONE]') continue;
+        try {
+          const ev = JSON.parse(d);
+          if (ev.type === 'response.output_text.delta' && typeof ev.delta === 'string') text += ev.delta;
+        } catch { /* ignore */ }
+      }
+    }
+    const provider = text.trim().slice(0, 200);
+    const hit = BLOCKED_PROVIDERS.find((p) => p.re.test(provider));
+    return { provider, blocked: hit ? hit.name : null };
+  } catch (e) {
+    console.error('Evidence check error', e);
+    return { provider: '', blocked: null, error: true };
+  }
+}
+
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
@@ -233,6 +332,21 @@ Deno.serve(async (req) => {
       }
     }
 
+    // Read the uploaded certificate(s) and reject blocked training providers.
+    const docPaths = [app.evidence_file_path, app.hr_licence_file_path].filter(Boolean) as string[];
+    let evidenceNote = '';
+    if (docPaths.length) {
+      const check = await checkEvidence(docPaths);
+      if (check.blocked) {
+        qualified = false;
+        evidenceNote = `[🚩 CERT FROM ${check.blocked}: ${check.provider}]`;
+      } else if (check.error) {
+        evidenceNote = '[⚠️ Evidence not auto-checked — review manually]';
+      } else {
+        evidenceNote = `[Provider: ${check.provider || 'unknown'}]`;
+      }
+    }
+
     // Keep the stored record consistent with the server-side outcome.
     await supabase
       .from('haul_truck_applications')
@@ -257,7 +371,7 @@ Deno.serve(async (req) => {
 
     const qualifiedTag = qualified ? '✅ QUALIFIED' : '⛔ NOT QUALIFIED';
     const source = String(app.source ?? 'website').slice(0, 60);
-    machineCell = `[${qualifiedTag}] [${source}] ${machineCell}`.trim();
+    machineCell = `[${qualifiedTag}] [${source}] ${evidenceNote} ${machineCell}`.replace(/\s+/g, ' ').trim();
 
     const yesNo = (v: unknown) => (v === true ? 'Yes' : v === false ? 'No' : '');
 
